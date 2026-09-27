@@ -3,7 +3,10 @@ import { after, before, beforeEach, test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
 import { collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from 'firebase/firestore';
-import { approveMember, getMemberPoints, listPendingMembers, registerMember } from '../src/points.js';
+import {
+  approveMember, awardPoints, createActivity, getMemberPoints,
+  listPendingMembers, registerMember, reverseAward,
+} from '../src/points.js';
 
 let env;
 const auth = (uid) => env.authenticatedContext(uid, { email: `${uid}@example.com` }).firestore();
@@ -146,4 +149,23 @@ test('a signed-in account without a profile cannot read club data', async () => 
   const db = auth('unregistered');
   await assertFails(getDoc(doc(db, 'activities', 'meeting1')));
   await assertFails(getMemberPoints(db, 'unregistered'));
+});
+
+test('meeting and assignment helpers award five each; reversals preserve audit records', async () => {
+  const officerDb = auth('officer');
+  const memberDb = auth('student');
+  await assertSucceeds(createActivity(officerDb, 'officer', 'meeting2', 'meeting', 'Club meeting'));
+  await assertSucceeds(createActivity(officerDb, 'officer', 'assignment2', 'assignment', 'Club assignment'));
+  await assertFails(createActivity(memberDb, 'student', 'meeting3', 'meeting', 'Forged meeting'));
+  await assertSucceeds(awardPoints(officerDb, 'officer', 'student', 'meeting2', 'meeting'));
+  await assertSucceeds(awardPoints(officerDb, 'officer', 'student', 'assignment2', 'assignment'));
+  assert.equal(await getMemberPoints(memberDb, 'student'), 10);
+  await assertFails(awardPoints(officerDb, 'officer', 'student', 'assignment2', 'meeting'));
+  await assertSucceeds(reverseAward(officerDb, 'officer', 'student', 'meeting2_student', 'Attendance correction'));
+  assert.equal(await getMemberPoints(memberDb, 'student'), 5);
+  await assertFails(reverseAward(officerDb, 'officer', 'student', 'meeting2_student', 'Duplicate correction'));
+  await assertSucceeds(reverseAward(officerDb, 'officer', 'student', 'assignment2_student', 'Submission correction'));
+  assert.equal(await getMemberPoints(memberDb, 'student'), 0);
+  assert.equal((await getDoc(doc(memberDb, 'awards', 'assignment2_student'))).data().points, 5);
+  assert.equal((await getDoc(doc(memberDb, 'reversals', 'assignment2_student'))).data().points, -5);
 });

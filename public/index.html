@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troy LLM backend test</title>
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #17202a; }
+    h1 { margin-bottom: .25rem; } h2 { margin-top: 2rem; }
+    section { border-top: 1px solid #ccd3db; margin-top: 1.5rem; }
+    label { display: block; margin: .7rem 0; } input, select, button { font: inherit; padding: .35rem .5rem; }
+    input { width: min(100%, 22rem); box-sizing: border-box; } button { margin: .3rem .4rem .3rem 0; cursor: pointer; }
+    output, pre { display: block; white-space: pre-wrap; overflow-wrap: anywhere; background: #f2f5f8; padding: .8rem; }
+    .quiet { color: #52606d; } [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <h1>Troy LLM backend test</h1>
+  <p class="quiet">A temporary operator page for Google sign-in, membership, and points verification. Club access still depends on officer approval.</p>
+  <button id="sign-in">Sign in with Google</button><button id="sign-out" hidden>Sign out</button>
+  <output id="identity">Signed out</output>
+  <section id="profile-section" hidden>
+    <h2>Membership</h2>
+    <output id="profile"></output>
+    <button id="register" hidden>Request membership</button>
+  </section>
+  <section id="member-section" hidden>
+    <h2>My points</h2>
+    <button id="my-points">Refresh my points</button>
+    <output id="points"></output>
+  </section>
+  <section id="officer-section" hidden>
+    <h2>Officer tools</h2>
+    <button id="pending-list">List pending requests</button>
+    <output id="pending"></output>
+    <form id="approve-form">
+      <label>Pending member UID <input name="memberUid" required></label>
+      <button>Approve member</button>
+    </form>
+    <form id="activity-form">
+      <label>Activity ID (letters, digits, _ or -) <input name="activityId" required maxlength="80" pattern="[A-Za-z0-9_-]+"></label>
+      <label>Kind <select name="kind"><option value="meeting">Meeting</option><option value="assignment">Assignment</option></select></label>
+      <label>Title <input name="title" required maxlength="150"></label>
+      <button>Create activity</button>
+    </form>
+    <form id="award-form">
+      <label>Approved member UID <input name="memberUid" required></label>
+      <label>Activity ID <input name="activityId" required></label>
+      <label>Kind <select name="kind"><option value="meeting">Meeting</option><option value="assignment">Assignment</option></select></label>
+      <button>Award 5 points</button>
+    </form>
+    <form id="reverse-form">
+      <label>Member UID <input name="memberUid" required></label>
+      <label>Award ID <input name="awardId" required></label>
+      <label>Reason <input name="reason" required minlength="5" maxlength="200"></label>
+      <button>Reverse award</button>
+    </form>
+  </section>
+  <section><h2>Result</h2><output id="result" role="status">Ready.</output></section>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Troy High LLM points backend
 
-Firebase project: `troy-high-llm`. This repository contains Firebase client helpers, Firestore Security Rules, and emulator tests. It does not contain the website or a Google Classroom connection.
+Firebase project: `troy-high-llm`. This repository contains Firebase client helpers, Firestore Security Rules, emulator tests, and a small hosted operator page. It does not contain the club website or a Google Classroom connection.
 
 ## Membership and points
 
@@ -12,9 +12,32 @@ Firebase project: `troy-high-llm`. This repository contains Firebase client help
 
 ### First officer and later approvals
 
-There is no client-side path to create the first officer. After Firebase Authentication, Firestore, and a sign-in flow are available, the first trusted officer signs in and creates a pending profile. A **Firebase project administrator** checks that person's identity and Auth UID, then changes only `members/{uid}.role` from `pending` to `officer` in the Firebase console. Console administrator writes bypass client Security Rules. The administrator should assign a trusted backup officer the same way; ordinary officers cannot promote anyone to officer.
+There is no client-side path to create the first officer. The chosen officer must sign in at <https://troy-high-llm.web.app> and click **Request membership**. This creates a pending profile. **Do not choose or promote a UID until the club owner identifies whose account should be the first officer.**
 
-After that, an officer reviews the pending profile and verifies the person belongs in the club. Calling `approveMember` from an authenticated officer session changes the role to `member` and stores the approving officer's UID and timestamp. The rules reject a second approval, changed approval metadata, or any client attempt to set `officer`. There is no approval screen yet; the future website can call these helpers.
+A Firebase project administrator can then use the checked bootstrap command. It requires the exact Google email and Firebase Auth UID. It verifies the Auth account uses Google sign-in, verifies that the matching Firestore profile is pending, and changes only its `role` field with an update-time precondition. It defaults to a read-only dry run; `--execute` performs the promotion and reads it back.
+
+```sh
+gcloud auth login
+npm run bootstrap:officer -- --uid AUTH_UID --email GOOGLE_EMAIL
+npm run bootstrap:officer -- --uid AUTH_UID --email GOOGLE_EMAIL --execute
+```
+
+The administrator must visually verify that the email and UID belong to the person identified by the club owner before running `--execute`. The script is fixed to `troy-high-llm`; it uses the administrator's existing `gcloud` login and stores no credentials. A trusted backup officer needs the same explicit administrator step. Ordinary officers cannot promote anyone to officer.
+
+After that, an officer reviews pending profiles on the operator page and verifies the person belongs in the club. **Approve member** changes a pending profile to `member` and stores the approving officer's UID and timestamp. The rules reject a second approval, changed approval metadata, or any client attempt to set `officer`.
+
+## Operator test page
+
+The minimal page at <https://troy-high-llm.web.app> signs in with Google and shows the signed-in email and UID. A new user can request membership. Pending users see their status; approved members can check their points. Officers can list pending requests, approve a member, create meeting or assignment activities, award five points, and reverse an award with a reason. This is a test and operator surface, not the club website. Firestore rules, rather than hidden buttons, enforce access.
+
+To reproduce the live flow after the first officer is identified and bootstrapped:
+
+1. Sign in as a second Google user and click **Request membership**. Confirm the page shows `pending` and does not expose points or officer tools.
+2. Sign in as the officer. List pending requests and approve the second user's UID. Confirm the member sees `member` and can read their own points.
+3. As the officer, create one meeting and one assignment with distinct stable IDs. Award the approved member once for each. Confirm their total is 10 and duplicate awards are rejected.
+4. Reverse each award with a reason. Confirm the member total changes to 5, then 0; the original awards and reversals remain in Firestore. Confirm a second reversal is rejected.
+
+The page uses the existing Firebase web app's public SDK configuration. Hosting deploy builds its JavaScript bundle with `npm run build`. Deploy only this small page with `npx firebase deploy --only hosting --project troy-high-llm`. Firestore rules deploy separately.
 
 ## Local tests
 
@@ -25,18 +48,22 @@ npm ci
 npm test
 ```
 
-The emulator tests cover pending access, officer approval, self-promotion attempts, forged point values, duplicate awards, private reads, and reversals. They test local rules, not the live Firebase project.
+The emulator tests cover pending access, officer approval, self-promotion attempts, forged point values, duplicate awards, private reads, meeting and assignment awards, and reversals. Troy's emulator uses port 8086 to avoid the separately running Prickle emulator on 8080. These tests exercise local rules, not live Firebase Authentication or Firestore.
 
 ## Live project status
 
 Verified on 2026-09-27 UTC:
 
-- Google sign-in is enabled in Firebase Authentication. Only the project's default Firebase domains are currently authorized; add the website's domain when one exists.
+- Google provider configuration is enabled in Firebase Authentication. The authorized domains are `troy-high-llm.firebaseapp.com` and `troy-high-llm.web.app`; the operator page uses the latter.
 - The `(default)` Firestore database is Standard edition, Native mode, in **`us-west2` (Los Angeles)**. Firebase reports it as free-tier eligible with point-in-time recovery disabled. Project billing remains disabled (Spark).
-- `firestore.rules` is deployed to the live `cloud.firestore` release. A readback of the published rules matched this file exactly. The emulator suite passed 8 tests before deployment.
-- No website or first officer was created. The approval helpers are not wired into a live app, and no live points operation was performed. Google Classroom is not connected.
+- The live `cloud.firestore` release points to ruleset `9e4eb812-6884-44b5-9159-781fef719bc0`. Its published contents match `firestore.rules` exactly. All **9 emulator tests passed** after this change.
+- The live `members` collection was empty when inspected. **No officer UID was selected or promoted.** The administrator bootstrap script rejected a nonexistent Auth UID without writing.
+- Firebase Hosting had no releases and returned 404 before deployment. The operator page was deployed as Hosting version `a2e11411ca1c970d`; both `/` and `/app.js` returned HTTP 200 and matched the local build byte for byte.
+- An interactive Google popup sign-in could not be verified through the available browser control. Automatic approval review rejected using a `gcloud` administrator token as a substitute user sign-in credential. Therefore **pending registration, officer approval, member access, awards, and reversals have not been tested against the live project**. Run the sequence above with real Google sign-ins after the owner identifies the first officer.
+- The OAuth support email could not be verified through available API access. An administrator should check **Google Cloud console → Google Auth Platform → Branding → User support email** for `troy-high-llm`.
+- Google Classroom is not connected.
 
-When a sign-in flow exists, bootstrap the first officer as described above. Officers can then review and approve pending members. Before any future rules deployment, compare the live rules with this file, rerun `npm test`, and deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules.
+Before any future rules deployment, compare the live rules with this file, rerun `npm test`, and deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules.
 
 Do not commit service-account keys or private credentials. The eventual website will initialize the Firebase web SDK using the registered web app config.
 
