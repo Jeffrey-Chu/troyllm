@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Only the Firebase project administrator can promote someone to officer.
+    function officer() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/members/$(request.auth.uid))
+        && get(/databases/$(database)/documents/members/$(request.auth.uid)).data.role == 'officer';
+    }
+
+    function validId(id) {
+      return id.matches('^[A-Za-z0-9_-]{1,80}$');
+    }
+
+    match /members/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || officer());
+      allow list: if officer();
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.auth.token.email is string
+        && request.resource.data.keys().hasAll(['role', 'email', 'displayName', 'joinedAt'])
+        && request.resource.data.keys().hasOnly(['role', 'email', 'displayName', 'joinedAt'])
+        && request.resource.data.role == 'member'
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 100
+        && request.resource.data.joinedAt == request.time;
+      allow update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName'])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 100;
+      allow delete: if false;
+    }
+
+    match /activities/{activityId} {
+      allow read: if signedIn();
+      allow create: if officer() && validId(activityId)
+        && request.resource.data.keys().hasAll(['kind', 'title', 'createdBy', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['kind', 'title', 'createdBy', 'createdAt'])
+        && request.resource.data.kind in ['meeting', 'assignment']
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 150
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // Exactly one award per activity and member; the document ID is deterministic.
+    match /awards/{awardId} {
+      allow get, list: if signedIn()
+        && (officer() || resource.data.memberUid == request.auth.uid);
+      allow create: if officer()
+        && request.resource.data.keys().hasAll(['activityId', 'memberUid', 'kind', 'points', 'awardedBy', 'awardedAt'])
+        && request.resource.data.keys().hasOnly(['activityId', 'memberUid', 'kind', 'points', 'awardedBy', 'awardedAt'])
+        && request.resource.data.activityId is string
+        && validId(request.resource.data.activityId)
+        && request.resource.data.memberUid is string
+        && awardId == request.resource.data.activityId + '_' + request.resource.data.memberUid
+        && exists(/databases/$(database)/documents/members/$(request.resource.data.memberUid))
+        && exists(/databases/$(database)/documents/activities/$(request.resource.data.activityId))
+        && request.resource.data.kind == get(/databases/$(database)/documents/activities/$(request.resource.data.activityId)).data.kind
+        && request.resource.data.points == 5
+        && request.resource.data.awardedBy == request.auth.uid
+        && request.resource.data.awardedAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // A mistaken award can be reversed once; neither record can be edited or erased.
+    match /reversals/{awardId} {
+      allow get, list: if signedIn()
+        && (officer() || resource.data.memberUid == request.auth.uid);
+      allow create: if officer()
+        && exists(/databases/$(database)/documents/awards/$(awardId))
+        && request.resource.data.keys().hasAll(['memberUid', 'points', 'reason', 'reversedBy', 'reversedAt'])
+        && request.resource.data.keys().hasOnly(['memberUid', 'points', 'reason', 'reversedBy', 'reversedAt'])
+        && request.resource.data.memberUid == get(/databases/$(database)/documents/awards/$(awardId)).data.memberUid
+        && request.resource.data.points == -5
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() >= 5
+        && request.resource.data.reason.size() <= 200
+        && request.resource.data.reversedBy == request.auth.uid
+        && request.resource.data.reversedAt == request.time;
+      allow update, delete: if false;
+    }
+  }
+}
