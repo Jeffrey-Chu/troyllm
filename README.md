@@ -27,12 +27,16 @@ npm test
 
 The emulator tests cover pending access, officer approval, self-promotion attempts, forged point values, duplicate awards, private reads, and reversals. They test local rules, not the live Firebase project.
 
-## Set up the live project
+## Live project status
 
-1. Configure Firebase Authentication with Google sign-in and an appropriate OAuth support email. Personal Google accounts are allowed; membership still requires officer approval.
-2. Choose the **permanent** Firestore location before creating the `(default)` database. Use production mode when creating it. The Firebase client helpers use the default database.
-3. Compare the live Firestore rules with `firestore.rules` before deployment. Run `npm test`, then deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules. No deployment has been performed by this repository change.
-4. When a sign-in flow exists, bootstrap the first officer as described above. Until then, no live member approval or points workflow is available.
+Verified on 2026-09-27 UTC:
+
+- Google sign-in is enabled in Firebase Authentication. Only the project's default Firebase domains are currently authorized; add the website's domain when one exists.
+- The `(default)` Firestore database is Standard edition, Native mode, in **`us-west2` (Los Angeles)**. Firebase reports it as free-tier eligible with point-in-time recovery disabled. Project billing remains disabled (Spark).
+- `firestore.rules` is deployed to the live `cloud.firestore` release. A readback of the published rules matched this file exactly. The emulator suite passed 8 tests before deployment.
+- No website or first officer was created. The approval helpers are not wired into a live app, and no live points operation was performed. Google Classroom is not connected.
+
+When a sign-in flow exists, bootstrap the first officer as described above. Officers can then review and approve pending members. Before any future rules deployment, compare the live rules with this file, rerun `npm test`, and deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules.
 
 Do not commit service-account keys or private credentials. The eventual website will initialize the Firebase web SDK using the registered web app config.
 
