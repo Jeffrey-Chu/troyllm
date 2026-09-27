@@ -1,13 +1,25 @@
 import {
-  collection, doc, getDocs, query, serverTimestamp, setDoc, where,
+  collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where,
 } from 'firebase/firestore';
 
 // Pass the initialized Firestore instance and the signed-in Firebase Auth user.
 export async function registerMember(db, user) {
   if (!user.email) throw new Error('An email address is required');
   await setDoc(doc(db, 'members', user.uid), {
-    role: 'member', email: user.email, displayName: user.displayName ?? '',
+    role: 'pending', email: user.email, displayName: user.displayName ?? '',
     joinedAt: serverTimestamp(),
+  });
+}
+
+export async function listPendingMembers(db) {
+  const snapshot = await getDocs(query(collection(db, 'members'), where('role', '==', 'pending')));
+  return snapshot.docs.map((item) => ({ uid: item.id, ...item.data() }));
+}
+
+// Only an existing officer can approve a pending profile; rules enforce this.
+export async function approveMember(db, officerUid, memberUid) {
+  await updateDoc(doc(db, 'members', memberUid), {
+    role: 'member', approvedBy: officerUid, approvedAt: serverTimestamp(),
   });
 }
 

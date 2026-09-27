@@ -1,51 +1,48 @@
-# Troy High LLM member points backend
+# Troy High LLM points backend
 
-Firebase project: `troy-high-llm`. This repository contains **backend code only**; it does not contain a website or a Google Classroom connection.
+Firebase project: `troy-high-llm`. This repository contains Firebase client helpers, Firestore Security Rules, and emulator tests. It does not contain the website or a Google Classroom connection.
 
-## What it does
+## Membership and points
 
-- Members sign in using Firebase Authentication and create a profile. Only a Firebase project administrator can promote a profile to `officer`.
-- Officers create `meeting` and `assignment` activities. An officer records a verified attendance or completed assignment for a member; each award is **5 points**.
-- A member receives at most one award per activity. Awards cannot be changed or deleted. An officer can add one recorded reversal with a reason if an award was mistaken.
-- Members can read their own points; officers can read everyone’s. `src/points.js` provides the Firestore calls for a future website. A member’s total is the sum of awards and reversals.
-- This uses Firestore security rules and no Cloud Functions, so the points backend can run on Spark. Firebase usage limits still apply.
+- Members may use personal Google accounts to sign in. Signing in does **not** grant club membership.
+- `registerMember(db, user)` creates only a `pending` profile. A pending user may read their own profile but cannot read activities or points, award points, approve anyone, or assign an officer role.
+- An officer can use `listPendingMembers(db)` to review requests and `approveMember(db, officerUid, memberUid)` to change one pending profile to `member`. The profile records `approvedBy` and `approvedAt`. Client rules do not allow approval to be undone or an officer role to be assigned.
+- Officers create `meeting` and `assignment` activities and award a verified member **5 points** once per activity. Awards cannot be edited or deleted. An officer can record one reversal with a reason; the original award remains for audit history.
+- Members can read their own points; officers can read everyone's. The total is the sum of awards and reversals.
 
-## Local test
+### First officer and later approvals
 
-Install Node.js and Java 17 or newer (Java 21 is recommended for newer Firebase CLI releases), then run:
+There is no client-side path to create the first officer. After Firebase Authentication, Firestore, and a sign-in flow are available, the first trusted officer signs in and creates a pending profile. A **Firebase project administrator** checks that person's identity and Auth UID, then changes only `members/{uid}.role` from `pending` to `officer` in the Firebase console. Console administrator writes bypass client Security Rules. The administrator should assign a trusted backup officer the same way; ordinary officers cannot promote anyone to officer.
+
+After that, an officer reviews the pending profile and verifies the person belongs in the club. Calling `approveMember` from an authenticated officer session changes the role to `member` and stores the approving officer's UID and timestamp. The rules reject a second approval, changed approval metadata, or any client attempt to set `officer`. There is no approval screen yet; the future website can call these helpers.
+
+## Local tests
+
+Install Node.js and Java 17 or newer, then run:
 
 ```sh
 npm ci
 npm test
 ```
 
-The tests exercise officer permissions, forged values, duplicate awards, private reads, and reversals. They run against the **local emulator**, not Ryan’s live Firebase project.
+The emulator tests cover pending access, officer approval, self-promotion attempts, forged point values, duplicate awards, private reads, and reversals. They test local rules, not the live Firebase project.
 
-## Set up the real Firebase project
+## Set up the live project
 
-1. The Firebase owner creates the Cloud Firestore database in project `troy-high-llm` and selects its data location. This location cannot be changed later.
-2. In Firebase Console → Authentication → Sign-in method, enable the chosen sign-in provider (Google if the school allows it). Confirm which accounts the club is allowed to use. The existing web app registration alone does not turn on sign-in.
-3. Sign in to Firebase CLI with an account that has deployment access: `npx firebase login`. Review the rules, then deploy **only** the Firestore rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. This overwrites the database’s current console rules.
-4. A member signs in through the eventual website and calls `registerMember(db, auth.currentUser)` once. The Firebase owner finds that member’s UID in Authentication and changes their `members/{uid}` Firestore document’s `role` from `member` to `officer` **in the Firebase Console**. Client code cannot promote users. Choose Ryan and at least one trusted backup officer.
-5. The eventual website initializes the Firebase web SDK using the web app config from Project settings and uses the functions in `src/points.js`. Do not commit service-account keys or private credentials. The web config is not a secret, but access is protected by Authentication and Firestore rules.
+1. Configure Firebase Authentication with Google sign-in and an appropriate OAuth support email. Personal Google accounts are allowed; membership still requires officer approval.
+2. Choose the **permanent** Firestore location before creating the `(default)` database. Use production mode when creating it. The Firebase client helpers use the default database.
+3. Compare the live Firestore rules with `firestore.rules` before deployment. Run `npm test`, then deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules. No deployment has been performed by this repository change.
+4. When a sign-in flow exists, bootstrap the first officer as described above. Until then, no live member approval or points workflow is available.
 
-**Deployment status:** Code prepared; no Firebase deployment has been performed here. No Authentication provider, Firestore database, officer account, or real member data has been verified. Do not claim the backend is live until the steps above succeed.
+Do not commit service-account keys or private credentials. The eventual website will initialize the Firebase web SDK using the registered web app config.
 
 ## Data layout
 
-| Collection | ID | Who writes |
+| Collection | ID | Client writes |
 | --- | --- | --- |
-| `members` | Firebase Auth UID | Member creates own profile; project owner sets officer role in console |
-| `activities` | Unique meeting/assignment ID | Officer |
-| `awards` | `activityId_memberUid` | Officer, once |
-| `reversals` | Same ID as original award | Officer, once, with reason |
+| `members` | Firebase Auth UID | User creates pending profile and edits display name; officer approves pending profile |
+| `activities` | Unique meeting/assignment ID | Officer creates once |
+| `awards` | `activityId_memberUid` | Officer creates once, only for approved members |
+| `reversals` | Same ID as original award | Officer creates once, with reason |
 
-The signed-in user ID comes from Firebase Auth. The future website should call `getMemberPoints(db, uid)` only for the signed-in member or an officer; Firestore rules enforce that access. IDs for activities must use letters, digits, underscores, or hyphens, up to 80 characters. Use stable IDs; renaming an activity requires a new one.
-
-## Google Classroom: pending access and policy decision
-
-Ryan asked if Classroom “marked done” can drive points. The Classroom API can list student submissions, but access depends on the school’s Google Workspace policy, OAuth consent, and whether the authorized account is a teacher or student in the class. Confirm the actual course, teacher/admin permission, student identity mapping, and allowed OAuth scopes before building a sync. A student marking work done is a submission state, not proof it meets the club’s completion standard. Decide with Ryan whether that state grants points automatically or creates an item for officer approval; this starter uses officer verification. There is currently **no** Classroom sync or stored Classroom OAuth credential.
-
-## GitHub handoff
-
-Put these files in a club-owned GitHub repository and grant Ryan access. The linked GitHub account currently exposes no repositories to this workspace, so no remote repository was updated. Once Ryan creates or grants access to the club repository, this directory is ready to commit. Do not mix it into PrickleMind.
+Activity IDs use letters, digits, underscores, or hyphens, up to 80 characters. Use stable IDs; renaming an activity requires a new one. Google Classroom is not connected.

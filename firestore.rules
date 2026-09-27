@@ -5,7 +5,13 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    // Only the Firebase project administrator can promote someone to officer.
+    function activeMember() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/members/$(request.auth.uid))
+        && get(/databases/$(database)/documents/members/$(request.auth.uid)).data.role in ['member', 'officer'];
+    }
+
+    // Only the Firebase project administrator can assign the officer role.
     function officer() {
       return signedIn()
         && exists(/databases/$(database)/documents/members/$(request.auth.uid))
@@ -23,20 +29,27 @@ service cloud.firestore {
         && request.auth.token.email is string
         && request.resource.data.keys().hasAll(['role', 'email', 'displayName', 'joinedAt'])
         && request.resource.data.keys().hasOnly(['role', 'email', 'displayName', 'joinedAt'])
-        && request.resource.data.role == 'member'
+        && request.resource.data.role == 'pending'
         && request.resource.data.email == request.auth.token.email
         && request.resource.data.displayName is string
         && request.resource.data.displayName.size() <= 100
         && request.resource.data.joinedAt == request.time;
-      allow update: if signedIn() && request.auth.uid == uid
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName'])
-        && request.resource.data.displayName is string
-        && request.resource.data.displayName.size() <= 100;
+      allow update: if (signedIn() && request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName'])
+          && request.resource.data.displayName is string
+          && request.resource.data.displayName.size() <= 100)
+        || (officer()
+          && resource.data.role == 'pending'
+          && request.resource.data.role == 'member'
+          && request.resource.data.diff(resource.data).affectedKeys().hasAll(['role', 'approvedBy', 'approvedAt'])
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role', 'approvedBy', 'approvedAt'])
+          && request.resource.data.approvedBy == request.auth.uid
+          && request.resource.data.approvedAt == request.time);
       allow delete: if false;
     }
 
     match /activities/{activityId} {
-      allow read: if signedIn();
+      allow read: if activeMember();
       allow create: if officer() && validId(activityId)
         && request.resource.data.keys().hasAll(['kind', 'title', 'createdBy', 'createdAt'])
         && request.resource.data.keys().hasOnly(['kind', 'title', 'createdBy', 'createdAt'])
@@ -51,7 +64,7 @@ service cloud.firestore {
 
     // Exactly one award per activity and member; the document ID is deterministic.
     match /awards/{awardId} {
-      allow get, list: if signedIn()
+      allow get, list: if activeMember()
         && (officer() || resource.data.memberUid == request.auth.uid);
       allow create: if officer()
         && request.resource.data.keys().hasAll(['activityId', 'memberUid', 'kind', 'points', 'awardedBy', 'awardedAt'])
@@ -61,6 +74,7 @@ service cloud.firestore {
         && request.resource.data.memberUid is string
         && awardId == request.resource.data.activityId + '_' + request.resource.data.memberUid
         && exists(/databases/$(database)/documents/members/$(request.resource.data.memberUid))
+        && get(/databases/$(database)/documents/members/$(request.resource.data.memberUid)).data.role in ['member', 'officer']
         && exists(/databases/$(database)/documents/activities/$(request.resource.data.activityId))
         && request.resource.data.kind == get(/databases/$(database)/documents/activities/$(request.resource.data.activityId)).data.kind
         && request.resource.data.points == 5
@@ -71,7 +85,7 @@ service cloud.firestore {
 
     // A mistaken award can be reversed once; neither record can be edited or erased.
     match /reversals/{awardId} {
-      allow get, list: if signedIn()
+      allow get, list: if activeMember()
         && (officer() || resource.data.memberUid == request.auth.uid);
       allow create: if officer()
         && exists(/databases/$(database)/documents/awards/$(awardId))

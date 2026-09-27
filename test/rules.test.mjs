@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import { after, before, beforeEach, test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { getMemberPoints } from '../src/points.js';
+import { collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from 'firebase/firestore';
+import { approveMember, getMemberPoints, listPendingMembers, registerMember } from '../src/points.js';
 
 let env;
 const auth = (uid) => env.authenticatedContext(uid, { email: `${uid}@example.com` }).firestore();
@@ -78,13 +78,72 @@ test('an officer can reverse an award once with an audit reason', async () => {
   await assertFails(getMemberPoints(auth('other'), 'student'));
 });
 
-test('new members can register only as members with their own email', async () => {
+test('new sign-ins can create only their own pending profile', async () => {
   const db = auth('newstudent');
   const profile = {
-    role: 'member', email: 'newstudent@example.com', displayName: 'New Student',
+    role: 'pending', email: 'newstudent@example.com', displayName: 'New Student',
     joinedAt: serverTimestamp(),
   };
   await assertFails(setDoc(doc(db, 'members', 'anotherperson'), profile));
   await assertFails(setDoc(doc(db, 'members', 'newstudent'), { ...profile, role: 'officer' }));
-  await assertSucceeds(setDoc(doc(db, 'members', 'newstudent'), profile));
+  await assertFails(setDoc(doc(db, 'members', 'newstudent'), { ...profile, role: 'member' }));
+  await assertSucceeds(registerMember(db, {
+    uid: 'newstudent', email: 'newstudent@example.com', displayName: 'New Student',
+  }));
+  assert.equal((await getDoc(doc(db, 'members', 'newstudent'))).data().role, 'pending');
+});
+
+test('pending users cannot read club data, approve themselves, or become officers', async () => {
+  const db = auth('pending');
+  await assertSucceeds(registerMember(db, { uid: 'pending', email: 'pending@example.com' }));
+  await assertSucceeds(getDoc(doc(db, 'members', 'pending')));
+  await assertFails(getDocs(collection(db, 'members')));
+  await assertFails(listPendingMembers(db));
+  await assertFails(getDoc(doc(db, 'activities', 'meeting1')));
+  await assertFails(getDocs(collection(db, 'activities')));
+  await assertFails(getMemberPoints(db, 'pending'));
+  await assertFails(getDoc(doc(db, 'awards', 'meeting1_student')));
+  await assertFails(getDoc(doc(db, 'reversals', 'meeting1_student')));
+  await assertFails(approveMember(db, 'pending', 'pending'));
+  await assertFails(setDoc(doc(db, 'members', 'pending'), { role: 'member' }, { merge: true }));
+  await assertFails(setDoc(doc(db, 'members', 'pending'), { role: 'officer' }, { merge: true }));
+  await assertFails(setDoc(doc(db, 'activities', 'pending-meeting'), {
+    kind: 'meeting', title: 'Unapproved', createdBy: 'pending', createdAt: serverTimestamp(),
+  }));
+  await assertFails(setDoc(doc(db, 'awards', 'meeting1_pending'), award('pending')));
+});
+
+test('officers can approve pending members once with an audit trail', async () => {
+  const pendingDb = auth('pending');
+  const officerDb = auth('officer');
+  await assertSucceeds(registerMember(pendingDb, { uid: 'pending', email: 'pending@example.com' }));
+  assert.deepEqual((await listPendingMembers(officerDb)).map((member) => member.uid), ['pending']);
+  await assertFails(setDoc(doc(officerDb, 'awards', 'meeting1_pending'), award('pending')));
+  await assertFails(setDoc(doc(officerDb, 'members', 'pending'), {
+    role: 'officer', approvedBy: 'officer', approvedAt: serverTimestamp(),
+  }, { merge: true }));
+  await assertFails(setDoc(doc(officerDb, 'members', 'pending'), {
+    role: 'member', approvedBy: 'pending', approvedAt: serverTimestamp(),
+  }, { merge: true }));
+  await assertFails(setDoc(doc(officerDb, 'members', 'pending'), {
+    role: 'member', approvedBy: 'officer', approvedAt: serverTimestamp(), email: 'changed@example.com',
+  }, { merge: true }));
+  await assertSucceeds(approveMember(officerDb, 'officer', 'pending'));
+  const approved = (await getDoc(doc(pendingDb, 'members', 'pending'))).data();
+  assert.equal(approved.role, 'member');
+  assert.equal(approved.approvedBy, 'officer');
+  assert.ok(approved.approvedAt);
+  assert.deepEqual(await listPendingMembers(officerDb), []);
+  await assertSucceeds(getDoc(doc(pendingDb, 'activities', 'meeting1')));
+  assert.equal(await getMemberPoints(pendingDb, 'pending'), 0);
+  await assertFails(approveMember(officerDb, 'officer', 'pending'));
+  await assertFails(setDoc(doc(pendingDb, 'members', 'pending'), { role: 'officer' }, { merge: true }));
+  await assertSucceeds(setDoc(doc(officerDb, 'awards', 'meeting1_pending'), award('pending')));
+  assert.equal(await getMemberPoints(pendingDb, 'pending'), 5);
+});
+
+test('a signed-in account without a profile cannot read club data', async () => {
+  const db = auth('unregistered');
+  await assertFails(getDoc(doc(db, 'activities', 'meeting1')));
+  await assertFails(getMemberPoints(db, 'unregistered'));
 });
