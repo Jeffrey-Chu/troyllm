@@ -1,20 +1,11 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
-import { getFirestore, doc, getDocFromServer, onSnapshot } from 'firebase/firestore';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { doc, getDocFromServer, onSnapshot } from 'firebase/firestore';
+import { auth, db } from './firebase.js';
 import {
   approveMember, awardPoints, createActivity, getMemberPoints,
   listPendingMembers, registerMember, reverseAward,
 } from './points.js';
 
-// Firebase web app config is public; authorization is enforced by Firestore rules.
-const app = initializeApp({
-  apiKey: 'AIzaSyCAbI-nR9_iunSLisL-s-8AjOcXwpwXgqM',
-  authDomain: 'troy-high-llm.firebaseapp.com',
-  projectId: 'troy-high-llm',
-  appId: '1:781446041006:web:b32556ddda0c6fec500c3f',
-});
-const auth = getAuth(app);
-const db = getFirestore(app);
 const el = (id) => document.getElementById(id);
 let user = null;
 let unsubscribeProfile = null;

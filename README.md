@@ -50,9 +50,49 @@ npm test
 
 The emulator tests cover pending access, officer approval, self-promotion attempts, forged point values, duplicate awards, private reads, meeting and assignment awards, and reversals. Troy's emulator uses port 8086 to avoid the separately running Prickle emulator on 8080. These tests exercise local rules, not live Firebase Authentication or Firestore.
 
+## Imports for Ryan's club website
+
+Use `src/firebase.js` for the shared Firebase initialization and `src/points.js` for membership and points operations. Both are browser ES modules; import them through the website's bundler, with the `firebase` dependency installed (this repository uses `12.19.0`). Adjust the relative paths to match the website's source tree. Do not import `src/operator.js`, which attaches handlers to the operator page's DOM.
+
+```js
+import { app, auth, db, firebaseConfig } from './src/firebase.js';
+import {
+  registerMember, listPendingMembers, approveMember,
+  createActivity, awardPoints, reverseAward, getMemberPoints,
+} from './src/points.js';
+import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+
+// Call from the website's sign-in button.
+const { user } = await signInWithPopup(auth, new GoogleAuthProvider());
+
+// Call when an approved member chooses to view their points.
+const total = await getMemberPoints(db, user.uid);
+
+// Call from the website's sign-out button.
+await signOut(auth);
+```
+
+`app`, `auth`, and `db` are initialized for `troy-high-llm`; `firebaseConfig` is the existing public web app configuration. The module reuses an existing default Firebase app, so the website should use this module as its default initialization source. Importing it does not sign in, request membership, or write points. A separately hosted website needs its domain added to Firebase Authentication's authorized domains by a project administrator before Google sign-in can work.
+
+All helpers take the shared `db` as their first argument. Pass the signed-in Firebase Auth user's UID for `officerUid`; Firestore rules enforce the officer role.
+
+| Helper | When to call |
+| --- | --- |
+| `registerMember(db, user)` | Request membership for a signed-in user with no profile; creates a pending profile |
+| `listPendingMembers(db)` | Officer reviews pending membership requests |
+| `approveMember(db, officerUid, memberUid)` | Officer approves a pending member; returns the server-confirmed profile |
+| `createActivity(db, officerUid, activityId, kind, title)` | Officer creates a stable activity ID with kind `meeting` or `assignment` |
+| `awardPoints(db, officerUid, memberUid, activityId, kind)` | Officer awards 5 points once per activity to an approved member; returns the award ID |
+| `reverseAward(db, officerUid, memberUid, awardId, reason)` | Officer reverses an award once with a reason, recording -5 points |
+| `getMemberPoints(db, memberUid)` | Read the sum of a member's awards and reversals |
+
+Wait for Firebase Auth to restore the session with `onAuthStateChanged(auth, callback)` before loading member data. Handle rejected helper promises in the website UI. Membership requests and approvals remain explicit user actions; signing in alone does not grant membership. The existing rules, duplicate-award restrictions, and reversal history still apply.
+
 ## Live project status
 
-Verified on 2026-09-27 UTC:
+Member approval is working, as confirmed by the project owner on 2026-10-08. This shared-module change does not require more live points tests.
+
+The following is the historical verification snapshot from 2026-09-27 UTC, not the current membership or approval status:
 
 - Google provider configuration is enabled in Firebase Authentication. The authorized domains are `troy-high-llm.firebaseapp.com` and `troy-high-llm.web.app`; the operator page uses the latter.
 - The `(default)` Firestore database is Standard edition, Native mode, in **`us-west2` (Los Angeles)**. Firebase reports it as free-tier eligible with point-in-time recovery disabled. Project billing remains disabled (Spark).
@@ -66,7 +106,7 @@ Verified on 2026-09-27 UTC:
 
 Before any future rules deployment, compare the live rules with this file, rerun `npm test`, and deploy only rules with `npx firebase deploy --only firestore:rules --project troy-high-llm`. CLI deployment replaces existing console rules.
 
-Do not commit service-account keys or private credentials. The eventual website will initialize the Firebase web SDK using the registered web app config.
+Do not commit service-account keys or private credentials. The eventual website can import the initialized Firebase web SDK instances from `src/firebase.js` as shown above.
 
 ## Data layout
 
