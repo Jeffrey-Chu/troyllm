@@ -1,5 +1,5 @@
 import {
-  collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where,
+  collection, doc, getDocFromServer, getDocs, query, serverTimestamp, setDoc, updateDoc, where,
 } from 'firebase/firestore';
 
 // Pass the initialized Firestore instance and the signed-in Firebase Auth user.
@@ -18,9 +18,24 @@ export async function listPendingMembers(db) {
 
 // Only an existing officer can approve a pending profile; rules enforce this.
 export async function approveMember(db, officerUid, memberUid) {
-  await updateDoc(doc(db, 'members', memberUid), {
+  if (!/^[A-Za-z0-9_-]{1,128}$/.test(memberUid)) {
+    throw new Error('Enter the pending member UID, not an email address. Or select Approve member beside a pending request.');
+  }
+  const memberRef = doc(db, 'members', memberUid);
+  await updateDoc(memberRef, {
     role: 'member', approvedBy: officerUid, approvedAt: serverTimestamp(),
   });
+  let profile;
+  try {
+    profile = (await getDocFromServer(memberRef)).data();
+  } catch (error) {
+    error.message = `Approval write succeeded, but server confirmation failed: ${error.message}. Refresh pending requests before retrying.`;
+    throw error;
+  }
+  if (profile?.role !== 'member' || profile.approvedBy !== officerUid || !profile.approvedAt) {
+    throw new Error('Approval could not be confirmed. Refresh pending requests before retrying.');
+  }
+  return profile;
 }
 
 export async function createActivity(db, officerUid, activityId, kind, title) {

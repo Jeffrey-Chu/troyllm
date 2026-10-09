@@ -23,6 +23,7 @@
     <h2>Membership</h2>
     <output id="profile"></output>
     <button id="register" hidden>Request membership</button>
+    <button id="refresh-profile">Refresh membership</button>
   </section>
   <section id="member-section" hidden>
     <h2>My points</h2>
@@ -32,11 +33,12 @@
   <section id="officer-section" hidden>
     <h2>Officer tools</h2>
     <button id="pending-list">List pending requests</button>
-    <output id="pending"></output>
-    <form id="approve-form">
-      <label>Pending member UID <input name="memberUid" required></label>
+    <div id="pending" aria-live="polite"></div>
+    <form id="approve-form" novalidate>
+      <label>Pending member UID <input name="memberUid" required aria-describedby="approval-result"></label>
       <button>Approve member</button>
     </form>
+    <output id="approval-result" role="status" aria-live="polite" tabindex="-1">List pending requests and approve the matching member, or enter their UID above.</output>
     <form id="activity-form">
       <label>Activity ID (letters, digits, _ or -) <input name="activityId" required maxlength="80" pattern="[A-Za-z0-9_-]+"></label>
       <label>Kind <select name="kind"><option value="meeting">Meeting</option><option value="assignment">Assignment</option></select></label>
