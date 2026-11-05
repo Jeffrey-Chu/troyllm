@@ -1,0 +1,812 @@
+<title>OCHSWA Legacy Archive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap">
+<style id="css">
+/* Layout: editorial museum — navy hero band with ticker, library shelves of document cards, frozen-column record tables, full-screen flipbook */
+:root{
+  --bg:#f6f6f3; --surface:#ffffff; --ink:#15181d; --muted:#5b6270; --line:#e1e1dc; --soft:#efefea;
+  --navy:#0e1c38; --navy-2:#16284b; --on-navy:#f3f4f6; --on-navy-muted:#a9b3c7;
+  --gold:#b38a35; --gold-ink:#8a6820; --gold-soft:#f3ead6;
+  --display:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1120; --surface:#101a2e; --ink:#eceef2; --muted:#98a2b6; --line:#1e2a42; --soft:#14203a;
+  --navy:#070d1a; --navy-2:#0f1a31; --gold:#d3ad5b; --gold-ink:#e2c171; --gold-soft:#2a2414; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1120; --surface:#101a2e; --ink:#eceef2; --muted:#98a2b6; --line:#1e2a42; --soft:#14203a;
+  --navy:#070d1a; --navy-2:#0f1a31; --gold:#d3ad5b; --gold-ink:#e2c171; --gold-soft:#2a2414; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+.num,.yr{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.gold{color:var(--gold-ink)}
+.icon{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:20px;min-height:64px}
+.mark{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.mark b{font-family:var(--display);font-weight:900;font-size:1.25rem;letter-spacing:.02em}
+.mark span{font-size:.8rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.topnav{display:flex;gap:4px}
+.topnav a{text-decoration:none;padding:8px 14px;border-radius:999px;font-weight:500;color:var(--muted)}
+.topnav a[aria-current="page"]{color:var(--ink);background:var(--soft)}
+.hsearch{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:999px;padding:0 14px;min-width:0;width:300px;max-width:40vw}
+.hsearch input{border:0;background:transparent;padding:10px 0;width:100%;outline:none;min-width:0}
+.manage-btn{border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:500;text-decoration:none;white-space:nowrap}
+.manage-btn[aria-current="page"]{border-color:var(--gold);color:var(--gold-ink)}
+.botnav{display:none}
+
+main{padding-block:0 96px;min-height:60vh}
+.view{display:grid;gap:40px}
+
+/* hero */
+.hero{background:var(--navy);color:var(--on-navy);border-bottom:1px solid #000}
+.hero .wrap{padding-block:72px 40px;display:grid;gap:28px}
+.hero .label{color:var(--on-navy-muted)}
+.hero h1{font-size:clamp(2.3rem,6.2vw,5rem);font-weight:900;max-width:15ch;letter-spacing:-.025em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.bigsearch{display:flex;gap:0;max-width:680px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.bigsearch input{flex:1;border:0;padding:18px 20px;font-size:1.1rem;color:#15181d;background:#fff;outline:none;min-width:0}
+.bigsearch button{border:0;background:var(--gold);color:#15130d;padding:0 22px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px}
+.hint{color:var(--on-navy-muted);font-size:.9rem;margin:-14px 0 0}
+.ticker{border-top:1px solid rgba(255,255,255,.12);overflow:hidden;background:var(--navy-2)}
+.ticker-track{display:flex;width:max-content;animation:tick 48s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.tick{display:flex;align-items:baseline;gap:10px;padding:16px 36px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.1)}
+.tick b{font-family:var(--mono);font-size:1.4rem;color:var(--gold)}
+.tick span{color:var(--on-navy-muted);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+@keyframes tick{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none;flex-wrap:wrap;width:auto}}
+
+.sec{display:grid;gap:18px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800}
+.link{color:var(--gold-ink);text-decoration:none;font-weight:600;background:none;border:0;cursor:pointer;padding:0}
+.link:hover{text-decoration:underline}
+.page-title{padding-top:40px;display:grid;gap:8px}
+.page-title h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:900}
+.page-title p{margin:0;color:var(--muted);max-width:62ch}
+
+.empty{border:1px dashed var(--line);border-radius:14px;padding:44px 24px;text-align:center;color:var(--muted);display:grid;gap:6px;justify-items:center}
+.empty strong{font-family:var(--display);color:var(--ink);font-size:1.15rem}
+
+/* cards */
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:28px 20px}
+.card{display:grid;gap:10px;align-content:start;min-width:0}
+.cover{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:6px;overflow:hidden;background:var(--navy);box-shadow:0 1px 0 var(--line),0 12px 24px -16px rgba(10,20,40,.5);cursor:pointer;border:0;padding:0;display:block;width:100%}
+.cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.cover:hover img{transform:scale(1.03)}
+.cover .ph{position:absolute;inset:0;padding:14px;display:flex;flex-direction:column;justify-content:space-between;color:var(--on-navy);text-align:left}
+.cover .ph .y{font-family:var(--display);font-weight:900;font-size:2.6rem;letter-spacing:-.03em;line-height:1}
+.cover .ph .t{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cover .ph .rule{height:3px;width:36px;background:var(--gold)}
+.card h3{font-family:var(--body);font-weight:600;font-size:1rem;line-height:1.3}
+.card-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.pill{background:var(--soft);border-radius:999px;padding:2px 10px;font-size:.75rem}
+.acts{display:flex;gap:4px}
+.act{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink);text-decoration:none}
+.act:hover{border-color:var(--gold);color:var(--gold-ink)}
+.act[disabled]{opacity:.35;cursor:not-allowed}
+
+/* archive */
+.archive{display:grid;grid-template-columns:240px 1fr;gap:40px;align-items:start}
+.filters{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);display:grid;gap:22px}
+.fgroup{display:grid;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:.9rem;min-height:40px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.select,.field{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+.ftoggle{display:none}
+.decade{display:grid;gap:18px}
+.decade h2{font-family:var(--display);font-weight:900;font-size:2.2rem;display:flex;align-items:baseline;gap:12px}
+.decade h2 small{font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted)}
+.count-line{color:var(--muted);font-size:.9rem}
+
+/* records */
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;padding:12px 16px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;min-height:44px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.rfilters{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.95rem}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface)}
+th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;position:sticky;top:0;z-index:1}
+tr:last-child td{border-bottom:0}
+.frz{position:sticky;left:0;z-index:2;box-shadow:1px 0 0 var(--line)}
+th.frz{z-index:3}
+td.frz{font-weight:600}
+.rank{font-family:var(--mono);color:var(--muted);width:3em}
+tr.top1 .rank{color:var(--gold-ink);font-weight:600}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.big{font-family:var(--display);font-weight:800;font-size:1.15rem;color:var(--gold-ink)}
+.years{white-space:normal;min-width:220px;color:var(--muted);font-family:var(--mono);font-size:.82rem}
+.yrhead td{background:var(--soft);font-family:var(--display);font-weight:800;font-size:1.05rem}
+.yrhead td.frz{background:var(--soft)}
+
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.mini{display:grid;gap:0}
+.mini-row{display:grid;grid-template-columns:2.2em 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.mini-row:last-child{border-bottom:0}
+.mini-row .r{font-family:var(--mono);color:var(--muted)}
+.mini-row .v{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--gold-ink)}
+.mini-row small{display:block;color:var(--muted)}
+.erarow{display:flex;gap:10px;flex-wrap:wrap}
+.era{border:1px solid var(--line);border-radius:12px;padding:14px 18px;background:var(--surface);cursor:pointer;text-align:left;min-width:130px}
+.era b{display:block;font-family:var(--display);font-weight:900;font-size:1.6rem}
+.era span{font-size:.85rem;color:var(--muted)}
+.era:hover{border-color:var(--gold)}
+
+.results{display:grid;gap:28px}
+.res-list{display:grid;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.res-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;text-align:left;width:100%;min-height:52px}
+.res-item:last-child{border-bottom:0}
+.res-item:hover{background:var(--soft)}
+
+/* manage */
+.mgr{display:grid;gap:32px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:20px;display:grid;gap:16px;min-width:0}
+.form{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.form label{display:grid;gap:6px;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.form label>*{text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
+.form .full{grid-column:1/-1}
+textarea.field{min-height:120px;font-family:var(--mono);font-size:.85rem}
+.btn{border:0;background:var(--ink);color:var(--bg);border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
+.btn.gold{background:var(--gold);color:#15130d}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:#b3261e;color:#fff}
+.btn[disabled]{opacity:.5;cursor:progress}
+.row-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.msg{font-size:.9rem}
+.msg.err{color:#c4372d}
+.dirty{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--ink);color:var(--bg);padding-bottom:env(safe-area-inset-bottom,0px)}
+.dirty .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-block:12px}
+.dirty .btn.ghost{color:var(--bg);border-color:rgba(255,255,255,.3)}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap}
+
+/* reader */
+.reader{position:fixed;inset:0;z-index:60;background:#0a0d14;color:#eef0f4;display:grid;grid-template-rows:auto 1fr auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.r-top{display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid #1d2230}
+.r-title{min-width:0;flex:1}
+.r-title b{display:block;font-family:var(--display);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r-title span{font-size:.8rem;color:#98a0b3;font-family:var(--mono)}
+.r-btn{width:44px;height:44px;border-radius:10px;border:1px solid #262c3b;background:#121722;color:#eef0f4;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;text-decoration:none}
+.r-btn:hover{border-color:var(--gold)}
+.r-btn[disabled]{opacity:.35}
+.r-stage{overflow:auto;display:flex;position:relative;touch-action:none;overscroll-behavior:contain}
+.r-stage.zoomed{touch-action:pan-x pan-y;cursor:grab}
+.r-book{margin:auto;display:flex;position:relative;perspective:2400px;transform-origin:center center}
+.r-page{background:#fff;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.r-page img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.r-page.blank{background:transparent;box-shadow:none}
+.r-page.left::after{content:"";position:absolute;inset:0 0 0 auto;width:28px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.18))}
+.r-page.right::after{content:"";position:absolute;inset:0 auto 0 0;width:28px;background:linear-gradient(270deg,transparent,rgba(0,0,0,.18))}
+.leaf{position:absolute;top:0;transform-style:preserve-3d;z-index:5}
+.leaf .face{position:absolute;inset:0;backface-visibility:hidden;background:#fff;overflow:hidden}
+.leaf .face img{width:100%;height:100%;object-fit:contain;display:block}
+.leaf .back{transform:rotateY(180deg)}
+.r-load{position:absolute;inset:0;display:grid;place-items:center;color:#98a0b3}
+.r-bottom{border-top:1px solid #1d2230;display:grid;gap:8px;padding:10px 0}
+.r-nav{display:flex;align-items:center;justify-content:center;gap:16px;padding-inline:16px}
+.r-nav .num{min-width:7em;text-align:center;color:#c9cedb}
+.r-thumbs{display:flex;gap:8px;overflow-x:auto;padding:4px max(16px,env(safe-area-inset-left,0px));scrollbar-width:thin;scroll-snap-type:x proximity}
+.r-thumb{flex:none;width:56px;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:#1a2030;border:2px solid transparent;cursor:pointer;padding:0;scroll-snap-align:center;position:relative}
+.r-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.r-thumb span{position:absolute;bottom:2px;right:4px;font-size:.65rem;font-family:var(--mono);color:#98a0b3}
+.r-thumb[aria-current="true"]{border-color:var(--gold)}
+
+@media (max-width:900px){
+  .archive{grid-template-columns:1fr;gap:20px}
+  .filters{position:static;display:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .filters.open{display:grid}
+  .ftoggle{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .rfilters{grid-template-columns:1fr 1fr}
+  .rfilters .q{grid-column:1/-1}
+  .home-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .topnav,.hsearch{display:none}
+  .manage-btn{margin-left:auto}
+  .botnav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:22;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+  .botnav a{display:grid;justify-items:center;gap:2px;padding:10px 0 8px;font-size:.72rem;text-decoration:none;color:var(--muted);min-height:56px}
+  .botnav a[aria-current="page"]{color:var(--gold-ink)}
+  .dirty{bottom:calc(56px + env(safe-area-inset-bottom,0px));padding-bottom:0}
+  .hero .wrap{padding-block:44px 28px}
+  .shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 14px}
+  .acts .act{width:40px;height:40px}
+  .tick{padding:12px 24px}
+}
+@media (prefers-reduced-motion:reduce){.cover img{transition:none}}
+</style>
+<div id="app"></div>
+<script type="application/json" id="state">{"docs":[],"champions":[],"teams":[],"undefeated":[]}</script>
+<script id="main">
+(function(){
+"use strict";
+/* ---------- constants ---------- */
+const HEAD='<title>OCHSWA Legacy Archive</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap">\n';
+const SKELETON='<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n';
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+const PDFWORKER="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const TYPES=["Championship Bracket","Tournament Program","All-County Team List","Historical Photo Album"];
+const EVENTS=["County","CIF-SS","Masters","State","League"];
+const DRAFT_KEY="ochswa-draft";
+const ICON={
+  book:'<svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
+  trophy:'<svg class="icon" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>',
+  down:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>',
+  search:'<svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  home:'<svg class="icon" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>',
+  lib:'<svg class="icon" viewBox="0 0 24 24"><path d="M4 4h4v16H4zM10 4h4v16h-4zM16 5l3.5-1 3 15.5-3.5 1z"/></svg>',
+  x:'<svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  l:'<svg class="icon" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg>',
+  r:'<svg class="icon" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>',
+  plus:'<svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M20 20l-3.5-3.5"/></svg>',
+  minus:'<svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M20 20l-3.5-3.5"/></svg>',
+  filter:'<svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>'
+};
+
+/* ---------- state ---------- */
+const served=document.getElementById("state").textContent;
+let D;try{D=JSON.parse(served);}catch(e){D={};}
+["docs","champions","teams","undefeated"].forEach(k=>{if(!Array.isArray(D[k]))D[k]=[];});
+const U={view:"home",q:"",era:"all",season:"all",types:[],weight:"all",league:"all",sort:"new",ftOpen:false,
+  rtab:"individual",rq:"",rschool:"all",rweight:"all",revent:"all",ryear:"all",
+  canEdit:false,dirty:false,mtab:"docs",assets:null,artifact:null,downloads:null,draftNote:false};
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s||"").trim().toLowerCase().replace(/\s+/g," ");
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+const blob=id=>"/_blob/"+encodeURIComponent(id);
+const yearOf=v=>{const m=String(v||"").match(/\d{4}/);return m?Number(m[0]):null;};
+const uniq=a=>[...new Set(a.filter(x=>x!==""&&x!=null))];
+const byNum=(a,b)=>{const na=parseFloat(a),nb=parseFloat(b);return (isNaN(na)||isNaN(nb))?String(a).localeCompare(String(b)):na-nb;};
+const slug=s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"document";
+function allYears(){const ys=[];D.docs.forEach(d=>ys.push(yearOf(d.year)));["champions","teams","undefeated"].forEach(k=>D[k].forEach(r=>ys.push(yearOf(r.year))));return ys.filter(y=>y).sort((a,b)=>a-b);}
+function span(){const ys=allYears();return ys.length?{min:ys[0],max:ys[ys.length-1],seasons:new Set(ys).size}:null;}
+function schools(){return uniq([...D.champions,...D.teams,...D.undefeated].map(r=>String(r.school||"").trim())).sort((a,b)=>a.localeCompare(b));}
+const decadeOf=y=>Math.floor(y/10)*10;
+
+/* ---------- shell ---------- */
+const NAV=[["home","Home",ICON.home],["archive","Archive",ICON.lib],["records","Records",ICON.trophy],["search","Search",ICON.search]];
+$("#app").innerHTML=`
+<header class="hdr"><div class="wrap">
+  <a class="mark" href="#home"><b>OCHSWA</b><span>Archive</span></a>
+  <nav class="topnav" aria-label="Main">${NAV.slice(0,3).map(([k,l])=>`<a href="#${k}" data-nav="${k}">${l}</a>`).join("")}</nav>
+  <form class="hsearch" role="search" data-search>${ICON.search}<input id="hq" name="q" type="search" placeholder="Search wrestler, school or year" aria-label="Search the archive"></form>
+  <a class="manage-btn" href="#manage" data-nav="manage" id="manage-link" hidden>Manage</a>
+</div></header>
+<main id="view"></main>
+<nav class="botnav" aria-label="Main">${NAV.map(([k,l,i])=>`<a href="#${k}" data-nav="${k}">${i}<span>${l}</span></a>`).join("")}</nav>
+<div class="dirty" id="dirty" hidden></div>
+<div class="reader" id="reader" hidden></div>`;
+
+/* ---------- routing ---------- */
+function route(){
+  const h=(location.hash||"").slice(1);
+  if(h.indexOf("read-")===0){const d=D.docs.find(x=>x.id===h.slice(5));if(d){if(U.view==="home"&&!$("#view").innerHTML)render();Reader.open(d);return;}}
+  const wasReading=Reader.close(true);
+  const v=["home","archive","records","search","manage"].includes(h)?h:"home";
+  if(wasReading&&v===U.view&&$("#view").innerHTML)return;
+  if(v==="manage"&&!U.canEdit){U.view="home";}else U.view=v;
+  render();window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+function go(v){if(location.hash==="#"+v)route();else location.hash=v;}
+
+/* ---------- render ---------- */
+function render(){
+  document.querySelectorAll("[data-nav]").forEach(a=>{if(a.dataset.nav===U.view)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  $("#manage-link").hidden=!U.canEdit;
+  $("#view").innerHTML=V[U.view]();
+  renderDirty();
+  if(U.view==="search"){const i=$("#sq");if(i&&!U.q)i.focus();}
+}
+const V={};
+
+/* home */
+function tickerItems(){
+  const s=span(),it=[];
+  if(D.champions.length)it.push([D.champions.length,"Individual champions crowned"]);
+  const sc=schools().length;if(sc)it.push([sc,"Participating schools"]);
+  if(s)it.push([s.min===s.max?String(s.min):s.min+"–"+s.max,"Era spanned · "+s.seasons+" season"+(s.seasons===1?"":"s")]);
+  if(D.teams.length)it.push([D.teams.length,"Team titles recorded"]);
+  if(D.undefeated.length)it.push([D.undefeated.length,"Undefeated seasons"]);
+  if(D.docs.length)it.push([D.docs.length,"Documents archived"]);
+  return it;
+}
+V.home=()=>{
+  const it=tickerItems();
+  const tick=it.length?it.map(([v,l])=>`<div class="tick"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join(""):`<div class="tick"><span>Verified records appear here as the archive is built</span></div>`;
+  const recent=[...D.docs].sort((a,b)=>String(b.addedAt||"").localeCompare(String(a.addedAt||""))).slice(0,6);
+  const decs={};D.docs.forEach(d=>{const y=yearOf(d.year);if(y){const k=decadeOf(y);decs[k]=(decs[k]||0)+1;}});
+  const ind=individualBoard(D.champions).slice(0,5),tm=teamBoard(D.teams).slice(0,5);
+  return `
+  <section class="hero"><div class="wrap">
+    <div class="label">Orange County High School Wrestling Association</div>
+    <h1>Decades of Orange County Wrestling Legacy. <em>Preserved and Documented.</em></h1>
+    <form class="bigsearch" role="search" data-search><input name="q" type="search" placeholder="Search a wrestler, school or championship year" aria-label="Search the archive" value="${esc(U.q)}"><button type="submit">${ICON.search}<span>Search</span></button></form>
+    <p class="hint">Brackets, programs, all-county teams and photo albums, with records rebuilt from the original documents.</p>
+  </div>
+  <div class="ticker" aria-label="Archive milestones"><div class="ticker-track">${tick}${it.length?tick:""}</div></div></section>
+  <div class="wrap view" style="padding-top:48px">
+    ${Object.keys(decs).length?`<section class="sec"><div class="sec-head"><h2>Browse by era</h2><a class="link" href="#archive">Full library</a></div><div class="erarow">${Object.keys(decs).sort().map(k=>`<button class="era" data-era="${k}"><b>${k}s</b><span>${decs[k]} document${decs[k]===1?"":"s"}</span></button>`).join("")}</div></section>`:""}
+    <section class="sec"><div class="sec-head"><h2>Recently archived</h2><a class="link" href="#archive">View all</a></div>
+      ${recent.length?`<div class="shelf">${recent.map(card).join("")}</div>`:empty("The library is being assembled","Scanned brackets, programs and photo albums will appear here as they are verified and uploaded.")}</section>
+    <div class="home-grid">
+      <section class="sec"><div class="sec-head"><h2>Most individual titles</h2><a class="link" href="#records" data-rtab="individual">Leaderboard</a></div>
+        ${ind.length?`<div class="mini">${ind.map((r,i)=>`<div class="mini-row"><span class="r">${String(i+1).padStart(2,"0")}</span><div><b>${esc(r.name)}</b><small>${esc(r.schools.join(" / "))}</small></div><span class="v">${r.total}</span></div>`).join("")}</div>`:`<p class="muted">Champion data has not been entered yet.</p>`}</section>
+      <section class="sec"><div class="sec-head"><h2>Team dominance</h2><a class="link" href="#records" data-rtab="teams">Leaderboard</a></div>
+        ${tm.length?`<div class="mini">${tm.map((r,i)=>`<div class="mini-row"><span class="r">${String(i+1).padStart(2,"0")}</span><div><b>${esc(r.school)}</b><small class="yr">${r.first}${r.last!==r.first?"–"+r.last:""}</small></div><span class="v">${r.total}</span></div>`).join("")}</div>`:`<p class="muted">Team title data has not been entered yet.</p>`}</section>
+    </div>
+  </div>`;
+};
+function empty(t,b){return `<div class="empty"><strong>${esc(t)}</strong><span>${esc(b)}</span>${U.canEdit?`<a class="link" href="#manage">Open Manage to add</a>`:""}</div>`;}
+
+/* card */
+function coverHTML(d){
+  const ph=`<div class="ph"><span class="t">${esc(d.type||"Document")}</span><div><div class="rule"></div><div class="y">${esc(d.year||"")}</div></div></div>`;
+  return d.cover?`<img src="${blob(d.cover)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">${ph.replace('class="ph"','class="ph" style="z-index:-1"')}`:ph;
+}
+function card(d){
+  return `<article class="card">
+    <button class="cover" data-read="${esc(d.id)}" aria-label="Read ${esc(d.title)}">${coverHTML(d)}</button>
+    <div class="card-meta"><span class="yr gold">${esc(d.year)}</span><span class="pill">${esc(d.type||"")}</span></div>
+    <h3>${esc(d.title)}</h3>
+    <div class="acts">
+      <button class="act" data-read="${esc(d.id)}" title="Read" aria-label="Read">${ICON.book}</button>
+      <button class="act" data-board="${esc(d.year)}" title="View leaderboard for ${esc(d.year)}" aria-label="View leaderboard for ${esc(d.year)}">${ICON.trophy}</button>
+      <button class="act" data-dl="${esc(d.id)}" title="Download PDF" aria-label="Download PDF" ${d.pdf?"":"disabled"}>${ICON.down}</button>
+    </div></article>`;
+}
+
+/* archive */
+function filteredDocs(){
+  return D.docs.filter(d=>{const y=yearOf(d.year);
+    if(U.era!=="all"&&(!y||decadeOf(y)!==Number(U.era)))return false;
+    if(U.season!=="all"&&String(y)!==U.season)return false;
+    if(U.types.length&&!U.types.includes(d.type))return false;
+    if(U.weight!=="all"&&String(d.weight||"")!==U.weight)return false;
+    if(U.league!=="all"&&String(d.league||"")!==U.league)return false;
+    return true;});
+}
+V.archive=()=>{
+  const docs=filteredDocs(),years=uniq(D.docs.map(d=>yearOf(d.year))).sort((a,b)=>a-b);
+  const decades=uniq(years.map(decadeOf));
+  const seasonsIn=years.filter(y=>U.era==="all"||decadeOf(y)===Number(U.era));
+  const weights=uniq(D.docs.map(d=>String(d.weight||""))).sort(byNum),leagues=uniq(D.docs.map(d=>String(d.league||""))).sort();
+  const nf=(U.era!=="all")+(U.season!=="all")+U.types.length+(U.weight!=="all")+(U.league!=="all");
+  const sorter={new:(a,b)=>(yearOf(b.year)||0)-(yearOf(a.year)||0),old:(a,b)=>(yearOf(a.year)||0)-(yearOf(b.year)||0),title:(a,b)=>String(a.title).localeCompare(b.title)}[U.sort];
+  docs.sort(sorter);
+  let body;
+  if(!D.docs.length) body=empty("No documents yet","Championship brackets, tournament programs, all-county team lists and photo albums will be shelved here by era.");
+  else if(!docs.length) body=`<div class="empty"><strong>Nothing matches these filters</strong><button class="link" data-clear>Clear filters</button></div>`;
+  else if(U.sort==="title") body=`<div class="shelf">${docs.map(card).join("")}</div>`;
+  else{const g={};docs.forEach(d=>{const y=yearOf(d.year),k=y?decadeOf(y):"Undated";(g[k]=g[k]||[]).push(d);});
+    const keys=Object.keys(g).sort((a,b)=>U.sort==="old"?byNum(a,b):byNum(b,a));
+    body=keys.map(k=>`<section class="decade"><h2>${k==="Undated"?"Undated":k+"s"} <small>${g[k].length} document${g[k].length===1?"":"s"}</small></h2><div class="shelf">${g[k].map(card).join("")}</div></section>`).join("");}
+  return `<div class="wrap view">
+  <div class="page-title"><span class="label">The Archive Library</span><h1>Every bracket, program and team list.</h1><p>${D.docs.length?`${D.docs.length} document${D.docs.length===1?"":"s"} from ${years.length?years[0]+" to "+years[years.length-1]:"the archive"}.`:"Original documents from the association's history, readable page by page."}</p></div>
+  <div class="archive">
+    <div>
+      <button class="ftoggle btn ghost" data-ftoggle aria-expanded="${U.ftOpen}" style="width:100%">${ICON.filter}<span>Filter &amp; sort${nf?" · "+nf+" active":""}</span><span>${U.ftOpen?"Close":"Open"}</span></button>
+      <aside class="filters ${U.ftOpen?"open":""}" aria-label="Filters">
+        <div class="fgroup"><span class="label">Era</span><div class="chips"><button class="chip" data-f="era" data-v="all" aria-pressed="${U.era==="all"}">All</button>${decades.map(d=>`<button class="chip" data-f="era" data-v="${d}" aria-pressed="${U.era===String(d)}">${d}s</button>`).join("")}</div>
+          <select class="select" id="f-season" aria-label="Season"><option value="all">All seasons</option>${seasonsIn.map(y=>`<option ${U.season===String(y)?"selected":""}>${y}</option>`).join("")}</select></div>
+        <div class="fgroup"><span class="label">Document type</span><div class="chips">${TYPES.map(t=>`<button class="chip" data-f="type" data-v="${esc(t)}" aria-pressed="${U.types.includes(t)}">${esc(t.replace("Historical ",""))}</button>`).join("")}</div></div>
+        <div class="fgroup"><label class="label" for="f-weight">Weight class</label><select class="select" id="f-weight"><option value="all">All weights</option>${weights.map(w=>`<option ${U.weight===w?"selected":""}>${esc(w)}</option>`).join("")}</select></div>
+        <div class="fgroup"><label class="label" for="f-league">League</label><select class="select" id="f-league"><option value="all">All leagues</option>${leagues.map(w=>`<option ${U.league===w?"selected":""}>${esc(w)}</option>`).join("")}</select></div>
+        <div class="fgroup"><label class="label" for="f-sort">Sort</label><select class="select" id="f-sort"><option value="new" ${U.sort==="new"?"selected":""}>Newest first</option><option value="old" ${U.sort==="old"?"selected":""}>Oldest first</option><option value="title" ${U.sort==="title"?"selected":""}>Title A–Z</option></select></div>
+        ${nf?`<button class="link" data-clear>Clear filters</button>`:""}
+      </aside>
+    </div>
+    <div style="display:grid;gap:40px;min-width:0"><p class="count-line">${docs.length} of ${D.docs.length} shown</p>${body}</div>
+  </div></div>`;
+};
+
+/* boards */
+function filterRows(rows){
+  const q=norm(U.rq);
+  return rows.filter(r=>{
+    if(q&&!(norm(r.name).includes(q)||norm(r.school).includes(q)))return false;
+    if(U.rschool!=="all"&&String(r.school||"").trim()!==U.rschool)return false;
+    if(U.rweight!=="all"&&String(r.weight||"")!==U.rweight)return false;
+    if(U.revent!=="all"&&String(r.event||"")!==U.revent)return false;
+    if(U.ryear!=="all"&&String(yearOf(r.year))!==U.ryear)return false;
+    return true;});
+}
+function individualBoard(rows){
+  const g={};rows.forEach(r=>{if(!r.name)return;const k=norm(r.name)+"|"+norm(r.school);
+    const e=g[k]||(g[k]={name:String(r.name).trim(),schools:[],total:0,ev:{},years:[],weights:[]});
+    e.total++;e.ev[r.event||"Other"]=(e.ev[r.event||"Other"]||0)+1;
+    if(r.school&&!e.schools.includes(String(r.school).trim()))e.schools.push(String(r.school).trim());
+    if(r.year)e.years.push(yearOf(r.year)||r.year);if(r.weight&&!e.weights.includes(String(r.weight)))e.weights.push(String(r.weight));});
+  return Object.values(g).sort((a,b)=>b.total-a.total||a.name.localeCompare(b.name)).map(e=>(e.years.sort(byNum),e.weights.sort(byNum),e));
+}
+function teamBoard(rows){
+  const g={};rows.forEach(r=>{if(!r.school)return;const k=norm(r.school);
+    const e=g[k]||(g[k]={school:String(r.school).trim(),total:0,ev:{},years:[]});
+    e.total++;e.ev[r.event||"Other"]=(e.ev[r.event||"Other"]||0)+1;const y=yearOf(r.year);if(y)e.years.push(y);});
+  return Object.values(g).map(e=>{e.years.sort((a,b)=>a-b);e.first=e.years[0]||"";e.last=e.years[e.years.length-1]||"";return e;}).sort((a,b)=>b.total-a.total||a.school.localeCompare(b.school));
+}
+const evCols=rows=>{const s=uniq(rows.map(r=>r.event||"Other"));return EVENTS.filter(e=>s.includes(e)).concat(s.filter(e=>!EVENTS.includes(e)));};
+const rankCell=(i)=>`<td class="rank">${String(i+1).padStart(2,"0")}</td>`;
+V.records=()=>{
+  const TABS=[["individual","Individual titles"],["teams","Team dominance"],["undefeated","Undefeated seasons"],["year","Champions by year"]];
+  const src=U.rtab==="teams"?D.teams:U.rtab==="undefeated"?D.undefeated:D.champions;
+  const sch=uniq(src.map(r=>String(r.school||"").trim())).sort((a,b)=>a.localeCompare(b));
+  const wts=uniq(src.map(r=>String(r.weight||""))).sort(byNum);
+  const yrs=uniq(src.map(r=>yearOf(r.year))).sort((a,b)=>b-a);
+  const evs=uniq(src.map(r=>String(r.event||"")));
+  const rows=filterRows(src);
+  const showW=U.rtab!=="teams",showE=U.rtab!=="undefeated";
+  const filt=`<div class="rfilters">
+    <input class="field q" id="r-q" type="search" placeholder="${U.rtab==="teams"?"Search school":"Search wrestler or school"}" value="${esc(U.rq)}" aria-label="Search records">
+    <select class="select" id="r-school" aria-label="School"><option value="all">All schools</option>${sch.map(s=>`<option ${U.rschool===s?"selected":""}>${esc(s)}</option>`).join("")}</select>
+    ${showW?`<select class="select" id="r-weight" aria-label="Weight class"><option value="all">All weights</option>${wts.map(s=>`<option ${U.rweight===s?"selected":""}>${esc(s)}</option>`).join("")}</select>`:"<span></span>"}
+    ${showE?`<select class="select" id="r-event" aria-label="Title"><option value="all">All titles</option>${evs.map(s=>`<option ${U.revent===s?"selected":""}>${esc(s)}</option>`).join("")}</select>`:"<span></span>"}
+    <select class="select" id="r-year" aria-label="Year"><option value="all">All years</option>${yrs.map(s=>`<option ${U.ryear===String(s)?"selected":""}>${s}</option>`).join("")}</select>
+  </div>`;
+  let table;
+  if(!src.length) table=empty("No records entered yet","Results are transcribed from the archived brackets and programs, then verified before they appear here.");
+  else if(!rows.length) table=`<div class="empty"><strong>No records match</strong><button class="link" data-rclear>Clear filters</button></div>`;
+  else if(U.rtab==="individual"){const b=individualBoard(rows),ec=evCols(rows);
+    table=`<div class="tbl-wrap"><table><thead><tr><th class="frz">Wrestler</th><th>#</th><th>School</th><th class="n">Titles</th>${ec.map(e=>`<th class="n">${esc(e)}</th>`).join("")}<th>Weights</th><th>Years</th></tr></thead><tbody>${b.map((r,i)=>`<tr class="${i===0?"top1":""}"><td class="frz">${esc(r.name)}</td>${rankCell(i)}<td>${esc(r.schools.join(" / "))}</td><td class="n big">${r.total}</td>${ec.map(e=>`<td class="n">${r.ev[e]||"–"}</td>`).join("")}<td class="num">${esc(r.weights.join(", "))}</td><td class="years">${esc(r.years.join(", "))}</td></tr>`).join("")}</tbody></table></div>`;}
+  else if(U.rtab==="teams"){const b=teamBoard(rows),ec=evCols(rows);
+    table=`<div class="tbl-wrap"><table><thead><tr><th class="frz">School</th><th>#</th><th class="n">Titles</th>${ec.map(e=>`<th class="n">${esc(e)}</th>`).join("")}<th>Span</th><th>Title years</th></tr></thead><tbody>${b.map((r,i)=>`<tr class="${i===0?"top1":""}"><td class="frz">${esc(r.school)}</td>${rankCell(i)}<td class="n big">${r.total}</td>${ec.map(e=>`<td class="n">${r.ev[e]||"–"}</td>`).join("")}<td class="num">${r.first}${r.last!==r.first?"–"+r.last:""}</td><td class="years">${esc(r.years.join(", "))}</td></tr>`).join("")}</tbody></table></div>`;}
+  else if(U.rtab==="undefeated"){const b=[...rows].sort((a,b)=>(yearOf(b.year)||0)-(yearOf(a.year)||0)||byNum(a.weight,b.weight));
+    table=`<div class="tbl-wrap"><table><thead><tr><th class="frz">Wrestler</th><th>School</th><th>Year</th><th class="n">Weight</th><th class="n">Record</th></tr></thead><tbody>${b.map(r=>`<tr><td class="frz">${esc(r.name)}</td><td>${esc(r.school)}</td><td class="num">${esc(r.year)}</td><td class="n">${esc(r.weight)}</td><td class="n">${esc(r.record||"")}</td></tr>`).join("")}</tbody></table></div>`;}
+  else{const g={};rows.forEach(r=>{const y=yearOf(r.year)||"Undated";(g[y]=g[y]||[]).push(r);});
+    table=`<div class="tbl-wrap"><table><thead><tr><th class="frz">Champion</th><th>School</th><th class="n">Weight</th><th>Title</th></tr></thead><tbody>${Object.keys(g).sort((a,b)=>byNum(b,a)).map(y=>`<tr class="yrhead"><td class="frz">${esc(y)}</td><td colspan="3"></td></tr>`+g[y].sort((a,b)=>String(a.event).localeCompare(String(b.event))||byNum(a.weight,b.weight)).map(r=>`<tr><td class="frz">${esc(r.name)}</td><td>${esc(r.school)}</td><td class="n">${esc(r.weight)}</td><td>${esc(r.event||"")}</td></tr>`).join("")).join("")}</tbody></table></div>`;}
+  return `<div class="wrap view">
+    <div class="page-title"><span class="label">Hall of Fame</span><h1>Historical records &amp; leaderboards.</h1><p>Built from verified results only. Rankings and year ranges update as new seasons are entered.</p></div>
+    <div class="sec"><div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button class="tab" role="tab" data-tab="${k}" aria-selected="${U.rtab===k}">${l}</button>`).join("")}</div>
+    ${src.length?filt:""}${table}</div></div>`;
+};
+
+/* search */
+V.search=()=>{
+  const q=norm(U.q);let body="";
+  if(q){
+    const people={};[...D.champions.map(r=>[r,"title"]),...D.undefeated.map(r=>[r,"undefeated"])].forEach(([r,kind])=>{if(!r.name)return;if(norm(r.name).includes(q)||norm(r.school).includes(q)||String(r.year).includes(q)){const k=norm(r.name)+"|"+norm(r.school);const e=people[k]||(people[k]={name:r.name,school:r.school,t:0,u:0,years:[]});kind==="title"?e.t++:e.u++;const y=yearOf(r.year);if(y&&!e.years.includes(y))e.years.push(y);}});
+    const ppl=Object.values(people).sort((a,b)=>b.t-a.t).slice(0,30);
+    const sc=schools().filter(s=>norm(s).includes(q)).slice(0,20);
+    const docs=D.docs.filter(d=>norm(d.title).includes(q)||String(d.year).includes(q)||norm(d.type).includes(q)||norm(d.league).includes(q)||norm(d.desc).includes(q));
+    const yr=/^\d{4}$/.test(q)?q:null;
+    body=`<div class="results">
+      ${yr?`<section class="sec"><div class="sec-head"><h2>${yr}</h2></div><div class="res-list"><button class="res-item" data-goyear="${yr}"><span>Champions crowned in ${yr}</span><span class="muted">${D.champions.filter(r=>String(yearOf(r.year))===yr).length}</span></button><button class="res-item" data-board-era="${yr}"><span>Documents from ${yr}</span><span class="muted">${D.docs.filter(d=>String(yearOf(d.year))===yr).length}</span></button></div></section>`:""}
+      ${ppl.length?`<section class="sec"><div class="sec-head"><h2>Wrestlers</h2></div><div class="res-list">${ppl.map(p=>`<button class="res-item" data-goname="${esc(p.name)}"><span><b>${esc(p.name)}</b> <span class="muted">${esc(p.school||"")}</span></span><span class="muted num">${p.t?p.t+" title"+(p.t>1?"s":""):""}${p.t&&p.u?" · ":""}${p.u?p.u+" undefeated":""} · ${p.years.sort().join(", ")}</span></button>`).join("")}</div></section>`:""}
+      ${sc.length?`<section class="sec"><div class="sec-head"><h2>Schools</h2></div><div class="res-list">${sc.map(s=>`<button class="res-item" data-goschool="${esc(s)}"><b>${esc(s)}</b><span class="muted">${D.teams.filter(t=>norm(t.school)===norm(s)).length} team titles · ${D.champions.filter(t=>norm(t.school)===norm(s)).length} individual</span></button>`).join("")}</div></section>`:""}
+      ${docs.length?`<section class="sec"><div class="sec-head"><h2>Documents</h2></div><div class="shelf">${docs.map(card).join("")}</div></section>`:""}
+      ${!yr&&!ppl.length&&!sc.length&&!docs.length?`<div class="empty"><strong>No matches for “${esc(U.q)}”</strong><span>Try a last name, a school name or a four-digit year.</span></div>`:""}
+    </div>`;
+  }
+  return `<div class="wrap view"><div class="page-title"><span class="label">Search</span><h1>Find a name, school or year.</h1></div>
+    <form class="bigsearch" role="search" data-search style="box-shadow:none;border:1px solid var(--line)"><input id="sq" name="q" type="search" value="${esc(U.q)}" placeholder="e.g. Garcia, Troy, 1998" aria-label="Search the archive"><button type="submit">${ICON.search}<span>Search</span></button></form>${body}</div>`;
+};
+
+/* ---------- manage ---------- */
+const ROWSPEC={
+  champions:{label:"Individual champions",cols:["year","name","school","weight","event","league"],req:["year","name","school"]},
+  teams:{label:"Team titles",cols:["year","school","event","league"],req:["year","school"]},
+  undefeated:{label:"Undefeated seasons",cols:["year","name","school","weight","record"],req:["year","name","school"]}
+};
+const COLLABEL={year:"Year",name:"Wrestler",school:"School",weight:"Weight",event:"Title",league:"League",record:"Record"};
+let editDoc=null,importRows=null,mfilter="";
+V.manage=()=>{
+  if(!U.canEdit)return "";
+  const tabs=[["docs","Documents"],["champions","Individual champions"],["teams","Team titles"],["undefeated","Undefeated seasons"]];
+  let body;
+  if(U.mtab==="docs"){const d=editDoc||{};
+    body=`<div class="panel"><h3>${editDoc?"Edit document":"Add a document"}</h3>
+    <form class="form" id="docform">
+      <label class="full">Title<input class="field" name="title" required value="${esc(d.title)}" placeholder="1998 OC Championships Bracket"></label>
+      <label>Year<input class="field" name="year" required inputmode="numeric" value="${esc(d.year)}" placeholder="1998"></label>
+      <label>Type<select class="select" name="type">${TYPES.map(t=>`<option ${d.type===t?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
+      <label>League<input class="field" name="league" value="${esc(d.league)}" placeholder="Optional"></label>
+      <label>Weight class<input class="field" name="weight" value="${esc(d.weight)}" placeholder="Optional"></label>
+      <label class="full">Description<input class="field" name="desc" value="${esc(d.desc)}" placeholder="Optional"></label>
+      ${editDoc?"":`<label class="full">File — one PDF, or page images in order<input class="field" type="file" name="files" accept="application/pdf,image/png,image/jpeg,image/webp" multiple required></label>`}
+      <label class="full">Cover image (optional${editDoc?", replaces current":"; PDFs use page 1"})<input class="field" type="file" name="cover" accept="image/png,image/jpeg,image/webp"></label>
+    </form>
+    <div class="row-actions"><button class="btn gold" data-savedoc>${editDoc?"Save changes":"Upload & add"}</button>${editDoc?`<button class="btn ghost" data-canceldoc>Cancel</button><button class="btn danger" data-deldoc="${esc(editDoc.id)}">Delete document</button>`:""}<span class="msg" id="docmsg"></span></div></div>
+    <div class="panel"><h3>${D.docs.length} document${D.docs.length===1?"":"s"}</h3>${D.docs.length?`<div class="tbl-wrap"><table><thead><tr><th class="frz">Title</th><th>Year</th><th>Type</th><th>Pages</th><th></th></tr></thead><tbody>${[...D.docs].sort((a,b)=>(yearOf(b.year)||0)-(yearOf(a.year)||0)).map(x=>`<tr><td class="frz">${esc(x.title)}</td><td class="num">${esc(x.year)}</td><td>${esc(x.type)}</td><td class="num">${x.pdf?(x.pageCount||"PDF"):(x.pages||[]).length}</td><td><button class="link" data-editdoc="${esc(x.id)}">Edit</button></td></tr>`).join("")}</tbody></table></div>`:`<p class="muted">No documents yet.</p>`}</div>`;
+  } else {
+    const sp=ROWSPEC[U.mtab],rows=D[U.mtab];
+    const shown=rows.filter(r=>!mfilter||sp.cols.some(c=>norm(r[c]).includes(norm(mfilter)))).sort((a,b)=>(yearOf(b.year)||0)-(yearOf(a.year)||0)).slice(0,200);
+    body=`<div class="panel"><h3>Add one row</h3><form class="form" id="rowform">${sp.cols.map(c=>c==="event"?`<label>${COLLABEL[c]}<select class="select" name="event">${EVENTS.map(e=>`<option>${e}</option>`).join("")}</select></label>`:`<label>${COLLABEL[c]}${sp.req.includes(c)?" *":""}<input class="field" name="${c}" ${c==="year"?'inputmode="numeric"':""}></label>`).join("")}</form>
+      <div class="row-actions"><button class="btn gold" data-addrow>Add row</button><span class="msg" id="rowmsg"></span></div></div>
+    <div class="panel"><h3>Import from a spreadsheet</h3><p class="muted" style="margin:0">Paste rows copied from Excel or Google Sheets, or a CSV. The first row must be headers. Columns: <span class="num">${sp.cols.join(", ")}</span>${sp.cols.includes("event")?` (title: ${EVENTS.join(", ")})`:""}.</p>
+      <textarea class="field" id="imp" placeholder="${sp.cols.join("\t")}"></textarea>
+      <div class="row-actions"><input type="file" id="impfile" accept=".csv,.tsv,.txt,text/csv,text/plain" class="field" style="max-width:320px"><button class="btn ghost" data-parse>Check rows</button>${importRows?`<button class="btn gold" data-import>Add ${importRows.length} rows</button>`:""}<span class="msg" id="impmsg">${importRows?importRows.length+" rows ready. Review then add.":""}</span></div></div>
+    <div class="panel"><div class="sec-head" style="border:0;padding:0"><h3>${rows.length} ${sp.label.toLowerCase()}</h3><input class="field" id="mfilter" type="search" placeholder="Filter" value="${esc(mfilter)}" style="max-width:240px"></div>
+      ${shown.length?`<div class="tbl-wrap"><table><thead><tr>${sp.cols.map((c,i)=>`<th class="${i===1?"frz":""}">${COLLABEL[c]}</th>`).join("")}<th></th></tr></thead><tbody>${shown.map(r=>`<tr>${sp.cols.map((c,i)=>`<td class="${i===1?"frz":""}">${esc(r[c])}</td>`).join("")}<td><button class="link" data-delrow="${esc(r.id)}">Delete</button></td></tr>`).join("")}</tbody></table></div>${rows.length>200?`<p class="muted">Showing the newest 200. Use the filter to find others.</p>`:""}`:`<p class="muted">Nothing here yet.</p>`}</div>`;
+  }
+  return `<div class="wrap view"><div class="page-title"><span class="label">Editors only</span><h1>Manage the archive.</h1><p>Changes stay in this browser until you publish them. Publishing updates the public site for everyone.</p></div>
+    <div class="subtabs">${tabs.map(([k,l])=>`<button class="chip" data-mtab="${k}" aria-pressed="${U.mtab===k}">${l}</button>`).join("")}</div>${body}</div>`;
+};
+function markDirty(){U.dirty=JSON.stringify(D)!==served;try{U.dirty?sessionStorage.setItem(DRAFT_KEY,JSON.stringify(D)):sessionStorage.removeItem(DRAFT_KEY);}catch(e){}renderDirty();}
+function renderDirty(){const el=$("#dirty");el.hidden=!(U.canEdit&&U.dirty);if(el.hidden)return;
+  el.innerHTML=`<div class="wrap"><span>${U.draftNote?"Unpublished changes restored from this browser.":"You have unpublished changes."}</span><span style="margin-left:auto;display:flex;gap:8px"><button class="btn ghost" data-discard>Discard</button><button class="btn gold" data-publish>Publish</button></span><span class="msg" id="pubmsg"></span></div>`;}
+function buildHTML(){
+  const json=JSON.stringify(D).replace(/</g,"\\u003c");
+  return SKELETON+HEAD+'<style id="css">'+$("#css").textContent+'</style>\n<div id="app"></div>\n<script type="application/json" id="state">'+json+'<\/script>\n<script id="main">'+$("#main").textContent+'<\/script>\n</body></html>';
+}
+async function publish(btn){
+  const m=$("#pubmsg");
+  if(!U.artifact){m.textContent="Publishing isn't available in this view.";return;}
+  btn.disabled=true;btn.textContent="Publishing…";
+  try{await U.artifact.publish(buildHTML());}
+  catch(e){btn.disabled=false;btn.textContent="Publish";
+    const c=e&&e.code;
+    m.textContent=c==="conflict"?"Someone published first. The page is reloading to their version; your draft is kept in this browser.":c==="not_writer"||c==="not_granted"?"You don't have edit access to publish.":c==="too_large"?"The archive is too large to publish. Remove some entries.":c==="rate_limited"?"Publishing too often. Wait a minute and try again.":"Couldn't publish. Try again.";
+    m.className="msg err";}
+}
+
+/* uploads */
+async function uploadFile(f){const t=f.type||({pdf:"application/pdf",png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",webp:"image/webp"})[(f.name.split(".").pop()||"").toLowerCase()];
+  const r=await U.assets.upload(f,t&&t!==f.type?{type:t}:undefined);return r.id;}
+async function pdfCover(file){
+  const lib=await loadPdfjs();const pdf=await lib.getDocument({data:await file.arrayBuffer()}).promise;
+  const pg=await pdf.getPage(1),vp=pg.getViewport({scale:1}),sc=600/vp.width,v=pg.getViewport({scale:sc});
+  const c=document.createElement("canvas");c.width=Math.round(v.width);c.height=Math.round(v.height);
+  await pg.render({canvasContext:c.getContext("2d"),viewport:v}).promise;
+  const b=await new Promise(r=>c.toBlob(r,"image/jpeg",.82));return {cover:b,pages:pdf.numPages};
+}
+async function saveDoc(btn){
+  const f=$("#docform"),msg=$("#docmsg");msg.className="msg";
+  const val=k=>f.elements[k].value.trim();
+  if(!val("title")||!val("year")){msg.textContent="Title and year are required.";msg.className="msg err";return;}
+  if(!yearOf(val("year"))){msg.textContent="Year needs four digits, like 1998.";msg.className="msg err";return;}
+  const meta={title:val("title"),year:val("year"),type:f.elements.type.value,league:val("league"),weight:val("weight"),desc:val("desc")};
+  const coverFile=f.elements.cover.files[0];
+  if(!U.assets&&(coverFile||!editDoc)){msg.textContent="Uploading files needs Editor access to this page.";msg.className="msg err";return;}
+  btn.disabled=true;
+  try{
+    if(editDoc){Object.assign(editDoc,meta);if(coverFile){msg.textContent="Uploading cover…";editDoc.cover=await uploadFile(coverFile);}editDoc=null;}
+    else{
+      const files=[...f.elements.files.files];if(!files.length)throw {message:"Choose a PDF or page images."};
+      const pdfF=files.find(x=>/pdf$/i.test(x.type)||/\.pdf$/i.test(x.name));
+      const d=Object.assign({id:uid(),addedAt:new Date().toISOString()},meta);
+      if(pdfF){msg.textContent="Uploading PDF…";d.pdf=await uploadFile(pdfF);
+        try{msg.textContent="Making cover…";const pc=await pdfCover(pdfF);d.pageCount=pc.pages;if(!coverFile)d.cover=(await U.assets.upload(pc.cover,{type:"image/jpeg"})).id;}catch(e){}}
+      else{d.pages=[];const imgs=files.sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));
+        for(let i=0;i<imgs.length;i++){msg.textContent=`Uploading page ${i+1} of ${imgs.length}…`;d.pages.push(await uploadFile(imgs[i]));}
+        d.pageCount=d.pages.length;if(!coverFile)d.cover=d.pages[0];}
+      if(coverFile){msg.textContent="Uploading cover…";d.cover=await uploadFile(coverFile);}
+      D.docs.push(d);
+    }
+    markDirty();render();const m2=$("#docmsg");if(m2)m2.textContent="Saved. Publish to make it public.";
+  }catch(e){btn.disabled=false;msg.className="msg err";
+    msg.textContent={too_large:"That file is over 20 MB. Split the PDF or compress it.",unsupported_type:"Use a PDF, PNG, JPEG or WebP file.",quota_or_state:"Storage is full. Remove unused documents first.",rate_limited:"Too many uploads at once. Wait a moment and try again."}[e&&e.code]||(e&&e.message)||"Upload failed. Try again.";}
+}
+function parseTable(text){
+  text=text.replace(/^﻿/,"").trim();if(!text)return [];
+  const delim=text.split("\n")[0].includes("\t")?"\t":",";const out=[];let row=[],cur="",q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=c;}
+    else if(c==='"')q=true;else if(c===delim){row.push(cur);cur="";}
+    else if(c==="\n"||c==="\r"){if(c==="\r"&&text[i+1]==="\n")i++;row.push(cur);out.push(row);row=[];cur="";}
+    else cur+=c;}
+  row.push(cur);out.push(row);return out.filter(r=>r.some(x=>x.trim()!==""));
+}
+function readImport(){
+  const sp=ROWSPEC[U.mtab],rows=parseTable($("#imp").value),msg=$("#impmsg");msg.className="msg";
+  if(rows.length<2){importRows=null;msg.textContent="Paste a header row plus at least one data row.";msg.className="msg err";return false;}
+  const alias={wrestler:"name",champion:"name",title:"event",tournament:"event",wt:"weight","weight class":"weight",season:"year",team:"school"};
+  const hdr=rows[0].map(h=>{h=norm(h);return alias[h]||h;});
+  const missing=sp.req.filter(c=>!hdr.includes(c));
+  if(missing.length){importRows=null;msg.textContent="Missing column: "+missing.join(", ")+".";msg.className="msg err";return false;}
+  const bad=[];importRows=[];
+  rows.slice(1).forEach((r,i)=>{const o={id:uid()};sp.cols.forEach(c=>{const j=hdr.indexOf(c);o[c]=j>=0?String(r[j]||"").trim():"";});
+    if(sp.req.some(c=>!o[c])||!yearOf(o.year))bad.push(i+2);else importRows.push(o);});
+  return bad;
+}
+
+/* ---------- events ---------- */
+document.addEventListener("submit",e=>{
+  if(e.target.matches("[data-search]")){e.preventDefault();U.q=e.target.elements.q.value.trim();const h=$("#hq");if(h)h.value=U.q;if(U.view==="search")render();else go("search");}
+  else e.preventDefault();
+});
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("button,a");if(!t)return;const ds=t.dataset;
+  if(ds.read){location.hash="read-"+ds.read;}
+  else if(ds.dl){download(D.docs.find(d=>d.id===ds.dl),t);}
+  else if(ds.board!==undefined){Object.assign(U,{rtab:"year",rq:"",rschool:"all",rweight:"all",revent:"all",ryear:String(yearOf(ds.board)||"all")});go("records");}
+  else if(ds.era){U.era=ds.era;U.season="all";go("archive");}
+  else if(ds.rtab&&t.tagName==="A"){U.rtab=ds.rtab;}
+  else if(ds.f==="era"){U.era=ds.v;U.season="all";render();}
+  else if(ds.f==="type"){U.types=U.types.includes(ds.v)?U.types.filter(x=>x!==ds.v):U.types.concat(ds.v);render();}
+  else if(ds.ftoggle!==undefined){U.ftOpen=!U.ftOpen;render();}
+  else if(ds.clear!==undefined){Object.assign(U,{era:"all",season:"all",types:[],weight:"all",league:"all"});render();}
+  else if(ds.tab){U.rtab=ds.tab;Object.assign(U,{rschool:"all",rweight:"all",revent:"all"});render();}
+  else if(ds.rclear!==undefined){Object.assign(U,{rq:"",rschool:"all",rweight:"all",revent:"all",ryear:"all"});render();}
+  else if(ds.goname){Object.assign(U,{rtab:"individual",rq:ds.goname,rschool:"all",rweight:"all",revent:"all",ryear:"all"});go("records");}
+  else if(ds.goschool){Object.assign(U,{rtab:"teams",rq:"",rschool:ds.goschool,rweight:"all",revent:"all",ryear:"all"});go("records");}
+  else if(ds.goyear){Object.assign(U,{rtab:"year",rq:"",rschool:"all",rweight:"all",revent:"all",ryear:ds.goyear});go("records");}
+  else if(ds.boardEra){U.era=String(decadeOf(Number(ds.boardEra)));U.season=ds.boardEra;go("archive");}
+  else if(ds.mtab){U.mtab=ds.mtab;importRows=null;mfilter="";editDoc=null;render();}
+  else if(ds.savedoc!==undefined)saveDoc(t);
+  else if(ds.editdoc){editDoc=D.docs.find(d=>d.id===ds.editdoc);render();window.scrollTo(0,0);}
+  else if(ds.canceldoc!==undefined){editDoc=null;render();}
+  else if(ds.deldoc){if(t.dataset.armed!=="1"){t.dataset.armed="1";t.textContent="Click again to delete";return;}D.docs=D.docs.filter(d=>d.id!==ds.deldoc);editDoc=null;markDirty();render();}
+  else if(ds.addrow!==undefined){const f=$("#rowform"),sp=ROWSPEC[U.mtab],o={id:uid()},msg=$("#rowmsg");sp.cols.forEach(c=>o[c]=f.elements[c].value.trim());
+    if(sp.req.some(c=>!o[c])){msg.textContent=sp.req.map(c=>COLLABEL[c]).join(", ")+" are required.";msg.className="msg err";return;}
+    if(!yearOf(o.year)){msg.textContent="Year needs four digits.";msg.className="msg err";return;}
+    D[U.mtab].push(o);markDirty();render();const m=$("#rowmsg");if(m)m.textContent="Added. Publish to make it public.";const first=$("#rowform input");if(first)first.focus();}
+  else if(ds.parse!==undefined){const bad=readImport();if(bad===false)return;render();const m=$("#impmsg");if(m&&bad.length){m.textContent+=` Skipped ${bad.length} row${bad.length>1?"s":""} missing required values (line ${bad.slice(0,8).join(", ")}${bad.length>8?"…":""}).`;}}
+  else if(ds.import!==undefined){if(!importRows)return;D[U.mtab]=D[U.mtab].concat(importRows);const n=importRows.length;importRows=null;markDirty();render();const m=$("#impmsg");if(m)m.textContent=`Added ${n} rows. Publish to make them public.`;}
+  else if(ds.delrow){if(t.dataset.armed!=="1"){t.dataset.armed="1";t.textContent="Confirm";return;}D[U.mtab]=D[U.mtab].filter(r=>r.id!==ds.delrow);markDirty();render();}
+  else if(ds.publish!==undefined)publish(t);
+  else if(ds.discard!==undefined){if(t.dataset.armed!=="1"){t.dataset.armed="1";t.textContent="Click again to discard";return;}D=JSON.parse(served);["docs","champions","teams","undefeated"].forEach(k=>{if(!Array.isArray(D[k]))D[k]=[];});U.draftNote=false;markDirty();render();}
+});
+document.addEventListener("change",e=>{const id=e.target.id,v=e.target.value;
+  const map={"f-season":"season","f-weight":"weight","f-league":"league","f-sort":"sort","r-school":"rschool","r-weight":"rweight","r-event":"revent","r-year":"ryear"};
+  if(map[id]){U[map[id]]=v;render();}
+  else if(id==="impfile"){const f=e.target.files[0];if(f)f.text().then(t=>{$("#imp").value=t;});}
+});
+let qT;document.addEventListener("input",e=>{
+  if(e.target.id==="r-q"){U.rq=e.target.value;clearTimeout(qT);qT=setTimeout(()=>{const pos=e.target.selectionStart;render();const i=$("#r-q");if(i){i.focus();try{i.setSelectionRange(pos,pos);}catch(_){}}},220);}
+  else if(e.target.id==="mfilter"){mfilter=e.target.value;clearTimeout(qT);qT=setTimeout(()=>{render();const i=$("#mfilter");if(i){i.focus();const n=i.value.length;i.setSelectionRange(n,n);}},220);}
+});
+
+/* download */
+async function download(d,btn){
+  if(!d||!d.pdf)return;
+  if(!U.downloads){window.open(blob(d.pdf),"_blank","noopener");return;}
+  const old=btn.innerHTML;btn.disabled=true;
+  try{const r=await fetch(blob(d.pdf));if(!r.ok)throw 0;const b=await r.blob();await U.downloads.save({filename:slug(d.year+" "+d.title)+".pdf",data:b});}
+  catch(e){}finally{btn.disabled=false;btn.innerHTML=old;}
+}
+
+/* ---------- pdf.js ---------- */
+let pdfjsP=null;
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("Couldn't load the PDF viewer."));document.head.appendChild(s);});}
+function loadPdfjs(){if(!pdfjsP)pdfjsP=loadScript(PDFJS).then(()=>loadScript(PDFWORKER)).then(()=>{window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFWORKER;return window.pdfjsLib;}).catch(e=>{pdfjsP=null;throw e;});return pdfjsP;}
+
+/* ---------- reader ---------- */
+const Reader=(()=>{
+  let doc=null,pdf=null,n=0,ratio=0.75,cur=0,zoom=1,cache=new Map(),busy=false,io=null;
+  const R=()=>$("#reader");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const spread=()=>n>1&&window.innerWidth>=900;
+  const viewOf=p=>spread()?(p===0?0:Math.ceil(p/2)):p;
+  const pagesOf=v=>spread()?(v===0?[-1,0]:[2*v-1,2*v<n?2*v:-1]):[v];
+  const nViews=()=>spread()?1+Math.ceil((n-1)/2):n;
+  async function url(i,w){
+    if(i<0||i>=n)return "";
+    if(!pdf)return blob(doc.pages[i]);
+    const bucket=Math.min(2400,Math.ceil(w*Math.min(2,window.devicePixelRatio||1)/200)*200),k=i+"@"+bucket;
+    if(cache.has(k))return cache.get(k);
+    const p=(async()=>{const pg=await pdf.getPage(i+1),vp=pg.getViewport({scale:1}),v=pg.getViewport({scale:bucket/vp.width});
+      const c=document.createElement("canvas");c.width=Math.round(v.width);c.height=Math.round(v.height);
+      await pg.render({canvasContext:c.getContext("2d"),viewport:v}).promise;
+      const b=await new Promise(r=>c.toBlob(r,"image/jpeg",.88));return URL.createObjectURL(b);})();
+    cache.set(k,p);return p;
+  }
+  function size(){const st=$("#r-stage");const W=st.clientWidth-24,H=st.clientHeight-24,cols=spread()?2:1;let pw=Math.min(W/cols,H*ratio);return {pw:Math.floor(pw*zoom),ph:Math.floor(pw*zoom/ratio)};}
+  async function paint(){
+    const book=$("#r-book");if(!book)return;const {pw,ph}=size();const ps=pagesOf(viewOf(cur));
+    const urls=await Promise.all(ps.map(i=>url(i,pw)));
+    book.style.width=(pw*ps.length)+"px";book.style.height=ph+"px";
+    book.innerHTML=ps.map((i,j)=>`<div class="r-page ${i<0?"blank":""} ${ps.length>1?(j?"right":"left"):""}" style="width:${pw}px;height:${ph}px">${i>=0?`<img src="${urls[j]}" alt="Page ${i+1}" draggable="false">`:""}</div>`).join("");
+    chrome();
+    const nx=pagesOf(Math.min(viewOf(cur)+1,nViews()-1)).concat(pagesOf(Math.max(viewOf(cur)-1,0)));nx.forEach(i=>url(i,pw));
+  }
+  function chrome(){
+    const v=viewOf(cur),ps=pagesOf(v).filter(i=>i>=0);
+    $("#r-num").textContent=(ps.length>1?(ps[0]+1)+"–"+(ps[1]+1):(ps[0]+1))+" / "+n;
+    $("#r-prev").disabled=v<=0;$("#r-next").disabled=v>=nViews()-1;
+    const st=$("#r-stage");st.classList.toggle("zoomed",zoom>1);
+    document.querySelectorAll(".r-thumb").forEach(b=>{const on=ps.includes(Number(b.dataset.p));b.setAttribute("aria-current",on);if(on&&b===document.querySelector(`.r-thumb[data-p="${ps[0]}"]`))b.scrollIntoView({block:"nearest",inline:"center",behavior:reduce?"auto":"smooth"});});
+  }
+  async function turn(dir){
+    if(busy)return;const v=viewOf(cur),nv=v+dir;if(nv<0||nv>=nViews())return;
+    if(reduce||zoom>1){cur=pagesOf(nv).find(i=>i>=0);paint();return;}
+    busy=true;
+    const {pw,ph}=size(),book=$("#r-book"),oldP=pagesOf(v),newP=pagesOf(nv),sp=oldP.length>1;
+    const newUrls=await Promise.all(newP.map(i=>url(i,pw)));
+    const pgs=book.querySelectorAll(".r-page");
+    const imgOf=el=>{const i=el&&el.querySelector("img");return i?i.src:"";};
+    const set=(el,u)=>{if(!el)return;el.classList.toggle("blank",!u);el.innerHTML=u?`<img src="${u}" alt="" draggable="false">`:"";};
+    const leaf=document.createElement("div");leaf.className="leaf";leaf.style.width=pw+"px";leaf.style.height=ph+"px";
+    let anim;
+    if(sp){
+      if(dir>0){const front=imgOf(pgs[1]);leaf.style.left=pw+"px";leaf.style.transformOrigin="left center";
+        leaf.innerHTML=`<div class="face">${front?`<img src="${front}">`:""}</div><div class="face back">${newUrls[0]?`<img src="${newUrls[0]}">`:""}</div>`;
+        set(pgs[1],newUrls[1]);book.appendChild(leaf);anim=leaf.animate([{transform:"rotateY(0deg)"},{transform:"rotateY(-180deg)"}],{duration:620,easing:"cubic-bezier(.45,.05,.25,1)"});}
+      else{const front=imgOf(pgs[0]);leaf.style.left="0px";leaf.style.transformOrigin="right center";
+        leaf.innerHTML=`<div class="face">${front?`<img src="${front}">`:""}</div><div class="face back">${newUrls[1]?`<img src="${newUrls[1]}">`:""}</div>`;
+        set(pgs[0],newUrls[0]);book.appendChild(leaf);anim=leaf.animate([{transform:"rotateY(0deg)"},{transform:"rotateY(180deg)"}],{duration:620,easing:"cubic-bezier(.45,.05,.25,1)"});}
+    } else {
+      leaf.style.left="0px";leaf.style.transformOrigin="left center";
+      if(dir>0){leaf.innerHTML=`<div class="face"><img src="${imgOf(pgs[0])}"></div>`;set(pgs[0],newUrls[0]);book.appendChild(leaf);
+        anim=leaf.animate([{transform:"rotateY(0deg)",opacity:1},{transform:"rotateY(-110deg)",opacity:0}],{duration:480,easing:"ease-in"});}
+      else{leaf.innerHTML=`<div class="face"><img src="${newUrls[0]}"></div>`;book.appendChild(leaf);
+        anim=leaf.animate([{transform:"rotateY(-110deg)",opacity:0},{transform:"rotateY(0deg)",opacity:1}],{duration:480,easing:"ease-out"});}
+    }
+    try{await anim.finished;}catch(_){}
+    cur=newP.find(i=>i>=0);busy=false;await paint();
+  }
+  function jump(p){cur=Math.max(0,Math.min(n-1,p));paint();}
+  function setZoom(z){zoom=Math.max(1,Math.min(4,Math.round(z*100)/100));paint();}
+  function thumbs(){
+    const strip=$("#r-thumbs");strip.innerHTML=Array.from({length:n},(_,i)=>`<button class="r-thumb" data-p="${i}" aria-label="Page ${i+1}"><span>${i+1}</span></button>`).join("");
+    if(io)io.disconnect();
+    io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const b=en.target;io.unobserve(b);url(Number(b.dataset.p),120).then(u=>{if(u)b.insertAdjacentHTML("afterbegin",`<img src="${u}" alt="" loading="lazy">`);}).catch(()=>{});}),{root:strip,rootMargin:"0px 300px"});
+    strip.querySelectorAll(".r-thumb").forEach(b=>io.observe(b));
+  }
+  /* gestures */
+  const pts=new Map();let pinch0=0,startX=0,startY=0,startT=0,lastTap=0,lastTapX=0,moved=false;
+  function onDown(e){pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===1){startX=e.clientX;startY=e.clientY;startT=Date.now();moved=false;}
+    if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);}}
+  function onMove(e){if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(Math.hypot(e.clientX-startX,e.clientY-startY)>10)moved=true;
+    if(pts.size===2&&pinch0){const [a,b]=[...pts.values()];const r=Math.hypot(a.x-b.x,a.y-b.y)/pinch0;$("#r-book").style.transform=`scale(${r})`;}}
+  function onUp(e){if(!pts.has(e.pointerId))return;
+    if(pts.size===2&&pinch0){const [a,b]=[...pts.values()];const r=Math.hypot(a.x-b.x,a.y-b.y)/pinch0;$("#r-book").style.transform="";pinch0=0;pts.clear();setZoom(zoom*r);return;}
+    pts.delete(e.pointerId);
+    const dx=e.clientX-startX,dy=e.clientY-startY,dt=Date.now()-startT;
+    if(!moved&&dt<300){const now=Date.now();if(now-lastTap<320&&Math.abs(e.clientX-lastTapX)<40){lastTap=0;setZoom(zoom>1?1:2.2);}else{lastTap=now;lastTapX=e.clientX;}return;}
+    if(zoom===1&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)turn(dx<0?1:-1);}
+  function onCancel(e){pts.delete(e.pointerId);if(pinch0){pinch0=0;$("#r-book").style.transform="";}}
+  function key(e){if(R().hidden)return;
+    if(e.key==="ArrowRight")turn(1);else if(e.key==="ArrowLeft")turn(-1);else if(e.key==="Escape")close();
+    else if(e.key==="+"||e.key==="=")setZoom(zoom+.5);else if(e.key==="-")setZoom(zoom-.5);}
+  let rT;function onResize(){if(R().hidden)return;clearTimeout(rT);rT=setTimeout(paint,150);}
+  window.addEventListener("keydown",key);window.addEventListener("resize",onResize);
+  async function open(d){
+    if(doc&&doc.id===d.id&&!R().hidden)return;
+    doc=d;pdf=null;n=d.pdf?(d.pageCount||1):(d.pages||[]).length;cur=0;zoom=1;cache.forEach(p=>p.then(u=>u&&u.startsWith("blob:")&&URL.revokeObjectURL(u)).catch(()=>{}));cache=new Map();
+    const r=R();r.hidden=false;document.body.style.overflow="hidden";
+    r.innerHTML=`<div class="r-top"><button class="r-btn" id="r-close" aria-label="Close reader">${ICON.x}</button><div class="r-title"><b>${esc(d.title)}</b><span>${esc(d.year)} · ${esc(d.type||"")}</span></div>
+      <button class="r-btn" id="r-zout" aria-label="Zoom out">${ICON.minus}</button><button class="r-btn" id="r-zin" aria-label="Zoom in">${ICON.plus}</button>
+      <button class="r-btn" id="r-dl" aria-label="Download PDF" ${d.pdf?"":"disabled"}>${ICON.down}</button></div>
+      <div class="r-stage" id="r-stage"><div class="r-book" id="r-book"></div><div class="r-load" id="r-load">Opening document…</div></div>
+      <div class="r-bottom"><div class="r-nav"><button class="r-btn" id="r-prev" aria-label="Previous page">${ICON.l}</button><span class="num" id="r-num"></span><button class="r-btn" id="r-next" aria-label="Next page">${ICON.r}</button></div><div class="r-thumbs" id="r-thumbs"></div></div>`;
+    $("#r-close").onclick=()=>close();$("#r-prev").onclick=()=>turn(-1);$("#r-next").onclick=()=>turn(1);
+    $("#r-zin").onclick=()=>setZoom(zoom+.5);$("#r-zout").onclick=()=>setZoom(zoom-.5);$("#r-dl").onclick=e=>download(d,e.currentTarget);
+    $("#r-thumbs").onclick=e=>{const b=e.target.closest(".r-thumb");if(b)jump(Number(b.dataset.p));};
+    const st=$("#r-stage");st.addEventListener("pointerdown",onDown);st.addEventListener("pointermove",onMove);st.addEventListener("pointerup",onUp);st.addEventListener("pointercancel",onCancel);
+    try{
+      if(d.pdf){const lib=await loadPdfjs();if(doc!==d)return;pdf=await lib.getDocument({url:blob(d.pdf)}).promise;if(doc!==d)return;n=pdf.numPages;const vp=(await pdf.getPage(1)).getViewport({scale:1});ratio=vp.width/vp.height;}
+      else{if(!n)throw new Error("This document has no pages.");ratio=await new Promise(res=>{const im=new Image();im.onload=()=>res(im.naturalWidth/im.naturalHeight||.75);im.onerror=()=>res(.75);im.src=blob(d.pages[0]);});}
+      $("#r-load").remove();thumbs();await paint();
+    }catch(err){const l=$("#r-load");if(l)l.innerHTML=`<div style="text-align:center;display:grid;gap:12px;padding:16px"><span>This document couldn't be opened here.</span>${d.pdf?`<a class="link" href="${blob(d.pdf)}" target="_blank" rel="noopener">Open the PDF in a new tab</a>`:""}</div>`;}
+  }
+  function close(fromRoute){
+    const r=R();if(r.hidden)return false;r.hidden=true;r.innerHTML="";document.body.style.overflow="";doc=null;pdf=null;if(io){io.disconnect();io=null;}
+    if(!fromRoute)location.hash=U.view;
+    return true;
+  }
+  return {open,close};
+})();
+
+/* ---------- boot ---------- */
+route();
+(async()=>{
+  const use=n=>(window.claude&&window.claude.use)?window.claude.use(n).catch(()=>null):Promise.resolve(null);
+  U.downloads=await use("downloads");
+  const user=await use("user");
+  U.canEdit=!!(user&&await user.canEdit().catch(()=>false));
+  if(!U.canEdit){render();return;}
+  [U.artifact,U.assets]=await Promise.all([use("artifact"),use("assets")]);
+  try{const dr=sessionStorage.getItem(DRAFT_KEY);if(dr){if(dr===served)sessionStorage.removeItem(DRAFT_KEY);else{D=JSON.parse(dr);U.dirty=true;U.draftNote=true;}}}catch(e){}
+  if(location.hash==="#manage")U.view="manage";
+  render();
+})();
+})();
+</script>
