@@ -127,7 +127,7 @@ input:focus,select:focus{outline:none;background:#fff;box-shadow:3px 3px 0 var(-
 .roster{list-style:none;margin-top:10px;max-height:220px;overflow:auto;display:grid;gap:4px}
 .roster li{background:var(--paper);border:1.5px solid var(--ink);border-radius:8px;padding:6px 10px;font-size:.88rem;display:flex;justify-content:space-between}
 .roster li span{color:var(--mute);font-size:.8rem}
-.who{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.88rem;margin:6px 0 10px}.who button{text-decoration:underline;font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+.who{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.88rem;margin:6px 0 10px}.who button:not(.btn){text-decoration:underline;font:inherit;background:none;border:0;cursor:pointer;color:inherit}.who .btn{padding:8px 14px;font-size:.88rem}
 .tiny{font-size:.8rem;color:var(--mute);margin-top:8px}
 
 /* events */
@@ -386,7 +386,7 @@ footer .big2{font-family:var(--disp);font-size:3rem;line-height:.9;color:var(--y
   </div>
   <p class="fine">© <span id="yr"></span> Troy High School VSA · made by Troy Web Development Club</p>
  </div>
-</footer>
+<p class="twdc" style="margin-top:18px;font-size:12px;opacity:.75;text-align:center">© <span data-yr-twdc>2026</span> Troy Web Development Club. Website designed and built by Troy Web Development Club.</p></footer>
 <div class="toast" id="toast"></div>
 
 <script>

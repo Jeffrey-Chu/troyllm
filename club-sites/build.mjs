@@ -26,7 +26,7 @@ for (const site of ['vsa', 'superdw', 'carclub']) {
   let html = readFileSync(join(src, 'index.html'), 'utf8');
   const m = html.match(/<script>([\s\S]*?)<\/script>/);
   if (!m || /<script>/.test(html.replace(m[0], ''))) throw new Error(`${site}: expected exactly one inline script`);
-  writeFileSync(join(out, 'site.js'), m[1]);
+  writeFileSync(join(out, 'site.js'), `${m[1]}\ndocument.querySelectorAll('[data-yr-twdc]').forEach((e) => { e.textContent = new Date().getFullYear(); });\n`);
   html = html.replace(m[0], '<script src="fb.js"></script>\n<script src="site.js"></script>');
   writeFileSync(join(out, 'index.html'), html);
   await bundle([join(here, 'src', `${site}.js`)], join(out, 'fb.js'));

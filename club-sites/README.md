@@ -21,7 +21,17 @@ Four club sites that share the `troy-high-llm` Firebase project but stay separat
 
 Rules are in the root `firestore.rules` (one rules file per Firestore database). Tests: `test/club-sites.test.mjs`.
 
-## Go live (project owner, from the repo root)
+## Go live automatically (GitHub Actions)
+
+Pushing to `main` or `club-sites` runs `.github/workflows/deploy-club-sites.yml`: it runs the rule tests, then deploys the rules and the four sites. It needs one secret, added once by the Firebase project owner:
+
+1. Google Cloud console for `troy-high-llm` → IAM & Admin → Service accounts → Create. Give it the roles **Firebase Hosting Admin**, **Firebase Rules Admin** and **Service Usage Consumer**. Keys → Add key → JSON.
+2. GitHub repo → Settings → Secrets and variables → Actions → New secret named `FIREBASE_SERVICE_ACCOUNT`, paste the whole JSON.
+3. Actions tab → Deploy club sites → Run workflow (or push again).
+
+Then do the two manual steps under "Then" below (authorized domains, admins).
+
+## Or go live by hand (project owner, from the repo root)
 
 Needs Node.js 20+ and Java 17+.
 

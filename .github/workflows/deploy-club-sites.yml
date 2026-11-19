@@ -1,0 +1,48 @@
+name: Deploy club sites
+
+# Tests the Firestore rules, then deploys the rules and the four club sites to troy-high-llm.
+# Needs one repo secret: FIREBASE_SERVICE_ACCOUNT (JSON key, see club-sites/README.md).
+on:
+  push:
+    branches: [main, club-sites]
+    paths: ['club-sites/**', 'firestore.rules', 'test/**', 'src/firebase.js', '.github/workflows/deploy-club-sites.yml']
+  workflow_dispatch:
+
+concurrency: { group: deploy-club-sites, cancel-in-progress: false }
+permissions: { contents: read }
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT: troy-high-llm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - run: npm ci
+      - name: Test security rules (LLM + club sites)
+        run: npm test
+      - name: Check deploy key
+        env: { KEY: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' }
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "::error::Add the FIREBASE_SERVICE_ACCOUNT secret (Settings > Secrets and variables > Actions). See club-sites/README.md."
+            exit 1
+          fi
+      - uses: google-github-actions/auth@v2
+        with: { credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' }
+      - name: Create hosting sites (skips ones that exist)
+        working-directory: club-sites
+        run: |
+          for s in troy-vsa troy-learning-league superdw-crystals troy-car-club; do
+            npx firebase hosting:sites:get "$s" --project "$PROJECT" >/dev/null 2>&1 \
+              || npx firebase hosting:sites:create "$s" --project "$PROJECT"
+          done
+      - name: Deploy Firestore rules
+        run: npx firebase deploy --only firestore:rules --project "$PROJECT" --non-interactive
+      - name: Deploy club sites
+        working-directory: club-sites
+        run: npx firebase deploy --only hosting --project "$PROJECT" --non-interactive
