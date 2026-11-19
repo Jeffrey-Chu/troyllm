@@ -6,7 +6,10 @@
   "scripts": {
     "test": "firebase emulators:exec --only firestore --project demo-troy-high-llm \"node --test test/*.test.mjs\"",
     "build": "esbuild src/operator.js --bundle --format=esm --target=es2022 --outfile=public/app.js",
-    "bootstrap:officer": "node scripts/bootstrap-officer.mjs"
+    "bootstrap:officer": "node scripts/bootstrap-officer.mjs",
+    "build:clubs": "node club-sites/build.mjs",
+    "grant:site-admin": "node scripts/grant-site-admin.mjs",
+    "deploy:clubs": "cd club-sites && npx firebase deploy --only hosting --project troy-high-llm"
   },
   "dependencies": {
     "firebase": "12.19.0"
@@ -14,6 +17,9 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "5.0.2",
     "esbuild": "^0.25.10",
-    "firebase-tools": "^14.25.1"
+    "firebase-tools": "^14.25.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.17"
   }
 }

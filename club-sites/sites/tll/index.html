@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Troy Learning League</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink: '#0A2F47', deep: '#0F4C6E', ocean: '#1C6E97', brand: '#2B8FD0',
+        sky: '#CFE9F7', mist: '#EEF7FC', paper: '#FAFAFA', sun: '#FFE27A', sunDeep: '#F5B700'
+      },
+      fontFamily: { sans: ['Nunito','system-ui','sans-serif'], display: ['"Lilita One"','sans-serif'], logo: ['"Lilita One"','sans-serif'] }
+    }
+  }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#FAFAFA; }
+  .reveal { opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+  @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  .marquee { animation: marquee 38s linear infinite; }
+  .marquee:hover { animation-play-state: paused; }
+  @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+  .floaty { animation: floaty 6s ease-in-out infinite; }
+  .floaty2 { animation: floaty 7s ease-in-out 1s infinite; }
+  @keyframes pop { from { opacity:0; transform: scale(.96) translateY(8px) } to { opacity:1; transform:none } }
+  .pop { animation: pop .35s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes fadein { from { opacity:0 } to { opacity:1 } }
+  .fadein { animation: fadein .25s ease both; }
+  .glass { background:#fff; }
+  .font-display { font-weight:400 !important; letter-spacing:.01em; }
+  .tape::before { content:''; position:absolute; top:-10px; left:50%; width:70px; height:20px; transform:translateX(-50%) rotate(-3deg); background:rgba(255,226,122,.85); }
+  .glass-dark { background: transparent; }
+  .wave { background-image: radial-gradient(circle at 10px -4px, transparent 12px, #CFE9F7 13px); background-size: 20px 20px; }
+  input[type=range] { accent-color: #2B8FD0; }
+  .grain { display:none; }
+</style>
+</head>
+<body class="font-sans text-ink antialiased">
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo } = React;
+
+/* ================================================================
+   CONFIG — edit everything here. Items marked TODO need real info.
+   ================================================================ */
+const CONFIG = {
+  name: 'Troy Learning League',
+  tagline: 'Students teaching students.',
+  meeting: { when: 'Every other Monday @ lunch', where: 'Room 527', walkin: 'Walk-in tutoring at lunch on the other Mondays', firstUpcoming: '2026-11-16' }, // TODO: confirm next meeting date (a Monday)
+  links: {
+    instagram: 'https://www.instagram.com/troy.learning.league/',
+    tutorForm: 'https://forms.gle/4VpvX5cCefuuybJZA', // TODO: replace with tutor application link
+    tuteeForm: 'https://forms.gle/4VpvX5cCefuuybJZA', // TODO: replace with tutee request link
+    boardForm: '',  // TODO
+    hoursForm: '',  // TODO
+  },
+  board: [
+    { name: 'Jessie Chen', role: 'Co-President', blurb: 'Leads club direction, partnerships, and tutor–tutee matching.' },
+    { name: 'Nina Xu', role: 'Co-President', blurb: 'Leads events, workshops, and member communication.' },
+    { name: 'Victor Li', role: 'Vice President', blurb: 'Supports operations, meetings, and volunteer hour tracking.' },
+  ],
+  openRoles: ['Secretary', 'Treasurer', 'Tutor Coordinator', 'Events Coordinator', 'Social Media & Outreach'],
+};
+
+const SUBJECT_GROUPS = ['All', 'Math', 'Science', 'English & Humanities', 'Languages', 'Test Prep', 'Coding'];
+const GRADES = ['All', 'Elementary (K–5)', 'Middle (6–8)', 'High (9–12)'];
+
+// SAMPLE tutor profiles — replace with real tutors (with their permission) before launch.
+const TUTORS = [
+  { id:1, name:'Tutor A', grade:'12th grade', group:'Math', subjects:['AP Calculus BC','Precalculus','Algebra II'], levels:['Middle (6–8)','High (9–12)'], format:'1-on-1', bio:'Loves turning "I hate math" into "oh, that’s it?" Breaks problems into small steps and checks understanding often.', creds:['AP Calc BC','Math Club officer'], philosophy:'Understand the why, then practice the how.', color:'bg-sky' },
+  { id:2, name:'Tutor B', grade:'11th grade', group:'Science', subjects:['AP Biology','Chemistry','Middle school science'], levels:['Middle (6–8)','High (9–12)'], format:'1-on-1 or group', bio:'Uses diagrams and real-world examples to make science stick. Great with lab report help.', creds:['AP Bio','Science Olympiad'], philosophy:'If you can draw it, you understand it.', color:'bg-deep' },
+  { id:3, name:'Tutor C', grade:'12th grade', group:'English & Humanities', subjects:['Essay writing','AP Lang','US History'], levels:['High (9–12)'], format:'1-on-1', bio:'Helps with thesis statements, structure, and editing without rewriting your voice.', creds:['AP Lang','School newspaper'], philosophy:'Clear thinking makes clear writing.', color:'bg-sun' },
+  { id:4, name:'Tutor D', grade:'10th grade', group:'Languages', subjects:['Spanish I–III','Mandarin basics'], levels:['Elementary (K–5)','Middle (6–8)','High (9–12)'], format:'Group', bio:'Conversation-first practice with games and flashcards. Patient with beginners.', creds:['Spanish III Honors'], philosophy:'Speak early, mistakes welcome.', color:'bg-brand' },
+  { id:5, name:'Tutor E', grade:'11th grade', group:'Test Prep', subjects:['SAT Math','SAT Reading & Writing','Study strategies'], levels:['High (9–12)'], format:'1-on-1 or group', bio:'Focuses on test strategy, timing, and reviewing mistakes so they don’t repeat.', creds:['Led Test-Taking Tips workshop'], philosophy:'Practice smart, not just more.', color:'bg-sky' },
+  { id:6, name:'Tutor F', grade:'12th grade', group:'Coding', subjects:['Python','AP CS A (Java)','Scratch for kids'], levels:['Elementary (K–5)','Middle (6–8)','High (9–12)'], format:'1-on-1', bio:'Builds small projects with students so concepts feel useful right away.', creds:['AP CS A','Hackathon participant'], philosophy:'Build first, then optimize.', color:'bg-deep' },
+  { id:7, name:'Tutor G', grade:'10th grade', group:'Math', subjects:['Elementary math','Pre-algebra','Math competitions'], levels:['Elementary (K–5)','Middle (6–8)'], format:'Group', bio:'Makes math feel like puzzles. Great with younger students and competition prep.', creds:['Math competition team'], philosophy:'Curiosity beats memorization.', color:'bg-sun' },
+  { id:8, name:'Tutor H', grade:'11th grade', group:'Science', subjects:['Physics','AP Physics 1','Earth science'], levels:['Middle (6–8)','High (9–12)'], format:'1-on-1', bio:'Connects physics to everyday things like sports and cars. Strong on free-response practice.', creds:['AP Physics 1'], philosophy:'Every formula tells a story.', color:'bg-brand' },
+];
+
+const IG = 'https://www.instagram.com/troy.learning.league/p/';
+const EVENTS = [
+  { key:'rush', tab:'Club Rush', img:'img/DdXtHCDy1eF.webp', post:'DdXtHCDy1eF', title:'Club Rush', date:'September 2026 · Campus', partner:'Recruiting',
+    desc:'Find our stand at Club Rush to meet the board, sign up as a tutor or tutee, and grab free treats.',
+    highlights:['Meet the board','Sign up on the spot','Free treats at our stand'] },
+  { key:'scent', tab:'Science of Scent', img:null, post:null, title:'The Science Behind Scent Workshop', date:'May 18, 2026 · Lunch · Room 527', partner:'Collaboration with Medfuse',
+    desc:'A hands-on workshop on how scent is wired into the brain’s limbic system. Participants explored dried floral herbs and made scent pouches to take home.',
+    highlights:['Hands-on scent pouch activity','Brain & limbic system mini-lesson','Free candy and squishies'] },
+  { key:'test', tab:'Test-Taking Tips', img:'img/DXFkzhZkvfK.webp', post:'DXFkzhZkvfK', title:'Test-Taking Tips Workshop', date:'Wed 4/15/2026 · Lunch · Room 527', partner:'Study sessions',
+    desc:'With testing season coming, we held study sessions to prep for AP, testing, and other exams — plus a workshop for anyone stressed about exams.',
+    highlights:['AP & exam prep','Study sessions','Workshop at lunch'] },
+  { key:'library', tab:'Library Program', img:'img/DVP0663FEvA.webp', post:'DVP0663FEvA', title:'Spring Library Event', date:'Spring 2026 · Diamond Bar Public Library', partner:'Partnered with Diamond Bar Public Library',
+    desc:'We introduced our library program on 2/23/2026, then partnered with Diamond Bar Public Library for in-person tutoring with kids in the community.',
+    highlights:['60–90 minute sessions','STEM activities with tutees and other kids','In-person tutoring','Volunteer hours'] },
+  { key:'winter', tab:'Winter Event', img:'img/DRuX2r8FPd9.webp', post:'DRuX2r8FPd9', title:'Fundraiser & Winter Event', date:'12/1/2025 · Room 527', partner:'Club meeting',
+    desc:'Members met to get the details on our fundraiser and winter event.',
+    highlights:['Fundraiser info','Winter event planning'] },
+  { key:'trial', tab:'Trial Lessons', img:'img/DQTGGSCkTcz.webp', post:'DQTGGSCkTcz', title:'Trial Lessons', date:'First lesson: Thursday 11/6/2025', partner:'Tutor training',
+    desc:'Tutors practice their teaching skills with short trial lessons before working with tutees.',
+    highlights:['10–15 minute sessions','Teach a topic of your choice','Include exercises or guided questions'] },
+];
+const POSTS = [
+  ['DdXtHCDy1eF','Club Rush'],['DXFkzhZkvfK','Test-Taking Tips Workshop'],['DVP0663FEvA','Spring Library Event'],['DVP0qA8FByJ','Yearbook Photos'],
+  ['DVFi0Tukei9','New Library Program'],['DRwDirzDn6S','Volunteer Hours Log'],['DRuX2r8FPd9','Fundraiser & Winter Event'],['DQ3LkvbEYmM','Walk-in Tutoring Session'],
+  ['DQlV57OkVi7','Meeting Update: Walk-in Tutoring'],['DQTGGSCkTcz','Trial Lessons'],['DPLEER0jomh','Tutor & Tutee Applications'],
+];
+
+const FAQS = [
+  { q:'Is tutoring free?', a:'Yes. Learning League is a student-run club — tutoring is free for tutees. Our tutors volunteer their time.' },
+  { q:'How do I become a tutor?', a:'Fill out the Tutor Application form. List the subjects you’re confident in and your availability. Once approved, we’ll match you with tutees and you’ll earn volunteer hours for every session.' },
+  { q:'How do I get a tutor?', a:'Fill out the Tutee Request form with the subject you need help with and any exams or competitions you’re preparing for. We’ll match you with a tutor who fits.' },
+  { q:'Do tutors get volunteer hours?', a:'Yes. Log your hours after every lesson in the Volunteer Log so they can be signed off at the end of each semester. The log is also in our Google Classroom.' },
+  { q:'What are trial lessons?', a:'New tutors practice teaching with a 10–15 minute trial lesson on a topic of their choice, with exercises or guided questions.' },
+  { q:'When and where do you meet?', a:`${CONFIG.meeting.when} in ${CONFIG.meeting.where}. On the Mondays without a meeting, we run walk-in tutoring for tutors and tutees at lunch in ${CONFIG.meeting.where}. Follow our Instagram for updates.` },
+  { q:'Can I join the board?', a:'Yes — we’re recruiting board members this year. Check the Team section for open roles and apply through the board application form.' },
+];
+
+/* ============================ ICONS ============================ */
+const P = {
+  menu:<><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></>,
+  x:<><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
+  chevron:<path d="m6 9 6 6 6-6"/>,
+  arrow:<><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>,
+  check:<path d="M20 6 9 17l-5-5"/>,
+  clock:<><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></>,
+  calendar:<><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></>,
+  pin:<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></>,
+  users:<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>,
+  book:<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
+  file:<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></>,
+  sparkle:<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>,
+  search:<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>,
+  heart:<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>,
+  mail:<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></>,
+  insta:<><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></>,
+  cap:<><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></>,
+  award:<><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></>,
+  ext:<><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></>,
+  target:<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>,
+  back:<><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></>,
+};
+const Icon = ({ n, className='w-5 h-5', sw=2 }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">{P[n]}</svg>
+);
+
+const Logo = ({ size=44 }) => (
+  <img src="img/logo.png" width={size} height={size} alt="Troy Learning League logo" className="rounded-full" style={{ width:size, height:size }} />
+);
+
+/* ============================ HELPERS ============================ */
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+}
+function useInView(ref) {
+  const [v, setV] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); io.disconnect(); } }, { threshold: .3 });
+    io.observe(ref.current); return () => io.disconnect();
+  }, []);
+  return v;
+}
+function upcomingMeetings(n = 4) {
+  const start = new Date(CONFIG.meeting.firstUpcoming + 'T12:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  let d = new Date(start);
+  while (d < today) d.setDate(d.getDate() + 14);
+  const out = [];
+  for (let i = 0; i < n; i++) { out.push(new Date(d)); d.setDate(d.getDate() + 14); }
+  return out;
+}
+const fmtDate = d => d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+const go = id => document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
+const initials = name => name.split(' ').map(s => s[0]).join('').slice(0,2);
+
+const Eyebrow = ({ children, dark }) => (
+  <span className={`inline-block px-3 py-1 text-sm font-bold -rotate-1 border-2 ${dark ? 'bg-sun text-ink border-sun' : 'bg-white text-deep border-deep shadow-[3px_3px_0_#0F4C6E]'}`}>{children}</span>
+);
+const SectionHead = ({ eyebrow, title, sub, dark, center=true }) => (
+  <div className={`reveal max-w-2xl ${center ? 'mx-auto text-center' : ''} mb-12`}>
+    <Eyebrow dark={dark}>{eyebrow}</Eyebrow>
+    <h2 className={`font-display text-3xl sm:text-4xl md:text-5xl mt-4 text-deep ${dark ? '!text-white' : ''}`}>{title}</h2>
+    {sub && <p className={`mt-4 text-lg ${dark ? 'text-sky/80' : 'text-slate-600'}`}>{sub}</p>}
+  </div>
+);
+const FormLink = ({ href, children, variant='primary', className='' }) => {
+  const base = 'inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition-all duration-200 active:scale-[.98]';
+  const styles = {
+    primary: 'bg-brand text-white hover:bg-ocean ',
+    sun: 'bg-sun text-ink hover:bg-sunDeep ',
+    ghost: 'bg-white/10 text-white border border-white/25 hover:bg-white/20',
+    outline: 'border-2 border-deep text-deep hover:bg-deep hover:text-white',
+  };
+  if (!href) return <span className={`${base} ${className} bg-slate-200 text-slate-500 cursor-not-allowed`}>{children} · coming soon</span>;
+  return <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles[variant]} ${className}`}>{children}</a>;
+};
+
+/* ============================ NAVBAR ============================ */
+function Navbar({ onPickSubject }) {
+  const [open, setOpen] = useState(false);
+  const [dd, setDd] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => { const f = () => setScrolled(window.scrollY > 20); f(); window.addEventListener('scroll', f); return () => window.removeEventListener('scroll', f); }, []);
+  const links = [['Mission','mission'],['Join','join'],['Find a Tutor','tutors'],['Path Quiz','quiz'],['Hours','hours'],['Events','events'],['Posts','posts'],['Team','team'],['Forms','forms'],['FAQ','faq']];
+  const nav = id => { setOpen(false); go(id); };
+  return (
+    <header className={`fixed top-0 inset-x-0 z-40 transition-all ${scrolled ? 'py-2' : 'py-4'}`}>
+      <div className={`mx-auto max-w-7xl px-4`}>
+        <nav className={`flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all ${scrolled ? 'bg-white border-2 border-deep' : 'bg-white/70'}`}>
+          <button onClick={() => go('top')} className="flex items-center gap-2.5">
+            <Logo size={38} />
+            <span className={`font-logo text-xl tracking-wide text-deep`}>LEARNING LEAGUE</span>
+          </button>
+          <div className="hidden lg:flex items-center gap-1">
+            {links.slice(0,2).map(([l,id]) => <button key={id} onClick={() => nav(id)} className={`px-3 py-2 rounded-lg text-sm font-medium transition text-deep hover:bg-sky/70`}>{l}</button>)}
+            <div className="relative" onMouseLeave={() => setDd(false)}>
+              <button onMouseEnter={() => setDd(true)} onClick={() => setDd(!dd)} className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition text-deep hover:bg-sky/70`}>
+                Subjects <Icon n="chevron" className={`w-4 h-4 transition ${dd ? 'rotate-180' : ''}`} />
+              </button>
+              {dd && (
+                <div className="absolute left-0 top-full pt-2 w-56 pop">
+                  <div className="glass rounded-xl border border-white/70 shadow-xl p-2">
+                    {SUBJECT_GROUPS.slice(1).map(s => (
+                      <button key={s} onClick={() => { onPickSubject(s); setDd(false); go('tutors'); }} className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-sky/70 hover:text-deep">{s}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            {links.slice(2).map(([l,id]) => <button key={id} onClick={() => nav(id)} className={`px-3 py-2 rounded-lg text-sm font-medium transition text-deep hover:bg-sky/70`}>{l}</button>)}
+          </div>
+          <div className="flex items-center gap-2">
+            <button onClick={() => go('join')} className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-deep text-white font-bold text-sm px-4 py-2.5 hover:bg-ink transition">Join Us <Icon n="arrow" className="w-4 h-4" /></button>
+            <button onClick={() => setOpen(!open)} className={`lg:hidden p-2 rounded-lg text-deep`} aria-label="Menu"><Icon n={open ? 'x' : 'menu'} className="w-6 h-6" /></button>
+          </div>
+        </nav>
+        {open && (
+          <div className="lg:hidden mt-2 glass rounded-2xl border border-white/70 shadow-xl p-3 pop">
+            {links.map(([l,id]) => <button key={id} onClick={() => nav(id)} className="block w-full text-left px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-sky/60">{l}</button>)}
+            <button onClick={() => nav('join')} className="mt-2 w-full rounded-xl bg-sun text-ink font-semibold px-4 py-3">Join Us</button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}
+
+/* ============================ HERO ============================ */
+const Squiggle = ({ className='' }) => (
+  <svg className={className} viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 8 Q10 0 20 8 T40 8 T60 8 T80 8 T100 8 T120 8 T140 8 T160 8 T180 8 T200 8 T220 8 T240 8 T260 8 T280 8 T300 8 T320 8 T340 8 T360 8 T380 8 T400 8" fill="none" stroke="currentColor" strokeWidth="3"/>
+  </svg>
+);
+function Hero() {
+  const next = upcomingMeetings(1)[0];
+  return (
+    <section id="top" className="relative bg-sky pt-32 pb-20 md:pt-40 md:pb-28">
+      <div className="mx-auto max-w-6xl px-4 grid lg:grid-cols-[1.2fr_.8fr] gap-12 items-center">
+        <div className="reveal">
+          <p className="font-bold text-deep">Troy High School · Peer Tutoring Club</p>
+          <h1 className="font-display text-deep text-6xl sm:text-7xl md:text-8xl leading-[.95] mt-3">LEARNING<br/>LEAGUE</h1>
+          <Squiggle className="w-64 h-4 text-deep mt-4" />
+          <p className="mt-6 text-lg md:text-xl text-ink/80 max-w-lg">
+            Need help with a class, an exam, or a competition? We'll match you with a student tutor for free. Want to tutor? Earn volunteer hours helping others.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <FormLink href={CONFIG.links.tutorForm} variant="primary" className="!bg-deep hover:!bg-ink">I want to tutor <Icon n="arrow" className="w-4 h-4" /></FormLink>
+            <FormLink href={CONFIG.links.tuteeForm} variant="outline" className="bg-white">I need a tutor</FormLink>
+          </div>
+        </div>
+        <div className="reveal relative flex flex-col items-center gap-8">
+          <div className="bg-white rounded-full p-3 border-4 border-deep"><Logo size={190} /></div>
+          <div className="tape relative bg-white border-2 border-deep px-6 py-5 rotate-2 shadow-[5px_5px_0_#0F4C6E] w-full max-w-xs">
+            <p className="text-sm font-bold text-brand uppercase tracking-wide">Next meeting</p>
+            <p className="font-display text-3xl text-deep mt-1">{fmtDate(next)}</p>
+            <p className="text-ink/70 mt-1">Lunch · {CONFIG.meeting.where}</p>
+            <p className="text-ink/70 text-sm mt-2">Meetings every other Monday. Walk-in tutoring on the off Mondays.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ MARQUEE ============================ */
+function Marquee() {
+  const items = ['Algebra','Geometry','AP Calculus','Biology','Chemistry','Physics','Essay Writing','AP Lang','US History','Spanish','Mandarin','SAT Prep','AP Exam Review','Python','Java','Math Competitions','Study Skills','Science Fair'];
+  const row = [...items, ...items];
+  return (
+    <section className="bg-deep py-4 overflow-hidden" aria-label="Subjects we tutor">
+      <div className="flex w-max marquee">
+        {row.map((s,i) => (
+          <span key={i} className="flex items-center gap-3 px-6 font-display text-white text-xl whitespace-nowrap">
+            {s}<span className="text-brand ml-3">•</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============================ MISSION BENTO ============================ */
+function Mission() {
+  const cards = [
+    { icon:'heart', t:'Free peer tutoring', d:'Tutoring for any subject, exam, or competition — at no cost. Help from people who just took the class.', cls:'md:col-span-2 bg-deep text-white', dark:true },
+    { icon:'users', t:'Matched by subject', d:'Tell us what you need. We pair you with a tutor who knows it well.', cls:'bg-white' },
+    { icon:'award', t:'Volunteer hours', d:'Tutors earn verified service hours for sessions and events.', cls:'bg-sun/90' },
+    { icon:'book', t:'Workshops & events', d:'Test-taking workshops, science collaborations, and community library sessions.', cls:'md:col-span-2 bg-white' },
+  ];
+  return (
+    <section id="mission" className="py-24 bg-paper">
+      <div className="mx-auto max-w-7xl px-4">
+        <SectionHead eyebrow="Our mission" title="What we do" sub="We believe every student should have someone to ask. Learning League builds a community where students support each other, learn by teaching, and give back to Troy and beyond." />
+        <div className="grid md:grid-cols-3 gap-5">
+          {cards.map((c,i) => (
+            <div key={i} className={`reveal group relative rounded-xl p-8 border border-slate-200/70 shadow-sm hover:border-deep transition-all duration-300 overflow-hidden ${c.cls}`} style={{ transitionDelay: `${i*60}ms` }}>
+              <div className={`w-12 h-12 rounded-2xl grid place-items-center mb-6 transition ${c.dark ? 'bg-white/15 text-sun' : 'bg-sky text-deep'}`}><Icon n={c.icon} className="w-6 h-6" /></div>
+              <h3 className={`font-display font-bold text-2xl ${c.dark ? 'text-white' : 'text-ink'}`}>{c.t}</h3>
+              <p className={`mt-2 text-base ${c.dark ? 'text-sky/85' : 'text-slate-600'}`}>{c.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ JOIN ============================ */
+function Join() {
+  const Col = ({ who, title, steps, href, cta, variant }) => (
+    <div className="reveal rounded-xl bg-white border-2 border-sky p-8 shadow-sm hover:shadow-xl transition relative overflow-hidden">
+      <span className="inline-block bg-sun text-ink font-semibold text-sm px-3 py-1 rounded-md shadow-sm -rotate-1">{who}</span>
+      <h3 className="font-display text-3xl text-deep mt-4">{title}</h3>
+      <ol className="mt-6 space-y-4">
+        {steps.map((s,i) => (
+          <li key={i} className="flex gap-4">
+            <span className="shrink-0 w-8 h-8 rounded-full bg-deep text-white font-bold grid place-items-center text-sm">{i+1}</span>
+            <p className="text-slate-700 pt-1">{s}</p>
+          </li>
+        ))}
+      </ol>
+      <FormLink href={href} variant={variant} className="mt-8 w-full">{cta} <Icon n="ext" className="w-4 h-4" /></FormLink>
+    </div>
+  );
+  return (
+    <section id="join" className="py-24 bg-mist relative">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionHead eyebrow="How to join" title="Two ways to join" sub="Whether you want help or want to help, it starts with one short form." />
+        <div className="grid md:grid-cols-2 gap-6">
+          <Col who="Interested in being a Tutor?" title="Become a Tutor" href={CONFIG.links.tutorForm} cta="Tutor Application" variant="primary"
+            steps={['Fill out the Tutor Application with the subjects you’re strong in.','Practice with a 10–15 minute trial lesson.','Get matched (check your email), then tutor and log your hours after every lesson.']} />
+          <Col who="Interested in being a Tutee?" title="Get a Tutor" href={CONFIG.links.tuteeForm} cta="Tutee Request" variant="sun"
+            steps={['Fill out the Tutee Request with the subject(s) you need help with.','Mention any exams or competitions you’re preparing for.','Check your email for your match, or drop by walk-in tutoring at lunch.']} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ TUTOR FINDER ============================ */
+function TutorModal({ tutor, onClose }) {
+  const dates = useMemo(() => upcomingMeetings(4), []);
+  const [date, setDate] = useState(null);
+  const [fmt, setFmt] = useState('1-on-1');
+  const [done, setDone] = useState(false);
+  useEffect(() => { const k = e => e.key === 'Escape' && onClose(); window.addEventListener('keydown', k); document.body.style.overflow = 'hidden'; return () => { window.removeEventListener('keydown', k); document.body.style.overflow = ''; }; }, []);
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end fadein" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-ink/60 backdrop-blur-sm" onClick={onClose} />
+      <aside className="relative w-full max-w-lg h-full bg-white overflow-y-auto shadow-2xl pop">
+        <div className={`h-36 ${tutor.color} relative`}>
+          <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 rounded-full glass grid place-items-center text-ink" aria-label="Close"><Icon n="x" /></button>
+          <div className="absolute -bottom-10 left-6 w-20 h-20 rounded-2xl bg-white shadow-xl grid place-items-center font-display text-2xl text-deep">{tutor.name.split(' ')[1]}</div>
+        </div>
+        <div className="p-6 pt-14">
+          <h3 className="font-display text-2xl">{tutor.name}</h3>
+          <p className="text-slate-500">{tutor.grade} · {tutor.format}</p>
+          <div className="flex flex-wrap gap-2 mt-4">{tutor.subjects.map(s => <span key={s} className="text-xs font-semibold bg-sky text-deep px-2.5 py-1 rounded-full">{s}</span>)}</div>
+          <h4 className="mt-6 font-semibold text-ink">About</h4>
+          <p className="text-slate-600 mt-1">{tutor.bio}</p>
+          <h4 className="mt-5 font-semibold text-ink">Experience</h4>
+          <ul className="mt-1 space-y-1">{tutor.creds.map(c => <li key={c} className="flex items-center gap-2 text-slate-600"><Icon n="check" className="w-4 h-4 text-brand" />{c}</li>)}</ul>
+          <div className="mt-5 rounded-2xl bg-mist border border-sky p-4"><p className="text-xs uppercase tracking-wider text-brand font-semibold">Teaching philosophy</p><p className="font-display font-semibold text-lg text-deep mt-1">“{tutor.philosophy}”</p></div>
+          <p className="mt-3 text-xs text-slate-500">Teaches: {tutor.levels.join(', ')}</p>
+
+          <div className="mt-8 border-t pt-6">
+            <h4 className="font-display font-bold text-xl flex items-center gap-2"><Icon n="calendar" className="text-brand" />Request a session</h4>
+            {!done ? (<>
+              <p className="text-sm text-slate-500 mt-1">Pick an upcoming meeting ({CONFIG.meeting.where}, lunch).</p>
+              <div className="grid grid-cols-2 gap-2 mt-4">
+                {dates.map(d => {
+                  const on = date && d.getTime() === date.getTime();
+                  return <button key={d.toISOString()} onClick={() => setDate(d)} className={`rounded-xl border-2 px-3 py-3 text-left transition ${on ? 'border-brand bg-brand text-white' : 'border-slate-200 hover:border-brand'}`}>
+                    <span className="block text-xs opacity-80">Lunch</span><span className="font-semibold">{fmtDate(d)}</span></button>;
+                })}
+              </div>
+              <div className="flex gap-2 mt-4 p-1 bg-slate-100 rounded-xl">
+                {['1-on-1','Small group'].map(f => <button key={f} onClick={() => setFmt(f)} className={`flex-1 py-2 rounded-lg text-sm font-semibold transition ${fmt===f ? 'bg-white shadow text-deep' : 'text-slate-500'}`}>{f}</button>)}
+              </div>
+              <button disabled={!date} onClick={() => setDone(true)} className="mt-5 w-full rounded-xl bg-deep text-white font-semibold py-3 disabled:opacity-40 hover:bg-ink transition">Continue</button>
+            </>) : (
+              <div className="pop mt-4 rounded-2xl bg-emerald-50 border border-emerald-200 p-5">
+                <p className="font-semibold text-emerald-800 flex items-center gap-2"><Icon n="check" />Almost done!</p>
+                <p className="text-sm text-emerald-900/80 mt-2">You picked <b>{fmtDate(date)}</b> ({fmt}) with <b>{tutor.name}</b>. Submit the Tutee Request form and mention this so the board can confirm your match.</p>
+                <FormLink href={CONFIG.links.tuteeForm} className="mt-4 w-full">Open Tutee Request <Icon n="ext" className="w-4 h-4" /></FormLink>
+              </div>
+            )}
+          </div>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function TutorFinder({ subject, setSubject }) {
+  const [grade, setGrade] = useState('All');
+  const [q, setQ] = useState('');
+  const [sel, setSel] = useState(null);
+  const list = TUTORS.filter(t =>
+    (subject === 'All' || t.group === subject) &&
+    (grade === 'All' || t.levels.includes(grade)) &&
+    (!q || (t.subjects.join(' ') + t.name + t.bio).toLowerCase().includes(q.toLowerCase()))
+  );
+  return (
+    <section id="tutors" className="py-24 bg-paper">
+      <div className="mx-auto max-w-7xl px-4">
+        <SectionHead eyebrow="Find your tutor" title="Find a tutor" sub="Filter by subject and grade level, then open a profile to request a session." />
+        <div className="reveal glass border border-slate-200 rounded-2xl p-4 shadow-sm mb-8 space-y-4">
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="relative flex-1">
+              <Icon n="search" className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search a class, e.g. “Chemistry” or “SAT”" className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand" />
+            </div>
+            <select value={grade} onChange={e => setGrade(e.target.value)} className="md:w-60 px-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand">
+              {GRADES.map(g => <option key={g} value={g}>{g === 'All' ? 'All grade levels' : g}</option>)}
+            </select>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {SUBJECT_GROUPS.map(s => (
+              <button key={s} onClick={() => setSubject(s)} className={`px-4 py-2 rounded-full text-sm font-semibold transition ${subject === s ? 'bg-deep text-white shadow-md' : 'bg-sky/60 text-deep hover:bg-sky'}`}>{s}</button>
+            ))}
+          </div>
+        </div>
+        <p className="text-xs text-slate-500 mb-4">Sample profiles shown — real tutor profiles coming soon. Showing {list.length} of {TUTORS.length}.</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {list.map(t => (
+            <button key={t.id} onClick={() => setSel(t)} className="pop text-left group rounded-xl bg-white border border-slate-200 overflow-hidden hover:border-deep transition-all duration-300">
+              <div className={`h-24 ${t.color} relative`}>
+                <span className="absolute top-3 right-3 text-[11px] font-semibold bg-white/85 text-deep px-2 py-0.5 rounded-full">{t.group}</span>
+              </div>
+              <div className="p-5 -mt-10">
+                <div className="w-16 h-16 rounded-2xl bg-white shadow-lg grid place-items-center font-display text-xl text-deep">{t.name.split(' ')[1]}</div>
+                <h3 className="font-display font-bold text-lg mt-3">{t.name}</h3>
+                <p className="text-sm text-slate-500">{t.grade} · {t.format}</p>
+                <div className="flex flex-wrap gap-1.5 mt-3">{t.subjects.slice(0,3).map(s => <span key={s} className="text-[11px] bg-mist text-deep px-2 py-0.5 rounded-full border border-sky">{s}</span>)}</div>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand group-hover:gap-2 transition-all">View profile <Icon n="arrow" className="w-4 h-4" /></span>
+              </div>
+            </button>
+          ))}
+          {list.length === 0 && (
+            <div className="col-span-full text-center rounded-xl border-2 border-dashed border-sky p-12">
+              <p className="font-display font-bold text-xl text-deep">No tutors match yet.</p>
+              <p className="text-slate-500 mt-1">Submit a Tutee Request anyway — we’ll find someone for you.</p>
+              <FormLink href={CONFIG.links.tuteeForm} className="mt-5">Tutee Request</FormLink>
+            </div>
+          )}
+        </div>
+      </div>
+      {sel && <TutorModal tutor={sel} onClose={() => setSel(null)} />}
+    </section>
+  );
+}
+
+/* ============================ PATH QUIZ ============================ */
+const QUIZ = [
+  { k:'role', q:'What brings you to Learning League?', opts:['I want help (tutee)','I want to tutor','I want to join the board','Just exploring'] },
+  { k:'grade', q:'What grade are you in?', opts:['Elementary (K–5)','Middle (6–8)','9th–10th','11th–12th'] },
+  { k:'goal', q:'What’s your main goal?', opts:['Raise a class grade','Prep for AP / SAT / exams','Competitions','Earn volunteer hours'] },
+  { k:'challenge', q:'What’s your biggest challenge?', opts:['Understanding the material','Staying organized','Test anxiety / timing','Finding time'] },
+];
+function buildRoadmap(a) {
+  const steps = [];
+  let form = CONFIG.links.tuteeForm, formLabel = 'Tutee Request', headline = 'Your Learning League roadmap';
+  if (a.role === 'I want to tutor') {
+    form = CONFIG.links.tutorForm; formLabel = 'Tutor Application'; headline = 'Your tutor roadmap';
+    steps.push('Submit the Tutor Application with the subjects you’re strongest in.');
+    steps.push(a.grade === '11th–12th' ? 'Upperclassmen are great for AP and test-prep matches — list the APs you’ve passed.' : 'Consider tutoring middle or elementary students — great matches for newer tutors.');
+    steps.push('Use the Volunteer Hours calculator below to plan your semester goal.');
+  } else if (a.role === 'I want to join the board') {
+    form = CONFIG.links.boardForm; formLabel = 'Board Application'; headline = 'Your board roadmap';
+    steps.push('Check the open roles in the Team section and pick one that fits you.');
+    steps.push(`Come to a meeting (${CONFIG.meeting.when}, ${CONFIG.meeting.where}) to meet the board.`);
+    steps.push('Submit the Board Application, or DM us on Instagram to ask questions.');
+  } else {
+    steps.push(`Submit the Tutee Request — note you’re in ${a.grade}.`);
+    const g = { 'Raise a class grade':'Bring recent tests or homework so your tutor can see where to focus.', 'Prep for AP / SAT / exams':'Ask for a test-prep tutor and watch for our Test-Taking Tips workshop.', 'Competitions':'Mention the competition name so we match you with someone who’s done it.', 'Earn volunteer hours':'Since you want hours, consider applying as a tutor too!' }[a.goal];
+    steps.push(g);
+    const c = { 'Understanding the material':'Ask for 1-on-1 sessions so you can go at your own pace.', 'Staying organized':'Ask your tutor to help you build a weekly study plan.', 'Test anxiety / timing':'Practice timed questions with your tutor and attend our study sessions.', 'Finding time':'Meetings happen at lunch — no after-school time needed.' }[a.challenge];
+    steps.push(c);
+  }
+  if (a.role === 'Just exploring') steps.unshift('Follow @troy.learning.league on Instagram for events and updates.');
+  return { headline, steps, form, formLabel };
+}
+function PathQuiz() {
+  const [step, setStep] = useState(0);
+  const [ans, setAns] = useState({});
+  const done = step >= QUIZ.length;
+  const pick = (k, v) => { setAns({ ...ans, [k]: v }); setStep(step + 1); };
+  const r = done ? buildRoadmap(ans) : null;
+  return (
+    <section id="quiz" className="py-24 bg-deep relative overflow-hidden">
+      <div className="absolute inset-0 grain opacity-50" />
+      <div className="relative mx-auto max-w-3xl px-4">
+        <SectionHead dark eyebrow="Find your path" title="Not sure where to start?" sub="Answer 4 quick questions and get a personalized next-steps roadmap." />
+        <div className="reveal glass-dark rounded-xl p-6 sm:p-10 shadow-2xl">
+          <div className="flex gap-2 mb-8">{QUIZ.map((_,i) => <div key={i} className="h-1.5 flex-1 rounded-full bg-white/15 overflow-hidden"><div className="h-full bg-sun transition-all duration-500" style={{ width: i < step ? '100%' : '0%' }} /></div>)}</div>
+          {!done ? (
+            <div key={step} className="pop">
+              <p className="text-sky/70 text-sm font-semibold">Question {step+1} of {QUIZ.length}</p>
+              <h3 className="font-display font-bold text-2xl sm:text-3xl text-white mt-2">{QUIZ[step].q}</h3>
+              <div className="grid sm:grid-cols-2 gap-3 mt-6">
+                {QUIZ[step].opts.map(o => <button key={o} onClick={() => pick(QUIZ[step].k, o)} className="text-left rounded-2xl bg-white/5 border border-white/15 px-5 py-4 text-white font-medium hover:bg-white hover:text-deep transition-all">{o}</button>)}
+              </div>
+              {step > 0 && <button onClick={() => setStep(step-1)} className="mt-6 text-sky/80 text-sm flex items-center gap-1 hover:text-white"><Icon n="back" className="w-4 h-4" />Back</button>}
+            </div>
+          ) : (
+            <div className="pop">
+              <div className="flex items-center gap-3"><div className="w-12 h-12 rounded-2xl bg-sun text-ink grid place-items-center"><Icon n="target" /></div><h3 className="font-display font-bold text-2xl sm:text-3xl text-white">{r.headline}</h3></div>
+              <ol className="mt-6 space-y-3">
+                {r.steps.map((s,i) => (
+                  <li key={i} className="flex gap-4 rounded-2xl bg-white/5 border border-white/10 p-4 pop" style={{ animationDelay: `${i*120}ms` }}>
+                    <span className="shrink-0 w-8 h-8 rounded-full bg-brand text-white font-bold grid place-items-center text-sm">{i+1}</span>
+                    <p className="text-sky/95 pt-1">{s}</p>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <FormLink href={r.form} variant="sun">{r.formLabel} <Icon n="ext" className="w-4 h-4" /></FormLink>
+                <button onClick={() => { setStep(0); setAns({}); }} className="rounded-xl px-5 py-3 font-semibold text-white border border-white/25 hover:bg-white/10">Start over</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ HOURS CALCULATOR ============================ */
+function HoursCalc() {
+  const [mode, setMode] = useState('1on1');
+  const [sessions, setSessions] = useState(4);
+  const [len, setLen] = useState(45);
+  const [months, setMonths] = useState(5);
+  const eventBonus = mode === 'group' ? 1.5 : 0; // group/event sessions often include setup time
+  const perMonth = sessions * (len/60) + eventBonus;
+  const total = Math.round(perMonth * months * 10) / 10;
+  const goals = [25, 50, 100];
+  const included = mode === '1on1'
+    ? ['Matched with a tutee by subject','Lunch-time or scheduled sessions','Hours verified by the board']
+    : ['Help run study sessions & workshops','Community events (e.g., library sessions)','Includes setup & event time'];
+  return (
+    <section id="hours" className="py-24 bg-mist">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionHead eyebrow="For tutors" title="Volunteer hours calculator" sub="Estimate how many service hours you can earn this school year. Final hours are verified by the board." />
+        <div className="reveal grid lg:grid-cols-5 gap-6">
+          <div className="lg:col-span-3 rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+            <div className="flex p-1 bg-slate-100 rounded-2xl">
+              {[['1on1','1-on-1 Tutoring'],['group','Group Sessions & Events']].map(([k,l]) => (
+                <button key={k} onClick={() => setMode(k)} className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all ${mode===k ? 'bg-deep text-white shadow-lg' : 'text-slate-500 hover:text-deep'}`}>{l}</button>
+              ))}
+            </div>
+            <div className="mt-8 space-y-8">
+              <div>
+                <div className="flex justify-between font-semibold"><label htmlFor="s">Sessions per month</label><span className="text-brand">{sessions}</span></div>
+                <input id="s" type="range" min="1" max="16" value={sessions} onChange={e => setSessions(+e.target.value)} className="w-full mt-3" />
+              </div>
+              <div>
+                <p className="font-semibold">Session length</p>
+                <div className="grid grid-cols-4 gap-2 mt-3">
+                  {[30,45,60,90].map(m => <button key={m} onClick={() => setLen(m)} className={`py-2.5 rounded-xl border-2 font-semibold text-sm transition ${len===m ? 'border-brand bg-brand/10 text-deep' : 'border-slate-200 text-slate-500 hover:border-brand'}`}>{m} min</button>)}
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between font-semibold"><label htmlFor="m">Months active</label><span className="text-brand">{months}</span></div>
+                <input id="m" type="range" min="1" max="9" value={months} onChange={e => setMonths(+e.target.value)} className="w-full mt-3" />
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-2 rounded-xl bg-deep text-white p-6 sm:p-8 shadow-xl flex flex-col">
+            <p className="text-sky/70 text-sm font-semibold uppercase tracking-wider">Estimated total</p>
+            <p className="font-display text-6xl mt-2">{total}<span className="text-2xl text-sky/70 ml-2">hrs</span></p>
+            <p className="text-sky/70 text-sm mt-1">≈ {Math.round(perMonth*10)/10} hrs / month</p>
+            <div className="mt-6 space-y-4">
+              {goals.map(g => {
+                const pct = Math.min(100, total/g*100);
+                return (
+                  <div key={g}>
+                    <div className="flex justify-between text-sm mb-1.5"><span className="flex items-center gap-1.5">{pct >= 100 && <Icon n="check" className="w-4 h-4 text-sun" />}{g}-hour milestone</span><span className="text-sky/70">{Math.round(pct)}%</span></div>
+                    <div className="h-2.5 rounded-full bg-white/10 overflow-hidden"><div className={`h-full rounded-full transition-all duration-700 ${pct>=100 ? 'bg-sun' : 'bg-brand'}`} style={{ width: `${pct}%` }} /></div>
+                  </div>
+                );
+              })}
+            </div>
+            <ul className="mt-6 space-y-2 text-sm text-sky/90">{included.map(i => <li key={i} className="flex gap-2"><Icon n="check" className="w-4 h-4 text-sun shrink-0 mt-0.5" />{i}</li>)}</ul>
+            <FormLink href={CONFIG.links.tutorForm} variant="sun" className="mt-auto pt-3 w-full !mt-6">Start earning hours</FormLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ EVENTS & IMPACT ============================ */
+function Counter({ to, suffix='' }) {
+  const ref = useRef(null); const v = useInView(ref); const [n, setN] = useState(0);
+  useEffect(() => { if (!v) return; let i = 0; const steps = 40; const t = setInterval(() => { i++; setN(Math.round(to * i/steps)); if (i >= steps) clearInterval(t); }, 25); return () => clearInterval(t); }, [v]);
+  return <span ref={ref}>{n}{suffix}</span>;
+}
+function Events() {
+  const [tab, setTab] = useState(EVENTS[0].key);
+  const e = EVENTS.find(x => x.key === tab);
+  const ref = useRef(null); const v = useInView(ref);
+  return (
+    <section id="events" className="py-24 bg-paper">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionHead eyebrow="Events & impact" title="Past events" sub="Workshops, partnerships, and community tutoring — beyond the classroom." />
+        <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {[[202,'','Instagram followers'],[21,'','Instagram posts'],[2,'','Community partners'],[1,'×/wk','Lunch sessions']].map(([n,s,l]) => (
+            <div key={l} className="rounded-2xl bg-white border border-slate-200 p-5 text-center hover:border-brand transition">
+              <p className="font-display text-4xl text-deep"><Counter to={n} suffix={s} /></p>
+              <p className="text-sm text-slate-500 mt-1">{l}</p>
+            </div>
+          ))}
+        </div>
+        <div className="reveal flex gap-2 overflow-x-auto pb-2 mb-6">
+          {EVENTS.map(x => <button key={x.key} onClick={() => setTab(x.key)} className={`shrink-0 px-5 py-2.5 rounded-full font-semibold text-sm transition ${tab===x.key ? 'bg-deep text-white shadow-lg' : 'bg-sky/60 text-deep hover:bg-sky'}`}>{x.tab}</button>)}
+        </div>
+        <div ref={ref} key={tab} className="pop grid md:grid-cols-5 gap-6 rounded-xl bg-white border border-slate-200 p-6 sm:p-10 shadow-sm">
+          <div className="md:col-span-3">
+            {e.img && <a href={IG + e.post + '/'} target="_blank" rel="noopener noreferrer" className="float-right ml-5 mb-3 w-36 sm:w-44 block border-2 border-deep rotate-2 shadow-[4px_4px_0_#0F4C6E] hover:rotate-0 transition"><img src={e.img} alt={e.title + ' poster'} className="w-full block" /></a>}
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand">{e.partner}</span>
+            <h3 className="font-display text-3xl text-ink mt-2">{e.title}</h3>
+            <p className="flex items-center gap-2 text-slate-500 mt-2"><Icon n="calendar" className="w-4 h-4" />{e.date}</p>
+            <p className="text-slate-600 mt-4 text-lg">{e.desc}</p>
+          </div>
+          <div className="md:col-span-2 rounded-2xl bg-mist border border-sky p-6">
+            <p className="font-semibold text-deep mb-4">Highlights</p>
+            <ul className="space-y-3">
+              {e.highlights.map((h,i) => (
+                <li key={h} className="transition-all duration-500" style={{ opacity: v ? 1 : 0, transform: v ? 'none' : 'translateX(12px)', transitionDelay: `${i*120}ms` }}>
+                  <div className="flex items-center gap-2 text-slate-700"><Icon n="check" className="w-4 h-4 text-brand" />{h}</div>
+                  <div className="h-1 mt-2 rounded-full bg-white overflow-hidden"><div className="h-full bg-brand transition-all duration-1000" style={{ width: v ? '100%' : '0%', transitionDelay: `${i*150}ms` }} /></div>
+                </li>
+              ))}
+            </ul>
+            <a href={CONFIG.links.instagram} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:gap-3 transition-all"><Icon n="insta" className="w-4 h-4" />See posts on Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ INSTAGRAM GALLERY ============================ */
+function Gallery() {
+  return (
+    <section id="posts" className="py-24 bg-sky">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionHead eyebrow="@troy.learning.league" title="From our Instagram" sub="Recent posts. Tap one to open it on Instagram." />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {POSTS.map(([id,label],i) => (
+            <a key={id} href={IG + id + '/'} target="_blank" rel="noopener noreferrer" className="reveal group block bg-white border-2 border-deep shadow-[4px_4px_0_#0F4C6E] hover:-translate-y-1 hover:shadow-[6px_6px_0_#0F4C6E] transition" style={{ transitionDelay: `${(i%4)*50}ms` }}>
+              <img src={`img/${id}.webp`} alt={label + ' poster'} loading="lazy" className="w-full aspect-[4/5] object-cover block" />
+              <p className="px-3 py-2 text-sm font-bold text-deep border-t-2 border-deep">{label}</p>
+            </a>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <a href={CONFIG.links.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-deep text-white font-bold px-5 py-3 rounded-lg hover:bg-ink transition"><Icon n="insta" className="w-5 h-5" />Follow @troy.learning.league</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ TEAM ============================ */
+function Team() {
+  return (
+    <section id="team" className="py-24 bg-mist">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionHead eyebrow="Meet the board" title="Meet the board" />
+        <div className="grid sm:grid-cols-3 gap-5">
+          {CONFIG.board.map((b,i) => (
+            <div key={b.name} className="reveal group rounded-xl bg-white border border-slate-200 p-7 text-center hover:border-deep transition-all" style={{ transitionDelay: `${i*80}ms` }}>
+              <div className="mx-auto w-24 h-24 rounded-full bg-sky p-1"><div className="w-full h-full rounded-full bg-white grid place-items-center font-display text-2xl text-deep">{initials(b.name)}</div></div>
+              <h3 className="font-display font-bold text-xl mt-4">{b.name}</h3>
+              <p className="text-brand font-semibold text-sm">{b.role}</p>
+              <p className="text-slate-500 text-sm mt-3">{b.blurb}</p>
+            </div>
+          ))}
+        </div>
+        <div className="reveal mt-8 rounded-xl border-2 border-dashed border-brand/50 bg-white/60 p-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <h3 className="font-display font-bold text-2xl text-deep">We’re recruiting board members!</h3>
+              <p className="text-slate-600 mt-1">Help lead tutoring, events, and outreach this year.</p>
+              <div className="flex flex-wrap gap-2 mt-4">{CONFIG.openRoles.map(r => <span key={r} className="text-sm font-semibold bg-sun/70 text-ink px-3 py-1 rounded-full">{r}</span>)}</div>
+            </div>
+            <FormLink href={CONFIG.links.boardForm} variant="outline">Apply for the board</FormLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ FORMS HUB ============================ */
+function Forms() {
+  const all = [
+    { t:'Tutor Application', d:'Sign up to tutor and list your subjects.', who:'Tutors', href:CONFIG.links.tutorForm },
+    { t:'Tutee Request', d:'Request a tutor for a class, exam, or competition.', who:'Tutees', href:CONFIG.links.tuteeForm },
+    { t:'Volunteer Hours Log', d:'Log your hours after every lesson so they can be signed off each semester. Also in Google Classroom.', who:'Tutors', href:CONFIG.links.hoursForm },
+    { t:'Board Application', d:'Apply for an open board position.', who:'Everyone', href:CONFIG.links.boardForm },
+  ];
+  const [f, setF] = useState('All');
+  const shown = all.filter(x => f === 'All' || x.who === f);
+  return (
+    <section id="forms" className="py-24 bg-paper">
+      <div className="mx-auto max-w-5xl px-4">
+        <SectionHead eyebrow="Forms & resources" title="Forms" sub="No more digging through Google Classroom." />
+        <div className="reveal flex justify-center gap-2 mb-6">{['All','Tutors','Tutees','Everyone'].map(x => <button key={x} onClick={() => setF(x)} className={`px-4 py-2 rounded-full text-sm font-semibold transition ${f===x ? 'bg-deep text-white' : 'bg-sky/60 text-deep hover:bg-sky'}`}>{x}</button>)}</div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {shown.map(x => (
+            <div key={x.t} className="pop flex items-start gap-4 rounded-2xl bg-white border border-slate-200 p-5 hover:border-brand hover:shadow-lg transition">
+              <div className="w-12 h-12 shrink-0 rounded-xl bg-sky text-deep grid place-items-center"><Icon n="file" /></div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap"><h3 className="font-semibold text-ink">{x.t}</h3><span className="text-[11px] font-semibold bg-mist text-brand px-2 py-0.5 rounded-full border border-sky">{x.who}</span></div>
+                <p className="text-sm text-slate-500 mt-1">{x.d}</p>
+                {x.href
+                  ? <a href={x.href} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand hover:gap-2 transition-all">Open form <Icon n="ext" className="w-4 h-4" /></a>
+                  : <span className="mt-3 inline-block text-sm text-slate-400">Coming soon</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ FAQ ============================ */
+function FAQ() {
+  const [open, setOpen] = useState(0);
+  return (
+    <section id="faq" className="py-24 bg-mist">
+      <div className="mx-auto max-w-3xl px-4">
+        <SectionHead eyebrow="FAQ" title="Frequently asked questions" />
+        <div className="space-y-3">
+          {FAQS.map((f,i) => {
+            const on = open === i;
+            return (
+              <div key={i} className={`reveal rounded-2xl border transition-all ${on ? 'bg-white border-brand shadow-lg' : 'bg-white/70 border-slate-200'}`}>
+                <button onClick={() => setOpen(on ? -1 : i)} className="w-full flex items-center justify-between gap-4 text-left px-6 py-5" aria-expanded={on}>
+                  <span className="font-semibold text-ink">{f.q}</span>
+                  <span className={`shrink-0 w-8 h-8 rounded-full grid place-items-center transition ${on ? 'bg-deep text-white rotate-180' : 'bg-sky text-deep'}`}><Icon n="chevron" className="w-4 h-4" /></span>
+                </button>
+                <div className="grid transition-all duration-300" style={{ gridTemplateRows: on ? '1fr' : '0fr' }}>
+                  <div className="overflow-hidden"><p className="px-6 pb-5 text-slate-600">{f.a}</p></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ FOOTER ============================ */
+function Footer() {
+  const [email, setEmail] = useState('');
+  const [state, setState] = useState('idle');
+  const [msg, setMsg] = useState('');
+  useEffect(() => TLL.onUser(({ user }) => setEmail(user ? user.email : '')), []);
+  const submit = async e => {
+    e.preventDefault();
+    setState('busy');
+    try { const r = await TLL.subscribe(); setEmail(r.email); setState(r.already ? 'already' : 'ok'); }
+    catch (err) { setMsg(TLL.friendlyError(err)); setState('error'); }
+  };
+  return (
+    <footer className="bg-ink text-sky/80 pt-20 pb-10 relative overflow-hidden">
+      <div className="absolute inset-0 grain opacity-40" />
+      <div className="relative mx-auto max-w-7xl px-4">
+        <div className="rounded-xl bg-sun border-2 border-deep p-8 sm:p-10 flex flex-col lg:flex-row gap-6 lg:items-center justify-between mb-16 shadow-2xl">
+          <div><h3 className="font-display text-3xl text-deep">Join Learning League</h3><p className="text-ink/80 mt-1">Tutoring is free. Sign-ups take about 5 minutes.</p></div>
+          <div className="flex flex-wrap gap-3"><FormLink href={CONFIG.links.tutorForm} className="!bg-deep hover:!bg-ink">Become a Tutor</FormLink><FormLink href={CONFIG.links.tuteeForm} variant="outline" className="bg-white">Get a Tutor</FormLink></div>
+        </div>
+        <div className="grid md:grid-cols-4 gap-10">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-3"><Logo size={48} /><span className="font-logo text-2xl text-white tracking-wide">LEARNING LEAGUE</span></div>
+            <p className="mt-4 max-w-sm">Connecting Troy students with tutors and tutees. Earn service hours. Grow together.</p>
+            <form onSubmit={submit} className="mt-6 max-w-md" noValidate>
+              <label className="text-sm font-semibold text-white" htmlFor="nl">Get event & meeting updates</label>
+              <div className="flex gap-2 mt-2">
+                <div className="relative flex-1 flex items-center pl-9 pr-3 py-3 rounded-xl bg-white/10 border border-white/15 text-white text-sm"><Icon n="mail" className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />{email || 'Uses your Google email'}</div>
+                <button disabled={state==='busy'} className="rounded-xl bg-sun text-ink font-semibold px-5 hover:bg-sunDeep transition disabled:opacity-60">{email ? 'Subscribe' : 'Subscribe with Google'}</button>
+              </div>
+              {state==='error' && <p className="text-red-300 text-sm mt-2">{msg}</p>}
+              {state==='already' && <p className="text-emerald-300 text-sm mt-2">You’re already on the list.</p>}
+              {state==='ok' && <p className="text-emerald-300 text-sm mt-2 flex items-center gap-1"><Icon n="check" className="w-4 h-4" />Thanks! {email} is on the list.</p>}
+            </form>
+          </div>
+          <div>
+            <p className="font-semibold text-white mb-3">Explore</p>
+            <ul className="space-y-2 text-sm">{[['Mission','mission'],['Find a Tutor','tutors'],['Path Quiz','quiz'],['Hours Calculator','hours'],['Events','events'],['Posts','posts'],['Team','team'],['FAQ','faq']].map(([l,id]) => <li key={id}><button onClick={() => go(id)} className="hover:text-white">{l}</button></li>)}</ul>
+          </div>
+          <div>
+            <p className="font-semibold text-white mb-3">Visit us</p>
+            <ul className="space-y-3 text-sm">
+              <li className="flex gap-2"><Icon n="calendar" className="w-4 h-4 mt-0.5" />{CONFIG.meeting.when}</li>
+              <li className="flex gap-2"><Icon n="pin" className="w-4 h-4 mt-0.5" />{CONFIG.meeting.where}, Troy High School</li>
+              <li className="flex gap-2"><Icon n="users" className="w-4 h-4 mt-0.5" />{CONFIG.meeting.walkin}</li>
+              <li><a href={CONFIG.links.instagram} target="_blank" rel="noopener noreferrer" className="flex gap-2 hover:text-white"><Icon n="insta" className="w-4 h-4 mt-0.5" />@troy.learning.league</a></li>
+            </ul>
+            <div className="flex flex-wrap gap-2 mt-5">{['Student-run','Free tutoring','Service hours'].map(b => <span key={b} className="text-[11px] font-semibold border border-white/20 rounded-full px-2.5 py-1 flex items-center gap-1"><Icon n="check" className="w-3 h-3 text-sun" />{b}</span>)}</div>
+          </div>
+        </div>
+        <div className="border-t border-white/10 mt-14 pt-6 flex flex-col sm:flex-row justify-between gap-2 text-xs text-sky/60">
+          <p>© {new Date().getFullYear()} Troy Learning League. Student-run club.</p>
+          <p>Troy High School</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ============================ APP ============================ */
+function App() {
+  const [subject, setSubject] = useState('All');
+  useReveal();
+  return (
+    <>
+      <Navbar onPickSubject={setSubject} />
+      <main>
+        <Hero />
+        <Marquee />
+        <Mission />
+        <Join />
+        <TutorFinder subject={subject} setSubject={setSubject} />
+        <PathQuiz />
+        <HoursCalc />
+        <Events />
+        <Gallery />
+        <Team />
+        <Forms />
+        <FAQ />
+      </main>
+      <Footer />
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

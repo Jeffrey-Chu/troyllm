@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUPER DW — Healing Crystals & Handcrafted Bracelets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rice:#F5F2EB;--paper:#FBF9F4;--sumi:#161615;--ink2:#3d3b37;--mute:#7b766c;
+  --alab:#EAE5D9;--glass:rgba(245,242,235,.78);--line:rgba(22,22,21,.1);
+  --seal:#B83A2D;--jade:#5F7A6E;--rose:#B07E62;--rose2:#E2C2A8;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--cn:'Noto Serif TC',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--rice);color:var(--sumi);font-family:var(--sans);font-size:15px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.28;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .35 0 0 0 0 .28 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:-.005em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--jade)}
+.cn{font-family:var(--cn)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+.seal{display:inline-flex;align-items:center;justify-content:center;text-align:center;background:var(--seal);color:#F5F2EB;font-family:var(--cn);font-weight:700;border-radius:3px;line-height:1.05;box-shadow:inset 0 0 0 2px rgba(245,242,235,.22)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;background:var(--sumi);color:var(--rice);border-radius:2px;font-size:12.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:transform .7s var(--ease),background .5s var(--ease),opacity .4s}
+.btn:hover{background:#2c2b28;transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--sumi);box-shadow:inset 0 0 0 1px var(--sumi)}
+.btn.ghost:hover{background:var(--alab)}
+.btn:disabled{opacity:.35;pointer-events:none}
+.chip{padding:7px 14px;border:1px solid var(--line);border-radius:40px;font-size:12.5px;transition:all .5s var(--ease);white-space:nowrap}
+.chip:hover{border-color:var(--sumi)}
+.chip.on{background:var(--sumi);color:var(--rice);border-color:var(--sumi)}
+.sec{padding:120px 0}
+.sechead{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:52px}
+.sechead h2{font-size:clamp(40px,4.8vw,66px);margin-top:10px}
+.sechead p{color:var(--ink2);max-width:460px;justify-self:end}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;height:68px;gap:40px}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:21px;letter-spacing:.2em;font-weight:500}
+.logo svg{width:34px;height:34px}
+.navlinks{display:flex;gap:30px;font-size:13px;margin-left:auto}
+.navlinks a{position:relative;color:var(--ink2);transition:color .4s}
+.navlinks a:hover{color:var(--sumi)}
+.navlinks a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:var(--sumi);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.navlinks a:hover::after{transform:scaleX(1)}
+.navicons{display:flex;gap:6px;align-items:center}
+.iconbtn{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;transition:background .4s}
+.iconbtn:hover{background:var(--alab)}
+.iconbtn svg{width:19px;height:19px}
+.iconbtn .n{position:absolute;top:3px;right:2px;min-width:16px;height:16px;border-radius:10px;background:var(--seal);color:#fff;font-family:var(--mono);font-size:9.5px;display:grid;place-items:center;padding:0 4px;transform:scale(0);transition:transform .6s var(--ease)}
+.iconbtn .n.on{transform:scale(1)}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center;padding:72px 0 100px}
+.hero h1{font-size:clamp(52px,6.6vw,96px)}
+.hero h1 em{font-style:italic;color:var(--rose)}
+.hero .lead{max-width:430px;margin:26px 0 34px;font-size:16.5px;color:var(--ink2)}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero .stats{display:flex;gap:36px;margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+.hero .stats b{display:block;font-family:var(--serif);font-size:32px;font-weight:500;line-height:1}
+.hero .stats span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase}
+.stage{position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/5;background:#222;perspective:1200px}
+.stage .ph{position:absolute;inset:-4%;background-size:cover;background-position:center;transition:transform 1s var(--ease),filter 1.4s var(--ease)}
+.stage[data-l="sun"] .ph{filter:saturate(1.08) sepia(.12) brightness(1.04)}
+.stage[data-l="spot"] .ph{filter:contrast(1.12) brightness(.95)}
+.stage[data-l="moon"] .ph{filter:saturate(.7) hue-rotate(-8deg) brightness(.82) contrast(1.05)}
+.stage .fx{position:absolute;inset:0;pointer-events:none;transition:opacity 1.4s var(--ease),background 1.4s var(--ease)}
+.stage[data-l="sun"] .fx{background:linear-gradient(200deg,rgba(255,214,150,.28),transparent 55%)}
+.stage[data-l="spot"] .fx{background:radial-gradient(circle at var(--sx,55%) var(--sy,45%),transparent 18%,rgba(10,10,10,.72) 62%)}
+.stage[data-l="moon"] .fx{background:linear-gradient(180deg,rgba(80,120,160,.35),rgba(10,20,30,.35))}
+.stage .tag{position:absolute;left:18px;top:16px;z-index:3;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.pin{position:absolute;z-index:4;transform:translate(-50%,-50%)}
+.pin>button{width:30px;height:30px;border-radius:50%;background:rgba(245,242,235,.92);font-family:var(--cn);font-size:13px;display:grid;place-items:center;box-shadow:0 4px 18px rgba(0,0,0,.25);transition:transform .6s var(--ease),background .4s,color .4s}
+.pin>button::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(255,255,255,.75);animation:ring 2.8s var(--ease) infinite}
+@keyframes ring{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.pin.open>button,.pin>button:hover{background:var(--seal);color:#fff;transform:scale(1.12)}
+.pin .tip{position:absolute;left:42px;top:50%;width:230px;transform:translate(-8px,-50%);opacity:0;pointer-events:none;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:14px 16px;border-radius:3px;font-size:12.5px;line-height:1.55;transition:all .7s var(--ease)}
+.pin.l .tip{left:auto;right:42px;transform:translate(8px,-50%)}
+.pin.open .tip{opacity:1;transform:translate(0,-50%)}
+.pin .tip b{display:block;font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:2px}
+.stagebar{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:40px;padding:3px;background:var(--paper)}
+.seg button{padding:7px 15px;border-radius:40px;font-size:12px;transition:all .6s var(--ease);color:var(--ink2)}
+.seg button.on{background:var(--sumi);color:var(--rice)}
+
+.trustbar{border-block:1px solid var(--line);background:var(--paper)}
+.trustbar .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding:22px 32px}
+.trustbar div{display:flex;gap:12px;align-items:center;font-size:13px;color:var(--ink2)}
+.trustbar svg{width:22px;height:22px;stroke:var(--jade);flex:none}
+
+/* SHOP */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.toolbar .chips{display:flex;gap:6px;flex-wrap:wrap}
+.toolbar .right{display:flex;gap:18px;align-items:center}
+.selectlite{appearance:none;border:1px solid var(--line);background:var(--paper);padding:8px 32px 8px 14px;border-radius:40px;font-size:12.5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23161615'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;cursor:pointer}
+.count{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:54px 26px}
+.card{cursor:pointer}
+.card .frame{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--alab);border-radius:2px}
+.card .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1s var(--ease),transform 1.6s var(--ease)}
+.card .frame .b{opacity:0;transform:scale(1.12)}
+.card:hover .frame .a{transform:scale(1.04)}
+.card.has2:hover .frame .a{opacity:0}
+.card.has2:hover .frame .b{opacity:1;transform:scale(1)}
+.card:not(.has2):hover .frame .a{transform:scale(1.14)}
+.card .one{position:absolute;right:12px;bottom:12px;width:46px;height:46px;font-size:10.5px;opacity:0;transform:rotate(-16deg) scale(.6);transition:all .9s var(--ease)}
+.card:hover .one{opacity:1;transform:rotate(-8deg) scale(1)}
+.card .heart{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(245,242,235,.9);display:grid;place-items:center;z-index:2;transition:transform .5s var(--ease)}
+.card .heart:hover{transform:scale(1.1)}
+.card .heart svg{width:16px;height:16px;transition:fill .4s}
+.card .heart.on svg{fill:var(--seal);stroke:var(--seal)}
+.card .quick{position:absolute;left:12px;right:12px;bottom:12px;padding:11px;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transform:translateY(130%);transition:transform .8s var(--ease);border-radius:2px;width:calc(100% - 82px)}
+.card:hover .quick{transform:none}
+.card .quick:hover{background:var(--sumi);color:var(--rice)}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;gap:10px}
+.card h3{font-size:22px}
+.card .price{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.card .sub{display:flex;justify-content:space-between;margin-top:3px;font-size:12.5px;color:var(--mute)}
+.card .tags{display:flex;gap:6px;margin-top:10px}
+.card .tags span{font-size:10.5px;letter-spacing:.06em;padding:2px 8px;border:1px solid var(--line);border-radius:20px;color:var(--ink2)}
+.empty{grid-column:1/-1;text-align:center;padding:70px 0;font-family:var(--serif);font-size:24px;font-style:italic;color:var(--mute)}
+
+/* HORSE */
+.horse{background:var(--sumi);color:var(--rice)}
+.horse .inner{display:grid;grid-template-columns:420px 1fr;gap:80px;align-items:center}
+.horse .card2{position:relative}
+.horse .card2 img{border-radius:3px;width:100%}
+.horse .card2 .seal{position:absolute;right:-18px;bottom:-18px;width:76px;height:76px;font-size:18px;transform:rotate(-8deg)}
+.horse h2{font-size:clamp(40px,4.6vw,62px)}
+.horse .eyebrow{color:var(--rose2)}
+.horse p{color:#cfc8b9;max-width:520px;margin-top:18px}
+.finder{margin-top:34px;padding-top:28px;border-top:1px solid rgba(245,242,235,.14)}
+.finder .row{display:flex;gap:10px;max-width:440px;margin-top:12px}
+.finder input{flex:1;background:transparent;border:1px solid rgba(245,242,235,.25);color:var(--rice);padding:12px 14px;border-radius:2px;font-family:var(--mono)}
+.finder input::placeholder{color:#7b766c}
+.finder .btn{background:var(--rice);color:var(--sumi)}
+.finder .out{margin-top:18px;min-height:24px;font-size:14px;color:#e7e1d4}
+.finder .out .rec{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.finder .out .rec button{padding:8px 14px;border:1px solid rgba(245,242,235,.3);border-radius:30px;font-size:12.5px;transition:all .5s var(--ease)}
+.finder .out .rec button:hover{background:var(--rice);color:var(--sumi)}
+
+/* CHART */
+.chartlayout{display:grid;grid-template-columns:1fr 360px;gap:50px;align-items:start}
+.chartbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:40px;padding:8px 14px;background:var(--paper);min-width:220px}
+.search input{border:0;background:transparent;outline:none;width:100%;font-size:13px}
+.spheres{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:22px 12px}
+.sph{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:10px 4px;border-radius:4px;transition:background .5s var(--ease),opacity .5s var(--ease),transform .7s var(--ease)}
+.sph:hover{background:var(--alab)}
+.sph.on{background:var(--alab);box-shadow:inset 0 0 0 1px var(--sumi)}
+.sph.dim{opacity:.18;pointer-events:none}
+.sph .ball{width:54px;height:54px;border-radius:50%;box-shadow:inset -6px -8px 14px rgba(0,0,0,.35),inset 6px 6px 10px rgba(255,255,255,.35),0 8px 14px rgba(0,0,0,.12);transition:transform .8s var(--ease)}
+.sph:hover .ball{transform:translateY(-4px) rotate(8deg)}
+.sph b{font-family:var(--serif);font-size:15.5px;font-weight:600;line-height:1.15}
+.sph span{font-family:var(--cn);font-size:11.5px;color:var(--mute)}
+.panel{position:sticky;top:92px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:28px}
+.panel .ball{width:84px;height:84px;border-radius:50%;box-shadow:inset -10px -12px 20px rgba(0,0,0,.35),inset 8px 8px 14px rgba(255,255,255,.4),0 14px 24px rgba(0,0,0,.14)}
+.panel h3{font-size:32px;margin-top:18px}
+.panel .zh{font-family:var(--cn);color:var(--rose);font-size:16px}
+.panel dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:18px 0;font-size:13px}
+.panel dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding-top:3px}
+.panel p{font-size:14px;color:var(--ink2)}
+.panel .acts{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.panel .acts .btn{padding:11px 16px;font-size:11px}
+.origchart{display:flex;gap:16px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);cursor:zoom-in}
+.origchart img{width:64px;height:80px;object-fit:cover;border-radius:2px}
+.origchart b{font-family:var(--serif);font-size:17px;font-weight:600;display:block}
+.origchart small{font-size:12px;color:var(--mute)}
+
+/* BUILDER */
+.builder{background:var(--alab)}
+.bl{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.bstage{position:relative;aspect-ratio:1;background:radial-gradient(circle at 50% 40%,#fbf9f4,#e3dccd);border-radius:50%;display:grid;place-items:center;max-width:520px;margin:0 auto;width:100%}
+.bstage svg{width:86%;height:86%;overflow:visible}
+.bstage .lbl{position:absolute;bottom:14%;text-align:center;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.1em}
+.bstage svg circle.bead{cursor:pointer;transition:transform .5s var(--ease)}
+.ctrl h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px;font-weight:500}
+.palette{display:flex;flex-wrap:wrap;gap:8px}
+.palette button{width:38px;height:38px;border-radius:50%;box-shadow:inset -4px -5px 9px rgba(0,0,0,.3),inset 4px 4px 7px rgba(255,255,255,.35);position:relative;transition:transform .5s var(--ease)}
+.palette button:hover{transform:translateY(-3px)}
+.palette button.on::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--sumi)}
+.palette button.on.b::after{border-color:var(--seal);border-style:dashed}
+.stonename{font-size:13px;color:var(--ink2);margin-top:10px;min-height:20px}
+.rangerow{display:flex;align-items:center;gap:14px}
+.rangerow input{flex:1;accent-color:var(--sumi)}
+.btotal{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.btotal b{font-family:var(--serif);font-size:34px;font-weight:500}
+
+/* QUIZ */
+.quiz{max-width:820px;margin:0 auto;text-align:center}
+.qprog{height:2px;background:var(--line);margin:30px auto 40px;max-width:300px;position:relative;overflow:hidden}
+.qprog i{position:absolute;inset:0;background:var(--sumi);transform-origin:left;transition:transform 1s var(--ease)}
+.qbox{min-height:260px}
+.qbox h3{font-size:clamp(30px,3.4vw,44px)}
+.qopts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
+.qopts button{padding:22px 14px;border:1px solid var(--line);border-radius:3px;background:var(--paper);transition:all .6s var(--ease);text-align:center}
+.qopts button:hover{border-color:var(--sumi);transform:translateY(-3px)}
+.qopts button .i{font-family:var(--cn);font-size:26px;display:block;color:var(--rose);margin-bottom:6px}
+.qopts button b{font-weight:500;font-size:14px;display:block}
+.qopts button small{font-size:11.5px;color:var(--mute)}
+.qresult{display:grid;grid-template-columns:240px 1fr;gap:34px;text-align:left;align-items:center;margin-top:20px}
+.qresult img{aspect-ratio:4/5;object-fit:cover;border-radius:3px;width:100%}
+.fade{animation:fade .9s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* CARE + IG */
+.care{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.care div{border-top:1px solid var(--sumi);padding-top:18px}
+.care .n{font-family:var(--mono);font-size:11px;color:var(--seal)}
+.care h4{font-size:24px;margin:8px 0 8px}
+.care p{font-size:13.5px;color:var(--ink2)}
+.ig{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.ig a{position:relative;aspect-ratio:1;overflow:hidden;background:var(--alab)}
+.ig img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease),filter .8s}
+.ig a:hover img{transform:scale(1.08);filter:brightness(.75)}
+.ig a::after{content:"View on Instagram";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:opacity .6s}
+.ig a:hover::after{opacity:1}
+
+footer{background:var(--sumi);color:var(--rice);padding:80px 0 36px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+footer h3{font-size:46px;letter-spacing:.06em}
+footer p{color:#b9b2a2;font-size:13.5px}
+footer h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--rose2);font-weight:500;margin-bottom:12px}
+footer .base{margin-top:60px;padding-top:22px;border-top:1px solid rgba(245,242,235,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:10.5px;color:#7b766c}
+
+/* DRAWERS */
+.scrim{position:fixed;inset:0;background:rgba(22,22,21,.45);z-index:80;opacity:0;pointer-events:none;transition:opacity .8s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;z-index:90;background:var(--rice);transform:translateX(104%);transition:transform 1s var(--ease);display:flex;flex-direction:column;box-shadow:-30px 0 70px rgba(0,0,0,.14)}
+.drawer.on{transform:none}
+.drawer.pdp{width:min(1060px,100%)}
+.drawer.cart{width:min(450px,100%);background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:16px 26px;border-bottom:1px solid var(--line);flex:none}
+.x{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:all .6s var(--ease)}
+.x:hover{background:var(--sumi);color:var(--rice);transform:rotate(90deg)}
+.dbody{flex:1;overflow-y:auto}
+.pgrid{display:grid;grid-template-columns:1.05fr 1fr;min-height:100%}
+.gal{background:var(--alab);padding:26px;display:flex;flex-direction:column;gap:14px}
+.zoom{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:2px;cursor:zoom-in;background:#ddd}
+.zoom img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.zoom.z img{transform:scale(2.2)}
+.zoom .hint{position:absolute;left:12px;bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;background:var(--glass);padding:5px 9px;border-radius:2px}
+.thumbs{display:flex;gap:8px}
+.thumbs button{width:64px;height:76px;overflow:hidden;border-radius:2px;opacity:.55;transition:opacity .5s;box-shadow:inset 0 0 0 1px transparent}
+.thumbs button.on{opacity:1;outline:1px solid var(--sumi);outline-offset:2px}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.pinfo{padding:34px 36px 44px}
+.pinfo h2{font-size:44px;margin-top:8px}
+.pinfo .zh{font-family:var(--cn);color:var(--rose);font-size:17px;margin-top:4px}
+.pinfo .pr{font-family:var(--mono);font-size:19px;margin:18px 0 6px}
+.lore{margin:22px 0;padding:18px 20px;background:var(--paper);border-left:2px solid var(--seal);font-size:14px;color:var(--ink2)}
+.lore h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--seal);font-weight:500;margin-bottom:8px}
+.specs{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:10px}
+.specs div{padding:11px 0;border-bottom:1px solid var(--line)}
+.specs span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.specs b{font-family:var(--mono);font-weight:500;font-size:13px}
+.fit{margin-top:22px;padding:16px 18px;border:1px solid var(--line);border-radius:3px}
+.fit .rangerow{margin-top:8px}
+.fit .res{font-size:13px;color:var(--ink2);margin-top:8px}
+.chime{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:3px;margin-top:14px;cursor:pointer;transition:border-color .5s;width:100%;text-align:left}
+.chime:hover{border-color:var(--sumi)}
+.chime .disc{width:40px;height:40px;border-radius:50%;background:var(--sumi);color:var(--rice);display:grid;place-items:center;flex:none}
+.chime .bars{display:flex;gap:3px;align-items:center;height:26px;margin-left:auto}
+.chime .bars i{width:3px;height:4px;background:var(--jade);border-radius:2px}
+.unit{display:inline-flex;border:1px solid var(--line);border-radius:20px;overflow:hidden;font-family:var(--mono);font-size:10.5px}
+.unit button{padding:3px 10px}
+.unit button.on{background:var(--sumi);color:var(--rice)}
+.addrow{display:flex;gap:10px;margin-top:24px}
+.addrow .btn{flex:1}
+
+.citem{display:grid;grid-template-columns:70px 1fr auto;gap:14px;padding:18px 26px;border-bottom:1px solid var(--line)}
+.citem .th{width:70px;height:86px;border-radius:2px;overflow:hidden;background:var(--alab);display:grid;place-items:center}
+.citem .th img{width:100%;height:100%;object-fit:cover}
+.citem .th svg{width:62px;height:62px}
+.citem h4{font-size:19px}
+.citem select{margin-top:6px;width:100%;padding:6px 8px;border:1px solid var(--line);background:var(--paper);font-size:12px;border-radius:2px}
+.citem .rm{font-size:11px;text-decoration:underline;color:var(--mute);margin-top:6px}
+.citem .p{font-family:var(--mono);font-size:13px}
+.steps{display:flex;gap:6px;padding:14px 26px 0;font-family:var(--mono);font-size:10px;letter-spacing:.1em;flex:none}
+.steps span{flex:1;border-top:2px solid var(--line);padding-top:6px;color:#a39d90;transition:all .6s}
+.steps span.on{border-color:var(--sumi);color:var(--sumi)}
+.cfoot{padding:20px 26px;border-top:1px solid var(--sumi);flex:none;background:rgba(251,249,244,.7)}
+.cfoot .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.cfoot .total{font-family:var(--serif);font-size:24px;margin-top:10px}
+.cfoot .total b{font-family:var(--mono);font-size:18px;font-weight:500}
+.cempty{padding:70px 26px;text-align:center;font-family:var(--serif);font-size:23px;font-style:italic;color:var(--mute)}
+.form{padding:16px 26px;display:grid;gap:14px}
+.form label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.form input{width:100%;padding:11px 12px;border:1px solid var(--line);background:var(--paper);border-radius:2px;margin-top:4px}
+.form .err{color:var(--seal);font-size:12px;min-height:16px}
+.cert{margin:22px 26px;padding:28px 22px;background:#FDFBF6;border:1px solid var(--rose);text-align:center;position:relative;box-shadow:0 0 0 6px #FDFBF6,0 0 0 7px var(--line)}
+.cert h3{font-size:28px;margin:8px 0 2px}
+.cert .line{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding:6px 0;font-family:var(--mono);font-size:11px;text-align:left}
+.cert .bless{font-family:var(--cn);color:var(--seal);margin-top:16px}
+.cert .seal{position:absolute;right:16px;bottom:16px;width:54px;height:54px;font-size:14px;transform:rotate(-10deg)}
+
+.lightbox{position:fixed;inset:0;z-index:120;background:rgba(15,15,14,.92);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .7s var(--ease);padding:30px}
+.lightbox.on{opacity:1;pointer-events:auto}
+.lightbox img{max-height:90vh;max-width:min(92vw,720px);border-radius:3px;transform:scale(.96);transition:transform 1s var(--ease)}
+.lightbox.on img{transform:none}
+.lightbox .x{position:absolute;top:20px;right:20px;color:#fff;border-color:rgba(255,255,255,.3)}
+.lightbox p{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#bbb;font-size:12px;font-family:var(--mono)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);opacity:0;z-index:130;background:var(--sumi);color:var(--rice);padding:12px 22px;border-radius:40px;font-size:13px;transition:all .8s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.cur{position:fixed;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--sumi);z-index:140;pointer-events:none;display:grid;place-items:center;transition:width .6s var(--ease),height .6s var(--ease),background .6s}
+.cur span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--rice);opacity:0;transition:opacity .4s}
+.cur.big{width:80px;height:80px;background:rgba(22,22,21,.85)}
+.cur.big span{opacity:1}
+@media (pointer:coarse){.cur{display:none}}
+
+@media(max-width:1060px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .hero{grid-template-columns:1fr;gap:44px}
+  .chartlayout{grid-template-columns:1fr}
+  .panel{position:static}
+  .bl,.horse .inner{grid-template-columns:1fr;gap:50px}
+  .horse .card2{max-width:380px}
+  .navlinks{display:none}
+  .pgrid{grid-template-columns:1fr}
+  .sechead{grid-template-columns:1fr}
+  .sechead p{justify-self:start}
+  .ig{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:720px){
+  .wrap{padding:0 18px}
+  .sec{padding:84px 0}
+  .grid{grid-template-columns:repeat(2,1fr);gap:36px 14px}
+  .card h3{font-size:18px}
+  .card .tags,.card .quick{display:none}
+  .trustbar .wrap{grid-template-columns:1fr 1fr;gap:14px;padding:18px}
+  .qopts{grid-template-columns:1fr 1fr}
+  .qresult{grid-template-columns:1fr}
+  .care{grid-template-columns:1fr 1fr}
+  footer .cols{grid-template-columns:1fr}
+  .pin .tip{width:180px}
+  .pinfo{padding:26px 20px}
+  .hero .stats{gap:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"><span id="curT">INSPECT</span></div>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.5" fill="#161615"/><g fill="none" stroke="#E2C2A8" stroke-width=".9"><path d="M20 8.5l5 7.5-5 10.5-5-10.5z"/><path d="M15 16h10M20 8.5v18"/><path d="M8.5 21.5c4.5 0 8.5 2.2 11.5 6.2 3-4 7-6.2 11.5-6.2-2 5.4-6.4 8.6-11.5 8.6s-9.5-3.2-11.5-8.6z"/></g><circle cx="12" cy="11" r=".9" fill="#E2C2A8"/><circle cx="29" cy="12" r=".9" fill="#E2C2A8"/></svg>
+      SUPER DW
+    </a>
+    <div class="navlinks"><a href="#shop">Shop</a><a href="#chart">Crystal Chart</a><a href="#builder">Design a Bracelet</a><a href="#quiz">Crystal Match</a><a href="#care">Care</a></div>
+    <div class="navicons">
+      <button class="iconbtn" id="wishBtn" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="n" id="wishN">0</span></button>
+      <button class="iconbtn" id="bagBtn" aria-label="Bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.5 8h13l-1 12h-11z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span class="n" id="bagN">0</span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap hero" id="top">
+  <div class="reveal">
+    <div class="eyebrow">Healing Crystals · Handcrafted Bracelets</div>
+    <h1>The right stone can <em>transform</em> a life.</h1>
+    <p class="lead">SUPER DW is Daphne's studio for natural crystals and hand-strung bracelets — each piece cleansed, blessed and chosen for the meaning it has carried for centuries.</p>
+    <div class="ctas"><a class="btn" href="#shop">Shop the Collection</a><a class="btn ghost" href="#quiz">Find Your Crystal</a></div>
+    <div class="stats">
+      <div><b>One</b><span>of one pieces</span></div>
+      <div><b>32</b><span>stones in our chart</span></div>
+      <div><b>2026</b><span>Year of the Horse</span></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="stage" id="stage" data-l="sun" data-cur="INSPECT">
+      <div class="ph" id="stagePh" style="background-image:url(img/jade.jpg)"></div>
+      <div class="fx"></div>
+      <div class="tag">INSPECTION · Nº 01 · GREEN JADE & MOONSTONE</div>
+      <div class="pin" style="left:62%;top:24%"><button>月</button><div class="tip"><b>Moonstone Eye</b>A faceted moonstone set in gold — yin light to balance jade's growing energy.</div></div>
+      <div class="pin l" style="left:28%;top:44%"><button>色</button><div class="tip"><b>Colour · 色</b>Deep, even green. Jade is graded by colour that is rich, bright and even.</div></div>
+      <div class="pin" style="left:56%;top:58%"><button>金</button><div class="tip"><b>Gold Accents · 金</b>Gold-tone spacers and a carved charm add Metal energy, traditionally for prosperity.</div></div>
+      <div class="pin l" style="left:44%;top:84%"><button>工</button><div class="tip"><b>Craft · 工</b>Hand-strung on durable stretch cord and cleansed before it ships.</div></div>
+    </div>
+    <div class="stagebar">
+      <div class="seg" id="lightSeg"><button class="on" data-l="sun">Sunlight</button><button data-l="spot">Spotlight</button><button data-l="moon">Moonlight</button></div>
+      <span class="mono" style="color:var(--mute)">MOVE TO TILT · TAP THE PINS</span>
+    </div>
+  </div>
+</header>
+
+<div class="trustbar">
+  <div class="wrap">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="m9 12 2 2 4-4"/></svg>Natural, hand-selected stones</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Hand-strung by Daphne</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3a7 7 0 1 0 7 9 5.5 5.5 0 1 1-7-9z"/></svg>Moon-cleansed before shipping</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="9" width="16" height="11" rx="1"/><path d="M12 9v11M4 13h16M12 9c-2-4-6-4-6-1s6 1 6 1 6 2 6-1-4-3-6 1"/></svg>Gift-boxed with red string</div>
+  </div>
+</div>
+
+<section class="sec" id="shop">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <div><div class="eyebrow">The Collection · 珍藏</div><h2>Stones from the studio</h2></div>
+      <p>Every photo is from SUPER DW's own studio. Hover to look closer, tap to open the full story behind each stone.</p>
+    </div>
+    <div class="toolbar reveal">
+      <div class="chips" id="catChips"></div>
+      <div class="right">
+        <select class="selectlite" id="intSel" aria-label="Intention"></select>
+        <select class="selectlite" id="sortSel" aria-label="Sort"><option value="feat">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="sec horse">
+  <div class="wrap inner">
+    <div class="card2 reveal"><img src="img/horse.jpg" alt="SUPER DW 2026 Year of the Horse greeting"><span class="seal">馬年<br>大吉</span></div>
+    <div class="reveal">
+      <div class="eyebrow">2026 · Year of the Fire Horse · 丙午</div>
+      <h2>A stone for your year</h2>
+      <p>In Chinese tradition, each birth year carries one of the Five Elements — Wood, Fire, Earth, Metal or Water. Wearing a stone of your element, or the element that "feeds" it, is believed to keep your energy in balance. 馬到成功 — may success arrive as swiftly as the horse.</p>
+      <div class="finder">
+        <span class="eyebrow">Birth-year element finder</span>
+        <div class="row"><input id="yr" type="number" inputmode="numeric" placeholder="Your birth year, e.g. 2008"><button class="btn" id="yrGo">Reveal</button></div>
+        <div class="out" id="yrOut"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="chart">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <div><div class="eyebrow">Crystal Effects & Functions · 水晶功效表</div><h2>The Crystal Chart</h2></div>
+      <p>An interactive version of SUPER DW's crystal effects chart. Search a stone, filter by what you're hoping for, and tap any sphere to read its meaning.</p>
+    </div>
+    <div class="chartlayout">
+      <div>
+        <div class="chartbar">
+          <label class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="cs" placeholder="Search stones…"></label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="cfChips"></div>
+        </div>
+        <div class="spheres" id="spheres"></div>
+      </div>
+      <aside class="panel" id="panel"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec builder" id="builder">
+  <div class="wrap">
+    <div class="sechead reveal">
+      <div><div class="eyebrow">Bespoke · 訂製手串</div><h2>Design your bracelet</h2></div>
+      <p>Choose a main stone and an accent, set your wrist size, and pick a pattern. Daphne strings custom pieces by hand.</p>
+    </div>
+    <div class="bl">
+      <div class="bstage reveal"><svg id="bsvg" viewBox="0 0 300 300"></svg><div class="lbl" id="blbl"></div></div>
+      <div class="ctrl reveal">
+        <h4>Main stone</h4><div class="palette" id="palA"></div><div class="stonename" id="nameA"></div>
+        <h4>Accent stone</h4><div class="palette" id="palB"></div><div class="stonename" id="nameB"></div>
+        <h4>Pattern</h4><div class="seg" id="patSeg"><button data-p="solid" class="on">Single focal</button><button data-p="alt">Alternating</button><button data-p="trio">Every third</button></div>
+        <h4>Bead size</h4><div class="seg" id="sizeSeg"><button data-s="8">8 mm</button><button data-s="10" class="on">10 mm</button><button data-s="12">12 mm</button></div>
+        <h4>Wrist size · <span id="wv" class="mono"></span></h4><div class="rangerow"><input type="range" id="wr" min="13" max="20" step=".5" value="16"><span class="mono" id="bc"></span></div>
+        <div class="btotal"><div><span class="eyebrow" style="color:var(--mute)">Your design</span><br><b id="bprice"></b></div><button class="btn" id="bAdd">Add to Bag</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="quiz">
+  <div class="wrap quiz">
+    <div class="eyebrow">Crystal Match · 選石</div>
+    <h2 style="font-size:clamp(40px,4.8vw,66px);margin-top:10px">Which stone is calling you?</h2>
+    <div class="qprog"><i id="qbar" style="transform:scaleX(0)"></i></div>
+    <div class="qbox" id="qbox"></div>
+  </div>
+</section>
+
+<section class="sec" id="care" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sechead reveal"><div><div class="eyebrow">Ritual & Care · 淨化保養</div><h2>Keeping a stone clear</h2></div></div>
+    <div class="care reveal">
+      <div><span class="n">01 · 左進右出</span><h4>Which wrist</h4><p>Tradition says the left hand receives and the right hand releases. Wear wealth and love stones on the left; protective stones on the right.</p></div>
+      <div><span class="n">02 · 月光淨化</span><h4>Moon cleansing</h4><p>Rest your stones on a windowsill under the full moon. Gentle and safe for every stone, including amethyst and rose tones that fade in sun.</p></div>
+      <div><span class="n">03 · 音波淨化</span><h4>Sound clearing</h4><p>Ring a singing bowl or chime near the stone for a minute. Try the chime button on any product page.</p></div>
+      <div><span class="n">04 · 保養</span><h4>Daily care</h4><p>Remove before showering, swimming or applying lotion. Store pieces apart so harder stones don't scratch softer ones.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 0 110px">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;flex-wrap:wrap;gap:10px" class="reveal"><h2 style="font-size:40px">From the studio <span class="mono" style="color:var(--mute);font-size:12px;vertical-align:middle">@deffning</span></h2><a class="btn ghost" href="https://www.instagram.com/deffning/" target="_blank" rel="noopener">Follow on Instagram</a></div>
+    <div class="ig reveal" id="ig"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><h3>SUPER DW</h3><p style="margin-top:12px;max-width:360px">We believe the right crystal can transform your life. High-quality healing crystals and beautifully crafted bracelets by Daphne.</p></div>
+      <div><h5>ORDERS</h5><p>Custom sizes and orders via Instagram DM.<br><a href="https://www.instagram.com/deffning/" target="_blank" rel="noopener" style="text-decoration:underline">instagram.com/deffning</a></p></div>
+      <div><h5>EXPLORE</h5><p><a href="#shop">Shop</a><br><a href="#chart">Crystal Chart</a><br><a href="#builder">Design a Bracelet</a><br><a href="#quiz">Crystal Match</a></p></div>
+    </div>
+    <div class="base"><span>© 2026 SUPER DW</span><span>Crystal meanings are traditional and cultural beliefs, not medical claims.</span></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer pdp" id="pdp"><div class="dhead"><span class="mono" id="pdpId"></span><button class="x" data-close aria-label="Close">✕</button></div><div class="dbody" id="pdpBody"></div></aside>
+<aside class="drawer cart" id="cart"><div class="dhead"><span style="font-family:var(--serif);font-size:24px" id="cartTitle">Your Bag</span><button class="x" data-close aria-label="Close">✕</button></div><div class="steps" id="steps"><span class="on">01 BAG</span><span>02 DETAILS</span><span>03 BLESSED</span></div><div class="dbody" id="cartBody"></div><div id="cartFoot"></div></aside>
+<div class="lightbox" id="lb"><button class="x" id="lbx" aria-label="Close">✕</button><img id="lbimg" alt=""><p id="lbcap"></p></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const EL={Wood:{zh:'木',c:'#5F7A6E'},Fire:{zh:'火',c:'#B83A2D'},Earth:{zh:'土',c:'#A07A4E'},Metal:{zh:'金',c:'#B49A5E'},Water:{zh:'水',c:'#3E5563'}};
+
+/* ---------- PRODUCTS (photos from @deffning) ---------- */
+const P=[
+ {id:'jade',name:'Green Jade Guardian',zh:'翡翠護身手串',cat:'Bracelets',int:['Protection','Health'],price:168,el:'Wood',img:['img/jade.jpg'],bead:'10 mm',wrist:16,chime:440,
+  lore:'Jade (玉) has been treasured in China for more than 7,000 years. Confucius compared its warmth to kindness and its toughness to integrity — "a gentleman compares his virtue to jade." Folk belief holds that jade guards its wearer: if it cracks, it has taken a misfortune in your place. Green belongs to Wood, the element of growth and health. The moonstone eye adds calm yin light; the gold charm invites prosperity.',
+  wear:'Right wrist for protection, left wrist to draw in luck.'},
+ {id:'tourm',name:'Tourmaline Collection',zh:'碧璽手串',cat:'Bracelets',int:['Love','Protection'],price:128,el:'Fire',img:['img/tourmaline.jpg'],bead:'6–8 mm',wrist:16,chime:523,
+  lore:'Tourmaline (碧璽) was the favourite gem of the Qing imperial court — Empress Dowager Cixi was famously buried with a tourmaline lotus. Because one stone can hold many colours, it is said to gather the energy of all Five Elements. Watermelon and pink tones lean toward Fire: warmth, joy and love. Each strand in this collection is one of a kind.',
+  wear:'Left wrist to invite love and harmony.'},
+ {id:'rutile',name:'Golden Rutile Bracelet',zh:'金髮晶手排',cat:'Bracelets',int:['Wealth','Career'],price:188,el:'Metal',img:['img/rutile.jpg','img/rutile2.jpg'],bead:'Tile cut',wrist:16,chime:587,
+  lore:'Clear quartz threaded with golden needles of rutile — 金髮晶, "golden-hair crystal". Its gold strands belong to Metal, and in feng shui it is one of the strongest stones for 招財 (drawing in wealth) and for the courage to act on opportunities. Denser, brighter needles are traditionally the most prized. This piece is cut as flat tiles to show off the needles.',
+  wear:'Left wrist to attract wealth and opportunity.'},
+ {id:'carnelian',name:'Carnelian & Citrine',zh:'紅玉髓黃晶手串',cat:'Bracelets',int:['Career','Wealth'],price:118,el:'Fire',img:['img/carnelian.jpg'],bead:'8 mm',wrist:16,chime:392,
+  lore:'Carnelian (紅玉髓) was worn by scholars and warriors as a stone of courage and vitality — red is Fire, the element of action and celebration. The golden centre bead is citrine (黃水晶), known as the "merchant\'s stone" for bringing in wealth. Together they make a bold piece for anyone starting something new.',
+  wear:'Left wrist for motivation and good fortune.'},
+ {id:'amber',name:'Honey Amber Stack',zh:'蜜蠟琥珀手串',cat:'Bracelets',int:['Protection','Calm'],price:158,el:'Earth',img:['img/amber.jpg'],bead:'6–10 mm',wrist:16,chime:349,
+  lore:'Amber (琥珀) and beeswax amber (蜜蠟) are fossilised tree resin, millions of years old. In Buddhism amber is one of the Seven Treasures (七寶), and in Chinese tradition it is a stone of protection and longevity that "holds the sun\'s warmth." It belongs to Earth: grounding, stable and nurturing. Light, warm and comfortable for everyday stacking.',
+  wear:'Either wrist; layer with a jade bangle as shown.'},
+ {id:'fan',name:'Fluorite Crystal Fan',zh:'螢石扇擺件',cat:'Display',int:['Wisdom','Calm'],price:96,el:'Water',img:['img/fan.jpg'],bead:'Display piece',dims:[12,9,1.5],chime:659,
+  lore:'A banded fluorite slice carved into a fan. The fan (扇, shàn) sounds like 善 — goodness — and a fan on the desk is said to "fan away" negative energy. Fluorite (螢石) is known in crystal lore as the "genius stone": it is kept near study spaces for focus and clear thinking. Its purple and white layers bring calm Water energy to a room.',
+  wear:'Place on a desk or study table, ideally in the north-east "wisdom" corner.'},
+ {id:'figures',name:'Crystal Spirit Figures',zh:'水晶小精靈',cat:'Carvings',int:['Love','Calm','Protection'],price:28,el:'Water',img:['img/figures.jpg'],bead:'Hand-carved',dims:[3,2,1.8],chime:784,each:true,
+  lore:'Small hand-carved figures in a rainbow of stones — citrine, clear quartz, blue opalite, rose quartz, lapis lazuli, obsidian and aquamarine. Small carvings like these are kept as 守護 (guardian) companions on desks and bedside tables. Pick one by colour or by meaning: rose quartz for love, lapis for wisdom, obsidian for protection, citrine for wealth, clear quartz to amplify intentions.',
+  wear:'Keep on your desk, bedside or in a bag as a pocket companion.'}
+];
+P.forEach(p=>p.lore2=p.lore);
+
+/* ---------- CHART DATA (from SUPER DW's "100 Crystal Gems" chart) ---------- */
+const C=[
+ ['Aurora 23','極光23',['#3a3048','#b06a3f','#e8c27a'],'Health','Fire','Crown','Boosts your own energy, keeps you healthy, happy and dispels negative energy.'],
+ ['Aquamarine','海藍寶',['#9fc6dd','#5c8fb3'],'Calm','Water','Throat','Self-confidence and clear thinking; traditionally the sailor\'s stone of calm seas.'],
+ ['Golden Rutile','金髮晶',['#efe0b3','#c79a35'],'Wealth','Metal','Solar Plexus','Strengthens wealth luck, courage and decisiveness — the strongest 招財 stone.'],
+ ['Red Rutile','紅髮晶',['#e6c7c0','#a3432f'],'Health','Fire','Root','Strengthens personal beliefs, tolerance and self-confidence; boosts vitality.'],
+ ['Green Rutile','綠髮晶',['#d7e2c6','#5f8a4a'],'Career','Wood','Heart','Attracts positive energy, helps career growth and opens up new territories.'],
+ ['Black Rutile','黑髮晶',['#ddd8d2','#2a2826'],'Protection','Water','Root','Wards off negative energy and evil; protects the wearer.'],
+ ['Green Phantom','綠幽靈',['#e3ecd9','#4f7d45'],'Wealth','Wood','Heart','The business stone — gathers wealth and builds a strong career foundation.'],
+ ['Red Phantom','紅幽靈',['#ecd5cf','#9a3a2a'],'Love','Fire','Root','Enhances tolerance, compassion and warmth; strengthens relationships.'],
+ ['White Phantom','白幽靈',['#f2f1ee','#bdb7ad'],'Wisdom','Metal','Crown','Purifies the energy field, helps focus and clears the mind.'],
+ ['Yellow Phantom','黃幽靈',['#f3ead2','#cda349'],'Wealth','Earth','Solar Plexus','Brings the power and ability to gather wealth.'],
+ ['Rose Quartz','芙蓉晶',['#f4d7dc','#d892a1'],'Love','Fire','Heart','Relieves tension, keeps the mind calm and enhances love luck.'],
+ ['Strawberry Quartz','草莓晶',['#f2c9c9','#c45a5a'],'Love','Fire','Heart','Romance and attraction; brings sweet, joyful energy to relationships.'],
+ ['Tiger\'s Eye','虎眼石',['#c9963f','#6b4318'],'Career','Earth','Solar Plexus','Improves concentration and balance; brings courage and steady drive.'],
+ ['Hawk\'s Eye','鷹眼石',['#4f6a7c','#1d2a33'],'Protection','Water','Third Eye','Attracts wealth, wards off evil and protects; sharpens insight.'],
+ ['Red Rabbit Hair','紅兔毛',['#e8c7b4','#b2533a'],'Wealth','Fire','Root','Attracts wealth, enlightens the mind and calms the emotions.'],
+ ['Yellow Rabbit Hair','黃兔毛',['#f1e2bf','#c39a4c'],'Wealth','Earth','Solar Plexus','Helps accumulate wealth, build self-confidence and calm anxiety.'],
+ ['Tridacna','硨磲',['#fbfaf5','#ddd6c6'],'Calm','Metal','Crown','A Buddhist treasure with a strong calming field; soothes and brings peace.'],
+ ['Emerald','祖母綠',['#7bc29a','#1f6b47'],'Health','Wood','Heart','Enhances self-confidence, relieves stress and is linked with longevity.'],
+ ['Tsavorite','沙弗萊',['#8fd18a','#2f7a33'],'Calm','Wood','Heart','Purifies negativity, soothes the mind and lifts the spirits.'],
+ ['Scheelite','白鎢',['#f1e9d6','#c7b48c'],'Wisdom','Metal','Third Eye','Opens up wisdom, keeps thoughts stable and builds endurance.'],
+ ['Blue Sandstone','藍砂石',['#2a3870','#0f1534'],'Career','Water','Throat','Helps achieve success and consolidate power; the "stone of ambition".'],
+ ['Amethyst','紫水晶',['#c7a8dd','#6b3f8f'],'Wisdom','Fire','Third Eye','Calm, clear thinking and better sleep; the classic stone for study.'],
+ ['Citrine','黃水晶',['#f6dc8e','#d29a2a'],'Wealth','Earth','Solar Plexus','The "merchant\'s stone" — draws in wealth and positive energy.'],
+ ['Carnelian','紅玉髓',['#f0a070','#b43e1e'],'Career','Fire','Sacral','Courage, motivation and vitality for new beginnings.'],
+ ['Moonstone','月光石',['#eef1f4','#a9bdd3'],'Calm','Water','Third Eye','Pure yin energy — intuition, emotional balance and gentle new starts.'],
+ ['Jade','翡翠',['#7fbf8f','#245a3a'],'Protection','Wood','Heart','Protection, virtue and good health; absorbs misfortune for its wearer.'],
+ ['Tourmaline','碧璽',['#e9a2b7','#5f8f6a'],'Love','Fire','Heart','Gathers all Five Elements; protects against negativity and invites love.'],
+ ['Amber','琥珀',['#f4bd5a','#9a5a12'],'Protection','Earth','Solar Plexus','One of the Buddhist Seven Treasures; protection, warmth and longevity.'],
+ ['Fluorite','螢石',['#c9b4e2','#5a7fa3'],'Wisdom','Water','Third Eye','The "genius stone" — focus, organisation and clear thinking.'],
+ ['Lapis Lazuli','青金石',['#3b56b0','#16235a'],'Wisdom','Water','Throat','Truth and wisdom; a Buddhist treasure once ground for royal blue.'],
+ ['Obsidian','黑曜石',['#4a4a4f','#0c0c0e'],'Protection','Water','Root','Absorbs negative energy and shields the wearer — a strong guardian stone.'],
+ ['Clear Quartz','白水晶',['#ffffff','#cfd8de'],'Health','Metal','Crown','The "master healer" — purifies and amplifies your intentions.']
+].map(([name,zh,col,int,el,chakra,desc])=>({name,zh,col,int,el,chakra,desc}));
+const ball=c=>`radial-gradient(circle at 34% 30%,#fff 0,${c.col[0]} 22%,${c.col[1]||c.col[0]} 78%,${shade(c.col[c.col.length-1],-.35)} 100%)`;
+function shade(h,a){const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=a<0?0:255,t=Math.abs(a);return'#'+[r,g,b].map(v=>Math.round((f-v)*t+v).toString(16).padStart(2,'0')).join('')}
+
+/* ---------- STATE ---------- */
+let cart=[],wish=new Set(),step=0,buyer=null;
+const fmt=n=>'$'+n.toFixed(0);
+
+/* ---------- REVEAL ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+function observe(){$$('.reveal:not(.in)').forEach(el=>io.observe(el))}
+
+/* ---------- HERO STAGE ---------- */
+const stage=$('#stage'),ph=$('#stagePh');
+stage.addEventListener('mousemove',e=>{const r=stage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  ph.style.transform=`scale(1.04) translate(${(x-.5)*-14}px,${(y-.5)*-14}px) rotateY(${(x-.5)*5}deg) rotateX(${(y-.5)*-5}deg)`;
+  stage.style.setProperty('--sx',x*100+'%');stage.style.setProperty('--sy',y*100+'%')});
+stage.addEventListener('mouseleave',()=>ph.style.transform='');
+$$('#lightSeg button').forEach(b=>b.onclick=()=>{$$('#lightSeg button').forEach(x=>x.classList.toggle('on',x===b));stage.dataset.l=b.dataset.l});
+$$('.pin').forEach(pin=>pin.querySelector('button').onclick=e=>{e.stopPropagation();const o=pin.classList.contains('open');$$('.pin').forEach(p=>p.classList.remove('open'));if(!o)pin.classList.add('open')});
+document.addEventListener('click',()=>$$('.pin').forEach(p=>p.classList.remove('open')));
+
+/* ---------- SHOP ---------- */
+const CATS=['All','Bracelets','Carvings','Display'];const INTS=['Any intention','Wealth','Love','Protection','Calm','Wisdom','Career','Health'];
+let fc='All',fi='Any intention',fs='feat';
+$('#catChips').innerHTML=CATS.map(c=>`<button class="chip ${c===fc?'on':''}" data-c="${c}">${c}</button>`).join('');
+$$('#catChips .chip').forEach(b=>b.onclick=()=>{fc=b.dataset.c;$$('#catChips .chip').forEach(x=>x.classList.toggle('on',x===b));drawGrid()});
+$('#intSel').innerHTML=INTS.map(i=>`<option>${i}</option>`).join('');
+$('#intSel').onchange=e=>{fi=e.target.value;drawGrid()};
+$('#sortSel').onchange=e=>{fs=e.target.value;drawGrid()};
+const heartSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+function drawGrid(){
+  let L=P.filter(p=>(fc==='All'||p.cat===fc)&&(fi==='Any intention'||p.int.includes(fi)));
+  if(fs==='lo')L=[...L].sort((a,b)=>a.price-b.price);if(fs==='hi')L=[...L].sort((a,b)=>b.price-a.price);
+  $('#count').textContent=`${L.length} of ${P.length}`;
+  $('#grid').innerHTML=L.length?L.map((p,i)=>`<article class="card reveal ${p.img[1]?'has2':''}" data-id="${p.id}" style="transition-delay:${i*60}ms">
+    <div class="frame" data-cur="VIEW">
+      <img class="a" src="${p.img[0]}" alt="${p.name}" loading="lazy">${p.img[1]?`<img class="b" src="${p.img[1]}" alt="" loading="lazy">`:''}
+      <button class="heart ${wish.has(p.id)?'on':''}" data-w="${p.id}" aria-label="Save">${heartSVG}</button>
+      <span class="seal one">ONE<br>OF ONE</span>
+      <button class="quick" data-q="${p.id}">${p.each?'Choose a figure':'Quick add'}</button>
+    </div>
+    <div class="meta"><h3>${p.name}</h3><span class="price">${p.each?'from ':''}${fmt(p.price)}</span></div>
+    <div class="sub"><span class="cn">${p.zh}</span><span>${EL[p.el].zh} ${p.el}</span></div>
+    <div class="tags">${p.int.slice(0,2).map(t=>`<span>${t}</span>`).join('')}</div>
+  </article>`).join(''):'<div class="empty">Nothing matches yet — try another intention.</div>';
+  $$('#grid .card').forEach(c=>c.onclick=e=>{if(e.target.closest('[data-w],[data-q]'))return;openPDP(c.dataset.id)});
+  $$('#grid [data-w]').forEach(b=>b.onclick=()=>toggleWish(b.dataset.w,b));
+  $$('#grid [data-q]').forEach(b=>b.onclick=()=>{const p=P.find(x=>x.id===b.dataset.q);p.each?openPDP(p.id):addItem({pid:p.id})});
+  observe();bindCursor();
+}
+function toggleWish(id,btn){wish.has(id)?wish.delete(id):wish.add(id);btn&&btn.classList.toggle('on',wish.has(id));const n=$('#wishN');n.textContent=wish.size;n.classList.toggle('on',wish.size>0);toast(wish.has(id)?'Saved to wishlist':'Removed from wishlist')}
+$('#wishBtn').onclick=()=>{if(!wish.size){toast('Tap the heart on any piece to save it');return}fc='All';fi='Any intention';drawGrid();location.hash='';$('#shop').scrollIntoView();toast(`${wish.size} saved: `+[...wish].map(id=>P.find(p=>p.id===id).name).join(', '))};
+
+/* ---------- PRODUCT DRAWER ---------- */
+const pdp=$('#pdp'),scrim=$('#scrim');let cur=null,unit='cm',gi=0,fig=0;
+const FIG=['Citrine','Clear Quartz','Blue Opalite','Rose Quartz','Lapis Lazuli','Obsidian','Aquamarine'];
+function openPDP(id){cur=P.find(p=>p.id===id);gi=0;fig=0;$('#pdpId').textContent=`SUPER DW · ${cur.cat.toUpperCase()}`;drawPDP();pdp.classList.add('on');scrim.classList.add('on');$('#cart').classList.remove('on');$('#pdpBody').scrollTop=0}
+const cm=v=>unit==='cm'?v.toFixed(1)+' cm':(v/2.54).toFixed(2)+' in';
+function drawPDP(){
+  const p=cur;
+  const specs=p.dims?`<div><span>Size</span><b>${cm(p.dims[0])} × ${cm(p.dims[1])}</b></div><div><span>Depth</span><b>${cm(p.dims[2])}</b></div>`:`<div><span>Bead</span><b>${p.bead}</b></div><div><span>Standard wrist</span><b>${cm(p.wrist)}</b></div>`;
+  $('#pdpBody').innerHTML=`<div class="pgrid">
+   <div class="gal"><div class="zoom" id="zoom" data-cur="ZOOM"><img src="${p.img[gi]}" alt="${p.name}"><span class="hint">HOVER OR TAP TO ZOOM</span></div>
+    ${p.img.length>1?`<div class="thumbs">${p.img.map((s,i)=>`<button class="${i===gi?'on':''}" data-g="${i}"><img src="${s}" alt=""></button>`).join('')}</div>`:''}</div>
+   <div class="pinfo">
+    <div class="eyebrow">${p.cat} · ${EL[p.el].zh} ${p.el} element</div>
+    <h2>${p.name}</h2><div class="zh">${p.zh}</div>
+    <div class="pr">${p.each?'from ':''}${fmt(p.price)}</div>
+    <div class="lore"><h5>Traditional meaning · 寓意</h5>${p.lore}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><span class="eyebrow" style="color:var(--mute)">Details</span><span class="unit"><button data-u="cm" class="${unit==='cm'?'on':''}">CM</button><button data-u="in" class="${unit==='in'?'on':''}">IN</button></span></div>
+    <div class="specs">${specs}<div><span>Intention</span><b>${p.int.join(' · ')}</b></div><div><span>How to wear</span><b style="font-family:var(--sans);font-size:12.5px">${p.wear}</b></div></div>
+    ${p.each?`<div class="fit"><span class="eyebrow" style="color:var(--mute)">Choose your figure</span><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${FIG.map((f,i)=>`<button class="chip ${i===fig?'on':''}" data-f="${i}">${f}</button>`).join('')}</div></div>`:''}
+    ${!p.dims?`<div class="fit"><span class="eyebrow" style="color:var(--mute)">Fit check · measure your wrist snugly</span><div class="rangerow"><input type="range" id="fitR" min="13" max="20" step=".5" value="${p.wrist}"><span class="mono" id="fitV"></span></div><div class="res" id="fitRes"></div></div>`:''}
+    <button class="chime" id="chimeBtn"><span class="disc">♪</span><span><b style="font-family:var(--serif);font-size:18px;font-weight:600">Sound cleanse</b><br><span class="mono" style="color:var(--mute)">STRIKE A CRYSTAL CHIME</span></span><span class="bars" id="bars">${'<i></i>'.repeat(16)}</span></button>
+    <div class="addrow"><button class="btn" id="addB">Add to Bag — ${fmt(p.price)}</button><button class="btn ghost" id="wishB" style="flex:0 0 54px;padding:0">${wish.has(p.id)?'♥':'♡'}</button></div>
+   </div></div>`;
+  const z=$('#zoom'),zi=z.querySelector('img');
+  z.onmousemove=e=>{const r=z.getBoundingClientRect();zi.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`;z.classList.add('z')};
+  z.onmouseleave=()=>z.classList.remove('z');
+  z.onclick=e=>{if(matchMedia('(pointer:coarse)').matches){const r=z.getBoundingClientRect();zi.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`;z.classList.toggle('z')}};
+  $$('#pdpBody [data-g]').forEach(b=>b.onclick=()=>{gi=+b.dataset.g;drawPDP()});
+  $$('#pdpBody [data-u]').forEach(b=>b.onclick=()=>{unit=b.dataset.u;drawPDP()});
+  $$('#pdpBody [data-f]').forEach(b=>b.onclick=()=>{fig=+b.dataset.f;$$('#pdpBody [data-f]').forEach(x=>x.classList.toggle('on',x===b))});
+  const fr=$('#fitR');if(fr){const upd=()=>{const w=+fr.value;$('#fitV').textContent=cm(w);const d=w+1;$('#fitRes').innerHTML=`Wrist ${cm(w)} → we'd string it at <b>${cm(d)}</b> for a comfortable fit (+1 cm ease). ${w<=14.5?'A petite fit — perfect for slim wrists.':w>=18.5?'Larger sizes may take 1–2 extra beads.':'Standard size, ready to ship.'}`};fr.oninput=upd;upd()}
+  $('#chimeBtn').onclick=()=>{if(chime(cur.chime))bars()};
+  $('#addB').onclick=()=>addItem({pid:cur.id,wrist:fr?+fr.value:null,variant:cur.each?FIG[fig]:null});
+  $('#wishB').onclick=()=>{toggleWish(cur.id);drawPDP();drawGrid()};
+  bindCursor();
+}
+function bars(){const B=$$('#bars i'),t0=performance.now();(function f(n){const t=(n-t0)/1000;if(t>3||!$('#bars')){B.forEach(b=>b.style.height='4px');return}B.forEach((b,i)=>b.style.height=4+Math.abs(Math.sin(t*13+i*.7))*22*Math.exp(-t*1.1)+'px');requestAnimationFrame(f)})(t0)}
+
+/* ---------- AUDIO ---------- */
+let actx;
+function chime(freq){
+  try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();
+    const t=actx.currentTime,out=actx.createGain();out.gain.value=.45;const comp=actx.createDynamicsCompressor();out.connect(comp);comp.connect(actx.destination);
+    [[1,1,5],[1.004,.6,5],[2.756,.4,3],[5.404,.22,1.8],[8.933,.1,1]].forEach(([r,a,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=freq*r;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a*.35,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(out);o.start(t);o.stop(t+d+.1)});
+    return true}catch(e){toast('Sound is not available in this browser');return false}
+}
+
+/* ---------- BIRTH-YEAR FINDER ---------- */
+const MOTHER={Wood:'Water',Fire:'Wood',Earth:'Fire',Metal:'Earth',Water:'Metal'};
+const ZOD=['Monkey','Rooster','Dog','Pig','Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat'];
+function findYear(){
+  const y=parseInt($('#yr').value,10),o=$('#yrOut');
+  if(!y||y<1920||y>2026){o.innerHTML='<span style="color:#e9a197">Please enter a year between 1920 and 2026.</span>';return}
+  const e=['Metal','Metal','Water','Water','Wood','Wood','Fire','Fire','Earth','Earth'][y%10],m=MOTHER[e],z=ZOD[y%12];
+  const recs=P.filter(p=>p.el===e||p.el===m);
+  o.innerHTML=`<div class="fade">Born ${y}: <b>${e} ${z}</b> <span class="cn" style="color:${EL[e].c==='#161615'?'#fff':'#E2C2A8'}">${EL[e].zh}</span>. ${m} feeds ${e}, so stones of <b>${e}</b> and <b>${m}</b> suit you.${z==='Horse'?' <b style="color:#e9a197">2026 is your zodiac year (本命年) — wear red for protection.</b>':''}<div class="rec">${recs.map(p=>`<button data-o="${p.id}">${p.name} →</button>`).join('')||'<span>Ask Daphne for a custom piece in your element.</span>'}</div></div>`;
+  $$('#yrOut [data-o]').forEach(b=>b.onclick=()=>openPDP(b.dataset.o));
+}
+$('#yrGo').onclick=findYear;$('#yr').onkeydown=e=>{if(e.key==='Enter')findYear()};
+
+/* ---------- CHART ---------- */
+const CF=['All','Wealth','Love','Protection','Calm','Wisdom','Career','Health'];let cf='All',cq='',csel=C[2];
+$('#cfChips').innerHTML=CF.map(c=>`<button class="chip ${c===cf?'on':''}" data-c="${c}">${c}</button>`).join('');
+$$('#cfChips .chip').forEach(b=>b.onclick=()=>{cf=b.dataset.c;$$('#cfChips .chip').forEach(x=>x.classList.toggle('on',x===b));drawChart()});
+$('#cs').oninput=e=>{cq=e.target.value.toLowerCase();drawChart()};
+function drawChart(){
+  $('#spheres').innerHTML=C.map((c,i)=>{const hit=(cf==='All'||c.int===cf)&&(!cq||(c.name+c.zh).toLowerCase().includes(cq));
+    return `<button class="sph ${hit?'':'dim'} ${c===csel?'on':''}" data-i="${i}"><span class="ball" style="background:${ball(c)}"></span><b>${c.name}</b><span>${c.zh}</span></button>`}).join('');
+  $$('#spheres .sph').forEach(b=>b.onclick=()=>{csel=C[+b.dataset.i];drawChart();if(innerWidth<1060)$('#panel').scrollIntoView({behavior:'smooth',block:'center'})});
+  drawPanel();
+}
+function drawPanel(){
+  const c=csel,rel=P.filter(p=>p.name.toLowerCase().includes(c.name.split(' ')[0].toLowerCase().replace("'s",''))||p.lore.includes(c.zh));
+  $('#panel').innerHTML=`<div class="fade"><span class="ball" style="display:block;background:${ball(c)}"></span><h3>${c.name}</h3><div class="zh">${c.zh}</div>
+  <dl><dt>Effect</dt><dd>${c.int}</dd><dt>Element</dt><dd><span class="cn" style="color:${EL[c.el].c}">${EL[c.el].zh}</span> ${c.el}</dd><dt>Chakra</dt><dd>${c.chakra}</dd></dl>
+  <p>${c.desc}</p>
+  <div class="acts"><button class="btn ghost" id="useA">Use in a bracelet</button>${rel[0]?`<button class="btn" id="seeP">See ${rel[0].name}</button>`:''}</div>
+  <div class="origchart" id="orig"><img src="img/chart.jpg" alt=""><div><b>View the original chart</b><small>"100 Crystal Gems: Effects and Functions" by SUPER DW</small></div></div></div>`;
+  $('#useA').onclick=()=>{const k=BS.findIndex(s=>s.name===c.name);if(k>-1){bA=k}else{BS.push({name:c.name,col:c.col,p:4});bA=BS.length-1}drawBuilder();$('#builder').scrollIntoView({behavior:'smooth'})};
+  if(rel[0])$('#seeP').onclick=()=>openPDP(rel[0].id);
+  $('#orig').onclick=()=>lightbox('img/chart.jpg','100 Crystal Gems: Effects and Functions — SUPER DW');
+}
+
+/* ---------- BUILDER ---------- */
+const BS=['Jade','Rose Quartz','Amethyst','Citrine','Moonstone','Tiger\'s Eye','Lapis Lazuli','Obsidian','Carnelian','Aquamarine','Golden Rutile','Clear Quartz'].map((n,i)=>{const c=C.find(x=>x.name===n);return{name:n,col:c.col,p:[5,3,3,3,4,3,4,2,3,4,6,2][i]}});
+let bA=0,bB=4,pat='solid',bsz=10,wrist=16;
+function pal(id,sel,cls,set){$(id).innerHTML=BS.map((s,i)=>`<button class="${i===sel?'on '+cls:''}" title="${s.name}" data-i="${i}" style="background:${ball(s)}"></button>`).join('');$$(id+' button').forEach(b=>b.onclick=()=>{set(+b.dataset.i);drawBuilder()})}
+function beadCount(){return Math.round(((wrist+1)*10)/bsz)}
+function drawBuilder(){
+  pal('#palA',bA,'',i=>bA=i);pal('#palB',bB,'b',i=>bB=i);
+  const A=BS[bA],B=BS[bB];
+  $('#nameA').textContent=`${A.name} · ${C.find(c=>c.name===A.name)?.desc||''}`;
+  $('#nameB').textContent=`${B.name} · ${C.find(c=>c.name===B.name)?.desc||''}`;
+  const n=beadCount(),R=108,r=Math.min(18,Math.PI*R/n*.95);
+  let defs='',beads='';
+  const gA='ga',gB='gb';
+  const mk=(id,s)=>`<radialGradient id="${id}" cx="34%" cy="30%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".22" stop-color="${s.col[0]}"/><stop offset=".78" stop-color="${s.col[1]||s.col[0]}"/><stop offset="1" stop-color="${shade(s.col[s.col.length-1],-.4)}"/></radialGradient>`;
+  defs=mk(gA,A)+mk(gB,B);
+  for(let i=0;i<n;i++){const a=i/n*Math.PI*2-Math.PI/2,x=150+Math.cos(a)*R,y=150+Math.sin(a)*R;
+    const acc=pat==='solid'?i===0:pat==='alt'?i%2===1:i%3===0;
+    const rr=acc&&pat==='solid'?r*1.25:r;
+    beads+=`<circle class="bead" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(1)}" fill="url(#${acc?gB:gA})" stroke="rgba(0,0,0,.12)" stroke-width=".6" data-i="${i}"/><ellipse cx="${(x-rr*.33).toFixed(1)}" cy="${(y-rr*.38).toFixed(1)}" rx="${(rr*.26).toFixed(1)}" ry="${(rr*.15).toFixed(1)}" fill="#fff" opacity=".6" pointer-events="none"/>`;
+  }
+  $('#bsvg').innerHTML=`<defs>${defs}</defs><circle cx="150" cy="150" r="${R}" fill="none" stroke="rgba(0,0,0,.15)"/>${beads}`;
+  $$('#bsvg .bead').forEach(c=>c.onclick=()=>chime(392+(+c.dataset.i%8)*55));
+  $('#blbl').textContent=`${n} BEADS · ${bsz} MM · TAP A BEAD`;
+  $('#wv').textContent=wrist+' cm';$('#bc').textContent=n+' beads';
+  $('#bprice').textContent=fmt(builderPrice());
+}
+function builderPrice(){const n=beadCount(),A=BS[bA],B=BS[bB];const acc=pat==='solid'?1:pat==='alt'?Math.floor(n/2):Math.ceil(n/3);return 30+(n-acc)*A.p*(bsz/10)+acc*B.p*(bsz/10)}
+$$('#patSeg button').forEach(b=>b.onclick=()=>{pat=b.dataset.p;$$('#patSeg button').forEach(x=>x.classList.toggle('on',x===b));drawBuilder()});
+$$('#sizeSeg button').forEach(b=>b.onclick=()=>{bsz=+b.dataset.s;$$('#sizeSeg button').forEach(x=>x.classList.toggle('on',x===b));drawBuilder()});
+$('#wr').oninput=e=>{wrist=+e.target.value;drawBuilder()};
+$('#bAdd').onclick=()=>addItem({custom:{a:bA,b:bB,pat,bsz,wrist,price:builderPrice()}});
+
+/* ---------- QUIZ ---------- */
+const Q=[
+ {q:'What are you hoping to invite in?',o:[['財','Abundance','wealth, success'],['愛','Love','relationships, warmth'],['安','Peace','calm, rest'],['護','Protection','safety, grounding']],k:'int'},
+ {q:'Which colours draw you in?',o:[['綠','Deep greens','calm, natural'],['金','Golds & honey','warm, glowing'],['紅','Pinks & reds','bold, joyful'],['紫','Purples & blues','cool, dreamy']],k:'col'},
+ {q:'How will you keep it?',o:[['腕','On my wrist','every day'],['疊','Stacked','with other pieces'],['桌','On my desk','a display piece'],['袋','In my pocket','a small companion']],k:'use'}
+];
+const SCORE={int:[['rutile','carnelian'],['tourm','figures'],['fan','amber'],['jade','amber']],col:[['jade'],['rutile','amber','carnelian'],['tourm','carnelian'],['fan','figures']],use:[['jade','rutile','tourm'],['amber','tourm','carnelian'],['fan'],['figures']]};
+let qi=0,qa=[];
+function drawQuiz(){
+  $('#qbar').style.transform=`scaleX(${qi/Q.length})`;
+  if(qi<Q.length){const q=Q[qi];
+    $('#qbox').innerHTML=`<div class="fade"><span class="mono" style="color:var(--mute)">QUESTION ${qi+1} OF ${Q.length}</span><h3 style="margin-top:10px">${q.q}</h3><div class="qopts">${q.o.map((o,i)=>`<button data-i="${i}"><span class="i">${o[0]}</span><b>${o[1]}</b><small>${o[2]}</small></button>`).join('')}</div></div>`;
+    $$('#qbox [data-i]').forEach(b=>b.onclick=()=>{qa[qi]=+b.dataset.i;qi++;drawQuiz()});
+  }else{
+    const s={};Q.forEach((q,i)=>SCORE[q.k][qa[i]].forEach((id,j)=>s[id]=(s[id]||0)+3-j*.5));
+    const best=P.find(p=>p.id===Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0]);
+    $('#qbox').innerHTML=`<div class="qresult fade"><img src="${best.img[0]}" alt="${best.name}"><div><span class="eyebrow">Your crystal match</span><h3 style="margin:10px 0 4px">${best.name}</h3><div class="cn" style="color:var(--rose)">${best.zh}</div><p style="margin:16px 0;color:var(--ink2)">${best.lore.split('. ').slice(0,2).join('. ')}.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="qOpen">See this piece</button><button class="btn ghost" id="qRe">Retake</button></div></div></div>`;
+    $('#qOpen').onclick=()=>openPDP(best.id);$('#qRe').onclick=()=>{qi=0;qa=[];drawQuiz()};
+  }
+}
+
+/* ---------- CART ---------- */
+const cartEl=$('#cart');
+const RIT=[['Moon-cleansed (included)',0],['Sage & selenite cleanse',8],['Red-string gift box',12],['Cleanse + gift box',18]];
+function itemInfo(it){
+  if(it.custom){const c=it.custom;return{name:'Custom Bracelet',sub:`${BS[c.a].name} with ${BS[c.b].name} · ${c.bsz} mm · ${c.wrist} cm`,price:c.price,thumb:miniBead(c)}}
+  const p=P.find(x=>x.id===it.pid);return{name:p.name,sub:[p.zh,it.variant,it.wrist?`Wrist ${it.wrist} cm`:null].filter(Boolean).join(' · '),price:p.price,thumb:`<img src="${p.img[0]}" alt="">`}
+}
+function miniBead(c){const A=BS[c.a],B=BS[c.b];let s='';for(let i=0;i<12;i++){const a=i/12*Math.PI*2,acc=c.pat==='solid'?i===0:c.pat==='alt'?i%2:i%3===0,col=(acc?B:A).col;s+=`<circle cx="${32+Math.cos(a)*22}" cy="${32+Math.sin(a)*22}" r="6" fill="${col[1]||col[0]}"/>`}return `<svg viewBox="0 0 64 64">${s}</svg>`}
+function addItem(it){
+  if(it.pid&&!P.find(p=>p.id===it.pid).each&&cart.some(c=>c.pid===it.pid)){toast('Already in your bag — each piece is one of one');openCart();return}
+  cart.push({...it,rit:0});updBag();toast(`${itemInfo(it).name} added to your bag`);openCart();
+}
+function updBag(){const n=$('#bagN');n.textContent=cart.length;n.classList.toggle('on',cart.length>0)}
+function totals(){const sub=cart.reduce((s,c)=>s+itemInfo(c).price,0),rit=cart.reduce((s,c)=>s+RIT[c.rit][1],0),ship=sub>0&&sub<150?8:0;return{sub,rit,ship,total:sub+rit+ship}}
+function openCart(){if(step===2)step=0;drawCart();cartEl.classList.add('on');scrim.classList.add('on');pdp.classList.remove('on')}
+function drawCart(){
+  $$('#steps span').forEach((s,i)=>s.classList.toggle('on',i<=step));
+  const body=$('#cartBody'),foot=$('#cartFoot');
+  if(step===0){
+    if(!cart.length){body.innerHTML='<div class="cempty">Your bag is empty.<br><span style="font-size:16px">Every stone is waiting for its person.</span></div>';foot.innerHTML='';return}
+    body.innerHTML=cart.map((c,i)=>{const f=itemInfo(c);return `<div class="citem"><div class="th">${f.thumb}</div><div><h4>${f.name}</h4><div style="font-size:12px;color:var(--mute)">${f.sub}</div><select data-r="${i}" aria-label="Ritual">${RIT.map((r,j)=>`<option value="${j}" ${j===c.rit?'selected':''}>${r[0]}${r[1]?' +$'+r[1]:''}</option>`).join('')}</select><button class="rm" data-x="${i}">Remove</button></div><div class="p">${fmt(f.price+RIT[c.rit][1])}</div></div>`}).join('');
+    $$('#cartBody [data-r]').forEach(s=>s.onchange=()=>{cart[+s.dataset.r].rit=+s.value;drawCart()});
+    $$('#cartBody [data-x]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.x,1);updBag();drawCart()});
+    foot.innerHTML=footHTML('Checkout');$('#cta').onclick=()=>{step=1;drawCart()};
+  }else if(step===1){
+    body.innerHTML=`<form class="form" id="cf" novalidate><div><label>Full name</label><input name="name" autocomplete="name"></div><div><label>Google account</label><div id="dwWho" style="font-size:13px"></div></div><div><label>City</label><input name="city" autocomplete="address-level2"></div><div><label>Your intention (optional)</label><input name="intent" placeholder="e.g. calm during exams"></div><div class="err" id="ferr"></div><p style="font-size:12px;color:var(--mute)">No payment is taken here. This sends an order request to the shop, which will contact you at your Google email to confirm. Questions? Message <b>@deffning</b> on Instagram.</p><button type="button" class="rm" id="back" style="justify-self:start">← Back to bag</button></form>`;
+    $('#back').onclick=()=>{step=0;drawCart()};
+    const who=()=>{const u=DW.user;$('#dwWho').innerHTML=u?`${esc(u.email)} · <button type="button" class="rm" id="dwOut">use another</button>`:`<button type="button" class="rm" id="dwIn">Sign in with Google</button>`;
+      const i=$('#dwIn');if(i)i.onclick=()=>DW.signIn().then(who,e=>$('#ferr').textContent=DW.friendlyError(e));const o=$('#dwOut');if(o)o.onclick=()=>DW.signOut().then(who)};who();
+    foot.innerHTML=footHTML('Send order request');
+    $('#cta').onclick=async()=>{const d=Object.fromEntries(new FormData($('#cf')));if(!d.name.trim()||!d.city.trim()){$('#ferr').textContent='Please add your name and city.';return}
+      const b=$('#cta');b.disabled=true;
+      const items=cart.map(c=>{const f=itemInfo(c);return{name:f.name,detail:[f.sub,RIT[c.rit][1]?RIT[c.rit][0]:''].filter(Boolean).join(' · '),price:f.price+RIT[c.rit][1]}});
+      try{const r=await DW.placeOrder({name:d.name,city:d.city,intent:d.intent,items,total:totals().total});
+        buyer={...d,email:r.email,order:r.id,items:cart.map(itemInfo),total:totals().total};step=2;cart=[];updBag();drawCart();chime(659)}
+      catch(e){b.disabled=false;$('#ferr').textContent=e.code==='wait'?'You just sent an order. Wait 2 minutes before sending another.':e.code==='limit'?'This account has reached the order limit. Message @deffning on Instagram.':DW.friendlyError(e)}};
+  }else{
+    const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    body.innerHTML=`<div style="text-align:center;padding:22px 26px 0" class="fade"><span class="eyebrow">Order request sent</span><p style="font-family:var(--serif);font-size:24px;margin-top:6px">Thank you, ${esc(buyer.name.split(' ')[0])}.</p><p style="font-size:13px;color:var(--mute);margin-top:6px">The shop will email ${esc(buyer.email)} to confirm and arrange payment.</p></div>
+    <div class="cert fade"><span class="eyebrow" style="color:var(--rose)">SUPER DW · 證書</span><h3>Certificate of Authenticity</h3><div class="mono" style="color:var(--mute);margin-bottom:14px">${buyer.order} · ${date}</div>
+    ${buyer.items.map(f=>`<div class="line"><span>${f.name}</span><span>${fmt(f.price)}</span></div>`).join('')}
+    <div class="line"><span>Keeper</span><span>${esc(buyer.name)}</span></div>${buyer.intent?`<div class="line"><span>Intention</span><span>${esc(buyer.intent)}</span></div>`:''}<div class="line"><span>Total</span><span>${fmt(buyer.total)}</span></div>
+    <div class="bless">願此石護佑平安 · 心想事成</div><div style="font-size:12px;color:var(--mute);font-style:italic;margin-top:4px">May this stone keep you safe, and may your wishes come true.</div><span class="seal">真品<br>DW</span></div>`;
+    foot.innerHTML=`<div class="cfoot"><button class="btn" id="cta" style="width:100%">Continue browsing</button></div>`;$('#cta').onclick=()=>{step=0;closeAll()};
+  }
+}
+function footHTML(l){const t=totals();return `<div class="cfoot"><div class="row"><span>Subtotal</span><span class="mono">${fmt(t.sub)}</span></div><div class="row"><span>Rituals & gifting</span><span class="mono">${fmt(t.rit)}</span></div><div class="row"><span>Shipping${t.ship?' · free over $150':''}</span><span class="mono">${t.ship?fmt(t.ship):'Free'}</span></div><div class="row total"><span>Total</span><b>${fmt(t.total)}</b></div><button class="btn" id="cta" style="width:100%;margin-top:12px">${l}</button></div>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('#bagBtn').onclick=openCart;
+function closeAll(){pdp.classList.remove('on');cartEl.classList.remove('on');scrim.classList.remove('on')}
+scrim.onclick=closeAll;$$('[data-close]').forEach(b=>b.onclick=closeAll);
+
+/* ---------- LIGHTBOX / TOAST / CURSOR ---------- */
+function lightbox(src,cap){$('#lbimg').src=src;$('#lbcap').textContent=cap;$('#lb').classList.add('on')}
+$('#lbx').onclick=()=>$('#lb').classList.remove('on');$('#lb').onclick=e=>{if(e.target.id==='lb')$('#lb').classList.remove('on')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAll();$('#lb').classList.remove('on')}});
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
+const cu=$('#cur');let mx=-99,my=-99,cx=-99,cy=-99;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cu.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;requestAnimationFrame(loop)})();
+function bindCursor(){$$('[data-cur]').forEach(el=>{if(el._c)return;el._c=1;el.addEventListener('mouseenter',()=>{$('#curT').textContent=el.dataset.cur;cu.classList.add('big')});el.addEventListener('mouseleave',()=>cu.classList.remove('big'))})}
+
+/* ---------- IG STRIP ---------- */
+$('#ig').innerHTML=['jade','tourmaline','fan','figures','carnelian','amber'].map(s=>`<a href="https://www.instagram.com/deffning/" target="_blank" rel="noopener"><img src="img/${s}.jpg" alt="" loading="lazy"></a>`).join('');
+
+drawGrid();drawChart();drawBuilder();drawQuiz();bindCursor();observe();
+})();
+</script>
+</body>
+</html>

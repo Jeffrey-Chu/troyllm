@@ -1,0 +1,23 @@
+{
+  "projects": {
+    "default": "troy-high-llm"
+  },
+  "targets": {
+    "troy-high-llm": {
+      "hosting": {
+        "vsa": [
+          "troy-vsa"
+        ],
+        "tll": [
+          "troy-learning-league"
+        ],
+        "superdw": [
+          "superdw-crystals"
+        ],
+        "carclub": [
+          "troy-car-club"
+        ]
+      }
+    }
+  }
+}
