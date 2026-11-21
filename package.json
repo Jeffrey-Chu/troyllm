@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "firebase emulators:exec --only firestore --project demo-troy-high-llm \"node --test test/*.test.mjs\"",
+    "test": "firebase emulators:exec --only firestore --project demo-troy-high-llm \"node --test --test-concurrency=1 test/*.test.mjs\"",
     "build": "esbuild src/operator.js --bundle --format=esm --target=es2022 --outfile=public/app.js",
     "bootstrap:officer": "node scripts/bootstrap-officer.mjs",
     "build:clubs": "node club-sites/build.mjs",
