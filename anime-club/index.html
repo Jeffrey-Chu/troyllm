@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THS Anime Club</title>
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf7f2; --card:#fff; --ink:#1d1b20; --muted:#6b6570; --line:#ebe4dc;
+  --orange:#e8764a; --orange-d:#c85a30; --orange-l:#fdeee6; --pink:#f7c8d2; --night:#16131b; --neon:#ff4560;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.jp{font-family:"Zen Kaku Gothic New",sans-serif}
+h1,h2,h3{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:-.01em;line-height:1.08}
+h1{font-size:clamp(44px,6.6vw,80px)}
+h2{font-size:clamp(30px,4.2vw,46px)}
+h3{font-size:22px}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-d);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow .jp{letter-spacing:0;font-size:13px;color:var(--muted);font-weight:700}
+.lead{font-size:19px;color:#3d3841;max-width:560px}
+.muted{color:var(--muted)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:#fbf7f2e8;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:18px;height:68px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:none}
+.brand img{width:40px;height:40px;border-radius:50%}
+.brand b{font-weight:800;font-size:16px;line-height:1.1}
+.brand small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tabs a{text-decoration:none;font-weight:700;font-size:14.5px;padding:8px 14px;border-radius:99px;color:#4a4450;transition:background .15s,color .15s}
+.tabs a:hover{background:#f1e9e0}
+.tabs a.on{background:var(--ink);color:#fff}
+.hbtn{flex:none}
+#skBtn{margin-left:0}
+@media(max-width:900px){
+  header .wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:10px}
+  .tabs{order:3;width:100%;overflow-x:auto;margin-left:0;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .hbtn{margin-left:auto}
+  #skBtn{margin-left:auto}
+}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:99px;font-weight:800;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);transition:transform .15s,background .15s,color .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.primary:hover{background:var(--orange-d);border-color:var(--orange-d)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.ghost{background:transparent}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.sm{padding:9px 16px;font-size:14px}
+
+/* pages */
+.page{display:none;padding:64px 0 90px;animation:fade .35s ease}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.sec{margin-top:80px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:28px;flex-wrap:wrap}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+
+/* home hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.hero h1 span{color:var(--orange)}
+.hero .lead{margin-top:20px}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.fact{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 16px 8px 10px;font-weight:700;font-size:14.5px}
+.fact i svg,.feat .ic svg{width:16px;height:16px;fill:none;stroke:var(--orange-d);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat .ic svg{width:22px;height:22px}
+.fact i{width:28px;height:28px;border-radius:50%;background:var(--orange-l);display:grid;place-items:center;font-style:normal;font-size:14px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.photo{position:relative}
+.photo figure{border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#fff;padding:10px}
+.photo figure img{border-radius:16px;width:100%;aspect-ratio:4/3;object-fit:cover}
+.photo figcaption{display:flex;gap:10px;align-items:center;padding:12px 6px 4px;font-size:14px}
+.photo figcaption img{width:28px;height:28px;border-radius:50%;flex:none}
+.photo figcaption b{font-weight:800}
+.photo .float{position:absolute;right:-26px;bottom:-40px;width:170px;border-radius:16px;overflow:hidden;border:6px solid #fff;box-shadow:0 20px 40px -16px #0006;transform:rotate(4deg)}
+.photo .tag{position:absolute;left:-14px;top:24px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;padding:7px 14px;border-radius:99px;transform:rotate(-4deg)}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:40px}.photo .float{right:0;width:130px}}
+
+/* manga hero */
+.manga{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:230px 170px;gap:10px;transform:rotate(1.2deg)}
+.mp{position:relative;overflow:hidden;border:3px solid var(--ink);background:#fff}
+.mp img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15)}
+.mp:hover img{filter:none}
+.mp img,.mp .tone{transition:filter .4s,opacity .4s}
+.mp .tone{position:absolute;inset:0;background:radial-gradient(#1d1b20 1px,transparent 1.4px) 0 0/5px 5px;mix-blend-mode:multiply;opacity:.35;pointer-events:none}
+.mp:hover .tone{opacity:0}
+.m1{grid-column:1;grid-row:1;clip-path:polygon(0 0,100% 0,100% 92%,0 100%)}
+.m2{grid-column:2;grid-row:1}
+.m2 img{filter:none}
+.m3{grid-column:1;grid-row:2;background:#fff;display:grid;place-items:center;margin-top:-18px}
+.m4{grid-column:2;grid-row:2}
+.lines{position:absolute;inset:0;width:100%;height:100%}
+.burst-txt{position:relative;font-family:"Dela Gothic One";font-size:30px;line-height:.95;text-align:center;background:#fff;padding:14px 22px;color:var(--ink);
+  clip-path:polygon(50% 0,60% 16%,78% 4%,76% 24%,98% 20%,86% 40%,100% 54%,84% 64%,94% 86%,72% 80%,66% 100%,50% 86%,34% 100%,28% 80%,6% 86%,16% 64%,0 54%,14% 40%,2% 20%,24% 24%,22% 4%,40% 16%);padding:34px 40px}
+.cap-box{position:absolute;left:10px;top:10px;background:#fff;border:2px solid var(--ink);padding:4px 10px;font-weight:800;font-size:13px}
+.bubble{position:absolute;left:10px;bottom:12px;background:#fff;border:2px solid var(--ink);border-radius:50%;padding:10px 16px;font-weight:800;font-size:13px}
+.bubble:after{content:"";position:absolute;right:18px;top:-10px;width:14px;height:14px;background:#fff;border-left:2px solid var(--ink);border-top:2px solid var(--ink);transform:rotate(30deg) skew(10deg)}
+@media(max-width:900px){.manga{transform:none;grid-template-rows:200px 150px}}
+
+/* series */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 16px;font-weight:700;font-size:14px}
+.filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.series{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sr{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;color:#fff;padding:18px;display:flex;flex-direction:column;cursor:pointer;border:3px solid var(--ink);transition:transform .2s}
+.sr:hover{transform:translateY(-4px) rotate(-.6deg)}
+.sr .pat{position:absolute;inset:0;opacity:.18;pointer-events:none}
+.sr .vol{position:relative;font-weight:800;font-size:11.5px;letter-spacing:.14em;opacity:.85}
+.sr h3{position:relative;font-size:clamp(20px,2.2vw,27px);line-height:1;margin-top:auto;text-transform:uppercase;word-break:break-word}
+.sr .meta{position:relative;font-size:12.5px;font-weight:700;opacity:.9;margin-top:8px}
+.sr .club{position:absolute;top:14px;right:-34px;transform:rotate(35deg);background:#fff;color:var(--ink);font-size:10.5px;font-weight:800;letter-spacing:.08em;padding:3px 36px}
+.sr .back{position:absolute;inset:0;background:#fff;color:var(--ink);padding:18px;display:flex;flex-direction:column;justify-content:center;font-size:14.5px;opacity:0;transition:opacity .25s}
+.sr.flip .back{opacity:1}
+.sr .back b{font-family:"Dela Gothic One";font-weight:400;font-size:18px;line-height:1.1;margin-bottom:8px}
+.sr .back small{color:var(--muted);margin-top:10px;font-weight:700}
+@media(max-width:960px){.series{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.series{grid-template-columns:1fr 1fr}}
+
+/* next meeting strip */
+.next{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;padding:26px 30px;background:var(--ink);color:#fff;border-radius:22px}
+.next .big{font-family:"Dela Gothic One";font-size:46px;line-height:1;color:var(--orange)}
+.next .lbl{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#bcb4c2}
+.days{display:flex;gap:6px}
+.days span{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:13px;background:#ffffff12;color:#bcb4c2}
+.days span.mon{background:var(--orange);color:#fff}
+.days span.today{outline:2px solid #fff;outline-offset:2px}
+@media(max-width:760px){.next{grid-template-columns:1fr}.days span{width:36px;height:36px}}
+
+/* feature cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{padding:28px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:transform .2s,border-color .2s}
+.feat:hover{transform:translateY(-3px);border-color:#d9cfc4}
+.feat .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--orange-l)}
+.feat p{color:var(--muted);font-size:15px}
+.feat .go{margin-top:auto;font-weight:800;font-size:14px;color:var(--orange-d)}
+@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+
+/* about */
+.split{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.split p+p{margin-top:14px}
+@media(max-width:860px){.split{grid-template-columns:1fr;gap:34px}}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.val{padding:26px}
+.val .n{font-family:"Dela Gothic One";color:var(--orange);font-size:15px}
+.val h3{margin:8px 0 6px;font-size:20px}
+.val p{color:var(--muted);font-size:15px}
+@media(max-width:860px){.values{grid-template-columns:1fr}}
+.agenda{list-style:none;display:grid;gap:12px}
+.agenda li{display:flex;gap:16px;align-items:flex-start;padding:18px 20px}
+.agenda .t{flex:none;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.agenda b{display:block}
+.agenda span{color:var(--muted);font-size:15px}
+.quote{border-left:3px solid var(--orange);padding:4px 0 4px 18px;margin-top:22px;font-size:15px;color:#4a4450}
+.quote b{color:var(--ink)}
+
+/* showcase */
+.dark{background:var(--night);color:#fff;border-radius:28px;padding:48px;position:relative;overflow:hidden}
+.dark:after{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(#ff456033,transparent 65%);pointer-events:none}
+.dark .eyebrow{color:#ff8fa0}
+.dark .lead{color:#d8d1de}
+.neon{color:var(--neon);text-shadow:0 0 8px #ff4560aa,0 0 24px #ff456066}
+.theme{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-top:34px;padding:24px 28px;border:1px solid #ffffff22;border-radius:18px;background:#ffffff08}
+.theme small{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#bcb4c2}
+.theme h3{font-size:30px;margin-top:4px}
+.reveal-btn{border:1px solid #ffffff44;border-radius:99px;padding:10px 18px;font-weight:800;font-size:14px}
+.reveal-btn:hover{background:#fff;color:var(--ink)}
+.blur{filter:blur(10px);transition:filter .5s;user-select:none}
+.blur.off{filter:none}
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.post{overflow:hidden}
+.post .media{aspect-ratio:1;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px;position:relative}
+.post .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.post .media .s1{font-family:"Dela Gothic One";font-size:20px;letter-spacing:.06em;color:#eee}
+.post .media .s2{font-family:"Dela Gothic One";font-size:28px;line-height:1.05;margin-top:12px}
+.post .body{padding:18px 20px}
+.post .meta{font-size:13px;color:var(--muted);font-weight:600}
+.post .body p{font-size:15px;margin-top:4px}
+.post .body b{font-weight:800}
+.post.ghost .media{background:var(--orange-l);color:var(--ink);border-bottom:1px dashed #e4cbbb}
+.post.ghost .media .s2{color:var(--orange-d)}
+@media(max-width:860px){.posts{grid-template-columns:1fr 1fr}.dark{padding:30px 22px}}
+@media(max-width:560px){.posts{grid-template-columns:1fr}}
+.suggest{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.input{flex:1;min-width:200px;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:12px 18px;font:inherit;outline:none}
+.input:focus{border-color:var(--orange)}
+
+/* meetings timeline */
+.tl{position:relative;display:grid;gap:18px}
+.tl:before{content:"";position:absolute;left:94px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.ev{display:grid;grid-template-columns:80px 1fr;gap:34px;align-items:start}
+.ev .date{text-align:right;font-weight:800;font-size:14px;line-height:1.3;padding-top:20px}
+.ev .date small{display:block;color:var(--muted);font-weight:600;font-size:12.5px}
+.ev .card{padding:20px 22px;position:relative;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.ev .card:before{content:"";position:absolute;left:-26px;top:26px;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px var(--bg)}
+.ev h3{font-size:19px;font-family:"Plus Jakarta Sans";font-weight:800;letter-spacing:0}
+.ev p{color:var(--muted);font-size:15px;margin-top:3px}
+.ev .cap{font-size:14px;margin-top:10px;background:var(--bg);border-radius:12px;padding:10px 14px;color:#4a4450}
+.ev .cap b{color:var(--ink)}
+.ev .thumb{width:120px;height:90px;border-radius:12px;object-fit:cover}
+.chip{display:inline-block;font-size:12px;font-weight:800;padding:2px 10px;border-radius:99px;background:var(--orange-l);color:var(--orange-d);margin-left:8px;vertical-align:middle}
+@media(max-width:640px){.tl:before{left:6px}.ev{grid-template-columns:1fr;gap:6px;padding-left:24px}.ev .date{text-align:left;padding-top:0}.ev .card:before{left:-24px}.ev .card{grid-template-columns:1fr}.ev .thumb{width:100%;height:160px}}
+
+/* games */
+.seg{display:inline-flex;background:#efe7de;border-radius:99px;padding:5px;gap:4px;margin-bottom:26px}
+.seg button{padding:9px 20px;border-radius:99px;font-weight:800;font-size:14.5px;color:#5a5360}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px -2px #0002}
+.game{display:none}.game.on{display:block;animation:fade .3s}
+/* quiz */
+.quiz{background:var(--ink);color:#fff;border-radius:24px;overflow:hidden}
+.qtop{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;font-weight:700;font-size:14px;color:#cfc8d6}
+.qtop .pts{background:#fff;color:var(--ink);border-radius:99px;padding:2px 14px;font-weight:800}
+.qbar{height:5px;background:#ffffff1a}.qbar div{height:100%;width:100%;background:var(--orange)}
+.qbody{padding:36px 24px 30px;min-height:380px;display:flex;flex-direction:column;justify-content:center}
+.qtext{background:#fff;color:var(--ink);border-radius:16px;padding:22px;text-align:center;font-weight:800;font-size:clamp(19px,2.6vw,26px);line-height:1.3;max-width:780px;width:100%;margin:0 auto 22px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:860px;width:100%;margin:0 auto}
+.opt{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:14px;color:#fff;font-weight:800;font-size:16.5px;text-align:left;min-height:72px;box-shadow:inset 0 -4px 0 #0002;transition:opacity .25s,transform .1s}
+.opt:hover{transform:translateY(-2px)}
+.opt svg{width:24px;height:24px;fill:#fff;flex:none}
+.c0{background:#e2404d}.c1{background:#3b6ddc}.c2{background:#d49500}.c3{background:#2b9a57}
+.opt.dim{opacity:.22}.opt.ok{outline:3px solid #fff;outline-offset:3px}
+.fb{text-align:center;margin-top:18px;font-weight:800;font-size:20px;min-height:30px}
+.qend{text-align:center}
+.qend .score{font-family:"Dela Gothic One";font-size:80px;line-height:1;color:var(--orange)}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+/* gacha */
+.gacha{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:stretch}
+.gm{padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dome{width:210px;height:210px;border-radius:50%;border:2px solid var(--ink);background:radial-gradient(circle at 30% 25%,#fff 0 10%,#fff0 11%),#f6efe8;position:relative;overflow:hidden}
+.capsule{position:absolute;width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:linear-gradient(var(--c) 50%,#fff 50%)}
+.dome.shake .capsule{animation:rat .14s infinite alternate}
+@keyframes rat{to{transform:translate(4px,-7px) rotate(30deg)}}
+.gbase{width:190px;height:96px;margin-top:-6px;background:var(--orange);border:2px solid var(--ink);border-radius:14px 14px 8px 8px;display:flex;align-items:center;justify-content:space-around}
+.knob{width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid var(--ink);position:relative;transition:transform .6s cubic-bezier(.5,0,.2,1)}
+.knob:after{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:11px;margin-left:-5.5px;background:var(--ink);border-radius:3px}
+.knob.turn{transform:rotate(360deg)}
+.chute{width:44px;height:32px;background:var(--ink);border-radius:8px}
+.gm p{margin-top:14px;font-size:14px;color:var(--muted);font-weight:600}
+.gres{padding:34px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;min-height:320px}
+.gres.pop{animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+.rar{align-self:flex-start;font-size:12.5px;font-weight:800;letter-spacing:.08em;padding:4px 12px;border-radius:99px;background:#f1e9e0}
+.rar.SSR{background:var(--neon);color:#fff}.rar.SR{background:#dcd3ff}
+.gres h3{font-size:clamp(26px,3.4vw,38px);margin:14px 0 8px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tags span{font-size:12.5px;font-weight:700;padding:2px 10px;border-radius:99px;border:1px solid var(--line)}
+.gres p{color:#4a4450}
+.glog{font-size:13.5px;color:var(--muted);margin-top:12px;font-weight:600}
+@media(max-width:820px){.gacha{grid-template-columns:1fr}}
+/* tier */
+.tier{display:grid;grid-template-columns:64px 1fr;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.tl-l{display:grid;place-items:center;font-family:"Dela Gothic One";font-size:24px;color:#fff}
+.drop{display:flex;flex-wrap:wrap;gap:7px;padding:10px;min-height:58px;align-content:flex-start;transition:background .15s}
+.drop.over,.drop.armed{background:var(--orange-l)}
+.pill{background:var(--bg);border:1px solid #ddd3c8;border-radius:99px;padding:5px 13px;font-weight:700;font-size:13.5px;cursor:grab;user-select:none}
+.pill.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pool{border:1.5px dashed #d9cdc0;border-radius:14px;min-height:64px;margin-top:14px;background:#fff8}
+.tbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+/* join */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{padding:28px}
+.step .n{width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800}
+.step h3{margin:16px 0 6px;font-size:21px}
+.step p{color:var(--muted);font-size:15px}
+.step a.btn{margin-top:16px}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.faq{max-width:780px}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;font-weight:800;font-size:17px}
+.qa button span{font-size:22px;transition:transform .25s;color:var(--orange-d)}
+.qa.on button span{transform:rotate(45deg)}
+.qa .a{max-height:0;overflow:hidden;transition:max-height .3s;color:#4a4450}
+.qa.on .a{max-height:200px}
+.qa .a p{padding-bottom:20px}
+
+footer{border-top:1px solid var(--line);padding:30px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer .brand img{width:32px;height:32px}
+footer .credit b{color:var(--ink)}
+footer nav a{margin-left:18px;text-decoration:none;font-weight:700}
+footer nav a:hover{color:var(--ink)}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:99px;font-weight:700;font-size:14.5px;z-index:100;transition:transform .3s,visibility .3s;visibility:hidden}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+main{min-height:calc(100vh - 160px)}
+
+/* === anime layer === */
+/* opening title card */
+#op{position:fixed;inset:0;z-index:200;background:#0f0d12;display:grid;place-items:center;cursor:pointer;overflow:hidden;transition:opacity .5s,visibility .5s}
+#op.done{opacity:0;visibility:hidden}
+#op canvas{position:absolute;inset:0;width:100%;height:100%}
+#op .in{position:relative;text-align:center;color:#fff}
+#op img{width:110px;height:110px;border-radius:50%;margin:0 auto;animation:stamp .55s cubic-bezier(.2,1.6,.4,1) both .15s}
+#op .t{font-family:"Dela Gothic One";font-size:clamp(40px,8vw,84px);line-height:1;margin-top:20px;animation:slam .5s cubic-bezier(.2,1.4,.4,1) both .45s}
+#op .t span{color:var(--orange)}
+#op .ep{margin-top:14px;font-weight:800;letter-spacing:.3em;font-size:13px;color:#bcb4c2;animation:fadeup .5s both .8s}
+#op .skip{position:absolute;bottom:24px;left:0;right:0;text-align:center;font-size:12px;color:#ffffff55;font-weight:700;letter-spacing:.15em}
+@keyframes stamp{from{transform:scale(2.4) rotate(-20deg);opacity:0}}
+@keyframes slam{from{transform:scale(1.6);opacity:0;letter-spacing:.2em}}
+@keyframes fadeup{from{transform:translateY(10px);opacity:0}}
+
+/* eyecatch wipe between pages */
+#wipe{position:fixed;inset:0;z-index:150;pointer-events:none;display:grid;place-items:center;
+  background:var(--orange);clip-path:polygon(0 0,0 0,-20% 100%,-20% 100%)}
+#wipe.go{animation:wipe .62s cubic-bezier(.7,0,.3,1)}
+#wipe .jp{font-family:"Dela Gothic One";font-size:clamp(46px,9vw,110px);color:#fff;opacity:0;letter-spacing:-.01em}
+#wipe.go .jp{animation:wj .62s}
+#wipe:before{content:"";position:absolute;inset:0;background:radial-gradient(#0000001f 1.2px,transparent 1.5px) 0 0/9px 9px}
+@keyframes wipe{0%{clip-path:polygon(0 0,0 0,-20% 100%,-20% 100%)}45%,55%{clip-path:polygon(0 0,120% 0,100% 100%,-20% 100%)}100%{clip-path:polygon(120% 0,120% 0,100% 100%,100% 100%)}}
+@keyframes wj{0%,30%{opacity:0;transform:scale(.9)}45%,60%{opacity:1;transform:none}75%,100%{opacity:0}}
+
+/* sakura */
+#sakura{position:fixed;inset:0;pointer-events:none;z-index:40}
+.sk{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:17px;flex:none;transition:opacity .2s}
+.sk.off{opacity:.45}
+
+/* page jp title */
+.pgjp{position:absolute;right:24px;top:40px;writing-mode:vertical-rl;font-size:15px;letter-spacing:.35em;color:#c9bfb5;font-weight:700;pointer-events:none}
+.page{position:relative}
+@media(max-width:900px){.pgjp{display:none}}
+
+/* visual novel box */
+.vn{position:relative;margin-top:70px;background:#16131bf2;color:#fff;border-radius:18px;padding:30px 34px 26px;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 4px var(--ink),0 18px 40px -20px #0008;min-height:150px;user-select:none}
+.vn .name{position:absolute;top:-18px;left:26px;background:var(--orange);color:#fff;font-weight:800;padding:6px 18px;border-radius:10px;font-size:14.5px;border:2px solid #fff;box-shadow:0 0 0 3px var(--ink)}
+.vn .name small{opacity:.8;font-weight:600;margin-left:6px}
+.vn .txt{font-size:19px;line-height:1.6;min-height:62px;font-weight:600}
+.vn .arrow{position:absolute;right:24px;bottom:16px;color:var(--orange);font-size:14px;animation:bob 1s ease-in-out infinite}
+.vn .opts2{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.vn .opts2 a{background:#ffffff14;border:1px solid #ffffff40;border-radius:10px;padding:8px 14px;font-weight:700;font-size:14px;text-decoration:none}
+.vn .opts2 a:hover{background:#fff;color:var(--ink)}
+.vn .opts2 a:before{content:"▸ ";color:var(--orange)}
+@keyframes bob{50%{transform:translateY(-4px)}}
+
+/* next episode preview */
+.next .lbl .jp{color:var(--orange);letter-spacing:.1em;margin-right:6px}
+
+/* ep numbers */
+.ep-n{font-family:"Dela Gothic One";font-size:12px;letter-spacing:.06em;color:var(--orange-d);display:block;margin-bottom:2px}
+
+/* quiz hanko stamp */
+.hanko{position:absolute;right:8%;top:24%;width:120px;height:120px;border-radius:50%;border:5px solid currentColor;display:grid;place-items:center;
+  font-family:"Dela Gothic One";font-size:26px;transform:rotate(-14deg);animation:hk .35s cubic-bezier(.2,1.8,.4,1);pointer-events:none;background:#ffffffd9}
+.hanko.ok{color:#e2404d}.hanko.ng{color:#6b6570}
+@keyframes hk{from{transform:scale(2.2) rotate(-30deg);opacity:0}}
+.qbody{position:relative}
+
+/* SSR */
+.gres.SSR{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--a,0deg),#ff4560,#ffd36e,#5ee0a0,#5ab0ff,#cfa3ff,#ff4560) border-box;animation:rb 2.5s linear infinite}
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes rb{to{--a:360deg}}
+.kami{position:absolute;right:22px;top:18px;font-family:"Dela Gothic One";font-size:18px;color:#e2404d;transform:rotate(8deg)}
+
+/* speed-line hover on feature cards */
+.feat{position:relative;overflow:hidden}
+.feat:after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;background:radial-gradient(var(--orange) 1.3px,transparent 1.6px) 0 0/8px 8px;
+  -webkit-mask:radial-gradient(circle at 100% 0,#000,transparent 70%);mask:radial-gradient(circle at 100% 0,#000,transparent 70%);opacity:0;transition:opacity .3s}
+.feat:hover:after{opacity:.55}
+
+/* like burst on posts */
+.like{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:14px;margin-top:10px;color:var(--muted);position:relative}
+.like.on{color:#e2404d}
+.like i{font-style:normal;font-size:18px;transition:transform .2s}
+.like.on i{transform:scale(1.25)}
+.float-k{position:fixed;pointer-events:none;z-index:120;font-weight:800;color:#e2404d;animation:fk .9s ease-out forwards}
+@keyframes fk{to{transform:translateY(-50px);opacity:0}}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="op"><canvas id="opc"></canvas><div class="in"><img src="img/logo.png" alt=""><div class="t">THS <span>ANIME CLUB</span></div><div class="ep">EPISODE 01 · WELCOME</div></div><div class="skip">CLICK TO SKIP</div></div>
+<div id="wipe"><div class="jp" id="wipeT"></div></div>
+<canvas id="sakura"></canvas>
+
+<header><div class="wrap">
+ <a class="brand" href="#home"><img src="img/logo.png" alt="THS Anime Club logo"><span><b>THS Anime Club</b><small>Troy High School</small></span></a>
+ <nav class="tabs" id="tabs">
+ <a href="#home" data-p="home">Home</a>
+ <a href="#about" data-p="about">About</a>
+ <a href="#showcase" data-p="showcase">Showcase</a>
+ <a href="#series" data-p="series">Series</a>
+ <a href="#meetings" data-p="meetings">Meetings</a>
+ <a href="#games" data-p="games">Games</a>
+ <a href="#join" data-p="join">Join</a>
+ </nav>
+ <button class="sk" id="skBtn" title="Toggle sakura" aria-label="Toggle sakura"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3c3 2 4.5 5.5 3 9-1 2.2-3 3.2-3 3.2S10 14.2 9 12c-1.5-3.5 0-7 3-9z" fill="#f0a3b6"/><path d="M12 3l-1 3h2z" fill="#fbf7f2"/></svg></button>
+ <a class="btn primary sm" href="https://discord.gg/r3bC8EHh" target="_blank" rel="noopener">Discord ↗</a>
+</div></header>
+
+<main>
+
+<!-- HOME -->
+<section class="page" id="p-home"><div class="wrap">
+ <div class="hero">
+ <div>
+ <div class="eyebrow">Official page of THS Anime Club</div>
+ <h1>Your favorite shows,<br><span>your people.</span></h1>
+ <p class="lead">A safe haven to talk about the Japanese shows you love — no judgment for having a niche interest. Plus Kahoots, games, contests and raffles.</p>
+ <div class="facts">
+ <div class="fact"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Mondays at lunch</div>
+ <div class="fact"><i><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i>Room 910</div>
+ <div class="fact"><i><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></i>Questions? DM us</div>
+ </div>
+ <div class="cta">
+ <a class="btn primary" href="https://discord.gg/r3bC8EHh" target="_blank" rel="noopener">Join the Discord</a>
+ <a class="btn ghost" href="#join">How to join →</a>
+ </div>
+ </div>
+ <div class="manga" aria-label="Club photos laid out as a manga page">
+  <div class="mp m1"><img src="img/meeting-1010.jpg" alt="Anime Club members at the 10/10 meeting"><div class="tone"></div><div class="cap-box">Monday. Lunch. Room 910.</div></div>
+  <div class="mp m2"><img src="img/showcase-fma.jpg" alt="Sunday Showcase post: Fullmetal Alchemist Brotherhood"></div>
+  <div class="mp m3"><svg class="lines" viewBox="0 0 300 200" preserveAspectRatio="none" id="burst"></svg><div class="burst-txt">EVERY<br>MONDAY!</div></div>
+  <div class="mp m4"><img src="img/room910.jpg" alt="Room 910"><div class="tone"></div><div class="bubble">which ep are you on??</div></div>
+ </div>
+ </div>
+ <div class="vn" id="vn"><div class="name">Anime Club<small>President</small></div><div class="txt" id="vnT"></div><div class="opts2" id="vnO"></div><span class="arrow">▼</span></div>
+
+ <div class="sec next" id="next"></div>
+
+ <div class="sec">
+ <div class="sec-head"><div><div class="eyebrow">Explore</div><h2>What we do</h2></div></div>
+ <div class="grid3">
+ <a class="card feat" href="#showcase"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4M10 9l4 2-4 2z"/></svg></div><h3>Sunday Showcase</h3><p>Every Sunday we highlight one anime that fits the month's theme, then play a game about it on Monday.</p><span class="go">See the showcase →</span></a>
+ <a class="card feat" href="#games"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 0 1 4 4v1a4 4 0 0 1-7 2.6L14 14h-4l-1 1.6A4 4 0 0 1 2 13v-1a4 4 0 0 1 4-4z"/><path d="M7 11v3M5.5 12.5h3"/></svg></div><h3>Kahoots & games</h3><p>We try to have as many fun days as possible. Warm up with our anime quiz, rec gacha and tier list maker.</p><span class="go">Play now →</span></a>
+ <a class="card feat" href="#meetings"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></div><h3>Meeting recaps</h3><p>Theme reveals, first episodes watched together, raffles and club photo day — straight from our Instagram.</p><span class="go">View meetings →</span></a>
+ </div>
+ </div>
+</div></section>
+
+<!-- ABOUT -->
+<section class="page" id="p-about"><div class="wrap">
+ <div class="split">
+ <div>
+ <div class="eyebrow">About us</div>
+ <h2>A safe haven for people who love anime.</h2>
+ <p class="lead" style="margin-top:18px">The Anime Club encourages cultural expansion for our members and gives them a place to talk about shared interests with other club members.</p>
+ <p class="muted" style="margin-top:14px">It's a place to express your love for your favorite Japanese shows without worrying about being judged for having a niche interest.</p>
+ </div>
+ <div class="photo">
+ <div class="tag">Room 910</div>
+ <figure><img src="img/room910.jpg" alt="Room 910, where Anime Club meets"><figcaption><img src="img/logo.png" alt=""><span><b>troyanimeclub</b> 10/24 meeting: watched first ep of Kaguya-sama </span></figcaption></figure>
+ </div>
+ </div>
+
+ <div class="sec">
+ <div class="eyebrow">What we're about</div>
+ <div class="values">
+ <div class="card val"><div class="n">01</div><h3>Cultural expansion</h3><p>Discover new shows, genres and pieces of Japanese culture you wouldn't have found on your own.</p></div>
+ <div class="card val"><div class="n">02</div><h3>Shared interests</h3><p>Talk theories, recs and favorite scenes with people who are just as into it as you are.</p></div>
+ <div class="card val"><div class="n">03</div><h3>Zero judgment</h3><p>Niche picks are welcome. Nobody here thinks your favorite is "too weird."</p></div>
+ </div>
+ </div>
+
+ <div class="sec split" style="align-items:start">
+ <div>
+ <div class="eyebrow">A typical meeting</div>
+ <h2>What happens on Mondays</h2>
+ <div class="quote">From our first meeting: <b>"what we covered today: introductions, slides, kahoot."</b></div>
+ </div>
+ <ul class="agenda">
+ <li class="card"><span class="t">1</span><div><b>Hang out & catch up</b><span>Grab lunch, find a seat in Room 910, talk about what you're watching.</span></div></li>
+ <li class="card"><span class="t">2</span><div><b>Slides & announcements</b><span>Monthly theme, the latest Sunday Showcase, contests and raffles.</span></div></li>
+ <li class="card"><span class="t">3</span><div><b>Fun day activity</b><span>Kahoot, a game about the showcase pick, or watching an episode together.</span></div></li>
+ </ul>
+ </div>
+</div></section>
+
+<!-- SHOWCASE -->
+<section class="page" id="p-showcase"><div class="wrap">
+ <div class="dark">
+ <div class="eyebrow">Every Sunday on Instagram</div>
+ <h2>Sunday <span class="neon">Showcase</span></h2>
+ <p class="lead" style="margin-top:14px">Every month has a theme. Every Sunday we highlight one anime under that theme — then there's a game about it at Monday's meeting.</p>
+ <div class="theme">
+ <div><small>Theme of the month · our first theme</small><h3 class="blur" id="theme">Mainstream anime</h3></div>
+ <button class="reveal-btn" id="revealBtn">Reveal theme</button>
+ </div>
+ </div>
+
+ <div class="sec" style="margin-top:56px">
+ <div class="sec-head"><div><div class="eyebrow">Past showcases</div><h2>From the feed</h2></div><a class="btn ghost sm" href="https://www.instagram.com/troyanimeclub/" target="_blank" rel="noopener">View on Instagram ↗</a></div>
+ <div class="posts">
+ <div class="card post"><div class="media"><img src="img/showcase-fma.jpg" alt="Sunday Showcase: Fullmetal Alchemist Brotherhood"></div><div class="body"><div class="meta">Oct 9, 2022</div><p><b>troyanimeclub</b> Sunday Showcase: Fullmetal Alchemist. Show up to the meeting tomorrow for a fun game </p><button class="like" data-n="11"><i>♡</i><span>11</span></button></div></div>
+ <div class="card post"><div class="media"><div class="s1">SUNDAY SHOWCASE</div><div class="s2 neon">JUJUTSU<br>KAISEN</div></div><div class="body"><div class="meta">Mainstream anime month</div><p><b>troyanimeclub</b> Sunday Showcase: Jujutsu Kaisen.</p><button class="like" data-n="0"><i>♡</i><span>like</span></button></div></div>
+ <div class="card post ghost"><div class="media"><div class="s1" style="color:var(--muted);font-size:15px">NEXT SHOWCASE</div><div class="s2">Your pick?</div></div><div class="body"><p style="margin-top:0"><b>Suggest an anime</b> and we'll send you a ready-made DM to copy.</p>
+ <div class="suggest"><input class="input" id="sugIn" placeholder="e.g. Frieren" maxlength="50"><button class="btn dark sm" id="sugBtn">Copy DM</button></div></div></div>
+ </div>
+ </div>
+</div></section>
+
+<!-- SERIES -->
+<section class="page" id="p-series"><div class="wrap">
+ <div class="sec-head"><div><div class="eyebrow">The shelf</div><h2>Series we talk about</h2><p class="muted" style="margin-top:10px;max-width:600px">Showcase picks, episodes watched at meetings, and the shows that come up every Monday. Tap a cover for the pitch.</p></div></div>
+ <div class="filters" id="filters"></div>
+ <div class="series" id="seriesGrid"></div>
+</div></section>
+
+<!-- MEETINGS -->
+<section class="page" id="p-meetings"><div class="wrap">
+ <div class="sec-head"><div><div class="eyebrow">Meeting log</div><h2>Recaps from the feed</h2><p class="muted" style="margin-top:10px;max-width:560px">Highlights from our Instagram. Follow <a href="https://www.instagram.com/troyanimeclub/" target="_blank" rel="noopener"><b>@troyanimeclub</b></a> for the latest.</p></div></div>
+ <div class="tl" id="tl"></div>
+</div></section>
+
+<!-- GAMES -->
+<section class="page" id="p-games"><div class="wrap">
+ <div class="eyebrow">Fun days</div>
+ <h2>Play before Monday</h2>
+ <p class="muted" style="margin:10px 0 28px;max-width:560px">We try to have as many fun days as possible — Kahoots, games and contests. Warm up here.</p>
+ <div class="seg" id="seg"><button class="on" data-g="quiz">Anime quiz</button><button data-g="gacha">Rec gacha</button><button data-g="tier">Tier list</button></div>
+
+ <div class="game on" id="g-quiz">
+ <div class="quiz"><div class="qtop"><span id="qProg">8 questions · 12 seconds each</span><span class="pts" id="qScore">0</span></div><div class="qbar"><div id="qBar"></div></div><div class="qbody" id="qBody"></div></div>
+ </div>
+
+ <div class="game" id="g-gacha">
+ <div class="gacha">
+ <div class="card gm"><div class="dome" id="dome"></div><div class="gbase"><button class="knob" id="knob" aria-label="Turn the knob"></button><div class="chute"></div></div><p>Turn the knob for a rec</p></div>
+ <div>
+ <div class="card gres" id="gres"><span class="rar">???</span><h3>What should you watch next?</h3><p>Each pull gives you one anime recommendation with a rarity. Every 10th pull is a guaranteed SSR.</p></div>
+ <div class="glog" id="glog"></div>
+ </div>
+ </div>
+ </div>
+
+ <div class="game" id="g-tier">
+ <p class="muted" style="margin-bottom:16px">Drag shows into tiers — or tap a show, then tap a tier. Copy it and post it in the Discord.</p>
+ <div id="tiers"></div>
+ <div class="drop pool" id="pool" data-tier="pool"></div>
+ <div class="tbar"><input class="input" id="addIn" placeholder="Add a show…" maxlength="40"><button class="btn ghost sm" id="addBtn">Add</button><button class="btn ghost sm" id="resetBtn">Reset</button><button class="btn primary sm" id="copyBtn">Copy for Discord</button></div>
+ </div>
+</div></section>
+
+<!-- JOIN -->
+<section class="page" id="p-join"><div class="wrap">
+ <div class="eyebrow">Join us</div>
+ <h2>No sign-ups. Just show up.</h2>
+ <p class="lead" style="margin:14px 0 36px">Anyone at Troy is welcome — whether you've watched 5 shows or 500.</p>
+ <div class="steps">
+ <div class="card step"><div class="n">1</div><h3>Come on Monday</h3><p>Meetings are every Monday at lunch in Room 910. Bring your lunch.</p></div>
+ <div class="card step"><div class="n">2</div><h3>Join the Discord</h3><p>Chat between meetings, share recs and catch announcements.</p><a class="btn primary sm" href="https://discord.gg/r3bC8EHh" target="_blank" rel="noopener">Open Discord ↗</a></div>
+ <div class="card step"><div class="n">3</div><h3>Follow the Insta</h3><p>Sunday Showcases, monthly themes, raffles and reminders.</p><a class="btn ghost sm" href="https://www.instagram.com/troyanimeclub/" target="_blank" rel="noopener">@troyanimeclub ↗</a></div>
+ </div>
+
+ <div class="sec faq">
+ <div class="eyebrow">FAQ</div>
+ <h2 style="margin-bottom:12px">Questions</h2>
+ <div id="faq"></div>
+ </div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+ <a class="brand" href="#home"><img src="img/logo.png" alt=""><span><b style="font-size:14px">THS Anime Club</b><small>Mondays · Lunch · Room 910</small></span></a>
+ <span class="credit">Website by <b>Troy Web Development Club</b></span>
+  <nav><a href="https://www.instagram.com/troyanimeclub/" target="_blank" rel="noopener">Instagram</a><a href="https://discord.gg/r3bC8EHh" target="_blank" rel="noopener">Discord</a></nav>
+</div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2000)}
+async function copy(t,m){try{await navigator.clipboard.writeText(t);toast(m||'Copied')}catch(e){toast('Copy was blocked — select the text manually')}}
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* opening */
+(function(){const op=$('#op');
+  const done=()=>op.classList.add('done');
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){op.classList.add('done');return}
+  op.onclick=done;setTimeout(done,2300);
+  const c=$('#opc'),x=c.getContext('2d');let W,H;const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};rs();
+  let f=0;(function dr(){if(op.classList.contains('done'))return;x.clearRect(0,0,W,H);const cx=W/2,cy=H/2,R=Math.hypot(W,H);
+    x.fillStyle='#ffffff';for(let i=0;i<120;i++){const a=Math.random()*Math.PI*2,w=.004+Math.random()*.012,r0=R*(.22+Math.random()*.12);
+      x.globalAlpha=.08+Math.random()*.2;x.beginPath();x.moveTo(cx+Math.cos(a)*r0,cy+Math.sin(a)*r0);x.lineTo(cx+Math.cos(a-w)*R,cy+Math.sin(a-w)*R);x.lineTo(cx+Math.cos(a+w)*R,cy+Math.sin(a+w)*R);x.fill()}
+    x.globalAlpha=1;if(f++<200)setTimeout(()=>requestAnimationFrame(dr),70)})()})();
+
+/* sakura */
+(function(){const c=$('#sakura'),x=c.getContext('2d');let W,H,on=store.get('tac-sk')!=='0',P=[];
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)on=false;
+  const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};addEventListener('resize',rs);rs();
+  const mk=(y)=>({x:Math.random()*W,y:y??-20,s:6+Math.random()*7,vy:.5+Math.random()*.8,vx:.3+Math.random()*.6,r:Math.random()*6,vr:(Math.random()-.5)*.04,ph:Math.random()*6});
+  for(let i=0;i<16;i++)P.push(mk(Math.random()*H));
+  function petal(p){x.save();x.translate(p.x,p.y);x.rotate(p.r);x.scale(1,Math.abs(Math.sin(p.ph))*.6+.4);
+    x.fillStyle='#f7b6c6';x.globalAlpha=.7;x.beginPath();x.moveTo(0,-p.s);x.bezierCurveTo(p.s,-p.s,p.s,p.s*.6,0,p.s);x.bezierCurveTo(-p.s,p.s*.6,-p.s,-p.s,0,-p.s);x.fill();
+    x.fillStyle='#fbf7f2';x.beginPath();x.moveTo(0,-p.s);x.lineTo(-p.s*.2,-p.s*.55);x.lineTo(p.s*.2,-p.s*.55);x.fill();x.restore()}
+  function loop(){x.clearRect(0,0,W,H);if(on){P.forEach(p=>{p.y+=p.vy;p.x+=p.vx+Math.sin(p.ph)*.4;p.ph+=.02;p.r+=p.vr;if(p.y>H+20||p.x>W+20)Object.assign(p,mk());petal(p)})}requestAnimationFrame(loop)}loop();
+  const b=$('#skBtn');b.classList.toggle('off',!on);b.onclick=()=>{on=!on;b.classList.toggle('off',!on);store.set('tac-sk',on?'1':'0');toast(on?'Sakura on':'Sakura off')}})();
+
+/* routing */
+const PAGES=['home','about','showcase','series','meetings','games','join'];
+const JP={home:'HOME',about:'ABOUT',showcase:'SHOWCASE',meetings:'MEETINGS',series:'SERIES',games:'GAMES',join:'JOIN'};
+let first=true;
+function route(){
+  const nx=PAGES.includes(location.hash.slice(1))?location.hash.slice(1):'home';
+  if(!first&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const w=$('#wipe');$('#wipeT').textContent=JP[nx];w.classList.remove('go');void w.offsetWidth;w.classList.add('go');first=false;setTimeout(swap,300);return}
+  first=false;swap()}
+function swap(){const p=PAGES.includes(location.hash.slice(1))?location.hash.slice(1):'home';
+  $$('.page').forEach(s=>s.classList.toggle('on',s.id==='p-'+p));
+  $$('#tabs a').forEach(a=>a.classList.toggle('on',a.dataset.p===p));
+  window.scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+
+/* next meeting */
+(function(){const d=new Date().getDay(),u=(8-d)%7,N=['S','M','T','W','T','F','S'];
+  const days=[1,2,3,4,5,6,0].map(i=>`<span class="${i===1?'mon':''} ${i===d?'today':''}">${N[i]}</span>`).join('');
+  $('#next').innerHTML=`<div><div class="lbl">Next episode</div><div class="big">${u===0?'Today':u===1?'Tomorrow':'In '+u+' days'}</div></div><div><div style="font-weight:800;font-size:18px">Monday · Lunch · Room 910</div><div style="color:#bcb4c2;font-size:14.5px">See you there. Bring your lunch and your hot takes.</div></div><div class="days">${days}</div>`})();
+
+/* showcase */
+$('#revealBtn').onclick=()=>{const t=$('#theme'),off=t.classList.toggle('off');$('#revealBtn').textContent=off?'Hide':'Reveal theme'};
+$('#sugBtn').onclick=()=>{const v=$('#sugIn').value.trim();if(!v){toast('Type an anime first');return}copy(`Hi! Could you do a Sunday Showcase on ${v}? ✦`,'Copied — paste it into our Instagram DMs')};
+
+/* meetings */
+const EV=[
+ ['Jan','2023','Club photo day','Club photo was taken at lunch on Wednesday. Dress code: black pants and an anime or white shirt.','<b>troyanimeclub</b> This is a reminder that the CLUB PHOTO WILL TAKE PLACE ON WEDNESDAY DURING LUNCH!!',null],
+ ['Oct 24','2022','Kaguya-sama, episode 1','We watched the first episode of Kaguya-sama: Love is War together.','<b>troyanimeclub</b> 10/24 Meeting: watched first ep of kaguya sama ','img/room910.jpg'],
+ ['Oct 10','2022','10/10 meeting','A full room and a super fun meeting.','<b>troyanimeclub</b> Super fun 10/10 meeting. ','img/meeting-1010.jpg'],
+ ['Oct 9','2022','Showcase: Fullmetal Alchemist','Sunday Showcase pick, with a game about it at the next meeting.','<b>troyanimeclub</b> Sunday Showcase: Full metal alchemist. Show up to the meeting tomorrow for a fun game ','img/showcase-fma.jpg'],
+ ['Oct 3','2022','Theme reveal','We revealed October\'s theme: mainstream anime.','<b>troyanimeclub</b> thanks for coming to our 10/3 meeting!! Today we did our theme reveal for october: mainstream anime!! ',null],
+ ['Oct 2','2022','First Sunday Showcase','The start of Sunday Showcases — one anime every Sunday under the month\'s theme.','<b>troyanimeclub</b> first sunday showcase!! every sunday we will highlight an anime under the months theme!!',null],
+ ['Sep 26','2022','First meeting','Introductions, slides and a Kahoot — plus a raffle announced for the next week.','<b>troyanimeclub</b> fun first meet! make sure to come next week for the raffle!!',null],
+];
+$('#tl').innerHTML=EV.map(([d,y,t,p,c,img],i)=>`<div class="ev"><div class="date">${d}<small>${y}</small></div><div class="card"><div><span class="ep-n">EP. ${String(EV.length-i).padStart(2,'0')}</span><h3>${t}${i===EV.length-1?'<span class="chip">Day one</span>':''}</h3><p>${p}</p><div class="cap">${c}</div></div>${img?`<img class="thumb" src="${img}" alt="">`:''}</div></div>`).join('');
+
+/* games tabs */
+$$('#seg button').forEach(b=>b.onclick=()=>{$$('#seg button').forEach(x=>x.classList.toggle('on',x===b));$$('.game').forEach(g=>g.classList.toggle('on',g.id==='g-'+b.dataset.g))});
+
+/* quiz */
+const Q=[
+ ['Which studio made Spirited Away?',['Studio Ghibli','Kyoto Animation','MAPPA','Bones'],0],
+ ["What is the name of Luffy's crew?",['Heart Pirates','Straw Hat Pirates','Red Hair Pirates','Whitebeard Pirates'],1],
+ ['Which village is Naruto from?',['Hidden Sand','Hidden Mist','Hidden Leaf','Hidden Cloud'],2],
+ ['What is the outermost wall in Attack on Titan?',['Wall Sina','Wall Rose','Wall Maria','Wall Shiganshina'],2],
+ ["Who is Demon Slayer's main character?",['Zenitsu Agatsuma','Tanjiro Kamado','Inosuke Hashibira','Giyu Tomioka'],1],
+ ['In Jujutsu Kaisen, Yuji Itadori swallows a finger belonging to…',['Mahito','Ryomen Sukuna','Satoru Gojo','Jogo'],1],
+ ['Which shinigami drops the Death Note into the human world?',['Rem','Ryuk','Sidoh','Gelus'],1],
+ ["What is Anya's secret ability in Spy x Family?",['Telekinesis','Seeing the future','Reading minds','Invisibility'],2],
+ ['"Itadakimasu" is said before…',['Sleeping','Eating','Fighting','Leaving home'],1],
+ ['"Senpai" means someone who is…',['Your younger sibling','Your upperclassman','Your rival','Your teacher'],1],
+ ['What sport do they play in Haikyuu!!?',['Basketball','Volleyball','Soccer','Tennis'],1],
+ ['In Fullmetal Alchemist, the Elric brothers try to bring back their…',['Father','Teacher','Mother','Dog'],2],
+ ['In Kaguya-sama, Kaguya and Miyuki are both on the…',['Student council','Volleyball team','Art club','Newspaper club'],0],
+];
+const SH=['<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/></svg>','<svg viewBox="0 0 24 24"><path d="M12 2l10 10-10 10L2 12z"/></svg>','<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>','<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/></svg>'];
+const LIMIT=12000;let qs,qi,score,t0,raf,locked;
+function qIntro(){const b=store.get('tac-best');$('#qBar').style.width='100%';
+  $('#qBody').innerHTML=`<div class="qend"><div class="qtext">Think you know your anime?</div><button class="btn primary" id="qGo">Start quiz</button>${b?`<p style="margin-top:14px;color:#bcb4c2;font-size:14px">Your best: ${b}</p>`:''}</div>`;$('#qGo').onclick=qNew}
+function qNew(){qs=shuffle(Q).slice(0,8);qi=0;score=0;$('#qScore').textContent='0';qShow()}
+function qShow(){locked=false;const [q,o]=qs[qi],ord=shuffle([0,1,2,3]);
+  $('#qProg').textContent=`Question ${qi+1} of ${qs.length}`;
+  $('#qBody').innerHTML=`<div class="qtext">${q}</div><div class="opts">${ord.map((x,k)=>`<button class="opt c${k}" data-o="${x}">${SH[k]}<span>${o[x]}</span></button>`).join('')}</div><div class="fb" id="fb"></div>`;
+  $$('.opt').forEach(b=>b.onclick=()=>qAns(+b.dataset.o));
+  t0=performance.now();cancelAnimationFrame(raf);
+  const tick=()=>{const e=performance.now()-t0;$('#qBar').style.width=Math.max(0,100-e/LIMIT*100)+'%';e>=LIMIT?qAns(-1):raf=requestAnimationFrame(tick)};tick()}
+function qAns(o){if(locked)return;locked=true;cancelAnimationFrame(raf);const a=qs[qi][2],e=performance.now()-t0;
+  $$('.opt').forEach(b=>b.classList.add(+b.dataset.o===a?'ok':'dim'));
+  const hk=document.createElement('div');hk.className='hanko '+(o===a?'ok':'ng');hk.textContent=o===a?'NICE!':'MISS';$('#qBody').appendChild(hk);
+  if(o===a){const p=Math.round(1000*(1-e/LIMIT/2));score+=p;$('#fb').textContent=`Correct! +${p}`}else $('#fb').textContent=o===-1?"Time's up":'Not quite';
+  $('#qScore').textContent=score;setTimeout(()=>{qi++;qi<qs.length?qShow():qEnd()},1400)}
+function qEnd(){const best=Math.max(score,+(store.get('tac-best')||0));store.set('tac-best',best);
+  const r=score>6500?'Final boss energy':score>4500?'Main character':score>2500?'Side character with potential':'Background extra (for now)';
+  $('#qProg').textContent='Finished';
+  $('#qBody').innerHTML=`<div class="qend"><div style="color:#bcb4c2;font-weight:700">Final score</div><div class="score">${score}</div><div class="qtext" style="max-width:420px;margin-top:16px">${r}</div><button class="btn primary" id="qAgain">Play again</button><p style="margin-top:12px;color:#bcb4c2;font-size:14px">Best: ${best}</p></div>`;$('#qAgain').onclick=qNew}
+qIntro();
+
+/* gacha */
+const POOL={
+ SSR:[["Frieren: Beyond Journey's End",['Fantasy','Slow burn'],'An elf mage outlives her party and slowly learns what the journey meant.'],
+      ['Fullmetal Alchemist: Brotherhood',['Action','Adventure'],'Two brothers, one huge mistake, 64 perfectly paced episodes. A past Sunday Showcase pick.'],
+      ['Mob Psycho 100',['Action','Comedy'],'The strongest psychic alive just wants to fit in at the body-improvement club.'],
+      ['Cowboy Bebop',['Sci-fi','Jazz'],'Bounty hunters in space with the coolest soundtrack ever made.']],
+ SR:[['Haikyuu!!',['Sports'],'Volleyball anime that will make you care way too much about volleyball.'],
+     ['Violet Evergarden',['Drama'],'A former soldier learns to write letters — and feelings.'],
+     ['Steins;Gate',['Sci-fi','Thriller'],'A microwave time machine. Starts silly, gets very serious.'],
+     ['Your Lie in April',['Music','Drama'],'A pianist who stopped hearing his own playing. Bring tissues.'],
+     ['Spy x Family',['Comedy','Family'],'A spy, an assassin and a telepath pretend to be a normal family.'],
+     ['Jujutsu Kaisen',['Action'],'Cursed energy and absurd fights. A past Sunday Showcase pick.']],
+ R:[['K-On!',['Slice of life','Music'],'Light music club girls drink tea and sometimes practice.'],
+    ['Kaguya-sama: Love is War',['Romcom'],'Two geniuses refuse to confess first. We watched episode 1 at a meeting.'],
+    ["Natsume's Book of Friends",['Cozy','Supernatural'],'A boy returns names to spirits. Peak comfort watch.'],
+    ['Ping Pong the Animation',['Sports'],'Weird-looking, incredibly good. Trust us.'],
+    ['March Comes in Like a Lion',['Drama'],'A teenage shogi pro finds a found family.'],
+    ["Komi Can't Communicate",['Comedy','School'],'A girl with extreme social anxiety tries to make 100 friends.'],
+    ['Dandadan',['Action','Weird'],'Aliens vs ghosts vs two teenagers. Chaos, in the best way.']]
+};
+const CC=['#e8764a','#f7c8d2','#cfc3ff','#ffd36e','#ff4560'];
+[[16,110],[60,135],[108,128],[148,100],[34,66],[86,78],[130,58],[52,160],[100,165],[146,150],[78,30]].forEach(([x,y],i)=>{const c=document.createElement('div');c.className='capsule';c.style.setProperty('--c',CC[i%5]);c.style.left=x+'px';c.style.top=y+'px';c.style.transform=`rotate(${i*47}deg)`;$('#dome').appendChild(c)});
+let pulls=0,ssr=0,busy=false;
+$('#knob').onclick=()=>{if(busy)return;busy=true;const k=$('#knob');k.classList.remove('turn');void k.offsetWidth;k.classList.add('turn');$('#dome').classList.add('shake');
+  setTimeout(()=>{$('#dome').classList.remove('shake');pulls++;const r=Math.random(),rar=(pulls%10===0||r<.1)?'SSR':r<.42?'SR':'R';const [t,tg,d]=rnd(POOL[rar]);if(rar==='SSR')ssr++;
+    const g=$('#gres');g.className='card gres '+rar;void g.offsetWidth;g.classList.add('pop');
+    g.innerHTML=`${rar==='SSR'?'<span class="kami">JACKPOT!</span>':''}<span class="rar ${rar}">${rar} ${'★'.repeat(rar==='SSR'?5:rar==='SR'?4:3)}</span><h3>${t}</h3><div class="tags">${tg.map(x=>`<span>${x}</span>`).join('')}</div><p>${d}</p>`;
+    $('#glog').textContent=`${pulls} pull${pulls>1?'s':''} · ${ssr} SSR · guaranteed SSR in ${10-pulls%10}`;busy=false},700)};
+
+/* tier list */
+const TIERS=[['S','#e2404d'],['A','#e8764a'],['B','#d49500'],['C','#2b9a57'],['D','#3b6ddc']];
+const DEF=['One Piece','Naruto','Demon Slayer','Jujutsu Kaisen','Attack on Titan','Spy x Family','Chainsaw Man','Haikyuu!!','Death Note','Frieren','Fullmetal Alchemist','Kaguya-sama','Blue Lock','Oshi no Ko','Dandadan','Solo Leveling'];
+$('#tiers').innerHTML=TIERS.map(([t,c])=>`<div class="tier"><div class="tl-l" style="background:${c}">${t}</div><div class="drop" data-tier="${t}"></div></div>`).join('');
+let sel=null;const arm=on=>$$('.drop').forEach(d=>d.classList.toggle('armed',on));
+function pill(n){const c=document.createElement('div');c.className='pill';c.textContent=n;c.draggable=true;
+  c.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain','');sel=c;c.classList.add('sel')});
+  c.addEventListener('dragend',()=>{c.classList.remove('sel');sel=null;$$('.drop').forEach(d=>d.classList.remove('over','armed'))});
+  c.addEventListener('click',e=>{e.stopPropagation();if(sel===c){c.classList.remove('sel');sel=null;arm(false);return}if(sel)sel.classList.remove('sel');sel=c;c.classList.add('sel');arm(true)});return c}
+function fill(){$$('.drop').forEach(d=>d.innerHTML='');DEF.forEach(n=>$('#pool').appendChild(pill(n)))}
+$$('.drop').forEach(d=>{d.addEventListener('dragover',e=>{e.preventDefault();d.classList.add('over')});d.addEventListener('dragleave',()=>d.classList.remove('over'));
+  d.addEventListener('drop',e=>{e.preventDefault();d.classList.remove('over');if(sel)d.appendChild(sel)});
+  d.addEventListener('click',()=>{if(sel){d.appendChild(sel);sel.classList.remove('sel');sel=null;arm(false)}})});
+fill();
+$('#addBtn').onclick=()=>{const v=$('#addIn').value.trim();if(!v)return;$('#pool').appendChild(pill(v));$('#addIn').value=''};
+$('#addIn').onkeydown=e=>{if(e.key==='Enter')$('#addBtn').click()};
+$('#resetBtn').onclick=fill;
+$('#copyBtn').onclick=()=>copy('**My anime tier list**\n'+TIERS.map(([t])=>`${t}: ${$$(`.drop[data-tier="${t}"] .pill`).map(c=>c.textContent).join(', ')||'—'}`).join('\n'),'Copied — paste it in the Discord');
+
+/* visual novel */
+(function(){const L=[
+  ["Oh! A new face~ Welcome to the THS Anime Club!",[]],
+  ["We meet every Monday at lunch in Room 910. Bring your lunch and your hottest takes.",[]],
+  ["Every Sunday we post a Sunday Showcase on Instagram — one anime that fits the month's theme.",[["See the showcase","#showcase"]]],
+  ["We try to have as many fun days as possible: Kahoots, games, contests and even raffles!",[["Play a game","#games"]]],
+  ["So… will you join our club?",[["Yes! How do I join?","#join"],["Tell me more","#about"]]]];
+  let i=0,tm;const T=$('#vnT'),O=$('#vnO');
+  function show(){clearInterval(tm);const [s,o]=L[i];let k=0;T.textContent='';O.innerHTML='';
+    tm=setInterval(()=>{T.textContent=s.slice(0,++k);if(k>=s.length){clearInterval(tm);O.innerHTML=o.map(([a,h])=>`<a href="${h}">${a}</a>`).join('')}},22)}
+  $('#vn').onclick=e=>{if(e.target.closest('a'))return;const [s]=L[i];if(T.textContent.length<s.length){clearInterval(tm);T.textContent=s;O.innerHTML=L[i][1].map(([a,h])=>`<a href="${h}">${a}</a>`).join('');return}i=(i+1)%L.length;show()};
+  show()})();
+$$('.like').forEach(b=>b.onclick=e=>{const on=b.classList.toggle('on');const n=+b.dataset.n+(on?1:0);b.querySelector('i').textContent=on?'♥':'♡';b.querySelector('span').textContent=n||'like';
+  if(on){const f=document.createElement('div');f.className='float-k';f.textContent='+1';f.style.left=e.clientX+'px';f.style.top=e.clientY-20+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),900)}});
+
+/* series */
+const SERIES=[
+ ['Fullmetal Alchemist: Brotherhood','Action','2009','Bones','#7a1c1c','Two brothers pay a terrible price for breaking alchemy\'s one rule, then set out to fix it.','Sunday Showcase'],
+ ['Jujutsu Kaisen','Action','2020','MAPPA','#1d2a5b','A high schooler eats a cursed finger and gets pulled into a world of sorcerers and curses.','Sunday Showcase'],
+ ['Kaguya-sama: Love Is War','Romcom','2019','A-1 Pictures','#c2185b','Two student-council geniuses would rather die than confess first.','Watched at a meeting'],
+ ['Spy x Family','Comedy','2022','Wit Studio / CloverWorks','#2e7d5b','A spy, an assassin and a telepath pretend to be a normal family.','On our feed'],
+ ['Chainsaw Man','Action','2022','MAPPA','#d84315','A broke devil hunter fuses with his chainsaw devil and joins public safety.','On our feed'],
+ ['Re:Zero','Fantasy','2016','White Fox','#3f51b5','Every time Subaru dies, he goes back in time and has to try again.','On our feed'],
+ ['Frieren: Beyond Journey\'s End','Fantasy','2023','Madhouse','#4a6f8a','After the hero\'s journey ends, an elf mage learns what it meant.',''],
+ ['Demon Slayer','Action','2019','ufotable','#1b4d3e','A kind boy becomes a demon slayer to turn his sister human again.',''],
+ ['Attack on Titan','Action','2013','Wit Studio / MAPPA','#5d4037','Humanity lives behind walls. The walls stop being enough.',''],
+ ['Haikyuu!!','Sports','2014','Production I.G','#ef6c00','A short kid with a huge jump joins a fallen volleyball team.',''],
+ ['Death Note','Thriller','2006','Madhouse','#212121','A student finds a notebook that kills anyone whose name he writes.',''],
+ ['Mob Psycho 100','Comedy','2016','Bones','#6a1b9a','The strongest psychic alive just wants a normal school life.',''],
+ ['Your Lie in April','Drama','2014','A-1 Pictures','#ad5a7a','A piano prodigy who can\'t hear his own playing meets a wild violinist.',''],
+ ['Violet Evergarden','Drama','2018','Kyoto Animation','#37474f','A former soldier writes letters for others while learning what love means.',''],
+ ['Cowboy Bebop','Sci-fi','1998','Sunrise','#8d6e63','Broke bounty hunters drift through space, to a great jazz soundtrack.',''],
+ ['Dandadan','Action','2024','Science SARU','#00838f','A ghost believer and an alien believer find out they\'re both right.',''],
+];
+const pats=['radial-gradient(#fff 1.4px,transparent 1.7px) 0 0/8px 8px','repeating-linear-gradient(45deg,#fff 0 2px,transparent 2px 9px)','repeating-conic-gradient(from 0deg at 85% 15%,#fff 0 2deg,transparent 2deg 9deg)'];
+let curG='All';
+function drawSeries(){const G=['All',...new Set(SERIES.map(x=>x[1])),'Club picks'];
+  $('#filters').innerHTML=G.map(g=>`<button class="${g===curG?'on':''}">${g}</button>`).join('');
+  $$('#filters button').forEach(b=>b.onclick=()=>{curG=b.textContent;drawSeries()});
+  const L=SERIES.filter(x=>curG==='All'||x[1]===curG||(curG==='Club picks'&&x[6]));
+  $('#seriesGrid').innerHTML=L.map((x,i)=>`<div class="sr" style="background:${x[4]}"><div class="pat" style="background:${pats[i%3]}"></div>${x[6]?'<span class="club">CLUB PICK</span>':''}<span class="vol">VOL. ${String(SERIES.indexOf(x)+1).padStart(2,'0')} · ${x[1].toUpperCase()}</span><h3>${x[0]}</h3><div class="meta">${x[3]} · ${x[2]}</div><div class="back"><b>${x[0]}</b>${x[5]}${x[6]?`<small>${x[6]}</small>`:''}</div></div>`).join('');
+  $$('.sr').forEach(c=>c.onclick=()=>c.classList.toggle('flip'))}
+drawSeries();
+
+/* burst lines */
+(function(){const sv=$('#burst');let d='';const cx=150,cy=100;for(let i=0;i<70;i++){const a=i/70*Math.PI*2+Math.random()*.05,w=.012+Math.random()*.02,r0=60+Math.random()*30,R=260;
+  const P=(an,r)=>`${(cx+Math.cos(an)*r).toFixed(1)},${(cy+Math.sin(an)*r*.75).toFixed(1)}`;d+=`M${P(a,r0)}L${P(a-w,R)}L${P(a+w,R)}Z`}
+  sv.innerHTML=`<path d="${d}" fill="#1d1b20"/>`})();
+
+/* faq */
+const FAQ=[
+ ['Do I need to have watched a lot of anime?','Nope. Whether you\'ve seen five shows or five hundred, you\'re welcome. Half the fun is finding new ones.'],
+ ['When and where do you meet?','Every Monday at lunch in Room 910. Check our Instagram for any changes.'],
+ ['Do I need to sign up?','No sign-up needed — just show up. Joining the Discord is the best way to stay in the loop.'],
+ ['What is the Sunday Showcase?','Every Sunday we post one anime that fits the month\'s theme on Instagram, then play a game about it at Monday\'s meeting.'],
+ ['How do I suggest a showcase or ask a question?','DM us on Instagram at @troyanimeclub, or ask in the Discord.'],
+];
+$('#faq').innerHTML=FAQ.map(([q,a])=>`<div class="qa"><button>${q}<span>+</span></button><div class="a"><p>${a}</p></div></div>`).join('');
+$$('.qa button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('on'));
+</script>
+</body>
+</html>
