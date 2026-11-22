@@ -378,6 +378,24 @@ main{min-height:calc(100vh - 160px)}
 .float-k{position:fixed;pointer-events:none;z-index:120;font-weight:800;color:#e2404d;animation:fk .9s ease-out forwards}
 @keyframes fk{to{transform:translateY(-50px);opacity:0}}
 
+
+/* click-me badges */
+.btn::after,.sr::before,#vn::before,.feat::before,.like::after,#revealBtn::after,.knob::before,.qa button::after,.vn .opts2 a::after{
+  content:"click me";font-family:"Plus Jakarta Sans",sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--orange);color:#fff;border-radius:99px;padding:3px 9px;line-height:1.3;white-space:nowrap;box-shadow:0 0 0 2px #fff;
+  animation:cm 1.6s ease-in-out infinite;pointer-events:none;z-index:6}
+@keyframes cm{50%{transform:translateY(-3px) rotate(-3deg)}}
+.sr::before{position:absolute;right:12px;bottom:14px}
+#vn::before{position:absolute;right:20px;top:-12px}
+.feat::before{position:absolute;right:18px;top:18px}
+.like::after{margin-left:6px;position:relative}
+#revealBtn,.btn,.qa button{position:relative}
+.btn::after{position:absolute;right:-10px;top:-12px;font-size:9.5px;padding:2px 7px}
+#revealBtn::after{position:absolute;right:-14px;top:-14px}
+.knob::before{position:absolute;left:50%;top:-34px;margin-left:-34px;animation:none}
+.qa button::after{position:absolute;right:34px;top:50%;margin-top:-10px;animation:none}
+.vn .opts2 a::after{margin-left:8px;position:relative;display:inline-block}
+@media(prefers-reduced-motion:reduce){.sr::before,#vn::before,.feat::before{animation:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
