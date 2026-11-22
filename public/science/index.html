@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Science Club</title>
+<link rel="icon" href="img/logo.webp">
+<style>
+@font-face{font-family:Sauce;src:url(fonts/sauce-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Sauce;src:url(fonts/sauce-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Sauce;src:url(fonts/sauce-700.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--paper:#fdfdfc;--ink:#10192e;--accent:#1b4dff;--muted:#585e6b;--hair:#dcdcda;--tint:#e8edff;--soft:#8fa8ff;--gap:clamp(80px,12vw,150px);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Sauce,system-ui,sans-serif;font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0 0 .5em;line-height:1.1;font-weight:500}
+h1{font-size:clamp(2.4rem,6vw,4.2rem)}h2{font-size:clamp(1.8rem,4vw,2.8rem)}h3{font-size:1.15rem}
+p{margin:0 0 1em}a{color:var(--accent)}img{max-width:100%;height:auto;display:block}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.container{max-width:1200px;margin-inline:auto;padding-inline:24px}
+.section{margin-block:var(--gap)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+.hairgrid{display:grid;border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+.haircell{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:32px;transition:background .15s}
+a.haircell,button.haircell{color:inherit;text-decoration:none;display:block;text-align:left;background:none;border-top:0;border-left:0}
+a.haircell:hover,button.haircell:hover{background:var(--tint)}
+.band{background:var(--ink);color:#fff}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;font-size:.95rem;font-weight:500;text-decoration:none;border-radius:14px;border:0;transition:background .15s,color .15s,box-shadow .15s,transform .15s}
+.btn .ar{transition:transform .15s}.btn:hover .ar{transform:translateX(4px)}
+.solid{background:linear-gradient(180deg,#303a52 0,var(--ink) 55%);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.28),0 2px 4px rgba(16,25,46,.24),0 10px 22px rgba(16,25,46,.22)}
+.solid:hover{background:linear-gradient(180deg,#3d5aa8 0,var(--accent) 55%);transform:translateY(-1px)}
+.outline{border:1px solid var(--ink);color:var(--ink);background:transparent}
+.outline:hover{background:var(--ink);color:#fff}
+.outlineL{border:1px solid #fff;color:#fff;background:transparent}
+.outlineL:hover{background:#fff;color:var(--ink)}
+.sm{padding:8px 16px;font-size:.85rem;border-radius:11px;gap:8px}
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:rgba(253,253,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:20px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:500;letter-spacing:.08em;font-size:.9rem;text-transform:uppercase}
+.brand img{width:32px;height:32px;object-fit:contain}
+.links{display:flex;align-items:center;gap:22px;list-style:none;margin:0;padding:0}
+.links a{color:var(--ink);text-decoration:none;font-size:.88rem;font-weight:500;position:relative}
+.links a:hover,.links a.on{color:var(--accent)}
+.links a.on:after{content:"";position:absolute;left:0;right:0;bottom:-24px;height:2px;background:var(--accent)}
+.more{position:relative}
+.more>button{background:none;border:0;font-size:.88rem;font-weight:500;padding:0}
+.drop{position:absolute;top:34px;right:-12px;background:var(--paper);border:1px solid var(--hair);min-width:200px;padding:8px;display:none;box-shadow:0 12px 30px rgba(16,25,46,.12)}
+.more.open .drop{display:block}
+.drop a{display:block;padding:9px 12px}.drop a:hover{background:var(--tint)}
+.drop a.on:after{display:none}
+.burger{display:none;background:none;border:1px solid var(--ink);padding:6px 10px}
+@media(max-width:940px){.links{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:var(--paper);border-bottom:1px solid var(--hair);padding:8px 24px 16px}.links.open{display:flex}.links li{width:100%}.links a{display:block;padding:11px 0}.links a.on:after{display:none}.more>button{display:none}.drop{display:block;position:static;border:0;box-shadow:none;padding:0}.drop a{padding:11px 0}.burger{display:block}}
+/* views */
+.view{display:none}.view.on{display:block}
+/* hero */
+.hero{height:760vh;position:relative}
+.sticky{position:sticky;top:0;height:100vh;height:100dvh}
+.poster{position:absolute;inset:clamp(8px,1.4vw,18px);background:var(--ink);border-radius:14px;overflow:hidden;transform-origin:center;will-change:transform}
+.poster canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,25,46,.92),rgba(16,25,46,0) 55%),linear-gradient(100deg,rgba(16,25,46,.85),rgba(16,25,46,.1) 62%);pointer-events:none}
+.headline{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:clamp(24px,6vw,80px);max-width:860px}
+.headline h1{color:var(--paper);font-size:clamp(2.2rem,5.2vw,4.2rem);line-height:1.04;margin:0}
+.headline p{color:#fff;max-width:560px;margin:0;font-size:1.08rem;text-shadow:0 1px 12px rgba(16,25,46,.6)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.hint{position:absolute;left:50%;bottom:clamp(20px,4vh,40px);transform:translateX(-50%);color:rgba(253,253,252,.55);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateX(-50%) translateY(6px)}}
+.cap{position:absolute;left:clamp(24px,6vw,80px);bottom:clamp(48px,10vh,110px);max-width:520px;display:flex;flex-direction:column;gap:10px;opacity:0;pointer-events:none}
+.cap .mono{color:var(--soft)}
+.cap .t{color:var(--paper);font-size:clamp(1.5rem,3vw,2.4rem);font-weight:500;line-height:1.1;margin:0}
+.cap .b{color:#fff;margin:0;font-size:1.05rem;text-shadow:0 1px 12px rgba(16,25,46,.6)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:.74rem;font-weight:500;color:var(--paper);border:1px solid rgba(253,253,252,.55);border-radius:999px;padding:5px 12px;white-space:nowrap;text-decoration:none;background:none}
+a.tag:hover,button.tag:hover{background:var(--paper);color:var(--ink)}
+.finale{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:24px;padding:clamp(24px,6vw,80px);opacity:0;pointer-events:none}
+.finale p{color:var(--paper);font-size:clamp(1.8rem,4.2vw,3.4rem);line-height:1.08;max-width:840px;margin:0;font-weight:500}
+.scale{position:absolute;right:clamp(16px,3vw,36px);top:clamp(16px,3vw,32px);color:rgba(253,253,252,.75);text-align:right;pointer-events:none}
+.scale sup{font-size:.55em;margin-left:1px}.scale b{display:block;font-family:Sauce;font-weight:500;font-size:clamp(1.2rem,2.4vw,1.8rem);letter-spacing:0;text-transform:none;color:#fff}
+.ruler{position:absolute;right:clamp(16px,3vw,36px);top:50%;transform:translateY(-50%);height:40%;width:2px;background:rgba(253,253,252,.2);pointer-events:none}
+.ruler i{position:absolute;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--soft);transform:translateY(-50%)}
+.lensbtn{position:absolute;right:clamp(16px,3vw,36px);bottom:clamp(16px,3vw,32px);z-index:3}
+@media(max-width:640px){.scrim{background:linear-gradient(0deg,rgba(16,25,46,.94),rgba(16,25,46,.45) 75%)}.hero{height:640vh}.headline{justify-content:flex-end;padding-bottom:clamp(64px,14vh,120px)}.ruler,.lensbtn{display:none}}
+/* stat */
+.stats{grid-template-columns:repeat(4,1fr)}
+.stat{text-align:center;padding:28px 16px}
+.stat b{display:block;font-weight:500;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1}
+.stat span{display:block;margin-top:10px;color:var(--muted)}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.what{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
+.what img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.meet{border-left:2px solid var(--accent);padding-left:20px;margin-top:28px;font-size:.95rem}
+@media(max-width:860px){.what{grid-template-columns:1fr;gap:32px}}
+/* orbit */
+.orbitwrap{text-align:center}
+.orbit{position:relative;width:min(880px,96vw);aspect-ratio:1.8;margin-inline:auto;touch-action:pan-y;cursor:grab;user-select:none}
+.orbit.drag{cursor:grabbing}
+.node{position:absolute;top:50%;left:50%;width:clamp(64px,15vw,104px);height:clamp(64px,15vw,104px);border-radius:24%;background:var(--paper);border:1px solid var(--hair);display:grid;place-items:center;transition:border-color .2s,box-shadow .2s;text-decoration:none;color:var(--ink);font-weight:500}
+.node{overflow:hidden}.node img{width:62%;height:62%;object-fit:contain;pointer-events:none}
+.node.act{border-color:var(--accent);box-shadow:0 6px 24px rgba(27,77,255,.22)}
+.ocenter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;max-width:min(440px,70vw);pointer-events:none}
+.ocenter>*{pointer-events:auto}
+.olead{font-size:1rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.oname{height:2.3em;font-size:clamp(1.6rem,4vw,2.5rem);display:flex;align-items:center;justify-content:center;overflow:hidden;line-height:1.15}
+.oname span{display:inline-block;animation:clubIn .5s cubic-bezier(.22,1,.36,1)}
+@keyframes clubIn{0%{clip-path:inset(0 0 100% 0);transform:translateY(40%)}to{clip-path:inset(0);transform:none}}
+.ohint{margin-top:56px}
+/* strips */
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.g4 h3,.g3 h3{font-size:1.1rem}.haircell p{font-size:.97rem;line-height:1.6;margin:0}
+@media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.g4,.g3,.g2{grid-template-columns:1fr}}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:16px;background:var(--ink)}
+.new{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:#fff;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.join{text-align:center;padding-block:32px}
+.join h2{font-size:clamp(2rem,5vw,3.4rem);max-width:760px;margin-inline:auto}
+.join p{max-width:480px;margin-inline:auto}
+/* page head */
+.phead{padding-top:clamp(56px,8vw,100px);max-width:820px}
+.phead p{font-size:1.08rem}
+/* groups */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:32px 0 28px}
+.chip{border:1px solid var(--hair);background:var(--paper);border-radius:999px;padding:7px 15px;font-size:.85rem;font-weight:500}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.search{margin-left:auto;border:1px solid var(--hair);border-radius:11px;padding:8px 14px;font:inherit;font-size:.9rem;min-width:220px;background:var(--paper)}
+.groups{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.groups{grid-template-columns:repeat(2,1fr)}.search{margin-left:0;width:100%}}
+@media(max-width:600px){.groups{grid-template-columns:1fr}}
+.gcard{display:flex!important;flex-direction:column;gap:12px;min-height:250px;width:100%}
+.glogo{width:64px;height:64px;border-radius:24%;border:1px solid var(--hair);display:grid;place-items:center;background:#fff;overflow:hidden}
+.glogo img{width:70%;height:70%;object-fit:contain}
+.glogo.txt{font-weight:500;font-size:1.3rem;color:var(--accent)}
+.gcard .cat{margin-top:auto;color:var(--muted)}
+.empty{padding:48px 0;color:var(--muted)}
+/* drawer */
+.dlg{position:fixed;inset:0;z-index:100;display:none}
+.dlg.on{display:block}
+.dlg .bg{position:absolute;inset:0;background:rgba(16,25,46,.5);animation:fade .2s}
+.dlg .panel{position:absolute;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--paper);padding:36px 32px;overflow:auto;animation:slide .3s cubic-bezier(.22,1,.36,1)}
+@keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(40px);opacity:0}}
+.x{position:absolute;top:18px;right:18px;background:none;border:1px solid var(--hair);border-radius:10px;width:38px;height:38px;font-size:1.1rem}
+.panel .glogo{width:96px;height:96px;margin-bottom:20px}
+.plist{list-style:none;padding:0;margin:16px 0 24px;border-top:1px solid var(--hair)}
+.plist li{padding:12px 0;border-bottom:1px solid var(--hair);display:flex;justify-content:space-between;gap:12px}
+/* tables / tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--hair);margin:40px 0 0;overflow-x:auto}
+.tab{background:none;border:0;padding:14px 20px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab.on{color:var(--ink);border-color:var(--accent)}
+.tpanel{display:none;padding-top:36px}.tpanel.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{text-align:left;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:12px 16px;border-bottom:1px solid var(--ink)}
+td{padding:16px;border-bottom:1px solid var(--hair)}
+.pill{display:inline-block;font-size:.75rem;padding:3px 10px;border-radius:999px;border:1px solid var(--hair)}
+.pill.done{background:var(--tint);border-color:var(--tint);color:var(--accent)}
+/* NSB */
+.nsbtop{display:flex;flex-wrap:wrap;gap:24px;align-items:end;justify-content:space-between;margin:36px 0 24px}
+.prog{flex:1;min-width:260px}
+.bar{height:8px;background:var(--tint);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+.matrix{overflow-x:auto;border:1px solid var(--hair)}
+.matrix table{min-width:760px}
+.matrix th,.matrix td{text-align:center;border-right:1px solid var(--hair)}
+.matrix td:first-child,.matrix th:first-child{text-align:left;white-space:nowrap}
+.q{display:inline-flex;align-items:center;gap:6px}
+.q a{font-size:.85rem;font-weight:500;text-decoration:none}
+.q a:hover{text-decoration:underline}
+.ck{appearance:none;width:18px;height:18px;border:1.5px solid var(--hair);border-radius:5px;display:inline-grid;place-items:center;cursor:pointer;margin:0;background:#fff}
+.ck:checked{background:var(--accent);border-color:var(--accent)}
+.ck:checked:after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+tr.focus td{background:var(--tint)}
+.subj{display:flex;gap:8px;flex-wrap:wrap}
+.pick{margin-top:20px;padding:20px 24px;border:1px dashed var(--accent);display:none;align-items:center;gap:16px;flex-wrap:wrap}
+.pick.on{display:flex}
+/* mascots */
+.masc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+@media(max-width:900px){.masc{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.masc{grid-template-columns:1fr}}
+.mcard{perspective:900px;background:none;border:0;padding:0;text-align:left;display:block;width:100%}
+.minner{position:relative;transition:transform .5s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;aspect-ratio:1}
+.mcard.flip .minner{transform:rotateY(180deg)}
+.mface{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;overflow:hidden;border:1px solid var(--hair)}
+.mface img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
+.mback{transform:rotateY(180deg);background:var(--ink);color:#fff;padding:28px;display:flex;flex-direction:column;gap:12px}
+.mback .mono{color:var(--soft)}
+.mback h3{font-size:1.8rem;margin:0}
+.mback p{color:rgba(255,255,255,.85);font-size:.95rem}
+.mback .ctas{margin-top:auto}
+.mmeta{display:flex;justify-content:space-between;margin-top:12px;font-weight:500}
+.quiz{margin-top:var(--gap);border:1px solid var(--hair);padding:clamp(24px,4vw,48px)}
+.qopts{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px}
+.qres{display:none;align-items:center;gap:24px;flex-wrap:wrap;margin-top:12px}
+.qres.on{display:flex}
+.qres img{width:120px;height:120px;border-radius:14px;object-fit:cover}
+/* emotif */
+.emo{display:grid;grid-template-columns:1.25fr 1fr;gap:0;border:1px solid var(--hair);margin-top:40px}
+@media(max-width:900px){.emo{grid-template-columns:1fr}}
+.world{position:relative;background:var(--ink);min-height:420px}
+.world canvas{position:absolute;inset:0;width:100%;height:100%}
+.world .mono{position:absolute;left:18px;top:16px;color:var(--soft)}
+.world .state{position:absolute;left:18px;bottom:16px;color:#fff;font-weight:500;font-size:1.3rem}
+.ctrl{padding:28px;display:flex;flex-direction:column;gap:18px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.ctrl{border-left:0;border-top:1px solid var(--hair)}}
+.ctrl label{display:flex;justify-content:space-between;font-weight:500;font-size:.92rem}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.eeg{width:100%;height:150px;display:block;background:#fff;border:1px solid var(--hair)}
+.spec{grid-template-columns:repeat(4,1fr);margin-top:40px}
+@media(max-width:800px){.spec{grid-template-columns:repeat(2,1fr)}}
+.spec b{display:block;font-size:1.6rem;font-weight:500;line-height:1.1}
+.benefits{counter-reset:b;list-style:none;padding:0;margin:0}
+.benefits li{counter-increment:b;padding:18px 0 18px 52px;border-bottom:1px solid var(--hair);position:relative}
+.benefits li:before{content:counter(b,decimal-leading-zero);position:absolute;left:0;top:18px;font-family:var(--mono);color:var(--accent);font-size:.8rem}
+/* yaes */
+.ladder{margin-top:40px;border:1px solid var(--hair);padding:28px}
+.lrow{display:flex;gap:6px;align-items:end;height:200px}
+.lbar{flex:1;background:var(--tint);position:relative;cursor:pointer;transition:background .15s;border:0;padding:0}
+.lbar:hover,.lbar.on{background:var(--accent)}
+.lbar span{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.62rem;white-space:nowrap;color:var(--muted)}
+.linfo{margin-top:44px;min-height:60px}
+/* officers */
+.offs{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.offs{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.offs{grid-template-columns:1fr}}
+.off{padding:26px}
+.av{width:52px;height:52px;border-radius:50%;background:var(--tint);color:var(--accent);display:grid;place-items:center;font-weight:500;margin-bottom:16px}
+.off h3{margin:0 0 6px;font-size:1.12rem}
+.off p{font-size:.93rem;line-height:1.5;color:var(--muted);margin:0}
+.off.dim{opacity:.25}
+.off2027{background:var(--ink);color:#fff}
+.off2027 .av{background:var(--accent);color:#fff}
+.off2027 p{color:rgba(255,255,255,.75)}
+/* about */
+.facts{grid-template-columns:repeat(3,1fr);margin-top:48px}
+@media(max-width:800px){.facts{grid-template-columns:1fr}}
+.count{display:flex;gap:clamp(12px,3vw,32px);margin:28px 0}
+.count div{text-align:center}
+.count b{display:block;font-size:clamp(2.2rem,6vw,4rem);font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.local{margin-top:8px}
+footer{margin-top:var(--gap);padding:64px 0 40px}
+.fgrid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
+footer h3{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+footer ul{list-style:none;margin:0;padding:0}footer li{margin-bottom:8px}
+footer a{color:#fff;text-decoration:none;font-size:.9rem}footer a:hover{color:var(--soft)}
+.legal{margin-top:48px;font-size:.8rem;color:#c7c7c7}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <div class="container navin">
+    <a class="brand" href="#home"><img src="img/logo.webp" alt="">The Science Club</a>
+    <ul class="links" id="links">
+      <li><a href="#groups">Groups</a></li>
+      <li><a href="#competitions">Competitions</a></li>
+      <li><a href="#nsb">NSB Training</a></li>
+      <li><a href="#mascots">Mascots</a></li>
+      <li><a href="#media">Media</a></li>
+      <li><a href="#officers">Officers</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a class="btn solid sm" href="#about">Join</a>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- HOME -->
+<section class="view" id="v-home">
+  <section class="hero" id="hero" aria-label="Every scale of science">
+    <div class="sticky">
+      <div class="poster" id="poster">
+        <canvas id="film"></canvas>
+        <div class="scrim"></div>
+        
+        
+        
+        <div class="headline" id="headline">
+          <h1>Sparking a supernova of scientific breakthroughs.</h1>
+          <p>The Science Club is a student community exploring biology, physics, astronomy, AI, and everything in between, through weekly meetings, research groups, and national competitions.</p>
+          <div class="ctas"><a class="btn solid" href="#groups">Explore Groups<span class="ar">→</span></a><a class="btn outlineL" href="#competitions">Competitions</a></div>
+          <span class="hint mono">Scroll ↓</span>
+        </div>
+        <div class="cap"><span class="mono">10⁻⁹ m · the code of life</span><p class="t">Rewriting life's source.</p><p class="b">Our members probe CRISPR, gene therapy, and the biology of aging.</p><div class="tags"><button class="tag" data-g="genome">Genome Editing &amp; Genetic Engineering</button><button class="tag" data-g="bioagents">Bio Agents</button><button class="tag" data-g="antiaging">Anti-Aging Research Group</button></div></div>
+        <div class="cap"><span class="mono">10⁻⁵ m · living machinery</span><p class="t">Engineering for the living.</p><p class="b">From medical devices to AI that safeguards human health.</p><div class="tags"><button class="tag" data-g="biomed">Biomedical Engineering Group</button><button class="tag" data-g="ailg">AI Life Guardian</button><button class="tag" data-g="emotif">Project Emotif</button></div></div>
+        <div class="cap"><span class="mono">10⁷ m · one planet</span><p class="t">Science for a changing planet.</p><p class="b">Studying Earth systems and the climate that shapes them.</p><div class="tags"><button class="tag" data-g="earth">Earth Science Club</button><button class="tag" data-g="cctf">Climate Change Task Force</button></div></div>
+        <div class="cap"><span class="mono">10¹³ m · reaching for orbit</span><p class="t">Built to leave the ground.</p><p class="b">Rocketry, spacecraft design, and the engineering of flight.</p><div class="tags"><button class="tag" data-g="yaes">Young Aerospace Engineers Society</button><button class="tag" data-g="spacez">SpaceZ</button></div></div>
+        <div class="finale" id="finale">
+          <p>Sparking a supernova of scientific breakthroughs in the age of AI.</p>
+          <div class="ctas"><a class="btn solid" href="#groups">Explore Groups<span class="ar">→</span></a><a class="btn outlineL" href="#competitions">Competitions</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <dl class="hairgrid stats" style="margin:0">
+      <div class="haircell stat"><b data-count="14">0</b><span class="mono">Research Groups</span></div>
+      <div class="haircell stat"><b>Weekly</b><span class="mono">Saturday Meetings</span></div>
+      <div class="haircell stat"><b data-count="4" data-suf="+">0</b><span class="mono">Competitions</span></div>
+      <div class="haircell stat"><b data-count="20">0</b><span class="mono">Student Officers</span></div>
+    </dl>
+  </div>
+
+  <section class="container section reveal">
+    <div class="what">
+      <div>
+        <h2>Real science, run by students.</h2>
+        <p class="muted">The Science Club is a nonprofit for middle and high school students. Members meet online every week to dig into important scientific concepts and developments, then put them to work through research groups, competitions, writing, and video.</p>
+        <p class="meet"><strong>Weekly meetings:</strong> Saturdays, 8:00 pm Pacific, open to middle and high school students everywhere.</p>
+      </div>
+      <img src="img/about.webp" alt="Club members during a meeting">
+    </div>
+  </section>
+
+  <section class="container section orbitwrap">
+    <div class="orbit" id="orbit">
+      <div id="ring"></div>
+      <div class="ocenter">
+        <span class="olead">Hosting</span>
+        <div class="oname" id="oname"><span>AI Life Guardian</span></div>
+        <button class="btn outline sm" id="oopen">Open group<span class="ar">→</span></button>
+      </div>
+    </div>
+    <p class="mono muted ohint">Drag to spin · click a logo</p>
+  </section>
+
+  
+  <section class="container section reveal">
+    <header style="max-width:720px;margin-bottom:48px"><h2>Train with the best.</h2><p class="muted" style="font-size:1.05rem;margin:0">Preparation programs led by professional educators and experienced high school volunteers.</p></header>
+    <div class="hairgrid g4">
+      <a class="haircell" href="#nsb"><h3>Science Bowl Prep</h3><p class="muted">Training for the DOE National Science Bowl, led by professional educators and experienced high school volunteers.</p></a>
+      <a class="haircell" href="#competitions"><h3>Biology Bowl Prep</h3><p class="muted">Focused preparation for biology quiz-bowl competitions.</p></a>
+      <a class="haircell" href="#competitions"><h3>Science Fair Coaching</h3><p class="muted">Mentorship for students building original science fair projects.</p></a>
+      <a class="haircell" href="#competitions"><h3>World Science Stars</h3><p class="muted">An annual ranking of high school and middle school science students based on performance in prestigious competitions.</p></a>
+    </div>
+  </section>
+
+  <section class="container section reveal">
+    <header style="max-width:720px;margin-bottom:48px"><h2>Science, published.</h2><p class="muted" style="font-size:1.05rem;margin:0">What the club makes when it isn't competing.</p></header>
+    <div class="hairgrid g3">
+      <a class="haircell" href="#media"><img class="thumb" src="img/poster0.webp" alt=""><h3>YouTube Channel</h3><p class="muted">Student-made explainers on astrophysics, gene editing, AI, and more.</p></a>
+      <a class="haircell" href="#media"><h3>Astro Book Club</h3><p class="muted">Reading and discussing the best of popular science and science fiction.</p></a>
+      <a class="haircell" href="#media"><h3>Science Fiction</h3><p class="muted">Original stories written by members, submitted to the Scholastic Art &amp; Writing Awards.</p></a>
+    </div>
+  </section>
+
+  <section class="container section join reveal">
+    <h2>Your breakthrough starts on a Saturday night.</h2>
+    <p class="muted">Open to middle and high school students everywhere. Show up curious.</p>
+    <div style="margin-top:24px"><a class="btn solid" href="#about">Join The Science Club<span class="ar">→</span></a></div>
+  </section>
+</section>
+
+<!-- GROUPS -->
+<section class="view container" id="v-groups">
+  <div class="phead"><span class="eyebrow">Research groups</span><h1>Fourteen teams. One mission.</h1><p class="muted">Affiliated research groups are student-led teams that meet on their own schedule to go deep on one field. Any member can join a group, or pitch a new one.</p></div>
+  <div class="filters" id="gfilters"></div>
+  <div class="hairgrid groups" id="glist"></div>
+  <p class="empty" id="gempty" hidden>No groups match that. Try another word.</p>
+</section>
+
+<!-- COMPETITIONS -->
+<section class="view container" id="v-competitions">
+  <div class="phead"><span class="eyebrow">Competitions</span><h1>Compete. Then host.</h1><p class="muted">The club runs its own quiz bowls and trains members for national competitions.</p></div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="nab">National Astro Bowl</button>
+    <button class="tab" data-t="ssb">Stellar Science Bowl</button>
+    <button class="tab" data-t="neb">National Engineering Bowl</button>
+    <button class="tab" data-t="prep">Training programs</button>
+  </div>
+  <div class="tpanel on" id="t-nab">
+    <p style="max-width:680px">A quiz-bowl competition run by The Science Club. Teams of students face off in fast-paced rounds at regional events across the country.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Regional</th><th>Location</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Northwest Regional</td><td>Bellevue, WA</td><td>January 10, 2026</td><td><span class="pill done">Completed</span></td></tr>
+      <tr><td>California Regionals</td><td>California</td><td>Dates TBA</td><td><span class="pill">TBA</span></td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tpanel" id="t-ssb">
+    <h2>Stellar Science Bowl</h2>
+    <p class="muted" style="max-width:640px">SSB is The Science Club's science bowl. Dates, format and sign-up will be posted here once they're announced.</p>
+    <p>Want to get ready now? The <a href="#nsb">NSB Training</a> quizzes cover the same five subjects.</p>
+  </div>
+  <div class="tpanel" id="t-neb">
+    <h2>National Engineering Bowl</h2>
+    <p class="muted" style="max-width:640px">Hosted every year by the club's <a href="#yaes">Young Aerospace Engineers Society</a>.</p>
+    <a class="btn solid" href="https://www.engineeringbowl.com/" target="_blank" rel="noopener">Visit engineeringbowl.com<span class="ar">→</span></a>
+  </div>
+  <div class="tpanel" id="t-prep">
+    <div class="hairgrid g2">
+      <a class="haircell" href="#nsb"><h3>Science Bowl Prep</h3><p class="muted">Training for the DOE National Science Bowl, led by professional educators and experienced high school volunteers. Includes the weekly NSB quizzes.</p></a>
+      <div class="haircell"><h3>Biology Bowl Prep</h3><p class="muted">Focused preparation for biology quiz-bowl competitions.</p></div>
+      <div class="haircell"><h3>Science Fair Coaching</h3><p class="muted">Mentorship for students building original science fair projects.</p></div>
+      <div class="haircell"><h3>World Science Stars</h3><p class="muted">An annual ranking of high school and middle school science students based on performance in prestigious competitions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NSB -->
+<section class="view container" id="v-nsb">
+  <div class="phead"><span class="eyebrow">NSB Training</span><h1>Eight weeks. Forty quizzes.</h1><p class="muted">Practice for the DOE National Science Bowl. Each week has a quiz in Biology, Chemistry, Physics, Earth and Space Science, and Energy. Quizzes open on ClassMarker. Tick them off as you go; your progress stays in this browser.</p></div>
+  <div class="nsbtop">
+    <div class="prog"><span class="mono muted">Your progress</span> <b id="pnum">0 / 40</b><div class="bar"><i id="pbar"></i></div></div>
+    <div class="subj" id="subjF"></div>
+    <div style="display:flex;gap:10px"><button class="btn solid sm" id="rand">Pick a quiz for me</button><button class="btn outline sm" id="reset">Reset</button></div>
+  </div>
+  <div class="pick" id="pick"></div>
+  <div class="matrix" style="margin-top:20px"><table id="nsbT"></table></div>
+</section>
+
+<!-- MASCOTS -->
+<section class="view container" id="v-mascots">
+  <div class="phead"><span class="eyebrow">Mascots</span><h1>Meet the crew.</h1><p class="muted">Each mascot stands for part of the club and has its own musical theme. Click a card to flip it, then play the theme.</p></div>
+  <div class="masc" id="masc"></div>
+  </section>
+
+<!-- EMOTIF -->
+<section class="view container" id="v-emotif">
+  <div class="phead"><span class="eyebrow">Project Emotif · AI Life Guardian</span><h1>Make brain states visible.</h1><p class="muted">Project EMOTIF is a brain-computer interface research project. It turns EEG brainwave activity into real-time, AI-powered visual feedback, so changes in attention, arousal and relaxation reshape the world on screen. It doesn't try to read thoughts. The goal is to make brain states visible, interactive and trainable.</p></div>
+  <div class="emo">
+    <div class="world"><canvas id="world"></canvas><span class="mono">Demo · simulated signal</span><span class="state" id="wstate">Calm focus</span></div>
+    <div class="ctrl">
+      <div><label>Attention <span id="va">60</span></label><input type="range" id="ra" min="0" max="100" value="60"></div>
+      <div><label>Relaxation <span id="vr">70</span></label><input type="range" id="rr" min="0" max="100" value="70"></div>
+      <div><label>Stress <span id="vs">20</span></label><input type="range" id="rs" min="0" max="100" value="20"></div>
+      <canvas class="eeg" id="eeg"></canvas>
+      <p class="mono muted" style="margin:0">5 channels: AF3 · AF4 · T7 · T8 · Pz (simulated)</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="chip" data-p="focus">Focus</button><button class="chip" data-p="calm">Wind down</button><button class="chip" data-p="stress">Exam stress</button><button class="chip" data-p="sleep">Before sleep</button></div>
+    </div>
+  </div>
+  <dl class="hairgrid spec">
+    <div class="haircell"><b>5</b><span class="mono muted">EEG channels</span></div>
+    <div class="haircell"><b>128</b><span class="mono muted">Samples / second</span></div>
+    <div class="haircell"><b>9-axis</b><span class="mono muted">Motion sensor</span></div>
+    <div class="haircell"><b>Wireless</b><span class="mono muted">Bluetooth, semi-dry</span></div>
+  </dl>
+  <section class="section" style="display:grid;grid-template-columns:1fr 1.2fr;gap:56px">
+    <div><h2>The headset</h2><p class="muted">EMOTIF uses the EMOTIV Insight, a lightweight five-channel wireless EEG headset. It records from AF3, AF4, T7, T8 and Pz with semi-dry polymer sensors at 128 samples per second, plus a nine-axis motion sensor for head movement. Simple setup, Bluetooth and long battery life make it good for repeated testing.</p></div>
+    <div><h2>What it could help with</h2><ol class="benefits"><li>Reducing everyday stress and anxiety</li><li>Better attention and concentration</li><li>Stepping away from repetitive negative thoughts</li><li>More confidence in situations that bring out shyness</li><li>Calmer brain states before sleep</li></ol><p class="muted" style="margin-top:16px;font-size:.9rem">These are possible benefits; they still need to be tested in controlled research.</p></div>
+  </section>
+</section>
+
+<!-- YAES -->
+<section class="view container" id="v-yaes">
+  <div class="phead"><span class="eyebrow">YAES</span><h1>Young Aerospace Engineers Society</h1><p class="muted">YAES brings together students who share a fascination with flight and space exploration. From SpaceX's reusable rockets and NASA's missions to China's space program and Blue Origin's spacecraft, advances in spaceflight are inspiring a new generation. Closer to home, engineers building flying cars and eVTOL aircraft are rethinking travel between and across cities. The Society is a place to explore the science behind these designs, share ideas, and imagine what you might build. YAES also hosts the annual National Engineering Bowl.</p>
+  <div class="ctas"><a class="btn solid" href="https://www.engineeringbowl.com/" target="_blank" rel="noopener">National Engineering Bowl<span class="ar">→</span></a><a class="btn outline" href="https://www.youtube.com/@StellarScienceClub" target="_blank" rel="noopener">YouTube</a></div></div>
+  <div class="ladder">
+    <span class="mono muted">How high does it fly? Tap a bar.</span>
+    <div class="lrow" id="lrow" style="margin-top:20px"></div>
+    <div class="linfo" id="linfo"></div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section class="view container" id="v-media">
+  <div class="phead"><span class="eyebrow">Media</span><h1>Science, published.</h1><p class="muted">Videos, books, and stories: what the club makes when it isn't competing.</p></div>
+  <div class="hairgrid g3" style="margin-top:40px">
+    <a class="haircell" href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener"><span class="eyebrow">Video</span><h3>General Relativity</h3><p class="muted">Student-made explainer.</p></a>
+    <a class="haircell" href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener"><span class="eyebrow">Video</span><h3>Gene Editing</h3><p class="muted">Student-made explainer.</p></a>
+    <a class="haircell" href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener"><span class="eyebrow">Video</span><h3>Space Race</h3><p class="muted">Student-made explainer.</p></a>
+  </div>
+  <div class="section" style="display:grid;grid-template-columns:repeat(2,1fr);gap:56px">
+    <div><h2>What we're reading</h2><p class="muted">Popular science and science fiction, discussed together at Astro Book Club.</p></div>
+    <div><h2>Original stories</h2><p class="muted">Members write original science fiction, share it at meetings, and submit standout stories to the Scholastic Art &amp; Writing Awards.</p></div>
+  </div>
+  <a class="btn solid" href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener">Visit the channel<span class="ar">→</span></a>
+</section>
+
+<!-- OFFICERS -->
+<section class="view container" id="v-officers">
+  <div class="phead"><span class="eyebrow">Officers</span><h1>Run by students.</h1><p class="muted">The leadership team behind the club and its research groups.</p></div>
+    <div class="hairgrid offs" id="offs" style="margin-top:48px"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="view container" id="v-about">
+  <div class="phead"><span class="eyebrow">About &amp; Join</span><h1>A club for the scientifically obsessed.</h1><p class="muted">The Science Club, "The Innovator Incubator," is a nonprofit for middle and high school students passionate about biology, chemistry, physics, astronomy, earth science, environmental science, computer science, engineering, medicine and AI. Members discuss important scientific ideas each week, then put them into practice through research groups, competitions, writing and video.</p></div>
+  <div class="section" style="margin-top:56px">
+    <span class="mono muted">Next meeting starts in</span>
+    <div class="count" id="count"></div>
+    <p class="muted local" id="local"></p>
+  </div>
+  <dl class="hairgrid facts">
+    <div class="haircell"><span class="eyebrow">When we meet</span><p>Every Saturday, 8:00 pm Pacific, online.</p></div>
+    <div class="haircell"><span class="eyebrow">Who can join</span><p>Any middle or high school student, anywhere.</p></div>
+    <div class="haircell"><span class="eyebrow">What it costs</span><p>Nothing, just curiosity and a Saturday evening.</p></div>
+  </dl>
+  <div class="join section"><h2>Join the next meeting.</h2><a class="btn solid" href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener">Join The Science Club<span class="ar">→</span></a></div>
+</section>
+</main>
+
+<div class="dlg" id="dlg"><div class="bg" data-close></div><div class="panel" id="dpanel"></div></div>
+
+<footer class="band">
+  <div class="container">
+    <div class="fgrid">
+      <div><h3>The Science Club</h3><p style="max-width:320px;color:#c7c7c7;font-size:.9rem">Sparking a supernova of scientific breakthroughs in the age of AI.</p></div>
+      <div><h3>Explore</h3><ul><li><a href="#groups">Research Groups</a></li><li><a href="#competitions">Competitions</a></li><li><a href="#nsb">NSB Training</a></li><li><a href="#media">Media</a></li></ul></div>
+      <div><h3>Projects</h3><ul><li><a href="#emotif">Project Emotif</a></li><li><a href="#yaes">YAES</a></li><li><a href="#mascots">Mascots</a></li></ul></div>
+      <div><h3>Club</h3><ul><li><a href="#officers">Officers</a></li><li><a href="#about">About &amp; Join</a></li><li><a href="https://www.youtube.com/channel/UCB45Fba3KLtYfN4pkou-68g" target="_blank" rel="noopener">YouTube</a></li></ul></div>
+    </div>
+    <div class="legal" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px"><span>© 2026 The Science Club.</span><span>Website by the <b style="color:#fff;font-weight:500">Troy Web Development Club</b></span></div>
+  </div>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- data ---------- */
+const CATS={bio:'Life sciences',earth:'Earth & climate',space:'Space',ai:'AI & robotics',mind:'Mind & brain'};
+const G=[
+ {id:'bioagents',n:'Bio Agents',img:'bio-agents',c:'bio',url:'https://www.bioagents.org',d:'Explores how AI agents can speed up biological research, from literature mining to experiment design.',m:'Vita'},
+ {id:'cctf',n:'Climate Change Task Force',img:'climate-change-task-force',c:'earth',url:'https://www.cctfyouth.org',d:'Studies climate science and evaluates mitigation and adaptation strategies through student-led research.',m:'Gaia'},
+ {id:'antiaging',n:'Anti-Aging Research Group',img:'anti-aging',c:'bio',url:'https://www.antiagingresearchgroup.org',d:'Investigates the biology of aging and emerging longevity research, from senescence to gene therapies.'},
+ {id:'astro',n:'Astrophysics Club',img:'astrophysics',c:'space',url:'https://www.astrophysicsclub.org',d:'Dives into stellar evolution, cosmology, and observational astronomy.'},
+ {id:'psych',n:'Psychology Research Group',img:'psychology',c:'mind',url:'https://www.psychologyresearchgroup.org',d:'Explores cognitive science and behavioral research methods through studies designed by students.'},
+ {id:'earth',n:'Earth Science Club',img:'earth-science',c:'earth',d:'Covers geology, oceanography, and atmospheric science with a focus on Earth systems.'},
+ {id:'ailg',n:'AI Life Guardian',img:'ai-life-guardian',c:'ai',url:'https://www.ailifeguardian.com',d:'Builds and studies AI applications that protect and improve human life. Home of Project Emotif.',m:'Aegis'},
+ {id:'emotif',n:'Project Emotif',mimg:'lumen',c:'mind',page:'#emotif',d:'Brain-computer interface research that turns EEG brainwaves into real-time visual feedback.',m:'Lumen',isNew:1},
+ {id:'biomed',n:'Biomedical Engineering Group',img:'biomedical',c:'bio',d:'Explores medical devices, prosthetics, and the engineering behind modern healthcare.'},
+ {id:'airesearch',n:'AI Research Group',img:'ai-research',c:'ai',d:'Studies machine learning fundamentals and the frontier of AI research.'},
+ {id:'yaes',n:'Young Aerospace Engineers Society',img:'young-aerospace',c:'space',page:'#yaes',d:'Covers rocketry, spacecraft design, and the engineering of flight. Hosts the National Engineering Bowl.',m:'Orion'},
+ {id:'genome',n:'Genome Editing & Genetic Engineering',img:'genome-editing',c:'bio',d:'Explores CRISPR, gene therapy, and the science and ethics of genetic engineering.'},
+ {id:'robotics',n:'AI Robotics',img:'ai-robotics',c:'ai',d:'Combines robotics and AI, from control systems to embodied agents.'},
+ {id:'spacez',n:'SpaceZ',c:'space',d:'A space group listed on the club site. More details coming soon.',isNew:1}
+];
+const OFF=[
+ ['Aiden Wu','CEO',[]],['Jiayou He','COO · President, Earth Science Club',['earth']],['Ryan Jian','COO · President, Biomedical Engineering Group',['biomed']],
+ ['Scarlett Cheng','CMO · President, Psychology Research Group',['psych']],['Eason Xu','CAO',[]],['Simon Li','CFO',[]],
+ ['Joyce Zhang','President, Climate Change Task Force',['cctf']],['Lucas Fan','President, Astrophysics Club',['astro']],
+ ['Nicolette Yang','President, Bio Agents · Climate Change Task Force',['bioagents','cctf']],['Raymond Shi','President, Psychology Research Group',['psych']],
+ ['Ryan Hou','President, AI Life Guardian',['ailg']],['Alex Zuo','President, Genome Editing & Genetic Engineering',['genome']],
+ ['Ruben Jing','President, Biomedical Engineering Group',['biomed']],['Kaihan Yang','President, Young Aerospace Engineers Society',['yaes']],
+ ['Logan Chiou','President, AI Robotics',['robotics']],['Iris Chiou','President, Anti-Aging Research Group',['antiaging']],
+ ['David Wang','President, Bio Agents',['bioagents']],['Junyi Gao','President, Bio Agents',['bioagents']],['Bella Liu','President, Psychology Research Group',['psych']]
+];
+const MASC=[
+ {k:'gaia',n:'Gaia',g:'Climate Change Task Force',gid:'cctf',song:'hsOhmbrlvo',d:'Keeper of the planet. Gaia stands for the Climate Change Task Force and its work on Earth systems.'},
+ {k:'aegis',n:'Aegis',g:'AI Life Guardian',gid:'ailg',song:'L0LM6qTz33',d:'A shield-bearing robot for AI Life Guardian: AI that protects and improves human life.'},
+ {k:'lumen',n:'Lumen',g:'Project Emotif',gid:'emotif',song:'uicfWP8yFE',d:'Lumen lights up Project Emotif, where brain activity becomes something you can see.'},
+ {k:'orion',n:'Orion',g:'Young Aerospace Engineers Society',gid:'yaes',song:'UPUdpVn0ds',d:'Named for the hunter in the stars, Orion flies with YAES.'},
+ {k:'vita',n:'Vita',g:'Bio Agents',gid:'bioagents',song:'nh8vYDEcXA',d:'Vita means life. She represents Bio Agents and AI-driven biology.'},
+ {k:'rune',n:'Rune',g:'The Vikings',song:'ZP0C6SPFOa',d:'Rune sails with The Vikings, the club\'s competition team.'}
+];
+const SUBJ=['Biology','Chemistry','Physics','Earth and Space Science','Energy'];
+const QZ=[['mb96ac665883b7e1','ebn6ac666198be44','yrf6ac6668173e0d','hbn6ac66655063f1','7re6ac6666cbcab0'],['ven6ace64044e82d','tj66ace646af14bb','apx6ace649745dcf','eex6ace6720b2119','fcp6ace64cc844ec'],['gkh6ad29ea273771','v436ad29eda3ec8c','qgr6ad29f071058d','nr46ad29e6d19971','fhv6ad29f67c5740'],['64y6adb8f7eb5dc7','xf76adb8fc9c3bba','kdd6adb90566912a','xgr6adbabb04c94a','ndk6adb90f0d5517'],['xnh6ae0efd309d18','b4h6ae0f000af280','fdc6ae0f156e04be','peh6ae0f1926938a','qgf6ae0f1cc353d0'],['adj6aecb287b2b62','fte6aecb2569d660','3xn6aed0ad2e065e','j7m6aecb2d441b8f','rfb6aed0b95caad8'],['xb46af3a7660c487','mft6af4e27bbd1ea','xp96af4e199ce8ff','fca6af4e4129a82a','cqe6af239f98a06a'],['6rx6afcf7864d1e9','k796afcf60e23cd2','cph6afcfa94461ed','cyy6afcf9f057937','xyt6afc9af60f254']];
+const qurl=id=>'https://www.classmarker.com/online-test/start/?quiz='+id;
+const logo=g=>g.img?`<img src="img/groups/${g.img}.webp" alt="">`:g.mimg?`<img src="img/mascots/${g.mimg}.webp" alt="" style="width:100%;height:100%;object-fit:cover">`:'';
+
+/* ---------- router ---------- */
+const VIEWS=['home','groups','competitions','nsb','mascots','emotif','yaes','media','officers','about'];
+function route(){
+  let h=location.hash.slice(1)||'home',sub='';
+  if(h.startsWith('competitions-')){sub=h.split('-')[1];h='competitions'}
+  if(!VIEWS.includes(h))h='home';
+  $$('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+h));
+  $$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));
+  $('#links').classList.remove('open');
+  if(sub)setTab(sub);
+  window.scrollTo(0,0);
+  if(h==='home')requestAnimationFrame(onScroll);
+  if(h==='emotif')startWorld();else stopWorld();
+  revealAll();
+}
+addEventListener('hashchange',route);
+$('#burger').onclick=()=>$('#links').classList.toggle('open');
+
+/* ---------- reveal + counters ---------- */
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const el=en.target;io.unobserve(el);
+  if(el.dataset.count){const end=+el.dataset.count,suf=el.dataset.suf||'',t0=performance.now();const st=t=>{const p=Math.min((t-t0)/1100,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+(p===1?suf:'');if(p<1)requestAnimationFrame(st)};requestAnimationFrame(st)}
+  else el.classList.add('in')}),{threshold:.15});
+function revealAll(){$$('.view.on .reveal:not(.in),.view.on [data-count]').forEach(el=>io.observe(el))}
+
+/* ---------- hero film (scroll-scrubbed, halftone) ---------- */
+const NF=128,frames=new Array(NF);let loaded=0;
+for(let i=0;i<NF;i++){const im=new Image();im.src=`film/f${String(i).padStart(3,'0')}.webp`;im.onload=()=>{loaded++;if(i===0||loaded===NF)draw()};frames[i]=im}
+const cv=$('#film'),cx=cv.getContext('2d'),small=document.createElement('canvas'),sx=small.getContext('2d',{willReadFrequently:true});
+
+let fi=0;const poster=$('#poster');
+function size(){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio,2);cv.width=r.width*d;cv.height=r.height*d;draw()}
+addEventListener('resize',size);
+function cover(im,W,H){const s=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;return[(W-w)/2,(H-h)/2,w,h]}
+function draw(){
+  const im=frames[fi];if(!im||!im.complete||!im.naturalWidth)return;
+  const W=cv.width,H=cv.height;if(!W)return;
+  const cell=Math.max(6,Math.round(W/170));const gw=Math.ceil(W/cell),gh=Math.ceil(H/cell);
+  small.width=gw;small.height=gh;const[a,b,c,d]=cover(im,gw,gh);sx.drawImage(im,a,b,c,d);
+  const px=sx.getImageData(0,0,gw,gh).data;
+  cx.fillStyle='#10192e';cx.fillRect(0,0,W,H);
+  cx.globalAlpha=.28;const[A,B,C,D]=cover(im,W,H);cx.drawImage(im,A,B,C,D);cx.globalAlpha=1;
+  cx.fillStyle='#e9eeff';cx.beginPath();
+  for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){const i=(y*gw+x)*4,l=(px[i]*.3+px[i+1]*.59+px[i+2]*.11)/255;if(l<.06)continue;const r=Math.sqrt(l)*cell*.56;const X=x*cell+cell/2,Y=y*cell+cell/2;cx.moveTo(X+r,Y);cx.arc(X,Y,r,0,6.2832)}
+  cx.fill();
+}
+const caps=$$('.cap');
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+function onScroll(){
+  if(!$('#v-home').classList.contains('on'))return;
+  const hero=$('#hero'),r=hero.getBoundingClientRect(),tot=hero.offsetHeight-innerHeight;
+  const p=clamp(-r.top/tot);
+  const fp=clamp(p/.86);const nf=Math.min(NF-1,Math.round(fp*(NF-1)));
+  if(nf!==fi){fi=nf;draw()}
+  // headline out, captions per leg, finale in
+  const hd=$('#headline');const ho=1-clamp(p/.06);hd.style.opacity=ho;hd.style.pointerEvents=ho>.5?'auto':'none';
+  caps.forEach((c,k)=>{const s=.08+k*.2,e=s+.18;let o=clamp((fp-s)/.04)*clamp((e-fp)/.04);if(p>.88)o=0;c.style.opacity=o;c.style.pointerEvents=o>.5?'auto':'none'});
+  const fo=clamp((p-.88)/.06);const fn=$('#finale');fn.style.opacity=fo;fn.style.pointerEvents=fo>.5?'auto':'none';
+  poster.style.transform=`scale(${1-clamp((p-.94)/.06)*.06})`;
+}
+addEventListener('scroll',()=>requestAnimationFrame(onScroll),{passive:true});
+$$('.cap .tag,.tag[data-g]').forEach(b=>b.onclick=()=>openGroup(b.dataset.g));
+
+/* ---------- orbit ---------- */
+const OG=['ailg','emotif','bioagents','cctf','biomed','psych','yaes','spacez'].map(id=>G.find(g=>g.id===id));const ring=$('#ring');let ang=0,vel=.06,drag=null,act=0;
+OG.forEach((g,i)=>{const a=document.createElement('button');a.className='node';a.innerHTML=logo(g)||`<span style="font-size:.95rem;letter-spacing:.02em">${g.n}</span>`;a.setAttribute('aria-label',g.n);a.onclick=()=>{if(moved)return;setAct(i);openGroup(g.id)};a.onmouseenter=()=>setAct(i);ring.appendChild(a)});
+const nodes=[...ring.children];let moved=false;
+function setAct(i){if(i===act)return;act=i;nodes.forEach((n,k)=>n.classList.toggle('act',k===i));$('#oname').innerHTML=`<span>${OG[i].n}</span>`}
+$('#oopen').onclick=()=>openGroup(OG[act].id);
+function layout(){const o=$('#orbit'),W=o.clientWidth,H=o.clientHeight,rx=W*.47,ry=H*.43,tilt=-12*Math.PI/180;let front=0,best=-9;
+  nodes.forEach((n,i)=>{const t=(ang+i*360/nodes.length)*Math.PI/180,ex=Math.cos(t)*rx,ey=Math.sin(t)*ry,depth=(Math.sin(t)+1)/2;
+   const X=ex*Math.cos(tilt)-ey*Math.sin(tilt),Y=ex*Math.sin(tilt)+ey*Math.cos(tilt);n.style.transform=`translate(${X}px,${Y}px) scale(${.62+.58*depth})`;n.style.zIndex=Math.round(depth*10);if(depth>best){best=depth;front=i}});
+  return front}
+let lastAuto=0;
+(function spin(t){if($('#v-home').classList.contains('on')){if(!drag)ang+=vel;vel+=(.06-vel)*.02;const f=layout();if(!drag&&t-lastAuto>2600){lastAuto=t;setAct(f)}}requestAnimationFrame(spin)})(0);
+const orb=$('#orbit');
+orb.addEventListener('pointerdown',e=>{drag={x:e.clientX,a:ang,t:performance.now()};moved=false;orb.classList.add('drag')});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;if(Math.abs(dx)>4)moved=true;const na=drag.a+dx*.35;vel=(na-ang);ang=na});
+addEventListener('pointerup',()=>{if(!drag)return;drag=null;orb.classList.remove('drag');vel=clamp(vel,-4,4);setTimeout(()=>moved=false,0)});
+setAct(1);setAct(0);
+
+/* ---------- groups ---------- */
+let gcat='all',gq='';
+$('#gfilters').innerHTML=[['all','All'],...Object.entries(CATS)].map(([k,v])=>`<button class="chip${k==='all'?' on':''}" data-c="${k}">${v}</button>`).join('')+'<input class="search" id="gsearch" placeholder="Search groups" aria-label="Search groups">';
+$$('#gfilters .chip').forEach(b=>b.onclick=()=>{gcat=b.dataset.c;$$('#gfilters .chip').forEach(x=>x.classList.toggle('on',x===b));renderG()});
+$('#gsearch').oninput=e=>{gq=e.target.value.toLowerCase().trim();renderG()};
+function renderG(){const L=G.filter(g=>(gcat==='all'||g.c===gcat)&&(!gq||(g.n+' '+g.d).toLowerCase().includes(gq)));
+  $('#glist').innerHTML=L.map(g=>`<button class="haircell gcard" data-g="${g.id}"><div class="glogo${logo(g)?'':' txt'}">${logo(g)||g.n[0]}</div><h3 style="margin:6px 0 0">${g.n}</h3><p class="muted">${g.d}</p><span class="mono cat">${CATS[g.c]}</span></button>`).join('');
+  $('#gempty').hidden=L.length>0;$$('#glist .gcard').forEach(b=>b.onclick=()=>openGroup(b.dataset.g))}
+renderG();
+function openGroup(id){const g=G.find(x=>x.id===id);if(!g)return;const leads=OFF.filter(o=>o[2].includes(id)).map(o=>o[0]);const m=MASC.find(x=>x.gid===id);
+  $('#dpanel').innerHTML=`<button class="x" data-close aria-label="Close">✕</button><div class="glogo${logo(g)?'':' txt'}">${logo(g)||g.n[0]}</div><span class="eyebrow">${CATS[g.c]}</span><h2>${g.n}</h2><p class="muted">${g.d}</p>
+  <ul class="plist">${leads.length?`<li><span class="muted">Led by</span><span style="text-align:right">${leads.join(', ')}</span></li>`:''}${m?`<li><span class="muted">Mascot</span><a href="#mascots">${m.n}</a></li>`:''}</ul>
+  <div class="ctas">${g.page?`<a class="btn solid" href="${g.page}">Open page<span class="ar">→</span></a>`:''}${g.url?`<a class="btn ${g.page?'outline':'solid'}" href="${g.url}" target="_blank" rel="noopener">Visit site<span class="ar">↗</span></a>`:''}<a class="btn outline" href="#about">Join</a></div>`;
+  $('#dlg').classList.add('on')}
+$('#dlg').addEventListener('click',e=>{if(e.target.closest('[data-close]')||e.target.closest('#dpanel a[href^="#"]'))$('#dlg').classList.remove('on')});
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#dlg').classList.remove('on')});
+
+/* ---------- competitions tabs ---------- */
+function setTab(t){$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.tpanel').forEach(p=>p.classList.toggle('on',p.id==='t-'+t))}
+$$('.tab').forEach(b=>b.onclick=()=>setTab(b.dataset.t));
+
+/* ---------- NSB ---------- */
+let done=store.get('sc-nsb',{}),sf='all';
+$('#subjF').innerHTML=['all',...SUBJ].map(s=>`<button class="chip${s==='all'?' on':''}" data-s="${s}">${s==='all'?'All':s==='Earth and Space Science'?'Earth & Space':s}</button>`).join('');
+$$('#subjF .chip').forEach(b=>b.onclick=()=>{sf=b.dataset.s;$$('#subjF .chip').forEach(x=>x.classList.toggle('on',x===b));renderN()});
+function renderN(){const cols=SUBJ.map((s,i)=>[s,i]).filter(([s])=>sf==='all'||s===sf);
+  $('#nsbT').innerHTML=`<thead><tr><th>Week</th>${cols.map(([s])=>`<th>${s}</th>`).join('')}<th>Done</th></tr></thead><tbody>${QZ.map((w,wi)=>{const n=w.filter((_,i)=>done[w[i]]).length;return`<tr data-w="${wi}"><td><b>Week ${wi+1}</b></td>${cols.map(([s,i])=>`<td><span class="q"><input type="checkbox" class="ck" data-id="${w[i]}" ${done[w[i]]?'checked':''} aria-label="Week ${wi+1} ${s} done"><a href="${qurl(w[i])}" target="_blank" rel="noopener">Start</a></span></td>`).join('')}<td><span class="pill${n===5?' done':''}">${n}/5</span></td></tr>`}).join('')}</tbody>`;
+  $$('#nsbT .ck').forEach(c=>c.onchange=()=>{if(c.checked)done[c.dataset.id]=1;else delete done[c.dataset.id];store.set('sc-nsb',done);renderN()});
+  const t=Object.keys(done).length;$('#pnum').textContent=t+' / 40';$('#pbar').style.width=(t/40*100)+'%'}
+renderN();
+$('#rand').onclick=()=>{const left=[];QZ.forEach((w,wi)=>w.forEach((id,i)=>{if(!done[id]&&(sf==='all'||SUBJ[i]===sf))left.push([wi,i,id])}));const p=$('#pick');
+  if(!left.length){p.innerHTML='<b>Nothing left here. Nice work.</b>';p.classList.add('on');return}
+  const[wi,i,id]=left[Math.floor(Math.random()*left.length)];p.innerHTML=`<span class="mono muted">Try this one</span><b>Week ${wi+1} · ${SUBJ[i]}</b><a class="btn solid sm" href="${qurl(id)}" target="_blank" rel="noopener">Start quiz<span class="ar">→</span></a>`;p.classList.add('on');
+  $$('#nsbT tr').forEach(r=>r.classList.toggle('focus',r.dataset.w==wi))};
+$('#reset').onclick=()=>{const b=$('#reset');if(b.dataset.sure){done={};store.set('sc-nsb',done);renderN();b.textContent='Reset';delete b.dataset.sure}else{b.dataset.sure=1;b.textContent='Tap again to clear';setTimeout(()=>{b.textContent='Reset';delete b.dataset.sure},2500)}};
+
+/* ---------- mascots ---------- */
+$('#masc').innerHTML=MASC.map(m=>`<div><button class="mcard" data-k="${m.k}" aria-label="${m.n}, flip card"><div class="minner"><div class="mface"><img src="img/mascots/${m.k}.webp" alt="${m.n}"></div><div class="mface mback"><span class="mono">${m.g}</span><h3>${m.n}</h3><p>${m.d}</p><div class="ctas"><a class="btn outlineL sm" href="https://www.musiccreator.ai/song/${m.song}" target="_blank" rel="noopener">▶ Play theme</a>${m.gid?`<span class="btn outlineL sm" data-g="${m.gid}">Group</span>`:''}</div></div></div></button><div class="mmeta"><span>${m.n}</span><span class="muted">${m.g}</span></div></div>`).join('');
+$$('.mcard').forEach(c=>{c.onclick=e=>{const g=e.target.closest('[data-g]');if(g){e.stopPropagation();openGroup(g.dataset.g);return}if(e.target.closest('a'))return;c.classList.toggle('flip')};});
+
+/* ---------- Emotif demo ---------- */
+let wRun=false,wt=0,parts=[];const wc=$('#world'),wx=wc.getContext('2d'),ec=$('#eeg'),ex=ec.getContext('2d');
+const S={a:60,r:70,s:20};
+['a','r','s'].forEach(k=>{const el=$('#r'+k);el.oninput=()=>{S[k]=+el.value;$('#v'+k).textContent=el.value;label()}});
+const PRE={focus:[85,45,20],calm:[40,85,10],stress:[70,15,90],sleep:[15,95,5]};
+$$('[data-p]').forEach(b=>b.onclick=()=>{const[a,r,s]=PRE[b.dataset.p];[['a',a],['r',r],['s',s]].forEach(([k,v])=>{S[k]=v;$('#r'+k).value=v;$('#v'+k).textContent=v});label()});
+function label(){const{a,r,s}=S;$('#wstate').textContent=s>65?'High stress':r>80&&a<30?'Drifting toward sleep':a>70&&s<40?'Locked in':r>60?'Calm focus':'Restless'}
+function startWorld(){if(wRun)return;wRun=true;const fit=()=>{for(const c of[wc,ec]){const r=c.getBoundingClientRect();c.width=r.width*devicePixelRatio;c.height=r.height*devicePixelRatio}};fit();addEventListener('resize',fit);
+  if(!parts.length)for(let i=0;i<160;i++)parts.push({x:Math.random(),y:Math.random(),v:Math.random()*Math.PI*2,s:Math.random()});requestAnimationFrame(tick)}
+function stopWorld(){wRun=false}
+function tick(){if(!wRun)return;wt+=1/60;const W=wc.width,H=wc.height,{a,r,s}=S;const calm=r/100,foc=a/100,st=s/100;
+  const top=`hsl(${225-st*200},${50+st*30}%,${12+calm*8}%)`,bot=`hsl(${230-st*190+calm*20},60%,${20+calm*18}%)`;const g=wx.createLinearGradient(0,0,0,H);g.addColorStop(0,top);g.addColorStop(1,bot);wx.fillStyle=g;wx.fillRect(0,0,W,H);
+  // horizon waves
+  for(let L=0;L<4;L++){wx.beginPath();const base=H*(.62+L*.09),amp=H*(.01+st*.06)*(1+L*.3);wx.moveTo(0,H);for(let x=0;x<=W;x+=8){wx.lineTo(x,base+Math.sin(x/(60+L*40)+wt*(.4+st*3)+L)*amp+Math.sin(x/23+wt*st*6)*amp*st*.6)}wx.lineTo(W,H);wx.fillStyle=`rgba(${140+st*100},${168-st*80},255,${.08+L*.05})`;wx.fill()}
+  // focus orb
+  const cxp=W*.5,cyp=H*.38,R=Math.min(W,H)*(.06+foc*.12);const og=wx.createRadialGradient(cxp,cyp,0,cxp,cyp,R*3);og.addColorStop(0,`rgba(255,${230-st*120},${200-st*150},${.5+foc*.5})`);og.addColorStop(.35,`rgba(143,168,255,${.15+foc*.3})`);og.addColorStop(1,'rgba(0,0,0,0)');wx.fillStyle=og;wx.beginPath();wx.arc(cxp,cyp,R*3,0,7);wx.fill();
+  // particles: converge when focused, jitter when stressed
+  wx.fillStyle='rgba(233,238,255,.85)';for(const p of parts){p.v+=(Math.random()-.5)*st*.6;const sp=.0006+st*.004+(1-calm)*.0015;p.x+=Math.cos(p.v)*sp+(.5-p.x)*foc*.0015;p.y+=Math.sin(p.v)*sp+(.38-p.y)*foc*.0015;if(p.x<0||p.x>1||p.y<0||p.y>1){p.x=Math.random();p.y=Math.random()}wx.beginPath();wx.arc(p.x*W,p.y*H,(1+p.s*1.6)*devicePixelRatio,0,7);wx.fill()}
+  // EEG
+  const EW=ec.width,EH=ec.height;ex.fillStyle='#fff';ex.fillRect(0,0,EW,EH);const ch=['AF3','AF4','T7','T8','Pz'];ex.font=`${10*devicePixelRatio}px ui-monospace,monospace`;
+  ch.forEach((c,k)=>{const y0=EH*(k+.5)/5;ex.fillStyle='#7a7a7a';ex.fillText(c,4*devicePixelRatio,y0-8*devicePixelRatio);ex.strokeStyle=k===4?'#1b4dff':'#10192e';ex.lineWidth=1.2*devicePixelRatio;ex.beginPath();
+   for(let x=0;x<EW;x+=2){const t=wt*2+x/EW*3;const alpha=Math.sin(t*10*2*Math.PI/3+k)*(calm*(k===4?1.3:.7)),beta=Math.sin(t*20*2*Math.PI/3+k*2)*(foc*.5+st*.6),noise=(Math.sin(x*1.7+wt*40+k*9)+Math.sin(x*.9+wt*31))*st*.35;const y=y0+(alpha+beta+noise)*EH*.045;x?ex.lineTo(x,y):ex.moveTo(x,y)}ex.stroke()});
+  requestAnimationFrame(tick)}
+
+/* ---------- YAES ladder ---------- */
+const ALT=[['Drone','120 m','Recreational drones usually stay under about 120 m.'],['eVTOL air taxi','~500 m','Electric vertical takeoff aircraft are designed to hop across cities at low altitude.'],['Airliner','~11 km','Passenger jets cruise around 10 to 12 km up.'],['Weather balloon','~35 km','High-altitude balloons reach the stratosphere.'],['Kármán line','100 km','The usual boundary of space.'],['ISS','~400 km','The International Space Station orbits about 400 km up.'],['GPS satellites','~20,200 km','Medium Earth orbit.'],['Moon','~384,400 km','Where crewed missions are headed again.']];
+$('#lrow').innerHTML=ALT.map((a,i)=>`<button class="lbar" data-i="${i}" style="height:${12+i*12.5}%" aria-label="${a[0]}"><span>${a[0]}</span></button>`).join('');
+function setAlt(i){$$('.lbar').forEach((b,k)=>b.classList.toggle('on',k==i));const a=ALT[i];$('#linfo').innerHTML=`<h3 style="margin:0">${a[0]} · <span style="color:var(--accent)">${a[1]}</span></h3><p class="muted" style="margin:6px 0 0">${a[2]}</p>`}
+$$('.lbar').forEach(b=>{b.onclick=()=>setAlt(b.dataset.i);b.onmouseenter=()=>setAlt(b.dataset.i)});setAlt(4);
+
+/* ---------- officers ---------- */
+const ini=n=>n.split(' ').map(w=>w[0]).join('');
+
+$('#offs').innerHTML=OFF.map(([n,r])=>`<div class="haircell off"><div class="av">${ini(n)}</div><h3>${n}</h3><p>${r}</p></div>`).join('');
+
+/* ---------- countdown to Saturday 8pm Pacific ---------- */
+function ptParts(d){const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',weekday:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(d);const o={};f.forEach(p=>o[p.type]=p.value);return o}
+function nextMeeting(){const now=new Date();const p=ptParts(now);const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(p.weekday);
+  const ptNow=Date.UTC(+p.year,+p.month-1,+p.day,+p.hour%24,+p.minute,+p.second);const offset=ptNow-now.getTime();
+  let days=(6-wd+7)%7;let target=Date.UTC(+p.year,+p.month-1,+p.day+days,20,0,0);if(target<=ptNow)target+=7*864e5;return{ms:target-ptNow,at:new Date(target-offset)}}
+function tickCount(){const{ms,at}=nextMeeting();const live=ms>6.5*864e5;const d=Math.floor(ms/864e5),h=Math.floor(ms/36e5)%24,m=Math.floor(ms/6e4)%60,s=Math.floor(ms/1e3)%60;
+  $('#count').innerHTML=[[d,'Days'],[h,'Hours'],[m,'Min'],[s,'Sec']].map(([v,l])=>`<div><b>${String(v).padStart(2,'0')}</b><span class="mono muted">${l}</span></div>`).join('');
+  $('#local').textContent=(live?'A meeting may be on right now. ':'')+'In your time zone: '+at.toLocaleString([], {weekday:'long',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+'.';}
+tickCount();setInterval(tickCount,1000);
+
+route();size();
+</script>
+</body>
+</html>
