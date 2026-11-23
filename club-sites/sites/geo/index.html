@@ -7,10 +7,10 @@
 <meta name="description" content="Troy High School GeoGuessr Club. Thursdays in Room 322. No experience needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f7f4ec;--white:#fffdf8;--ink:#14231a;--muted:#55635a;--line:#e2dccd;--forest:#173322;--forest2:#21452e;--yellow:#f2c94c;--sky:#a8d2ee;--red:#d9482b;--green:#5fb83f;
---disp:'Gloock',Georgia,serif;--body:'Figtree',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace}
+--disp:'Overpass',system-ui,sans-serif;--body:'Overpass',system-ui,sans-serif;--mono:'Overpass Mono',ui-monospace,monospace;--sign:#0b6b3f;--asphalt:#23292a}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--body);color:var(--ink);background:var(--bg);font-size:18px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -19,10 +19,16 @@ a{color:inherit}
 img{display:block;max-width:100%}
 .wrap{max-width:1160px;margin:0 auto;padding:0 28px}
 .mono{font-family:var(--mono)}
-h1,h2,h3{font-family:var(--disp);font-weight:400;letter-spacing:-.01em}
-h2{font-size:clamp(36px,4.6vw,54px);line-height:1.05;margin-bottom:14px}
+h1,h2,h3{font-family:var(--disp);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(34px,4.2vw,50px);line-height:1.05;margin-bottom:14px}
 .lead{font-size:19px;color:var(--muted);max-width:620px}
-.label{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:block}
+.label{display:inline-block;background:var(--yellow);color:var(--ink);font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px 3px;border-radius:6px 6px 0 0;margin-bottom:0}
+.sign{display:inline-block;background:var(--sign);color:#fff;border:3px solid #fff;box-shadow:0 0 0 4px var(--sign),0 14px 24px -12px rgba(0,0,0,.45);border-radius:10px;padding:12px 24px 8px;margin:4px 4px 22px}
+.sign.y{background:var(--yellow);color:var(--ink);border-color:var(--ink);box-shadow:0 0 0 4px var(--yellow)}
+.road{height:54px;background:var(--asphalt);position:relative;overflow:hidden}
+.road::before{content:"";position:absolute;left:0;right:0;top:50%;height:5px;margin-top:-2px;background:linear-gradient(90deg,var(--yellow) 0 55%,transparent 55%) 0 0/70px 5px repeat-x;animation:drive 2.5s linear infinite}
+.road::after{content:"";position:absolute;left:0;right:0;top:6px;bottom:6px;border-top:2px solid rgba(255,255,255,.55);border-bottom:2px solid rgba(255,255,255,.55)}
+@keyframes drive{to{background-position:-70px 0}}
 
 /* header */
 header.top{position:sticky;top:0;z-index:50;background:var(--forest);color:#fff;border-bottom:3px solid var(--yellow)}
@@ -53,19 +59,30 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 /* HOME hero */
 .hero{background:var(--forest);color:#fff;padding:70px 0 0;overflow:hidden;position:relative}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
-.hero h1{font-size:clamp(54px,7.4vw,96px);line-height:.98;color:var(--yellow);margin-bottom:22px}
+.hero h1{font-size:clamp(46px,6vw,80px);line-height:.95;color:#fff;margin-bottom:26px;background:var(--sign);border:4px solid #fff;box-shadow:0 0 0 6px var(--sign),0 30px 50px -20px rgba(0,0,0,.6);border-radius:16px;padding:26px 30px 18px;display:inline-block;position:relative}
+.hero h1 small{display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:22px;font-weight:700;letter-spacing:0;border-top:3px solid #fff;margin-top:16px;padding-top:12px}
+.hero h1 small span{font-family:var(--mono);font-weight:600}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.posts{position:absolute;bottom:-60px;width:12px;height:60px;background:#8e9691;left:18%;box-shadow:calc(var(--gap,260px)) 0 0 #8e9691;z-index:-1}
 .hero p{font-size:20px;color:#d6e2d8;max-width:500px}
 .hero .acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
 .globe-wrap{position:relative;aspect-ratio:1;width:100%;max-width:520px;justify-self:end}
 #globe{width:100%;height:100%;cursor:grab;touch-action:none}
 #globe:active{cursor:grabbing}
+.compass{position:absolute;left:12%;right:12%;top:-34px;height:30px;overflow:hidden;background:rgba(0,0,0,.35);border-radius:999px;-webkit-mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent)}
+.compass .tape{position:absolute;top:0;left:50%;display:flex;white-space:nowrap;font-family:var(--mono);font-size:13px;font-weight:600;color:#cfdcd2;line-height:30px}
+.compass .tape span{width:40px;text-align:center}
+.compass .tape span.c{color:var(--yellow)}
+.compass::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--red)}
+.coord{position:absolute;top:8px;right:0;font-family:var(--mono);font-size:13px;color:#b8c8bc}
 .globe-cap{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:14px;color:#b8c8bc;white-space:nowrap}
-.facts{background:var(--yellow);color:var(--ink);margin-top:60px}
-.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-.facts div{padding:22px 22px 22px 0}
-.facts div+div{padding-left:22px;border-left:2px solid rgba(20,35,26,.15)}
-.facts small{display:block;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.65}
-.facts b{font-size:20px;font-weight:800}
+.facts{background:var(--asphalt);margin-top:60px;padding:34px 0 30px;position:relative}
+.facts::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--yellow) 0 55%,transparent 55%) 0 0/70px 5px repeat-x}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.facts .wrap>div{position:relative;padding-top:24px}
+.facts small{position:absolute;top:0;left:0;background:var(--yellow);color:var(--ink);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px 2px;border-radius:6px 6px 0 0}
+.facts b{display:block;background:var(--sign);color:#fff;border:3px solid #fff;box-shadow:0 0 0 3px var(--sign);border-radius:0 8px 8px 8px;padding:14px 16px 10px;font-size:22px;font-weight:800;text-decoration:none}
+.facts b a{text-decoration:none}
 
 section.block{padding:96px 0}
 section.alt{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -96,6 +113,8 @@ section.alt{background:var(--white);border-top:1px solid var(--line);border-bott
 .person .bk .time{margin-top:auto;background:rgba(255,255,255,.08);border-radius:8px;padding:10px;font-family:var(--mono);font-size:20px;text-align:center}
 .person .bk .time small{display:block;font-family:var(--body);font-size:12px;opacity:.7}
 .person .meta{padding-top:12px}
+.mile{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;background:var(--sign);color:#fff;border:2px solid #fff;box-shadow:0 0 0 2px var(--sign);border-radius:6px;padding:6px 10px 3px;font-weight:700;font-size:14.5px}
+.mile span:last-child{font-family:var(--mono);font-size:13.5px}
 .person .meta b{display:block;font-size:18px}
 .person .meta span{font-size:15px;color:var(--muted)}
 .hint{font-size:15px;color:var(--muted);margin-top:18px}
@@ -130,7 +149,7 @@ section.alt{background:var(--white);border-top:1px solid var(--line);border-bott
 
 /* PAGE header for Play/Learn */
 .phead{background:var(--forest);color:#fff;padding:56px 0 0}
-.phead h1{font-size:clamp(46px,6vw,72px);color:var(--yellow);line-height:1}
+.phead h1{font-size:clamp(42px,5vw,62px);color:#fff;line-height:1;display:inline-block;background:var(--sign);border:4px solid #fff;box-shadow:0 0 0 5px var(--sign);border-radius:12px;padding:16px 26px 10px}
 .phead p{color:#d6e2d8;font-size:19px;max-width:620px;margin-top:12px}
 .subtabs{display:flex;gap:6px;margin-top:34px;overflow-x:auto}
 .subtabs button{border:0;background:rgba(255,255,255,.08);color:#dfe8e0;font-weight:800;font-size:16px;padding:14px 20px;border-radius:12px 12px 0 0;cursor:pointer;white-space:nowrap}
@@ -190,7 +209,7 @@ section.alt{background:var(--white);border-top:1px solid var(--line);border-bott
 .rbar .bar i{display:block;height:100%;width:0;background:var(--yellow);border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
 .final{position:absolute;inset:0;z-index:9;background:var(--forest);display:none;padding:44px;overflow:auto}
 .final.on{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-.final .big{font-family:var(--disp);font-size:104px;line-height:.9;color:var(--yellow)}
+.final .big{font-family:var(--disp);font-weight:900;font-size:104px;line-height:.9;color:var(--yellow)}
 .final .rank{font-size:24px;font-weight:800;margin:10px 0 6px}
 .final p{color:#d6e2d8}
 .final table{width:100%;border-collapse:collapse;font-size:16px}
@@ -199,10 +218,10 @@ section.alt{background:var(--white);border-top:1px solid var(--line);border-bott
 .final td:last-child{font-family:var(--mono);text-align:right;color:var(--yellow)}
 .final .acts{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 .splash{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background:var(--forest);padding:30px}
-.splash h3{font-size:52px;color:var(--yellow);line-height:1}
+.splash h3{font-size:52px;font-style:italic;font-weight:900;text-transform:uppercase;color:var(--yellow);line-height:1}
 .splash p{max-width:460px;margin:14px 0 24px;color:#d6e2d8}
 .splash ul{list-style:none;display:flex;gap:28px;margin-bottom:28px;font-size:15px;color:#d6e2d8;flex-wrap:wrap;justify-content:center}
-.splash ul b{display:block;font-family:var(--disp);font-size:34px;color:#fff;font-weight:400}
+.splash ul b{display:block;font-family:var(--disp);font-size:34px;color:#fff;font-weight:900}
 .splash.off{display:none}
 .toast{position:absolute;left:50%;top:70px;transform:translate(-50%,-16px);background:var(--yellow);color:var(--ink);font-weight:800;padding:8px 16px;border-radius:8px;opacity:0;transition:.25s;z-index:12;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -219,7 +238,7 @@ section.alt{background:var(--white);border-top:1px solid var(--line);border-bott
 .city.lose{background:#f9ddd5;border-color:var(--red)}
 .vs{font-family:var(--disp);font-size:30px;width:64px;height:64px;border-radius:50%;background:var(--forest);color:var(--yellow);display:flex;align-items:center;justify-content:center}
 .hl-bar{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:20px;flex-wrap:wrap;font-size:17px}
-.hl-bar b{font-family:var(--disp);font-size:40px;font-weight:400;margin-right:6px}
+.hl-bar b{font-family:var(--disp);font-size:40px;font-weight:900;margin-right:6px}
 
 /* quiz */
 .quiz{display:grid;grid-template-columns:300px 1fr;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:var(--white)}
@@ -266,8 +285,6 @@ footer a{text-decoration:none}
  .hero-grid,.about,.join-grid,.drop{grid-template-columns:1fr}
  .globe-wrap{justify-self:center;max-width:420px}
  .facts .wrap{grid-template-columns:1fr 1fr}
- .facts div:nth-child(3){padding-left:0;border-left:0}
- .facts div{border-top:2px solid rgba(20,35,26,.1)}
  .about-photos{height:420px}
  .board{grid-template-columns:repeat(3,1fr)}
  .gallery{grid-template-columns:1fr 1fr}
@@ -288,7 +305,6 @@ footer a{text-decoration:none}
  .tabs-nav a.join{display:none}
  .board{grid-template-columns:1fr 1fr;gap:14px}
  .facts .wrap{grid-template-columns:1fr}
- .facts div{padding-left:0!important;border-left:0!important}
  .opts{grid-template-columns:1fr}
  .final .big{font-size:76px}
  .about-photos{height:340px}
@@ -307,11 +323,11 @@ footer a{text-decoration:none}
  <section class="hero">
   <div class="wrap hero-grid">
    <div>
-    <h1>THS GeoGuessr Club</h1>
+    <h1>THS GeoGuessr<br>Club<small>Room 322 <span>Thursdays →</span></small></h1>
     <p>Troy High's club for GeoGuessr, the game that drops you somewhere on Earth and has you figure out where you are. We play together, compete in tournaments and get better every week.</p>
     <div class="acts"><a class="btn y" href="#join">How to join</a><a class="btn o" href="#play">Play a round</a></div>
    </div>
-   <div class="globe-wrap"><canvas id="globe" aria-label="Globe showing Troy High and the board's favorite cities. Drag to spin."></canvas><div class="globe-cap">Drag to spin · pins are the board's favorite cities</div></div>
+   <div class="globe-wrap"><div class="compass"><div class="tape" id="tape"></div></div><canvas id="globe" aria-label="Globe showing Troy High and the board's favorite cities. Drag to spin."></canvas><div class="globe-cap">Drag to spin · pins are the board's favorite cities</div></div>
   </div>
   <div class="facts"><div class="wrap">
    <div><small>When</small><b>Thursdays</b></div>
@@ -323,8 +339,8 @@ footer a{text-decoration:none}
 
  <section class="block"><div class="wrap about">
   <div>
-   <span class="label">About</span>
-   <h2>Real-world geography, but it's a game.</h2>
+   <span class="label">Exit 1 · About</span>
+   <h2>Real-world geography,<br>but it's a game.</h2>
    <p class="lead">GeoGuessr puts you on a random road somewhere in the world. You look around and guess where you are on a map. The closer your guess, the more points you get.</p>
    <div class="does">
     <div><span class="n">1</span><div><b>Play together</b><p>We play rounds as a group at every meeting, solo and in teams.</p></div></div>
@@ -335,16 +351,17 @@ footer a{text-decoration:none}
   <div class="about-photos"><img class="p1" src="img/flyer.webp" alt="Club flyer: Room 322, Thursdays"><img class="p2" src="img/rush.webp" alt="Club Rush 2026 poster"></div>
  </div></section>
 
+ <div class="road"></div>
  <section class="block alt"><div class="wrap">
-  <span class="label">2026–27</span>
-  <h2>The Board</h2>
+  <span class="label">Exit 2 · 2026–27</span><br>
+  <h2 class="sign">The Board</h2>
   <p class="lead">Click a card to see their favorite city, how far it is from Troy and the time there right now.</p>
   <div class="board" id="board"></div>
  </div></section>
 
  <section class="block"><div class="wrap">
-  <span class="label">Photos</span>
-  <h2>Gallery</h2>
+  <span class="label">Exit 3 · Photos</span><br>
+  <h2 class="sign">Gallery</h2>
   <div class="gallery">
    <button data-big="img/reel.webp" data-href="https://www.instagram.com/geoguessr_ths/reel/C_epmU-Nh55/"><div class="im"><img src="img/reel.webp" alt="Club president playing GeoGuessr" style="object-position:30% 50%"><span class="play"><i>▶</i></span></div><div class="cap">Bud playing a round</div></button>
    <button data-big="img/rush.webp"><div class="im"><img src="img/rush.webp" alt="Club Rush 2026 poster"></div><div class="cap">Club Rush 2026</div></button>
@@ -353,9 +370,10 @@ footer a{text-decoration:none}
   </div>
  </div></section>
 
+ <div class="road"></div>
  <section class="join" id="join"><div class="wrap join-grid">
   <div>
-   <span class="label" style="color:var(--yellow)">Join</span>
+   <span class="label">Exit 4 · Join</span>
    <h2>Come to a meeting.</h2>
    <p>Anyone at Troy can join. Just show up on a Thursday. You don't need an account or any experience. Check Instagram for tournaments and any schedule changes.</p>
    <div class="acts"><a class="btn y" href="https://www.instagram.com/geoguessr_ths/" target="_blank" rel="noopener">Follow on Instagram</a><a class="btn o" href="#play">Practice first</a></div>
@@ -473,7 +491,7 @@ $('#board').innerHTML=BOARD.map((b,i)=>{const d=km(TROY,b.c);return`<button clas
  <div class="card"><div class="f"><img src="img/${b.img}.webp" alt="${b.name}"></div>
  <div class="f bk"><span class="k">Favorite city</span><span class="v">${b.city}</span><span class="k">Distance from Troy</span><span class="v">${d<100?fmt(d)+' km (close!)':fmt(d)+' km'}</span><span class="k">Flight time</span><span class="v">${d<100?'No flight needed':'About '+Math.round(d/850+1)+' hours'}</span>
   <div class="time"><small>Time there now</small><span data-tz="${b.tz}">--</span></div></div></div>
- <div class="meta"><b>${b.name}</b><span>${b.role} · ${b.yr}</span></div></button>`;}).join('');
+ <div class="meta"><b>${b.name}</b><span>${b.role} · ${b.yr}</span></div><div class="mile"><span>${b.city.split(',')[0]} ${((b.c[1]-TROY[1]+540)%360-180)<0?'←':'→'}</span><span>${fmt(d)} km</span></div></button>`;}).join('');
 $$('.person').forEach(p=>p.onclick=()=>p.classList.toggle('flip'));
 const clocks=()=>$$('[data-tz]').forEach(e=>e.textContent=lt(e.dataset.tz,true));clocks();setInterval(clocks,1000);
 
@@ -502,12 +520,14 @@ function drawGlobe(){
  const ctr=[-rot[0],-rot[1]];
  BOARD.forEach(b=>{if(km(TROY,b.c)<100)return;cx.beginPath();gpath({type:'LineString',coordinates:[[TROY[1],TROY[0]],[b.c[1],b.c[0]]]});cx.setLineDash([4,5]);cx.strokeStyle='rgba(217,72,43,.85)';cx.lineWidth=1.6;cx.stroke();cx.setLineDash([]);});
  const pin=(la,lo,col,lab,r)=>{if(G.geoDistance(ctr,[lo,la])>Math.PI/2-.05)return;const [x,y]=proj([lo,la]);cx.beginPath();cx.arc(x,y,r,0,7);cx.fillStyle=col;cx.fill();cx.lineWidth=2;cx.strokeStyle='#14231a';cx.stroke();
-  cx.font='700 13px Figtree, sans-serif';const w=cx.measureText(lab).width;const lx=x>W*.68?x-w-22:x+10;cx.fillStyle='rgba(20,35,26,.9)';cx.beginPath();cx.roundRect?cx.roundRect(lx,y-11,w+12,22,5):cx.rect(lx,y-11,w+12,22);cx.fill();cx.fillStyle='#fff';cx.fillText(lab,lx+6,y+4.5);};
+  cx.font='700 13px Overpass, sans-serif';const w=cx.measureText(lab).width;const lx=x>W*.68?x-w-22:x+10;cx.fillStyle='rgba(20,35,26,.9)';cx.beginPath();cx.roundRect?cx.roundRect(lx,y-11,w+12,22,5):cx.rect(lx,y-11,w+12,22);cx.fill();cx.fillStyle='#fff';cx.fillText(lab,lx+6,y+4.5);};
  BOARD.forEach(b=>{if(km(TROY,b.c)>100)pin(b.c[0],b.c[1],'#d9482b',b.name.split(' ')[0],4.5);});
  pin(TROY[0],TROY[1],'#f2c94c','Troy High',6);
  const g=cx.createRadialGradient(W*.35,W*.3,W*.05,W/2,W/2,W/2);g.addColorStop(0,'rgba(255,255,255,.15)');g.addColorStop(1,'rgba(0,0,0,.2)');cx.beginPath();gpath({type:'Sphere'});cx.fillStyle=g;cx.fill();
 }
-function loop(){if(globeOn&&W){if(!dragging&&performance.now()-lastInt>2500)rot[0]+=.1;drawGlobe();}requestAnimationFrame(loop);}
+const DIRS=['N','NE','E','SE','S','SW','W','NW'];const tapeEl=$('#tape');let tapeHTML='';for(let k=0;k<5;k++)for(let j=0;j<8;j++)for(let m=0;m<3;m++)tapeHTML+=m?'<span>·</span>':`<span class="${DIRS[j].length===1?'c':''}">${DIRS[j]}</span>`;tapeEl.innerHTML=tapeHTML;
+function tape(){const per=120/45;const off=((rot[0]%360)+360)%360;tapeEl.style.transform=`translateX(${-(off*per)-120*8*2-20}px)`;}
+function loop(){if(globeOn&&W){if(!dragging&&performance.now()-lastInt>2500)rot[0]+=.1;drawGlobe();tape();}requestAnimationFrame(loop);}
 let gp=null;
 cv.addEventListener('pointerdown',e=>{dragging=true;gp={x:e.clientX,y:e.clientY,r:rot.slice()};cv.setPointerCapture(e.pointerId);});
 cv.addEventListener('pointermove',e=>{if(!dragging)return;const k=180/W*.9;rot[0]=gp.r[0]+(e.clientX-gp.x)*k;rot[1]=Math.max(-80,Math.min(80,gp.r[1]-(e.clientY-gp.y)*k));});
