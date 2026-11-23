@@ -37,6 +37,9 @@
         ],
         "geo": [
           "troy-geoguessr-club"
+        ],
+        "key": [
+          "troy-key-club"
         ]
       }
     }

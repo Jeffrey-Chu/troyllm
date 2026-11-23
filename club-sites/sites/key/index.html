@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troy Key Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fbf8f2;--ink:#241539;--purple:#5b2d9e;--lav:#cdb8f5;--lav2:#efe7ff;--gold:#f5b82e;--tape:#a9dcefcc;--pink:#f7b5d0;--grey:#9a96a3;--mute:#5f566f;--line:2.5px solid var(--ink)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font:400 17px/1.6 Inter,system-ui,sans-serif;color:var(--ink);background:var(--paper);overflow-x:hidden}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.hand{font-family:Caveat,cursive;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 16px Inter;background:var(--purple);color:#fff;border:var(--line);padding:12px 20px;border-radius:12px;box-shadow:4px 4px 0 var(--ink);text-decoration:none;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.btn.white{background:#fff;color:var(--ink)}
+section{padding:84px 0;position:relative}
+.sh{margin-bottom:36px;max-width:640px}
+.sh .hand{font-size:26px;color:var(--purple);display:block;transform:rotate(-2deg);transform-origin:left}
+.sh h2{font-size:clamp(34px,5vw,54px);font-weight:800;margin:2px 0 10px}
+.sh p{color:var(--mute)}
+/* lined notebook paper */
+.lined{background-color:#fff;background-image:linear-gradient(90deg,transparent 58px,#f2a7b8 58px,#f2a7b8 60px,transparent 60px),repeating-linear-gradient(#fff 0 31px,#dbe6f3 31px 32px)}
+/* tape */
+.tape{position:absolute;width:96px;height:28px;background:var(--tape);border-left:2px dashed rgba(255,255,255,.7);border-right:2px dashed rgba(255,255,255,.7);z-index:2}
+/* polaroid */
+.pola{background:#fff;padding:10px 10px 0;box-shadow:0 2px 0 rgba(0,0,0,.04),0 12px 26px -10px rgba(36,21,57,.45);position:relative;transition:transform .25s}
+.pola img{width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--lav2)}
+.pola figcaption{font:700 22px Caveat;text-align:center;padding:8px 4px 12px;line-height:1.1}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:800 19px "Bricolage Grotesque";text-decoration:none}
+.brand svg{width:40px}
+.nl{display:flex;gap:2px}
+.nl a{text-decoration:none;font-weight:500;font-size:15px;padding:7px 12px;border-radius:8px}
+.nl a:hover{background:var(--lav2)}
+.nl a.act{background:var(--lav);font-weight:600}
+.burger{display:none;background:none;border:0;font-size:26px;cursor:pointer}
+
+/* HERO */
+.hero{padding:54px 0 40px}
+.hg{display:grid;grid-template-columns:1fr 1.05fr;gap:24px;align-items:center}
+.hero .hand.kick{font-size:28px;color:var(--purple);transform:rotate(-3deg);display:inline-block}
+.hero h1{font-size:clamp(54px,8vw,104px);font-weight:800;line-height:.9;margin:6px 0 20px}
+.hero h1 .u{position:relative;display:inline-block;color:var(--purple)}
+.hero h1 .u svg{position:absolute;left:-4%;bottom:-14px;width:108%}
+.lead{font-size:19px;max-width:460px;color:#3b2d52}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.meet{display:inline-flex;gap:14px;align-items:center;margin-top:30px;background:#fff7c2;padding:14px 18px 14px 16px;transform:rotate(-1.5deg);box-shadow:0 10px 20px -12px rgba(36,21,57,.5);position:relative}
+.meet .tape{top:-14px;left:40%;width:70px;height:22px;transform:rotate(4deg)}
+.meet b{display:block;font-size:16px}
+.meet span{font-size:14px;color:var(--mute)}
+.meet .ic{font-size:30px}
+
+.stage{position:relative;height:500px;touch-action:none;user-select:none}
+.stage .pola{position:absolute;width:210px;right:0;top:8px;transform:rotate(7deg);z-index:0}
+.stage .pola .tape{top:-12px;left:56px;transform:rotate(-6deg)}
+.note{position:absolute;font:700 25px Caveat;color:var(--purple);z-index:3;pointer-events:none;line-height:1.1}
+.note svg{display:block}
+#n1{left:2%;top:4px;transform:rotate(-4deg)}
+#lock{position:absolute;left:2%;top:54%;width:52%;transform:translateY(-50%);z-index:1;filter:drop-shadow(5px 6px 0 var(--ink))}
+#shackle{transition:transform .7s cubic-bezier(.3,1.6,.5,1);transform-origin:258px 150px}
+.open #shackle{transform:translateY(-46px) rotate(-14deg)}
+#key{position:absolute;width:210px;z-index:2;cursor:grab;filter:drop-shadow(4px 5px 0 var(--ink))}
+#key.drag{cursor:grabbing}
+#key.snap{transition:left .35s cubic-bezier(.3,1.4,.6,1),top .35s cubic-bezier(.3,1.4,.6,1)}
+#key svg{display:block;transform-origin:0 50%;transition:transform .6s ease-in-out}
+#key.turn svg{transform:perspective(500px) rotateX(180deg)}
+#key.idle{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -8px}}
+.near #keyhole{fill:var(--gold)}
+.reveal{position:absolute;left:4%;right:4%;bottom:10px;background:#fff;border:var(--line);border-radius:14px;padding:14px 16px;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;opacity:0;transform:translateY(24px) rotate(-1deg);transition:.45s .55s;pointer-events:none;box-shadow:5px 5px 0 var(--ink)}
+.open .reveal{opacity:1;transform:rotate(-1deg);pointer-events:auto}
+.open #n1{opacity:0}
+.reveal p{font-size:14px;color:var(--mute)}
+.reveal b{font:700 24px "Space Mono"}
+.relock{position:absolute;left:0;top:0;z-index:4;background:#fff;border:2px solid var(--ink);border-radius:8px;font:600 13px Inter;padding:4px 10px;cursor:pointer;display:none}
+.open .relock{display:block}
+.conf{position:absolute;width:10px;height:10px;border:2px solid var(--ink);z-index:5;pointer-events:none}
+
+/* WHO */
+#who{padding-top:40px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.who .pola{transform:rotate(-2.5deg);max-width:470px}
+.who .pola img{aspect-ratio:auto}
+.who .pola .tape{top:-12px;left:-20px;transform:rotate(-30deg)}
+.who .pola .t2{left:auto;right:-20px;transform:rotate(32deg)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.fact{border:var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+.fact b{display:block;font:800 18px "Bricolage Grotesque"}
+.fact span{font-size:14px;color:var(--mute)}
+
+/* UPDATES wall */
+#updates{background:var(--lav2);border-block:var(--line)}
+#updates::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(91,45,158,.12) 1.4px,transparent 1.4px);background-size:22px 22px;pointer-events:none}
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 34px;position:relative}
+.wall .pola{cursor:zoom-in;border:0;text-align:left;font:inherit;color:inherit}
+.wall .pola:nth-child(3n+1){transform:rotate(-2.5deg)}
+.wall .pola:nth-child(3n+2){transform:rotate(1.5deg) translateY(14px)}
+.wall .pola:nth-child(3n){transform:rotate(-1deg)}
+.wall .pola:hover{transform:rotate(0) scale(1.04);z-index:3}
+.wall .pola .tape{top:-13px;left:calc(50% - 48px)}
+.wall .pola:nth-child(even) .tape{background:#f7b5d0cc;transform:rotate(-5deg)}
+.wall .cap{padding:8px 4px 14px}
+.wall .cap .d{font:700 12px "Space Mono";color:var(--purple);text-transform:uppercase}
+.wall .cap h3{font-size:19px;margin:2px 0 2px}
+.wall .cap p{font-size:14.5px;color:var(--mute);line-height:1.4}
+.newtag{position:absolute;top:-16px;right:-14px;z-index:3;background:var(--gold);border:var(--line);border-radius:50%;width:62px;height:62px;display:grid;place-items:center;font:700 21px Caveat;transform:rotate(12deg)}
+
+/* BOARD */
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 24px}
+.bcard{cursor:zoom-in;border:0;background:none;text-align:left;font:inherit;color:inherit}
+.bcard .pola{padding:8px 8px 0}
+.bcard:nth-child(odd) .pola{transform:rotate(-1.5deg)}
+.bcard:nth-child(even) .pola{transform:rotate(1.5deg)}
+.bcard:hover .pola{transform:rotate(0) translateY(-6px)}
+.bcard .pola img{aspect-ratio:287/361}
+.bcard .who2{margin-top:14px;padding-left:4px}
+.bcard .who2 b{display:block;font:800 18px "Bricolage Grotesque"}
+.bcard .who2 span{font-size:14px;color:var(--purple);font-weight:600}
+.bnote{margin-top:30px;font:700 24px Caveat;color:var(--mute)}
+
+/* LINKS */
+#links{border-top:var(--line)}
+.lg{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+.cr{position:relative}
+.cr .pola{transform:rotate(-2deg);max-width:380px}
+.cr .pola img{aspect-ratio:auto}
+.cr .pola .tape{top:-12px;left:30%}
+.codebox{margin-top:22px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.codebox .c{font:700 28px "Space Mono";background:#fff;border:var(--line);border-radius:10px;padding:4px 14px;letter-spacing:.06em}
+.ll{display:grid;gap:12px}
+.lk{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border:var(--line);border-radius:14px;background:#fff;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.lk:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--purple)}
+.lk b{display:block;font-size:17px}
+.lk span{font-size:14px;color:var(--mute)}
+.lk .ar{font:700 26px Caveat;color:var(--purple)}
+
+/* HOURS */
+#hours{background:var(--ink);color:#fff}
+#hours .sh .hand{color:var(--gold)}#hours .sh p{color:#cfc4e2}
+.hours{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.panel{background:var(--paper);color:var(--ink);border-radius:16px;padding:26px}
+.panel h3{font-size:22px;margin-bottom:14px}
+form.log{display:grid;grid-template-columns:1fr 90px;gap:10px}
+form.log .btn{grid-column:1/-1;justify-content:center}
+input{font:400 16px Inter;padding:12px 14px;border:2px solid var(--ink);border-radius:10px;background:#fff;width:100%}
+input:focus{outline:3px solid var(--lav)}
+.preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.preset button{font:500 13px Inter;background:var(--lav2);border:1.5px solid var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.preset button:hover{background:var(--lav)}
+.logs{margin-top:14px;max-height:200px;overflow:auto}
+.logs div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e7e0d2;font-size:15px}
+.logs button{background:none;border:0;color:#b42318;cursor:pointer;font-size:14px;margin-left:10px}
+.empty{color:var(--mute);font-size:15px;padding:8px 0}
+.total{font:800 60px "Bricolage Grotesque";line-height:1}
+.total small{font:500 17px Inter;color:var(--mute)}
+.bar{position:relative;height:26px;border:var(--line);border-radius:999px;background:#fff;margin:58px 0 14px}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--lav);border-radius:999px;transition:width .8s cubic-bezier(.3,1.2,.5,1)}
+.rh{position:absolute;bottom:16px;width:72px;transition:left .8s cubic-bezier(.3,1.2,.5,1);transform:translateX(-50%)}
+.goal{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--mute)}
+.goal input{width:80px;padding:8px 10px}
+.tip{font:700 22px Caveat;color:var(--purple);margin-top:14px}
+
+/* JOIN */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{position:relative;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:26px 22px 22px 22px;background:#fff7c2;box-shadow:0 12px 22px -14px rgba(36,21,57,.55);transition:transform .2s}
+.step:nth-child(1){transform:rotate(-1.5deg)}.step:nth-child(2){transform:rotate(1deg);background:#ffe0ec}.step:nth-child(3){transform:rotate(-.5deg);background:#e2f4fb}
+.step:hover{transform:rotate(0) translateY(-4px)}
+.step .tape{top:-12px;left:calc(50% - 40px);width:80px;height:22px}
+.step .n{font:700 38px Caveat;color:var(--purple);line-height:1}
+.step h3{font-size:20px;margin:6px 0}
+.step p{font-size:15px;color:var(--mute)}
+.step .chk{position:absolute;right:16px;top:16px;width:28px;height:28px;border:var(--line);border-radius:6px;background:#fff;display:grid;place-items:center;font-weight:800}
+.step.done .chk{background:var(--purple);color:#fff}
+.step.done h3{text-decoration:line-through;text-decoration-color:var(--purple);text-decoration-thickness:3px}
+.prog{margin-top:26px;font:700 26px Caveat;color:var(--purple)}
+
+/* FAQ */
+#faq{border-top:var(--line)}
+.faq{max-width:800px}
+details{border-bottom:2px solid var(--ink);padding:18px 0}
+summary{cursor:pointer;font:600 20px "Bricolage Grotesque";list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:28px;line-height:.8;color:var(--purple);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:8px;color:var(--mute);max-width:660px}
+
+footer{background:var(--purple);color:#efe7ff;padding:36px 0;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{color:#fff}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(36,21,57,.82);display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}
+.lbin{display:grid;grid-template-columns:auto 300px;gap:0;background:var(--paper);border:var(--line);border-radius:16px;overflow:hidden;max-width:920px;max-height:90vh}
+.lbin img{max-height:86vh;max-width:min(560px,60vw);object-fit:contain;background:#fff}
+.lbt{padding:26px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.lbt .d{font:700 12px "Space Mono";color:var(--purple);text-transform:uppercase}
+.lbt h3{font-size:26px}
+.lbt p{color:var(--mute);font-size:16px}
+.lbt .btn{margin-top:auto;align-self:flex-start}
+.lbx,.lbp,.lbn{position:fixed;background:#fff;border:var(--line);border-radius:50%;width:46px;height:46px;font-size:20px;cursor:pointer;display:grid;place-items:center}
+.lbx{top:18px;right:18px}.lbp{left:18px;top:50%}.lbn{right:18px;top:50%}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:#fff;border-radius:10px;padding:10px 16px;font-weight:600;z-index:120;transition:transform .3s}
+.toast.show{transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .nl{display:none}
+  .nl.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--paper);border-bottom:var(--line);padding:10px 22px}
+  .burger{display:block}
+  .hg,.who,.lg,.hours{grid-template-columns:1fr}
+  .stage{height:420px}.stage .pola{width:160px}
+  .wall{grid-template-columns:1fr 1fr;gap:30px 18px}
+  .bgrid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .lbin{grid-template-columns:1fr;overflow:auto}
+  .lbin img{max-width:100%;max-height:60vh}
+  .lbp,.lbn{top:auto;bottom:18px}
+}
+@media (max-width:520px){#key{width:160px}.stage{height:380px}.wall .cap p{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="rhino" viewBox="0 0 200 130">
+    <g stroke="#241539" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="52" y="86" width="22" height="36" rx="8" fill="#7d7988"/><rect x="120" y="86" width="22" height="36" rx="8" fill="#7d7988"/>
+      <path d="M150 50c-10-22-40-32-74-28C42 26 22 48 24 74c2 20 18 32 46 34h56c22 0 34-10 34-28" fill="#a8a4b2"/>
+      <rect x="40" y="88" width="22" height="34" rx="8" fill="#a8a4b2"/><rect x="132" y="88" width="22" height="34" rx="8" fill="#a8a4b2"/>
+      <path d="M140 46c14-8 34-6 44 6 8 10 6 26-4 34-10 8-30 6-42-4" fill="#a8a4b2"/>
+      <path d="M180 52l14-28 0 30z" fill="#fbf0d8"/><path d="M166 46l6-16 4 18z" fill="#fbf0d8"/><path d="M146 40l-4-14 12 8z" fill="#a8a4b2"/>
+    </g>
+    <circle cx="162" cy="60" r="4.5" fill="#241539"/><circle cx="172" cy="72" r="5" fill="#f7b5d0"/>
+  </symbol>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><svg viewBox="0 0 200 130"><use href="#rhino"/></svg>Troy Key Club</a>
+    <div class="nl" id="nl"><a href="#who">About</a><a href="#updates">Updates</a><a href="#board">Board</a><a href="#links">Links</a><a href="#hours">Hours</a><a href="#join">Join</a><a href="#faq">FAQ</a></div>
+    <button class="burger" id="burger" aria-label="Open menu">☰</button>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <div class="hg">
+    <div>
+      <span class="hand kick">charging into service! 🦏</span>
+      <h1>Troy High <span class="u">Key Club<svg viewBox="0 0 300 20" preserveAspectRatio="none"><path d="M4 14C60 4 140 2 296 10" stroke="#f5b82e" stroke-width="7" fill="none" stroke-linecap="round"/></svg></span></h1>
+      <p class="lead">We're Troy's student-led service club. Members volunteer, earn service hours, and hang out with Key Clubbers from all over Division 30 North.</p>
+      <div class="cta">
+        <a class="btn" href="#join">Join Key Club</a>
+        <a class="btn white" href="#updates">See what's new</a>
+      </div>
+      <div class="meet"><span class="tape"></span><span class="ic">📍</span><div><b>Meetings at lunch · Room 517 (Bloxham)</b><span>Dates get posted in the Google Classroom and on Instagram</span></div></div>
+    </div>
+    <div class="stage" id="stage">
+      <figure class="pola"><span class="tape"></span><img src="img/club-rush.jpg" alt="Club Rush 26-27 photo collage"><figcaption>club rush '26 💜</figcaption></figure>
+      <button class="relock" id="relock">↺ relock</button>
+      <svg id="lock" viewBox="0 0 400 420" aria-hidden="true">
+        <g id="shackle"><path d="M110 190V130a90 90 0 0 1 180 0v60" fill="none" stroke="#241539" stroke-width="44" stroke-linecap="round"/><path d="M110 190V130a90 90 0 0 1 180 0v60" fill="none" stroke="#d9d6df" stroke-width="28" stroke-linecap="round"/></g>
+        <rect x="40" y="170" width="320" height="236" rx="40" fill="#cdb8f5" stroke="#241539" stroke-width="6"/>
+        <rect x="62" y="192" width="276" height="20" rx="10" fill="#fff" opacity=".6"/>
+        <text x="200" y="382" text-anchor="middle" font-family="Caveat" font-weight="700" font-size="34" fill="#241539">troy key club</text>
+        <circle cx="200" cy="268" r="44" fill="#241539"/>
+        <path id="keyhole" d="M200 246a14 14 0 0 1 8 25l6 32h-28l6-32a14 14 0 0 1 8-25z" fill="#5b2d9e" style="transition:fill .2s"/>
+      </svg>
+      <div id="key" class="idle">
+        <svg viewBox="0 0 260 96">
+          <rect x="4" y="40" width="168" height="16" rx="4" fill="#f5b82e" stroke="#241539" stroke-width="4"/>
+          <path d="M22 54v20h14V62h12v16h14V54" fill="#f5b82e" stroke="#241539" stroke-width="4" stroke-linejoin="round"/>
+          <rect x="150" y="34" width="16" height="28" rx="5" fill="#f5b82e" stroke="#241539" stroke-width="4"/>
+          <circle cx="208" cy="48" r="42" fill="#f5b82e" stroke="#241539" stroke-width="4"/>
+          <circle cx="208" cy="48" r="22" fill="#fbf8f2" stroke="#241539" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="note" id="n1">drag the key into the lock!<br><span style="font-size:20px">(or <a href="#" id="tapturn" style="pointer-events:auto">tap here</a>)</span></div>
+      <div class="reveal"><div><p>You're in! Join our Google Classroom:</p><b>lk7edmmh</b></div><button class="btn gold" data-copy>Copy code</button></div>
+    </div>
+  </div>
+</header>
+
+<section id="who">
+  <div class="wrap who">
+    <figure class="pola"><span class="tape"></span><span class="tape t2"></span><img src="img/board-cover.jpg" alt="Troy Key Club members at an event in purple shirts"><figcaption>the herd 🦏</figcaption></figure>
+    <div>
+      <div class="sh" style="margin-bottom:0">
+        <span class="hand">who we are</span>
+        <h2>Service, but make it fun.</h2>
+        <p>Key Club is the oldest and largest service program for high school students, sponsored by Kiwanis. At Troy, that means making care packages for seniors, cards with Joy4Juvies, and going to big events like Fall Rally South at Six Flags Magic Mountain, all in matching purple shirts.</p>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>Division 30 North</b><span>our division (the rhinos 🦏)</span></div>
+        <div class="fact"><b>Region 3</b><span>Cal-Nev-Ha District</span></div>
+        <div class="fact"><b>Room 517</b><span>where we meet, at lunch</span></div>
+        <div class="fact"><b>Fall Rally South</b><span>biggest event of the year</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="updates">
+  <div class="wrap">
+    <div class="sh"><span class="hand">straight from @troyhighkeyclub</span><h2>Latest updates</h2><p>Click a poster to see it full size.</p></div>
+    <div class="wall" id="wall"></div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="wrap">
+    <div class="sh"><span class="hand">your 26–27 board</span><h2>Meet the board</h2><p>Have a question about events, hours, or dues? Ask any of them. Click a card to see their full slide.</p></div>
+    <div class="bgrid" id="bgrid"></div>
+    <p class="bnote">fun fact: Lawrence's favorite animal is (of course) a rhino 🦏</p>
+  </div>
+</section>
+
+<section id="links" class="lined">
+  <div class="wrap">
+    <div class="lg">
+      <div class="cr">
+        <div class="sh" style="margin-bottom:24px"><span class="hand">step one</span><h2>Join the Classroom</h2><p>Event sign-ups, payment forms, and announcements get posted here first.</p></div>
+        <figure class="pola"><span class="tape"></span><img src="img/classroom.jpg" alt="Google Classroom code lk7edmmh"></figure>
+        <div class="codebox"><span class="c">lk7edmmh</span><button class="btn gold" data-copy>Copy code</button></div>
+      </div>
+      <div>
+        <div class="sh" style="margin-bottom:24px"><span class="hand">forms &amp; payments</span><h2>Quick links</h2><p>Everything below is on our Linktree.</p></div>
+        <div class="ll" id="ll"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hours">
+  <div class="wrap">
+    <div class="sh"><span class="hand">for members</span><h2>Track your hours</h2><p>Keep a personal log of your service hours. It saves on your device only, so still turn in your hours the official way.</p></div>
+    <div class="hours">
+      <div class="panel">
+        <h3>Log an event</h3>
+        <form class="log" id="logf"><input id="ln" placeholder="Event name" required><input id="lh" type="number" min="0.5" step="0.5" placeholder="Hours" required><button class="btn" type="submit">Add hours</button></form>
+        <div class="preset" id="preset"></div>
+        <div class="logs" id="logs"></div>
+      </div>
+      <div class="panel">
+        <h3>Your progress</h3>
+        <div class="total"><span id="tot">0</span> <small>of <span id="gt">25</span> hours</small></div>
+        <div class="bar"><div class="fill" id="fill"></div><svg class="rh" id="rh" viewBox="0 0 200 130"><use href="#rhino"/></svg></div>
+        <div class="goal">Goal: <input id="goal" type="number" min="1" value="25"> hours</div>
+        <p class="tip" id="left"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="sh"><span class="hand">new here?</span><h2>How to join</h2><p>Anyone at Troy can join. There's no application. Check off each step as you go.</p></div>
+    <div class="steps">
+      <button class="step"><span class="tape"></span><span class="chk"></span><div class="n">01</div><h3>Join the Classroom</h3><p>Code <b>lk7edmmh</b>. Everything gets posted there.</p></button>
+      <button class="step"><span class="tape"></span><span class="chk"></span><div class="n">02</div><h3>Fill out the forms</h3><p>Club sign-up and medical release form, both on the Linktree.</p></button>
+      <button class="step"><span class="tape"></span><span class="chk"></span><div class="n">03</div><h3>Pay dues &amp; get a shirt</h3><p>Then come to a lunch meeting in Room 517 and sign up for an event.</p></button>
+    </div>
+    <p class="prog" id="prog"></p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sh"><span class="hand">questions?</span><h2>FAQ</h2></div>
+    <div class="faq">
+      <details><summary>Who can join?</summary><p>Any Troy High student. Join the Google Classroom and come to a lunch meeting in Room 517.</p></details>
+      <details><summary>Are there dues?</summary><p>Yes, yearly club dues. The payment form is in the Google Classroom and on our Linktree, and deadlines are announced on Instagram.</p></details>
+      <details><summary>Do I need the club shirt?</summary><p>The shirt is the attire for all Key Club events and is required for Fall Rally South. This year's shirt was $16. Watch Instagram for order windows and pickup times.</p></details>
+      <details><summary>How do I earn service hours?</summary><p>Come to service meetings and sign up for events in the Classroom. For example, at the senior care package meeting, every two bags you made counted as one service hour.</p></details>
+      <details><summary>What is Fall Rally South?</summary><p>The biggest Key Club event of the year, held at Six Flags Magic Mountain. Registration and payment happen through the Classroom and Linktree.</p></details>
+      <details><summary>What's D30N?</summary><p>Division 30 North, the group of nearby Key Clubs we belong to. Our mascot is the rhino.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="yr"></span> Troy High School Key Club · D30N · Region 3 · Cal-Nev-Ha</div>
+    <div><a href="https://www.instagram.com/troyhighkeyclub/">Instagram</a> · <a href="https://linktr.ee/troykeyclub">Linktree</a></div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="lbx" id="lbx" aria-label="Close">✕</button>
+  <button class="lbp" id="lbp" aria-label="Previous">←</button>
+  <button class="lbn" id="lbn" aria-label="Next">→</button>
+  <div class="lbin"><img id="lbimg" alt=""><div class="lbt" id="lbt"></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("show"),1800)}
+$("#yr").textContent=new Date().getFullYear();
+$("#burger").onclick=()=>$("#nl").classList.toggle("open");
+$$("#nl a").forEach(a=>a.onclick=()=>$("#nl").classList.remove("open"));
+const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$$("#nl a").forEach(a=>a.classList.toggle("act",a.getAttribute("href")==="#"+e.target.id))}),{rootMargin:"-45% 0px -50% 0px"});
+$$("section[id]").forEach(s=>nio.observe(s));
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]");if(!b)return;try{await navigator.clipboard.writeText("lk7edmmh");toast("Copied lk7edmmh ✓")}catch{toast("Code: lk7edmmh")}});
+
+/* ===== key + lock ===== */
+const stage=$("#stage"),key=$("#key"),hole=$("#keyhole");let drag=null,open=false;
+function home(){key.style.left=(stage.clientWidth-key.offsetWidth-10)+"px";key.style.top=(stage.clientHeight*.72)+"px"}
+function hp(){const s=stage.getBoundingClientRect(),r=hole.getBoundingClientRect();return{x:r.left+r.width/2-s.left,y:r.top+r.height*.45-s.top}}
+function dist(){const h=hp();return Math.hypot(h.x-key.offsetLeft,h.y-(key.offsetTop+key.offsetHeight/2))}
+key.onpointerdown=e=>{if(open)return;key.setPointerCapture(e.pointerId);drag={x:e.clientX-key.offsetLeft,y:e.clientY-key.offsetTop};key.classList.add("drag");key.classList.remove("idle","snap")};
+key.onpointermove=e=>{if(!drag)return;key.style.left=Math.max(-20,Math.min(stage.clientWidth-40,e.clientX-drag.x))+"px";key.style.top=Math.max(0,Math.min(stage.clientHeight-40,e.clientY-drag.y))+"px";stage.classList.toggle("near",dist()<70)};
+key.onpointerup=()=>{if(!drag)return;drag=null;key.classList.remove("drag");stage.classList.remove("near");if(dist()<70)unlock();else{key.classList.add("snap");home();setTimeout(()=>key.classList.add("idle"),400)}};
+function unlock(){if(open)return;open=true;key.classList.remove("idle");key.classList.add("snap");const h=hp();key.style.left=h.x+"px";key.style.top=(h.y-key.offsetHeight/2)+"px";setTimeout(()=>key.classList.add("turn"),380);setTimeout(()=>{stage.classList.add("open");confetti()},950)}
+$("#tapturn").onclick=e=>{e.preventDefault();unlock()};
+$("#relock").onclick=()=>{open=false;stage.classList.remove("open");key.classList.remove("turn");setTimeout(()=>{home();setTimeout(()=>key.classList.add("idle"),400)},300)};
+function confetti(){const c=["#cdb8f5","#f5b82e","#f7b5d0","#a9dcef"],h=hp();for(let i=0;i<36;i++){const d=document.createElement("div");d.className="conf";d.style.background=c[i%4];d.style.left=h.x+"px";d.style.top=h.y+"px";if(i%3==0)d.style.borderRadius="50%";stage.appendChild(d);const a=Math.random()*6.28,v=110+Math.random()*200;d.animate([{transform:"none"},{transform:`translate(${Math.cos(a)*v}px,${Math.sin(a)*v+100}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:1200+Math.random()*500,easing:"cubic-bezier(.2,.7,.4,1)",fill:"forwards"}).onfinish=()=>d.remove()}}
+addEventListener("load",home);addEventListener("resize",()=>{if(!open)home()});home();
+
+/* ===== lightbox ===== */
+let LB=[],li=0;
+function lbShow(list,i){LB=list;li=i;const it=LB[li];$("#lbimg").src=it.img;$("#lbimg").alt=it.t;$("#lbt").innerHTML=`${it.d?`<div class="d">${it.d}</div>`:""}<h3>${it.t}</h3><p>${it.c}</p>${it.u?`<a class="btn" href="${it.u}">View on Instagram ↗</a>`:""}`;$("#lb").classList.add("on");document.body.style.overflow="hidden"}
+function lbClose(){$("#lb").classList.remove("on");document.body.style.overflow=""}
+$("#lbx").onclick=lbClose;$("#lb").onclick=e=>{if(e.target.id==="lb")lbClose()};
+$("#lbp").onclick=()=>lbShow(LB,(li-1+LB.length)%LB.length);$("#lbn").onclick=()=>lbShow(LB,(li+1)%LB.length);
+addEventListener("keydown",e=>{if(!$("#lb").classList.contains("on"))return;if(e.key==="Escape")lbClose();if(e.key==="ArrowRight")$("#lbn").click();if(e.key==="ArrowLeft")$("#lbp").click()});
+
+/* ===== updates (from @troyhighkeyclub) ===== */
+const IG="https://www.instagram.com/troyhighkeyclub/p/";
+const POSTS=[
+  {img:"img/care.jpg",d:"Nov 19",t:"Care packages for seniors",c:"Lunch meeting in Room 517 making care packages for seniors. Every two bags = one service hour. You could also pick up your T-shirt.",u:IG+"Df8UiXIor6M/"},
+  {img:"img/shirt-pickup.jpg",d:"Nov 12",t:"T-shirt pickup",c:"Ordered a shirt? Pick it up in Room 517 at lunch. If you haven't paid yet, bring cash.",u:IG+"Dfq62l5oBmP/"},
+  {img:"img/dues.jpg",d:"Oct 27",t:"Payments are due",c:"Club dues were due Oct 28 and Fall Rally South payments Oct 30, both by 3:30 PM. Forms are in the Classroom and the Instagram bio.",u:IG+"DfBCH6-PgFD/"},
+  {img:"img/joy4juvies.jpg",d:"Oct 18",t:"Key Club × Joy4Juvies",c:"Monday lunch meeting in Room 517 for card-making service hours, cupcakes, and updates.",u:IG+"Dep7ndYoo69/"},
+  {img:"img/first-meeting.jpg",d:"Sep 22",t:"First meeting of the year",c:"Our first meeting was Friday, Sept 25 in Room 517 at lunch, with cookies and a rundown of upcoming events.",u:IG+"DdnLp_DoGUP/"},
+  {img:"img/shirt-order.jpg",d:"Sep 21",t:"Club T-shirts",c:"Shirts were $16. They're the attire for all Key Club events and required for Fall Rally South at Six Flags Magic Mountain (Nov 14).",u:IG+"Ddk80CfIxhF/"}
+];
+$("#wall").innerHTML=POSTS.map((p,i)=>`<button class="pola" data-i="${i}">${i===0?'<span class="newtag">new!</span>':""}<span class="tape"></span><img src="${p.img}" alt="${p.t} poster" loading="lazy"><div class="cap"><div class="d">${p.d}</div><h3>${p.t}</h3><p>${p.c.split(". ")[0]}.</p></div></button>`).join("");
+$$("#wall .pola").forEach(b=>b.onclick=()=>lbShow(POSTS,+b.dataset.i));
+
+/* ===== board ===== */
+const BOARD=[
+  ["saniya","Saniya Lalani","President",11,"tiger"],["jason","Jason Lee","VP of Service Projects",11,"frog"],
+  ["irvin","Irvin Zhao","VP of Member Engagement & Marketing",12,"penguins"],["lily","Lily Song","Fundraising & Marketing",11,"dog"],
+  ["lawrence","Lawrence Santiago","Secretary & Marketing",11,"rhino"],["jeremy","Jeremy Kim","Treasurer",12,"cat"],
+  ["amy","Amy Hong","Editor",12,"rabbits"],["nina","Nina Villajoaquin","Marketing",11,"dachshunds"]
+];
+const BL=BOARD.map(([k,n,r,g,a])=>({img:`img/board-${k}.jpg`,d:`Grade ${g}`,t:n,c:`${r}. Favorite animal: ${a}.`,u:IG+"Ddh5uzWmwGm/"}));
+$("#bgrid").innerHTML=BOARD.map(([k,n,r],i)=>`<button class="bcard" data-i="${i}"><div class="pola"><img src="img/board-${k}.jpg" alt="${n}" loading="lazy"></div><div class="who2"><b>${n}</b><span>${r}</span></div></button>`).join("");
+$$(".bcard").forEach(b=>b.onclick=()=>lbShow(BL,+b.dataset.i));
+
+/* ===== links ===== */
+const LT="https://linktr.ee/troykeyclub";
+$("#ll").innerHTML=[["Club sign-up form","Fill this out first"],["Medical release form","Required before events"],["Dues payment","Yearly club dues"],["Fall Rally South","Registration & payment"],["T-shirt order form","When orders are open"],["D30N newsletter","News from our division"],["Feedback form","Tell the board what you think"]].map(([a,b])=>`<a class="lk" href="${LT}"><div><b>${a}</b><span>${b}</span></div><span class="ar">→</span></a>`).join("");
+
+/* ===== hours ===== */
+let logs=store.get("tkc_logs",[]),goal=store.get("tkc_goal",25);$("#goal").value=goal;
+$("#preset").innerHTML=[["Lunch service meeting",1],["Care packages (2 bags)",1],["Fall Rally South",4]].map(([n,h])=>`<button data-n="${n}" data-h="${h}">+ ${n}</button>`).join("");
+$$("#preset button").forEach(b=>b.onclick=()=>add(b.dataset.n,+b.dataset.h));
+function add(n,h){logs.unshift({n,h});store.set("tkc_logs",logs);draw();toast(`+${h} hr logged`)}
+function draw(){
+  const t=logs.reduce((s,l)=>s+l.h,0),p=Math.min(t/goal,1);
+  $("#tot").textContent=t%1?t.toFixed(1):t;$("#gt").textContent=goal;
+  $("#fill").style.width=(p*100)+"%";$("#rh").style.left=Math.min(Math.max(p*100,5),95)+"%";
+  $("#left").textContent=p>=1?"goal reached! the rhino is proud 🦏":`${+(goal-t).toFixed(1)} hours to go. you got this!`;
+  $("#logs").innerHTML=logs.length?logs.map((l,i)=>`<div><span>${l.n.replace(/[<>&]/g,"")}</span><span>${l.h} hr<button data-i="${i}">Remove</button></span></div>`).join(""):`<p class="empty">Nothing logged yet.</p>`;
+  $$("#logs button").forEach(b=>b.onclick=()=>{logs.splice(+b.dataset.i,1);store.set("tkc_logs",logs);draw()});
+}
+$("#logf").onsubmit=e=>{e.preventDefault();add($("#ln").value.trim(),+$("#lh").value);e.target.reset()};
+$("#goal").oninput=e=>{goal=Math.max(1,+e.target.value||1);store.set("tkc_goal",goal);draw()};
+draw();
+
+/* ===== join ===== */
+let done=store.get("tkc_steps",[]);
+function prog(){const n=done.length;$("#prog").textContent=n===3?"you're officially a rhino! see you in Room 517 💜":`${n}/3 done`}
+$$(".step").forEach((s,i)=>{s.classList.toggle("done",done.includes(i));s.querySelector(".chk").textContent=done.includes(i)?"✓":"";s.onclick=()=>{s.classList.toggle("done");const d=s.classList.contains("done");s.querySelector(".chk").textContent=d?"✓":"";done=$$(".step").map((x,j)=>x.classList.contains("done")?j:-1).filter(j=>j>=0);store.set("tkc_steps",done);prog()}});
+prog();
+</script>
+</body>
+</html>

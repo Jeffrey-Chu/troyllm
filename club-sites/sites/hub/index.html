@@ -100,6 +100,16 @@ h1, h2, h3, p { margin: 0; }
 a.row:hover .ch { color: #fff; }
 a.row.today:hover .ch { color: #ffe489; }
 .ch { display: inline-block; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.55); min-width: .28em; }
+.row.big { height: calc(var(--row) * 2); grid-template-columns: 1fr; justify-items: center; font-size: calc(var(--fs) * 1.75); color: var(--today); font-weight: 700; }
+.row.big .cell { padding-bottom: calc(var(--row) * .2); }
+.row.sub { grid-template-columns: 1fr; justify-items: center; }
+a.row.big:hover .ch { color: #ffe489; }
+.index { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
+.index h2 { font-family: var(--display); font-stretch: 80%; font-weight: 700; font-size: 1.15rem; margin-bottom: .8rem; }
+.index ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem .55rem; }
+.index a { display: inline-flex; align-items: center; height: 2.35rem; padding: 3px .85rem 0; border-radius: 4px; background: var(--felt); color: var(--letter); text-decoration: none; font-family: var(--display); font-stretch: 80%; font-weight: 600; font-size: 1.02rem; letter-spacing: .05em; text-transform: uppercase; box-shadow: 0 0 0 2px #a9b2bc, 0 3px 0 2px rgba(23,33,47,.12); transition: transform .15s, color .15s; }
+.index a:hover { color: var(--today); transform: translateY(-2px); }
+.index a:focus-visible { outline-color: var(--ink); }
 .board-note { margin-top: 1.1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; color: var(--slate); font-size: .98rem; }
 @media (max-width: 640px) {
   .board { --fs: clamp(15px, 4.6vw, 22px); --row: clamp(28px, 8vw, 38px); }
@@ -108,6 +118,8 @@ a.row.today:hover .ch { color: #ffe489; }
 
 @media (prefers-reduced-motion: no-preference) {
   .js .ch { animation: snap .55s cubic-bezier(.2, 1.6, .4, 1) both; animation-delay: var(--d, 0ms); }
+  .js .ch.out { animation: fall .42s cubic-bezier(.5, 0, .9, .4) both; animation-delay: var(--o, 0ms); }
+  @keyframes fall { from { opacity: 1; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); } to { opacity: 0; transform: translateY(.9em) rotate(calc(var(--r, 0deg) * 9 + 14deg)); } }
   .js .leader { animation: dots .5s ease-out both; animation-delay: var(--d, 0ms); }
   @keyframes dots { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: .9; clip-path: inset(0 0 0 0); } }
   @keyframes snap {
@@ -224,28 +236,20 @@ footer p { max-width: 62ch; }
     <div class="wrap">
       <div class="hero-text">
         <h1 id="hero-title">Every Troy club website in one place.</h1>
-        <p>Find a club, see the day and room it meets in, and open its site to check in, sign up or follow along.</p>
+        <p>Find a club, see where it meets, and open its site to check in, sign up or follow along.</p>
       </div>
 
       <div class="board-stage" id="board">
-        <div class="board">
+        <div class="board" id="marquee-board">
           <div class="felt">
             <div class="rows" id="rows" aria-hidden="true"></div>
           </div>
         </div>
       </div>
-      <ul class="sr" aria-label="Club meeting directory">
-        <li>Monday: Anime Club, every Monday at lunch, Room 910</li>
-        <li>Monday: Troy Learning League, every other Monday at lunch, Room 527</li>
-        <li>Tuesday: Chinese Culture Club, every other Tuesday at lunch, Room 324</li>
-        <li>Tuesday: Troy Car Club, every other Tuesday, Room W1</li>
-        <li>Wednesday: VSA, every other Wednesday at lunch, Room 412</li>
-        <li>Friday: Leo Club, 1st and 3rd Fridays at lunch, Room W17</li>
-      </ul>
-      <div class="board-note">
-        <p>Clubs meeting today are in yellow. Rooms can change, so check each club's Instagram.</p>
-        <p>The Science Club meets online every week.</p>
-      </div>
+      <nav class="index" aria-labelledby="index-title">
+        <h2 id="index-title">Jump to a club</h2>
+        <ul id="index-list"></ul>
+      </nav>
     </div>
   </section>
 
@@ -266,23 +270,7 @@ footer p { max-width: 62ch; }
             <div class="plaque"><span class="plate">910</span><div><h3>Anime Club</h3><p class="who">THS Anime Club</p></div></div>
             <p class="what">Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.</p>
             <p class="when">Every Monday, lunch</p>
-            <div class="links"><a class="btn" href="https://troy-anime-club.web.app">Visit site</a><a href="https://www.instagram.com/troyanimeclub/">Instagram</a><a href="https://discord.gg/r3bC8EHh">Discord</a></div>
-          </article>
-
-          <article class="door" id="tll">
-            <a class="screen" href="https://troy-learning-league.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-learning-league.web.app</span></span><img src="img/tll.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
-            <div class="plaque"><span class="plate">527</span><div><h3>Troy Learning League</h3><p class="who">Peer tutoring</p></div></div>
-            <p class="what">Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.</p>
-            <p class="when">Every other Monday, lunch</p>
-            <div class="links"><a class="btn" href="https://troy-learning-league.web.app">Visit site</a><a href="https://www.instagram.com/troy.learning.league/">Instagram</a></div>
-          </article>
-
-          <article class="door" id="chinese">
-            <a class="screen" href="https://troy-chinese-culture-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-chinese-culture-club.web.app</span></span><img src="img/chinese.webp" width="960" height="2428" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
-            <div class="plaque"><span class="plate">324</span><div><h3>Chinese Culture Club</h3><p class="who">中国文化社</p></div></div>
-            <p class="what">Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.</p>
-            <p class="when">Every other Tuesday, lunch</p>
-            <div class="links"><a class="btn" href="https://troy-chinese-culture-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhs_ccc/">Instagram</a></div>
+            <div class="links"><a class="btn" href="https://troy-anime-club.web.app">Visit site</a><a href="https://www.instagram.com/troyanimeclub/">Instagram</a><a href="https://discord.gg/4hMCYW8b3T">Discord</a></div>
           </article>
 
           <article class="door" id="carclub">
@@ -293,12 +281,36 @@ footer p { max-width: 62ch; }
             <div class="links"><a class="btn" href="https://troy-car-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighcarclub/">Instagram</a></div>
           </article>
 
-          <article class="door" id="vsa">
-            <a class="screen" href="https://troy-vsa.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-vsa.web.app</span></span><img src="img/vsa.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
-            <div class="plaque"><span class="plate">412</span><div><h3>VSA</h3><p class="who">Vietnamese Student Association</p></div></div>
-            <p class="what">Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.</p>
-            <p class="when">Every other Wednesday, lunch</p>
-            <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
+          <article class="door" id="chinese">
+            <a class="screen" href="https://troy-chinese-culture-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-chinese-culture-club.web.app</span></span><img src="img/chinese.webp" width="960" height="2428" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">324</span><div><h3>Chinese Culture Club</h3><p class="who">中国文化社</p></div></div>
+            <p class="what">Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.</p>
+            <p class="when">Every other Tuesday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-chinese-culture-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhs_ccc/">Instagram</a></div>
+          </article>
+
+          <article class="door" id="geo">
+            <a class="screen" href="https://troy-geoguessr-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-geoguessr-club.web.app</span></span><img src="img/geo.webp" width="960" height="2647" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">322</span><div><h3>GeoGuessr Club</h3><p class="who">THS GeoGuessr Club</p></div></div>
+            <p class="what">Play GeoGuessr together, compete in tournaments and get better every week. No experience needed.</p>
+            <p class="when">Thursdays</p>
+            <div class="links"><a class="btn" href="https://troy-geoguessr-club.web.app">Visit site</a><a href="https://www.instagram.com/geoguessr_ths/">Instagram</a></div>
+          </article>
+
+          <article class="door" id="key">
+            <a class="screen" href="https://troy-key-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-key-club.web.app</span></span><img src="img/key.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">517</span><div><h3>Key Club</h3><p class="who">Student-led service club</p></div></div>
+            <p class="what">Volunteer, earn service hours and meet Key Clubbers from across Division 30 North.</p>
+            <p class="when">Lunch meetings, dates on Google Classroom</p>
+            <div class="links"><a class="btn" href="https://troy-key-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighkeyclub/">Instagram</a><a href="https://linktr.ee/troykeyclub">Links</a></div>
+          </article>
+
+          <article class="door" id="tll">
+            <a class="screen" href="https://troy-learning-league.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-learning-league.web.app</span></span><img src="img/tll.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">527</span><div><h3>Troy Learning League</h3><p class="who">Peer tutoring</p></div></div>
+            <p class="what">Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.</p>
+            <p class="when">Every other Monday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-learning-league.web.app">Visit site</a><a href="https://www.instagram.com/troy.learning.league/">Instagram</a></div>
           </article>
 
           <article class="door" id="leo">
@@ -316,9 +328,17 @@ footer p { max-width: 62ch; }
             <div class="links"><a class="btn" href="https://troy-high-llm.web.app">Open portal</a></div>
           </article>
 
+          <article class="door" id="vsa">
+            <a class="screen" href="https://troy-vsa.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-vsa.web.app</span></span><img src="img/vsa.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">412</span><div><h3>VSA</h3><p class="who">Vietnamese Student Association</p></div></div>
+            <p class="what">Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.</p>
+            <p class="when">Every other Wednesday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
+          </article>
+
           <div class="divider">
             <h3>Beyond Troy High.</h3>
-            <p>Sites we built for a science nonprofit, an arts school group and a crystal studio.</p>
+            <p>Sites we built for a science nonprofit and a student group at the Orange County School of the Arts.</p>
           </div>
 
           <article class="door" id="science">
@@ -334,13 +354,6 @@ footer p { max-width: 62ch; }
             <div class="plaque"><span class="plate word">OCSA</span><div><h3>Roots &amp; Roads</h3><p class="who">Orange County School of the Arts</p></div></div>
             <p class="what">A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.</p>
             <div class="links"><a class="btn" href="https://troy-roots-and-roads.web.app">Visit site</a><a href="https://www.instagram.com/roots.nroads/">Instagram</a></div>
-          </article>
-
-          <article class="door" id="superdw">
-            <a class="screen" href="https://superdw-crystals.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>superdw-crystals.web.app</span></span><img src="img/superdw.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
-            <div class="plaque"><span class="plate word">SHOP</span><div><h3>SUPER DW</h3><p class="who">Crystal and bracelet studio</p></div></div>
-            <p class="what">Daphne's natural crystals and hand-strung bracelets, with a crystal chart and a custom bracelet designer.</p>
-            <div class="links"><a class="btn" href="https://superdw-crystals.web.app">Visit site</a><a href="https://www.instagram.com/deffning/">Instagram</a></div>
           </article>
 
         </div>
@@ -384,14 +397,19 @@ footer p { max-width: 62ch; }
   var today = new Date().getDay();
   var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-  // Letterboard rows: [day index, name, room, anchor]
+  // Marquee: every club on the page, in hallway order: [board name, detail line, anchor, index label]
   var clubs = [
-    [1, 'ANIME CLUB', '910', 'anime'],
-    [1, 'LEARNING LEAGUE', '527', 'tll'],
-    [2, 'CHINESE CULTURE CLUB', '324', 'chinese'],
-    [2, 'CAR CLUB', 'W1', 'carclub'],
-    [3, 'VSA', '412', 'vsa'],
-    [5, 'LEO CLUB', 'W17', 'leo']
+    ['ANIME CLUB', 'RM 910 / MONDAYS', 'anime', 'Anime Club'],
+    ['CAR CLUB', 'RM W1 / TUESDAYS', 'carclub', 'Car Club'],
+    ['CHINESE CULTURE CLUB', 'RM 324 / TUESDAYS', 'chinese', 'Chinese Culture Club'],
+    ['GEOGUESSR CLUB', 'RM 322 / THURSDAYS', 'geo', 'GeoGuessr Club'],
+    ['KEY CLUB', 'RM 517 / LUNCH', 'key', 'Key Club'],
+    ['LEARNING LEAGUE', 'RM 527 / MONDAYS', 'tll', 'Learning League'],
+    ['LEO CLUB', 'RM W17 / FRIDAYS', 'leo', 'Leo Club'],
+    ['LLM CLUB', 'MEMBER PORTAL', 'llm', 'LLM Club'],
+    ['VSA', 'RM 412 / WEDNESDAYS', 'vsa', 'VSA'],
+    ['THE SCIENCE CLUB', 'ONLINE / WEEKLY', 'science', 'The Science Club'],
+    ['ROOTS & ROADS', 'OCSA', 'roots', 'Roots & Roads']
   ];
 
   // Deterministic jitter so letters sit a little crooked, like real ones.
@@ -421,9 +439,14 @@ footer p { max-width: 62ch; }
       var row;
       if (r.type === 'title') { row = document.createElement('div'); row.className = 'row title'; row.appendChild(cell('', r.text, base)); }
       else if (r.type === 'blank') { row = document.createElement('div'); row.className = 'row blank'; }
+      else if (r.type === 'big' || r.type === 'sub') {
+        row = document.createElement(r.href ? 'a' : 'div'); row.className = 'row ' + r.type;
+        if (r.href) { row.href = r.href; row.tabIndex = -1; }
+        row.appendChild(cell('', r.text, base));
+      }
       else {
         row = document.createElement(r.href ? 'a' : 'div');
-        row.className = 'row' + (r.today ? ' today' : '');
+        row.className = 'row';
         if (r.href) { row.href = r.href; row.tabIndex = -1; }
         row.appendChild(cell('day', r.day, base));
         var nm = cell('name', r.name, base);
@@ -435,13 +458,23 @@ footer p { max-width: 62ch; }
     });
   }
 
-  var boardRows = [{ type: 'title', text: 'TROY HIGH CLUB DIRECTORY' }, { type: 'blank' }];
-  clubs.forEach(function (c) {
-    boardRows.push({ day: DAYS[c[0]], name: c[1], room: 'RM ' + c[2], href: '#' + c[3], today: c[0] === today });
-  });
-  boardRows.push({ type: 'blank' });
-  boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
+  var boardRows = [
+    { type: 'title', text: 'NOW SHOWING' },
+    { type: 'blank' },
+    { type: 'big', text: reduce ? clubs.length + ' CLUB SITES' : clubs[0][0], href: reduce ? '#hall' : '#' + clubs[0][2] },
+    { type: 'sub', text: reduce ? 'ON THIS WALL' : clubs[0][1] },
+    { type: 'blank' },
+    { type: 'title', text: 'PRESENTED BY' },
+    { type: 'title', text: 'TROY WEB DEV CLUB' }
+  ];
   buildBoard(document.getElementById('rows'), boardRows, 250);
+
+  // Jump-to index
+  var list = document.getElementById('index-list');
+  clubs.forEach(function (c) {
+    var li = document.createElement('li'), a = document.createElement('a');
+    a.href = '#' + c[2]; a.textContent = c[3]; li.appendChild(a); list.appendChild(li);
+  });
 
   // Second board: letters snap in when it scrolls into view
   var nextRows = document.getElementById('rows-next');
@@ -537,6 +570,31 @@ footer p { max-width: 62ch; }
     var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.closest('.door').classList.toggle('tour', e.intersectionRatio > .75); }); }, { threshold: [0, .75, 1] });
     track.querySelectorAll('.screen').forEach(function (s) { tio.observe(s); });
   }
+
+  // Marquee cycling: old letters fall out, the next club's letters snap in
+  var bigRow = document.querySelector('#rows .row.big'), subRow = document.querySelector('#rows .row.sub');
+  var mBoard = document.getElementById('marquee-board');
+  var mi = 0, paused = false, visible = true;
+  function swap(row, text, delay) {
+    var c = row.firstChild, old = c.querySelectorAll('.ch');
+    old.forEach(function (s, i) { s.style.setProperty('--o', (i * 18) + 'ms'); s.classList.add('out'); });
+    setTimeout(function () { c.textContent = ''; n = 0; c.appendChild(letters(text, 0)); }, 420 + old.length * 18 + delay);
+  }
+  function next() {
+    if (paused || !visible || document.hidden) { setTimeout(next, 800); return; }
+    mi = (mi + 1) % clubs.length;
+    swap(bigRow, clubs[mi][0], 0); swap(subRow, clubs[mi][1], 120);
+    bigRow.href = '#' + clubs[mi][2];
+    setTimeout(next, 3600);
+  }
+  if (!reduce && bigRow) {
+    setTimeout(next, 4200);
+    mBoard.addEventListener('mouseenter', function () { paused = true; });
+    mBoard.addEventListener('mouseleave', function () { paused = false; });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(mBoard);
+  }
+  if (bigRow) bigRow.addEventListener('click', function (e) { e.preventDefault(); goTo(bigRow.getAttribute('href').slice(1)); });
+  list.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); goTo(a.getAttribute('href').slice(1)); } });
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 })();

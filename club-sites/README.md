@@ -82,9 +82,10 @@ Anime Club (`sites/anime`), Chinese Culture Club (`sites/chinese`), Leo Club (`s
 | Leo Club | https://troy-leo-club.web.app |
 | Roots & Roads | https://troy-roots-and-roads.web.app |
 | The Science Club | https://troy-science-club.web.app |
+| Key Club | https://troy-key-club.web.app |
 | Troy Clubs (hub of all sites) | https://troy-clubs.web.app |
 | THS GeoGuessr Club | https://troy-geoguessr-club.web.app |
 
 To add another static site: put it in `sites/<name>/index.html`, add `<name>` to `staticSites` in `build.mjs`, copy one of these targets in `firebase.json`, add the target in `.firebaserc`, and add the hosting site name to the list in `.github/workflows/deploy-club-sites.yml`.
 
-The hub (`sites/hub`) lists every site with its meeting day and room. When a club's schedule changes or a new site goes live, update its card and the week board in `sites/hub/index.html`. Card screenshots are in `sites/hub/img/` (1152×720 WebP).
+The hub (`sites/hub`) lists every club site. To add a club: add a card (`<article class="door">`) in the hallway and a line to the `clubs` list in the script (it drives the NOW SHOWING letterboard and the jump-to index). Card screenshots are full-page captures in `sites/hub/img/` (960px wide WebP).
