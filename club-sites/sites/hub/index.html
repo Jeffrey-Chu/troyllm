@@ -7,329 +7,365 @@
 <meta name="description" content="Find Troy High clubs, see when and where they meet, and open their websites. Made by Troy Web Development Club.">
 <meta property="og:title" content="Troy Clubs">
 <meta property="og:description" content="Every Troy High club website in one place, with meeting days and rooms.">
-<meta name="theme-color" content="#14213b">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2314213b'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='800' font-size='15' fill='%23fff' text-anchor='middle'%3ETC%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#cfd7e1">
+<link rel="preload" href="fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23222528'/%3E%3Ctext x='16' y='22' font-family='Arial Narrow,Arial' font-weight='700' font-size='15' fill='%23f2f1ec' text-anchor='middle'%3ETC%3C/text%3E%3C/svg%3E">
 <style>
-@font-face { font-family: Overpass; font-weight: 400; font-display: swap; src: url(fonts/overpass-400.woff2) format('woff2'); }
-@font-face { font-family: Overpass; font-weight: 600; font-display: swap; src: url(fonts/overpass-600.woff2) format('woff2'); }
-@font-face { font-family: Overpass; font-weight: 800; font-display: swap; src: url(fonts/overpass-800.woff2) format('woff2'); }
+@font-face { font-family: Archivo; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(fonts/archivo-wdth.woff2) format('woff2'); }
+@font-face { font-family: Atkinson; font-weight: 400; font-display: swap; src: url(fonts/atkinson-400.woff2) format('woff2'); }
+@font-face { font-family: Atkinson; font-weight: 700; font-display: swap; src: url(fonts/atkinson-700.woff2) format('woff2'); }
 
 :root {
-  --paper: #f3f5f8;
-  --surface: #ffffff;
-  --ink: #14213b;
-  --slate: #56627a;
-  --rule: #d8dee8;
-  --sign: #1f4fbf;
-  --today: #f2b33d;
-  --today-wash: #fdf3df;
-  --radius: 10px;
-  --wrap: 1180px;
+  --wall: #cfd7e1;
+  --ink: #17212f;
+  --slate: #4b5768;
+  --felt: #222528;
+  --letter: #f2f1ec;
+  --today: #ffcf3a;
+  --link: #1d4fc4;
+  --paper: #f4f6f8;
+  --wrap: 1200px;
+  --display: Archivo, "Arial Narrow", Arial, sans-serif;
+  --text: Atkinson, Verdana, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 76px; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body {
-  margin: 0; background: var(--paper); color: var(--ink);
-  font-family: Overpass, "Helvetica Neue", Arial, sans-serif;
-  font-size: 1.0625rem; line-height: 1.55; font-feature-settings: "tnum" 1;
-}
-img { display: block; max-width: 100%; height: auto; }
-a { color: var(--sign); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; color: var(--ink); background: var(--wall); font-family: var(--text); font-size: 1.0625rem; line-height: 1.55; }
+img { display: block; max-width: 100%; }
+a { color: var(--link); text-underline-offset: .2em; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 3px solid var(--sign); outline-offset: 3px; border-radius: 4px; }
-h1, h2, h3 { margin: 0; line-height: 1.1; letter-spacing: -.01em; }
-p { margin: 0; }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, p { margin: 0; }
 .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
-.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: .5rem .8rem; border-radius: 6px; z-index: 10; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 20; background: var(--ink); color: #fff; padding: .5rem .8rem; border-radius: 6px; }
 .skip:focus { left: 8px; }
 
+/* Painted cinderblock wall */
+.wall {
+  background-color: var(--wall);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.16'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.04'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Crect x='2' y='2' width='236' height='56' rx='3'/%3E%3Crect x='-118' y='62' width='236' height='56' rx='3'/%3E%3Crect x='122' y='62' width='236' height='56' rx='3'/%3E%3C/g%3E%3Cg fill='%2330404f' fill-opacity='.13'%3E%3Crect x='0' y='58' width='240' height='4'/%3E%3Crect x='0' y='118' width='240' height='2'/%3E%3Crect x='0' y='0' width='240' height='2'/%3E%3Crect x='238' y='0' width='4' height='60'/%3E%3Crect x='118' y='60' width='4' height='60'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%);
+  background-size: 240px 120px, 100% 100%;
+}
+
 /* Header */
-.top { position: sticky; top: 0; z-index: 5; background: rgba(243,245,248,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 1rem; }
-.brand { display: flex; align-items: center; gap: .6rem; color: var(--ink); text-decoration: none; font-weight: 800; font-size: 1.15rem; }
-.brand-plate { display: inline-grid; place-items: center; width: 34px; height: 26px; border-radius: 4px; background: var(--ink); color: #fff; font-size: .8rem; letter-spacing: .02em; }
-.top nav { display: flex; gap: 1.6rem; }
-.top nav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: .98rem; }
-.top nav a:hover { color: var(--sign); }
-@media (max-width: 640px) { .top nav { gap: 1rem; } .top nav a:nth-child(3) { display: none; } }
+.top { position: relative; z-index: 3; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 76px; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--ink); font-family: var(--display); font-stretch: 85%; font-weight: 800; font-size: 1.3rem; letter-spacing: .01em; }
+.brand b { display: inline-grid; place-items: center; height: 30px; padding: 2px 8px 0; border-radius: 3px; background: var(--felt); color: var(--letter); font-stretch: 75%; font-weight: 700; font-size: 1rem; letter-spacing: .06em; box-shadow: 0 0 0 2px #aab3bd, 0 2px 0 3px rgba(0,0,0,.12); }
+.top nav { display: flex; gap: 1.75rem; }
+.top nav a { color: var(--ink); text-decoration: none; font-weight: 700; }
+.top nav a:hover { color: var(--link); }
+@media (max-width: 600px) { .top nav a:last-child { display: none; } .top nav { gap: 1.1rem; } }
 
-/* Intro */
-.intro { padding: clamp(2.75rem, 6vw, 4.5rem) 0 2.5rem; }
-.intro h1 { font-size: clamp(2.6rem, 7.4vw, 6rem); font-weight: 800; max-width: 18ch; letter-spacing: -.025em; text-wrap: balance; }
-.intro p { margin-top: 1.25rem; max-width: 52ch; font-size: clamp(1.1rem, 1.6vw, 1.28rem); color: var(--slate); }
-.intro-count { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; font-weight: 600; }
-.intro-count span { color: var(--slate); font-weight: 400; }
+/* Hero */
+.hero { padding: clamp(1rem, 3vw, 2.25rem) 0 clamp(3.5rem, 7vw, 6rem); overflow: hidden; }
+.hero-text { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.hero h1 { font-family: var(--display); font-weight: 800; font-stretch: 72%; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: .92; letter-spacing: -.01em; max-width: 20ch; text-wrap: balance; }
+.hero-text p { max-width: 30ch; font-size: 1.15rem; color: var(--slate); }
 
-/* Room plate */
+/* The letterboard */
+.board-stage { perspective: 1400px; }
+.board {
+  --row: clamp(30px, 4.4vw, 54px);
+  --fs: clamp(18px, 2.85vw, 36px);
+  position: relative; padding: clamp(12px, 1.6vw, 18px); border-radius: 8px;
+  background: linear-gradient(135deg, #f4f6f8 0%, #a7b0ba 18%, #eef1f4 34%, #8f99a4 52%, #e7ebef 70%, #9aa4ae 86%, #f1f3f5 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 40px 60px -30px rgba(23,33,47,.55), 0 18px 24px -12px rgba(23,33,47,.35), 0 0 0 1px rgba(23,33,47,.18);
+  transform-origin: 50% 0%;
+}
+.felt {
+  position: relative; overflow: hidden; border-radius: 3px;
+  padding: calc(var(--row) * .6) clamp(14px, 3vw, 40px) calc(var(--row) * .55);
+  background-color: var(--felt);
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0) 0, rgba(255,255,255,0) calc(var(--row) - 3px), rgba(0,0,0,.6) calc(var(--row) - 3px), rgba(0,0,0,.6) calc(var(--row) - 1px), rgba(255,255,255,.07) calc(var(--row) - 1px), rgba(255,255,255,.07) var(--row)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-position: 0 calc(var(--row) * .6 - 2px), 0 0;
+  box-shadow: inset 0 6px 18px rgba(0,0,0,.6), inset 0 0 0 1px rgba(0,0,0,.5);
+}
+.felt::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 38%); }
+.rows { position: relative; }
+.row { display: grid; grid-template-columns: 4.2ch 1fr auto; align-items: end; column-gap: 1.2ch; height: var(--row); font-family: var(--display); font-stretch: 78%; font-weight: 600; font-size: var(--fs); line-height: 1; color: var(--letter); text-decoration: none; }
+.row.title { grid-template-columns: 1fr; justify-items: center; }
+.row.blank { height: calc(var(--row) * .5); }
+.row .cell { display: flex; align-items: end; white-space: nowrap; padding-bottom: calc(var(--row) * .14); }
+.row .name { min-width: 0; overflow: hidden; }
+.leader { flex: 1; min-width: 1ch; height: .22em; margin: 0 .35em .08em; align-self: end;
+  background: radial-gradient(circle at 50% 50%, var(--letter) 0 32%, transparent 36%) 0 0 / .62em .22em space no-repeat; opacity: .9; }
+.row.today { color: var(--today); }
+.row.today .leader { background-image: radial-gradient(circle at 50% 50%, var(--today) 0 32%, transparent 36%); }
+a.row:hover .ch { color: #fff; }
+a.row.today:hover .ch { color: #ffe489; }
+.ch { display: inline-block; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.55); min-width: .28em; }
+.board-note { margin-top: 1.1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; color: var(--slate); font-size: .98rem; }
+@media (max-width: 640px) {
+  .board { --fs: clamp(15px, 4.6vw, 22px); --row: clamp(28px, 8vw, 38px); }
+  .row { grid-template-columns: 3.4ch 1fr auto; column-gap: .9ch; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .ch { animation: snap .55s cubic-bezier(.2, 1.6, .4, 1) both; animation-delay: var(--d, 0ms); }
+  .js .leader { animation: dots .5s ease-out both; animation-delay: var(--d, 0ms); }
+  @keyframes dots { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: .9; clip-path: inset(0 0 0 0); } }
+  @keyframes snap {
+    0% { opacity: 0; transform: translateY(calc(var(--y, 0px) - .55em)) rotate(calc(var(--r, 0deg) * 6)); }
+    60% { opacity: 1; }
+    100% { opacity: 1; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); }
+  }
+  @supports (animation-timeline: view()) {
+    .hero .board { animation: recede linear both; animation-timeline: view(); animation-range: exit 5% exit 95%; }
+    @keyframes recede { to { transform: rotateX(28deg) scale(.86) translateY(4%); filter: brightness(.8); } }
+  }
+}
+
+/* Hallway */
+.hall { position: relative; background: var(--paper); border-top: 6px solid var(--ink); }
+.hall-sticky { position: relative; }
+.hall-head { padding: clamp(3rem, 6vw, 4.5rem) 0 2rem; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; }
+.hall-head h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.4rem, 5.6vw, 4.6rem); line-height: .92; }
+.hall-head p { max-width: 38ch; color: var(--slate); }
+.progress { display: none; }
+.track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; padding-bottom: clamp(3.5rem, 7vw, 5.5rem); }
+@media (max-width: 760px) { .track { grid-template-columns: 1fr; } }
+
+.door { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 24px; }
+.screen {
+  text-decoration: none;
+  --pan: 0px; --dur: 6s;
+  position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10px;
+  background: #e5e9ee; border: 1px solid rgba(23,33,47,.14);
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 40px -28px rgba(23,33,47,.6);
+}
+.url { position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 34px; display: flex; align-items: center; padding: 0 12px; background: rgba(245,247,249,.94); border-bottom: 1px solid rgba(23,33,47,.1); backdrop-filter: blur(6px); }
+.url span { display: block; width: 100%; max-width: 360px; margin-inline: auto; padding: 3px 12px 2px; border-radius: 999px; background: #e3e8ee; color: var(--slate); font-size: .8rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.screen img { position: absolute; top: 34px; left: 0; width: 100%; height: auto; transform: translateY(0); transition: transform 1.1s cubic-bezier(.5, 0, .2, 1); will-change: transform; }
+.door:hover .screen img, .door:focus-within .screen img, .door.tour .screen img { transform: translateY(calc(-1 * var(--pan))); transition-duration: var(--dur); transition-timing-function: cubic-bezier(.45, 0, .55, 1); }
+@media (prefers-reduced-motion: reduce) { .door:hover .screen img, .door:focus-within .screen img, .door.tour .screen img { transform: none; } }
+.on-touch { display: none; }
+@media (hover: none) { .on-touch { display: inline; } .on-hover { display: none; } }
+.screen .hint { position: absolute; right: 12px; bottom: 12px; z-index: 2; padding: 4px 10px 3px; border-radius: 999px; background: rgba(23,33,47,.82); color: #fff; font-size: .78rem; opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; }
+.door:hover .screen.pans .hint { opacity: 1; transform: none; }
+.screen.type { display: grid; place-items: center; background: var(--felt); }
+.screen.type .mini { font-family: var(--display); font-stretch: 75%; font-weight: 600; color: var(--letter); font-size: clamp(2rem, 4.4vw, 3.4rem); letter-spacing: .04em; text-align: center; line-height: 1.1; padding-top: 34px; text-shadow: 0 2px 3px rgba(0,0,0,.55); }
+.screen.type .mini small { display: block; font-size: .42em; letter-spacing: .12em; color: #b9bec4; margin-top: .6em; }
+
+.plaque { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; }
 .plate {
-  display: inline-grid; place-items: center; min-width: 3.1em; height: 1.8em; padding: .2em .5em 0; line-height: 1;
-  background: var(--ink); color: #fff; border-radius: 4px; font-weight: 800; font-size: .92rem;
-  letter-spacing: .03em; box-shadow: inset 0 0 0 2px var(--ink), inset 0 0 0 3px rgba(255,255,255,.22); flex: none;
+  display: inline-grid; place-items: center; flex: none; min-width: 4.1rem; height: 2.6rem; padding: 3px .7rem 0;
+  border-radius: 4px; background: var(--felt); color: var(--letter);
+  font-family: var(--display); font-stretch: 80%; font-weight: 700; font-size: 1.35rem; letter-spacing: .05em; line-height: 1;
+  box-shadow: 0 0 0 2px #a9b2bc, 0 0 0 3px rgba(23,33,47,.15), 0 3px 0 3px rgba(23,33,47,.1);
 }
+.plate.word { font-size: 1rem; letter-spacing: .08em; }
+.door h3 { font-family: var(--display); font-stretch: 76%; font-weight: 800; font-size: clamp(1.8rem, 2.8vw, 2.35rem); line-height: 1; }
+.door .who { color: var(--slate); font-size: .95rem; margin-top: .25rem; }
+.door .what { margin-top: .9rem; max-width: 48ch; }
+.door .when { margin-top: .55rem; font-weight: 700; }
+.door .links { margin-top: auto; padding-top: 1.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.35rem; }
+.btn { display: inline-flex; align-items: center; height: 2.75rem; padding: 2px 1.15rem 0; border-radius: 7px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 700; }
+.btn:hover { background: var(--link); }
+.links a:not(.btn) { font-weight: 700; }
 
-/* Week board */
-.board { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
-.board-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.board-head h2 { font-size: 1.5rem; font-weight: 800; }
-.board-head p { color: var(--slate); font-size: .98rem; }
-.week { display: grid; grid-template-columns: repeat(5, 1fr); background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
-.day { padding: 1.1rem 1.1rem 1.35rem; border-left: 1px solid var(--rule); min-height: 210px; }
-.day:first-child { border-left: 0; }
-.day h3 { font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-bottom: .8rem; margin-bottom: .9rem; border-bottom: 1px solid var(--rule); }
-.day h3 small { font-size: .78rem; font-weight: 600; color: var(--ink); background: var(--today); padding: .15rem .45rem 0; border-radius: 3px; visibility: hidden; }
-.day.is-today { background: var(--today-wash); }
-.day.is-today h3 { border-bottom-color: var(--today); }
-.day.is-today h3 small { visibility: visible; }
-.day ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .85rem; }
-.day li a { display: flex; gap: .7rem; align-items: flex-start; text-decoration: none; color: var(--ink); }
-.day li a:hover strong { color: var(--sign); text-decoration: underline; text-underline-offset: .18em; }
-.day li strong { display: block; font-weight: 600; line-height: 1.25; }
-.day li .note { display: block; font-size: .88rem; color: var(--slate); line-height: 1.35; margin-top: .15rem; }
-.day .none { color: var(--slate); font-size: .95rem; }
-.board-foot { margin-top: .9rem; color: var(--slate); font-size: .95rem; }
-@media (max-width: 860px) {
-  .week { grid-template-columns: 1fr; }
-  .day { border-left: 0; border-top: 1px solid var(--rule); min-height: 0; display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: 1rem 1.1rem; }
-  .day:first-child { border-top: 0; }
-  .day h3 { border: 0; padding: .3rem 0 0; margin: 0; flex-direction: column; align-items: flex-start; justify-content: flex-start; align-self: start; }
-}
+.divider { display: flex; flex-direction: column; justify-content: center; gap: 1rem; padding: 2rem 0; grid-column: 1 / -1; border-top: 1px solid rgba(23,33,47,.15); }
+.divider h3 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .95; }
+.divider p { color: var(--slate); max-width: 40ch; }
 
-/* Club grid */
-.clubs { padding: clamp(3rem, 6vw, 4.5rem) 0; background: var(--surface); border-block: 1px solid var(--rule); }
-.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
-.section-head h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: -.02em; }
-.section-head p { color: var(--slate); max-width: 46ch; }
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.75rem 2rem; }
-@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
-.club { display: flex; flex-direction: column; scroll-margin-top: 90px; }
-.club:target .shot { outline: 3px solid var(--today); outline-offset: 4px; }
-.shot { display: block; aspect-ratio: 16 / 10; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); background: var(--paper); }
-.shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .35s ease; }
-.shot:hover img { transform: scale(1.025); }
-@media (prefers-reduced-motion: reduce) { .shot img { transition: none; } .shot:hover img { transform: none; } }
-.shot.type { display: grid; place-items: center; background: var(--ink); color: #fff; }
-.shot.type span { font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.6rem); letter-spacing: -.03em; line-height: 1; padding-top: .12em; }
-.club h3 { margin-top: 1.15rem; font-size: 1.32rem; font-weight: 800; }
-.club .who { margin-top: .2rem; color: var(--slate); font-size: .92rem; }
-.club .what { margin-top: .6rem; max-width: 46ch; }
-.club .when { margin-top: .95rem; display: flex; align-items: center; gap: .7rem; font-size: .95rem; font-weight: 600; }
-.club .when.online .plate { background: var(--surface); color: var(--ink); }
-.club .links { margin-top: auto; padding-top: 1.15rem; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; align-items: center; }
-.btn { display: inline-flex; align-items: center; height: 2.6rem; padding: .2rem 1.05rem 0; border-radius: 7px; background: var(--sign); color: #fff; font-weight: 600; text-decoration: none; }
-.btn:hover { background: #193f9a; }
-.links a:not(.btn) { font-weight: 600; font-size: .98rem; }
-.club.wide { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 0 2rem; align-items: center; padding-top: .5rem; }
-.club.wide .shot { aspect-ratio: 16 / 7; grid-row: 1 / 6; }
-.club.wide h3 { margin-top: 0; }
-.club.wide .links { margin-top: 0; }
-@media (max-width: 620px) { .club.wide { grid-template-columns: 1fr; } .club.wide .shot { grid-row: auto; aspect-ratio: 16 / 7; } .club.wide h3 { margin-top: 1.15rem; } }
-.subhead { margin: clamp(3.5rem, 6vw, 4.75rem) 0 1.75rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+/* Pinned horizontal hallway (desktop, motion allowed) */
+.hall.pinned .hall-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
+.hall.pinned .hall-head { padding: clamp(1.5rem, 4vh, 2.75rem) 0 clamp(1rem, 2.5vh, 1.75rem); }
+.hall.pinned .progress { display: block; height: 4px; background: rgba(23,33,47,.12); border-radius: 2px; overflow: hidden; }
+.hall.pinned .progress i { display: block; height: 100%; width: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.hall.pinned .track-outer { flex: 1; min-height: 0; display: flex; align-items: center; }
+.hall.pinned .track { display: flex; gap: clamp(2rem, 3.5vw, 3.5rem); padding: 0 max(1.25rem, calc((100vw - var(--wrap)) / 2)) clamp(1rem, 3vh, 2rem); will-change: transform; transform: translate3d(calc(-1 * var(--x, 0px)), 0, 0); }
+.hall.pinned .door { flex: none; width: clamp(380px, 33vw, 500px); transform: perspective(1500px) rotateY(calc(var(--t, 0) * -16deg)) translateZ(calc(var(--ta, 0) * -70px)); transform-origin: calc(50% - var(--t, 0) * 50%) 50%; }
+.hall.pinned .track-outer { perspective: 1500px; }
+.hall.pinned .screen { aspect-ratio: auto; height: clamp(240px, 42vh, 420px); }
+.hall.pinned .what { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hall.pinned .divider { flex: none; width: clamp(280px, 24vw, 360px); border-top: 0; border-left: 1px solid rgba(23,33,47,.15); padding: 0 0 0 2rem; align-self: stretch; }
+@media (max-height: 760px) { .hall.pinned .what { display: none; } }
 
-/* Get a site */
-.make { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
-.make .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-@media (max-width: 860px) { .make .wrap { grid-template-columns: 1fr; gap: 2rem; } }
-.make h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); font-weight: 800; letter-spacing: -.02em; max-width: 16ch; }
-.make .lede { margin-top: 1rem; color: var(--slate); font-size: 1.15rem; max-width: 44ch; }
-.make .ask { margin-top: 1.5rem; font-weight: 600; }
-.make ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.make li { padding: 1.05rem 0; border-bottom: 1px solid var(--rule); }
-.make li strong { display: block; font-weight: 800; font-size: 1.08rem; }
-.make li span { color: var(--slate); }
+/* Your club next */
+.next { padding: clamp(4rem, 8vw, 6.5rem) 0; }
+.next .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+@media (max-width: 900px) { .next .wrap { grid-template-columns: 1fr; } }
+.next .board { --row: clamp(30px, 3.6vw, 46px); --fs: clamp(18px, 2.3vw, 30px); }
+.next h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.3rem, 5vw, 4rem); line-height: .92; }
+.next .lede { margin-top: 1rem; font-size: 1.15rem; color: var(--slate); max-width: 42ch; }
+.next ul { list-style: none; margin: 1.75rem 0 0; padding: 0; border-top: 1px solid rgba(23,33,47,.2); }
+.next li { padding: .95rem 0; border-bottom: 1px solid rgba(23,33,47,.2); }
+.next li strong { display: block; }
+.next li span { color: var(--slate); }
+.next .ask { margin-top: 1.4rem; font-weight: 700; }
 
-footer { border-top: 1px solid var(--rule); padding: 2rem 0 2.5rem; color: var(--slate); font-size: .93rem; }
+footer { background: var(--ink); color: #c9d1db; padding: 2.25rem 0 2.75rem; font-size: .95rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; }
 footer p { max-width: 62ch; }
 </style>
 </head>
-<body>
-<a class="skip" href="#clubs">Skip to the clubs</a>
+<body class="wall">
+<a class="skip" href="#hall">Skip to the club sites</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="brand-plate" aria-hidden="true">TC</span>Troy Clubs</a>
+    <a class="brand" href="#top"><b aria-hidden="true">TC</b>Troy Clubs</a>
     <nav aria-label="Sections">
-      <a href="#week">This week</a>
-      <a href="#clubs">Clubs</a>
-      <a href="#make">Get a site</a>
+      <a href="#board">Directory</a>
+      <a href="#hall">Club sites</a>
+      <a href="#next">Get a site</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
-  <section class="intro">
+  <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <h1>Every Troy club website in one place.</h1>
-      <p>See what each club does, when it meets and in which room, then open its site to check in, sign up or follow along.</p>
-      <div class="intro-count">
-        <div>7 <span>Troy High clubs</span></div>
-        <div>3 <span>more sites we built</span></div>
+      <div class="hero-text">
+        <h1 id="hero-title">Every Troy club website in one place.</h1>
+        <p>Find a club, see the day and room it meets in, and open its site to check in, sign up or follow along.</p>
+      </div>
+
+      <div class="board-stage" id="board">
+        <div class="board">
+          <div class="felt">
+            <div class="rows" id="rows" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <ul class="sr" aria-label="Club meeting directory">
+        <li>Monday: Anime Club, every Monday at lunch, Room 910</li>
+        <li>Monday: Troy Learning League, every other Monday at lunch, Room 527</li>
+        <li>Tuesday: Chinese Culture Club, every other Tuesday at lunch, Room 324</li>
+        <li>Tuesday: Troy Car Club, every other Tuesday, Room W1</li>
+        <li>Wednesday: VSA, every other Wednesday at lunch, Room 412</li>
+        <li>Friday: Leo Club, 1st and 3rd Fridays at lunch, Room W17</li>
+      </ul>
+      <div class="board-note">
+        <p>Clubs meeting today are in yellow. Rooms can change, so check each club's Instagram.</p>
+        <p>The Science Club meets online every week.</p>
       </div>
     </div>
   </section>
 
-  <section class="board" id="week" aria-labelledby="week-title">
-    <div class="wrap">
-      <div class="board-head">
-        <h2 id="week-title">Where clubs meet this week</h2>
-        <p>Rooms can change. Each club posts updates on its Instagram.</p>
-      </div>
-      <div class="week">
-        <div class="day" data-day="1">
-          <h3>Monday <small>Today</small></h3>
-          <ul>
-            <li><a href="#anime"><span class="plate">910</span><div><strong>Anime Club</strong><span class="note">Every Monday</span></div></a></li>
-            <li><a href="#tll"><span class="plate">527</span><div><strong>Troy Learning League</strong><span class="note">Every other Monday, walk-in tutoring on the rest</span></div></a></li>
-          </ul>
+  <section class="hall" id="hall" aria-labelledby="hall-title">
+    <div class="hall-sticky">
+      <div class="wrap">
+        <div class="hall-head">
+          <h2 id="hall-title">Walk the hall.</h2>
+          <p><span class="on-hover">Hover a site to scroll through it.</span><span class="on-touch">Each site scrolls by as you reach it.</span> Every one was designed and built by Troy Web Development Club.</p>
         </div>
-        <div class="day" data-day="2">
-          <h3>Tuesday <small>Today</small></h3>
-          <ul>
-            <li><a href="#chinese"><span class="plate">324</span><div><strong>Chinese Culture Club</strong><span class="note">Every other Tuesday</span></div></a></li>
-            <li><a href="#carclub"><span class="plate">W1</span><div><strong>Troy Car Club</strong><span class="note">Every other Tuesday</span></div></a></li>
-          </ul>
-        </div>
-        <div class="day" data-day="3">
-          <h3>Wednesday <small>Today</small></h3>
-          <ul>
-            <li><a href="#vsa"><span class="plate">412</span><div><strong>VSA</strong><span class="note">Every other Wednesday</span></div></a></li>
-          </ul>
-        </div>
-        <div class="day" data-day="4">
-          <h3>Thursday <small>Today</small></h3>
-          <p class="none">No club meetings listed.</p>
-        </div>
-        <div class="day" data-day="5">
-          <h3>Friday <small>Today</small></h3>
-          <ul>
-            <li><a href="#leo"><span class="plate">W17</span><div><strong>Leo Club</strong><span class="note">1st and 3rd Friday of the month</span></div></a></li>
-          </ul>
-        </div>
+        <div class="progress" aria-hidden="true"><i></i></div>
       </div>
-      <p class="board-foot">The Science Club meets online every week and is open to students from any school.</p>
-    </div>
-  </section>
+      <div class="track-outer">
+        <div class="track wrap" id="track">
 
-  <section class="clubs" id="clubs" aria-labelledby="clubs-title">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="clubs-title">Troy High clubs</h2>
-        <p>Each site has the club's latest meetings, events and how to join.</p>
-      </div>
+          <article class="door" id="anime">
+            <a class="screen" href="https://troy-anime-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-anime-club.web.app</span></span><img src="img/anime.webp" width="960" height="1320" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">910</span><div><h3>Anime Club</h3><p class="who">THS Anime Club</p></div></div>
+            <p class="what">Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.</p>
+            <p class="when">Every Monday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-anime-club.web.app">Visit site</a><a href="https://www.instagram.com/troyanimeclub/">Instagram</a><a href="https://discord.gg/r3bC8EHh">Discord</a></div>
+          </article>
 
-      <div class="grid">
-        <article class="club" id="vsa">
-          <a class="shot" href="https://troy-vsa.web.app" aria-hidden="true" tabindex="-1"><img src="img/vsa.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>VSA</h3>
-          <p class="who">Vietnamese Student Association</p>
-          <p class="what">Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.</p>
-          <p class="when"><span class="plate">412</span>Every other Wednesday, lunch</p>
-          <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
-        </article>
+          <article class="door" id="tll">
+            <a class="screen" href="https://troy-learning-league.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-learning-league.web.app</span></span><img src="img/tll.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">527</span><div><h3>Troy Learning League</h3><p class="who">Peer tutoring</p></div></div>
+            <p class="what">Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.</p>
+            <p class="when">Every other Monday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-learning-league.web.app">Visit site</a><a href="https://www.instagram.com/troy.learning.league/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="tll">
-          <a class="shot" href="https://troy-learning-league.web.app" aria-hidden="true" tabindex="-1"><img src="img/tll.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Troy Learning League</h3>
-          <p class="who">Peer tutoring</p>
-          <p class="what">Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.</p>
-          <p class="when"><span class="plate">527</span>Every other Monday, lunch</p>
-          <div class="links"><a class="btn" href="https://troy-learning-league.web.app">Visit site</a><a href="https://www.instagram.com/troy.learning.league/">Instagram</a></div>
-        </article>
+          <article class="door" id="chinese">
+            <a class="screen" href="https://troy-chinese-culture-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-chinese-culture-club.web.app</span></span><img src="img/chinese.webp" width="960" height="2428" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">324</span><div><h3>Chinese Culture Club</h3><p class="who">中国文化社</p></div></div>
+            <p class="what">Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.</p>
+            <p class="when">Every other Tuesday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-chinese-culture-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhs_ccc/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="anime">
-          <a class="shot" href="https://troy-anime-club.web.app" aria-hidden="true" tabindex="-1"><img src="img/anime.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Anime Club</h3>
-          <p class="who">THS Anime Club</p>
-          <p class="what">Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.</p>
-          <p class="when"><span class="plate">910</span>Every Monday, lunch</p>
-          <div class="links"><a class="btn" href="https://troy-anime-club.web.app">Visit site</a><a href="https://www.instagram.com/troyanimeclub/">Instagram</a><a href="https://discord.gg/r3bC8EHh">Discord</a></div>
-        </article>
+          <article class="door" id="carclub">
+            <a class="screen" href="https://troy-car-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-car-club.web.app</span></span><img src="img/carclub.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">W1</span><div><h3>Troy Car Club</h3><p class="who">Car culture and maintenance</p></div></div>
+            <p class="what">How cars work, how to look after one, and the history behind them. No car, license or experience needed.</p>
+            <p class="when">Every other Tuesday</p>
+            <div class="links"><a class="btn" href="https://troy-car-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighcarclub/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="chinese">
-          <a class="shot" href="https://troy-chinese-culture-club.web.app" aria-hidden="true" tabindex="-1"><img src="img/chinese.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Chinese Culture Club</h3>
-          <p class="who">中国文化社</p>
-          <p class="what">Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.</p>
-          <p class="when"><span class="plate">324</span>Every other Tuesday, lunch</p>
-          <div class="links"><a class="btn" href="https://troy-chinese-culture-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhs_ccc/">Instagram</a></div>
-        </article>
+          <article class="door" id="vsa">
+            <a class="screen" href="https://troy-vsa.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-vsa.web.app</span></span><img src="img/vsa.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">412</span><div><h3>VSA</h3><p class="who">Vietnamese Student Association</p></div></div>
+            <p class="what">Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.</p>
+            <p class="when">Every other Wednesday, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="carclub">
-          <a class="shot" href="https://troy-car-club.web.app" aria-hidden="true" tabindex="-1"><img src="img/carclub.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Troy Car Club</h3>
-          <p class="who">Car culture and maintenance</p>
-          <p class="what">How cars work, how to look after one, and the history behind them. No car, license or experience needed.</p>
-          <p class="when"><span class="plate">W1</span>Every other Tuesday</p>
-          <div class="links"><a class="btn" href="https://troy-car-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighcarclub/">Instagram</a></div>
-        </article>
+          <article class="door" id="leo">
+            <a class="screen" href="https://troy-leo-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-leo-club.web.app</span></span><img src="img/leo.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate">W17</span><div><h3>Leo Club</h3><p class="who">Lions Clubs International</p></div></div>
+            <p class="what">Volunteer events, Leo competitions, scholarships, and outreach for chronic kidney disease awareness.</p>
+            <p class="when">1st and 3rd Fridays, lunch</p>
+            <div class="links"><a class="btn" href="https://troy-leo-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighleoclub/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="leo">
-          <a class="shot" href="https://troy-leo-club.web.app" aria-hidden="true" tabindex="-1"><img src="img/leo.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Leo Club</h3>
-          <p class="who">Lions Clubs International</p>
-          <p class="what">Volunteer events, Leo competitions, scholarships, and outreach for chronic kidney disease awareness.</p>
-          <p class="when"><span class="plate">W17</span>1st and 3rd Fridays, lunch</p>
-          <div class="links"><a class="btn" href="https://troy-leo-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighleoclub/">Instagram</a></div>
-        </article>
+          <article class="door" id="llm">
+            <a class="screen type" href="https://troy-high-llm.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-high-llm.web.app</span></span><span class="mini">LLM CLUB<small>MEMBER PORTAL</small></span></a>
+            <div class="plaque"><div><h3>LLM Club</h3><p class="who">Member portal</p></div></div>
+            <p class="what">Sign in with Google to request membership. Officers approve members and track points for meetings and assignments.</p>
+            <div class="links"><a class="btn" href="https://troy-high-llm.web.app">Open portal</a></div>
+          </article>
 
-        <article class="club wide" id="llm">
-          <a class="shot type" href="https://troy-high-llm.web.app" aria-hidden="true" tabindex="-1"><span>LLM</span></a>
-          <h3>LLM Club</h3>
-          <p class="who">Member portal</p>
-          <p class="what">Sign in with Google to request membership. Officers approve members and track points for meetings and assignments.</p>
-          <div class="links"><a class="btn" href="https://troy-high-llm.web.app">Open portal</a></div>
-        </article>
-      </div>
+          <div class="divider">
+            <h3>Beyond Troy High.</h3>
+            <p>Sites we built for a science nonprofit, an arts school group and a crystal studio.</p>
+          </div>
 
-      <div class="section-head subhead">
-        <h2>More sites we built</h2>
-        <p>Projects for students and groups beyond Troy's clubs.</p>
-      </div>
+          <article class="door" id="science">
+            <a class="screen" href="https://troy-science-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-science-club.web.app</span></span><img src="img/science.webp" width="960" height="600" alt="" decoding="async"></a>
+            <div class="plaque"><span class="plate word">ONLINE</span><div><h3>The Science Club</h3><p class="who">Nonprofit for middle and high school students</p></div></div>
+            <p class="what">Research groups, national competitions and Science Bowl training, from biology and physics to AI.</p>
+            <p class="when">Online, every week</p>
+            <div class="links"><a class="btn" href="https://troy-science-club.web.app">Visit site</a></div>
+          </article>
 
-      <div class="grid">
-        <article class="club" id="science">
-          <a class="shot" href="https://troy-science-club.web.app" aria-hidden="true" tabindex="-1"><img src="img/science.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>The Science Club</h3>
-          <p class="who">Nonprofit for middle and high school students</p>
-          <p class="what">Research groups, national competitions and Science Bowl training, from biology and physics to AI.</p>
-          <p class="when online"><span class="plate">Web</span>Online, every week</p>
-          <div class="links"><a class="btn" href="https://troy-science-club.web.app">Visit site</a></div>
-        </article>
+          <article class="door" id="roots">
+            <a class="screen" href="https://troy-roots-and-roads.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-roots-and-roads.web.app</span></span><img src="img/roots.webp" width="960" height="2262" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate word">OCSA</span><div><h3>Roots &amp; Roads</h3><p class="who">Orange County School of the Arts</p></div></div>
+            <p class="what">A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.</p>
+            <div class="links"><a class="btn" href="https://troy-roots-and-roads.web.app">Visit site</a><a href="https://www.instagram.com/roots.nroads/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="roots">
-          <a class="shot" href="https://troy-roots-and-roads.web.app" aria-hidden="true" tabindex="-1"><img src="img/roots.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>Roots &amp; Roads</h3>
-          <p class="who">Orange County School of the Arts</p>
-          <p class="what">A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.</p>
-          <div class="links"><a class="btn" href="https://troy-roots-and-roads.web.app">Visit site</a><a href="https://www.instagram.com/roots.nroads/">Instagram</a></div>
-        </article>
+          <article class="door" id="superdw">
+            <a class="screen" href="https://superdw-crystals.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>superdw-crystals.web.app</span></span><img src="img/superdw.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
+            <div class="plaque"><span class="plate word">SHOP</span><div><h3>SUPER DW</h3><p class="who">Crystal and bracelet studio</p></div></div>
+            <p class="what">Daphne's natural crystals and hand-strung bracelets, with a crystal chart and a custom bracelet designer.</p>
+            <div class="links"><a class="btn" href="https://superdw-crystals.web.app">Visit site</a><a href="https://www.instagram.com/deffning/">Instagram</a></div>
+          </article>
 
-        <article class="club" id="superdw">
-          <a class="shot" href="https://superdw-crystals.web.app" aria-hidden="true" tabindex="-1"><img src="img/superdw.webp" width="1152" height="720" alt="" loading="lazy"></a>
-          <h3>SUPER DW</h3>
-          <p class="who">Crystal and bracelet studio</p>
-          <p class="what">Daphne's natural crystals and hand-strung bracelets, with a crystal chart and a custom bracelet designer.</p>
-          <div class="links"><a class="btn" href="https://superdw-crystals.web.app">Visit site</a><a href="https://www.instagram.com/deffning/">Instagram</a></div>
-        </article>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="make" id="make" aria-labelledby="make-title">
+  <section class="next" id="next" aria-labelledby="next-title">
     <div class="wrap">
       <div>
-        <h2 id="make-title">Want a website for your club?</h2>
+        <div class="board" aria-hidden="true">
+          <div class="felt"><div class="rows" id="rows-next"></div></div>
+        </div>
+      </div>
+      <div>
+        <h2 id="next-title">Your club could be next.</h2>
         <p class="lede">Troy Web Development Club built every site on this page. We can build one for your club too.</p>
+        <ul>
+          <li><strong>Designed around your club</strong><span>Your colors, photos and voice, not a fill-in template.</span></li>
+          <li><strong>Its own web address</strong><span>A fast, secure site to share in your bio and on flyers.</span></li>
+          <li><strong>Tools your members use</strong><span>Meeting check-in, tutor sign-ups, newsletters or order forms when you need them.</span></li>
+          <li><strong>Kept up to date</strong><span>New officers, rooms and events added as your club changes.</span></li>
+        </ul>
         <p class="ask">Ask any Troy Web Development Club member to get started.</p>
       </div>
-      <ul>
-        <li><strong>Designed around your club</strong><span class="note">Your colors, photos and voice, not a fill-in template.</span></li>
-        <li><strong>Its own web address</strong><span class="note">A fast, secure site you can share in your bio and on flyers.</span></li>
-        <li><strong>Tools your members use</strong><span class="note">Meeting check-in, tutor sign-ups, newsletters or order forms when you need them.</span></li>
-        <li><strong>Kept up to date</strong><span class="note">New officers, rooms and events added as your club changes.</span></li>
-      </ul>
     </div>
   </section>
 </main>
@@ -343,9 +379,165 @@ footer p { max-width: 62ch; }
 
 <script>
 (function () {
-  var d = new Date().getDay();
-  var col = document.querySelector('.day[data-day="' + d + '"]');
-  if (col) col.classList.add('is-today');
+  document.body.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var today = new Date().getDay();
+  var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+  // Letterboard rows: [day index, name, room, anchor]
+  var clubs = [
+    [1, 'ANIME CLUB', '910', 'anime'],
+    [1, 'LEARNING LEAGUE', '527', 'tll'],
+    [2, 'CHINESE CULTURE CLUB', '324', 'chinese'],
+    [2, 'CAR CLUB', 'W1', 'carclub'],
+    [3, 'VSA', '412', 'vsa'],
+    [5, 'LEO CLUB', 'W17', 'leo']
+  ];
+
+  // Deterministic jitter so letters sit a little crooked, like real ones.
+  var seed = 7;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var n = 0;
+  function letters(text, base) {
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      var s = document.createElement('span');
+      s.className = 'ch';
+      s.textContent = c === ' ' ? ' ' : c;
+      s.style.setProperty('--r', ((rnd() - .5) * 3.2).toFixed(2) + 'deg');
+      s.style.setProperty('--y', ((rnd() - .5) * 2.4).toFixed(1) + 'px');
+      s.style.setProperty('--d', (base + n * 14 + Math.floor(rnd() * 60)) + 'ms');
+      n++;
+      frag.appendChild(s);
+    }
+    return frag;
+  }
+  function cell(cls, text, base) { var d = document.createElement('span'); d.className = 'cell ' + cls; if (text) d.appendChild(letters(text, base)); return d; }
+
+  function buildBoard(el, rows, base) {
+    n = 0;
+    rows.forEach(function (r) {
+      var row;
+      if (r.type === 'title') { row = document.createElement('div'); row.className = 'row title'; row.appendChild(cell('', r.text, base)); }
+      else if (r.type === 'blank') { row = document.createElement('div'); row.className = 'row blank'; }
+      else {
+        row = document.createElement(r.href ? 'a' : 'div');
+        row.className = 'row' + (r.today ? ' today' : '');
+        if (r.href) { row.href = r.href; row.tabIndex = -1; }
+        row.appendChild(cell('day', r.day, base));
+        var nm = cell('name', r.name, base);
+        var lead = document.createElement('span'); lead.className = 'leader'; lead.style.setProperty('--d', (base + n * 14 + 80) + 'ms'); nm.appendChild(lead);
+        row.appendChild(nm);
+        row.appendChild(cell('room', r.room, base));
+      }
+      el.appendChild(row);
+    });
+  }
+
+  var boardRows = [{ type: 'title', text: 'TROY HIGH CLUB DIRECTORY' }, { type: 'blank' }];
+  clubs.forEach(function (c) {
+    boardRows.push({ day: DAYS[c[0]], name: c[1], room: 'RM ' + c[2], href: '#' + c[3], today: c[0] === today });
+  });
+  boardRows.push({ type: 'blank' });
+  boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
+  buildBoard(document.getElementById('rows'), boardRows, 250);
+
+  // Second board: letters snap in when it scrolls into view
+  var nextRows = document.getElementById('rows-next');
+  function buildNext() {
+    if (nextRows.childNodes.length) return;
+    buildBoard(nextRows, [
+      { type: 'title', text: 'NOW BOOKING' },
+      { type: 'blank' },
+      { day: '???', name: 'YOUR CLUB', room: 'RM ???' },
+      { type: 'blank' }
+    ], 0);
+  }
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { buildNext(); io.disconnect(); } }, { threshold: .4 });
+    io.observe(nextRows.closest('.board'));
+  } else buildNext();
+
+  // Hover tour: how far each screenshot scrolls
+  function setPans() {
+    document.querySelectorAll('.screen img').forEach(function (img) {
+      var scr = img.parentElement;
+      var pan = img.offsetHeight - (scr.clientHeight - 34);
+      if (pan > 40) { scr.style.setProperty('--pan', pan + 'px'); scr.style.setProperty('--dur', Math.min(9, Math.max(2.5, pan / 380)).toFixed(1) + 's'); scr.classList.add('pans'); }
+      else { scr.style.setProperty('--pan', '0px'); scr.classList.remove('pans'); }
+    });
+  }
+  document.querySelectorAll('.screen img').forEach(function (img) {
+    if (!img.complete) img.addEventListener('load', setPans);
+  });
+
+  // Pinned horizontal hallway
+  var hall = document.getElementById('hall');
+  var track = document.getElementById('track');
+  var bar = hall.querySelector('.progress');
+  var mq = window.matchMedia('(min-width: 900px) and (min-height: 600px) and (hover: hover)');
+  var dist = 0, ticking = false;
+  var doors = track.querySelectorAll('.door');
+  function layout() {
+    var pin = mq.matches && !reduce;
+    hall.classList.toggle('pinned', pin);
+    track.classList.toggle('wrap', !pin);
+    if (!pin) { hall.style.height = ''; track.style.removeProperty('--x'); doors.forEach(function (d) { d.style.removeProperty('--t'); d.style.removeProperty('--ta'); }); setPans(); return; }
+    dist = Math.max(0, track.scrollWidth - window.innerWidth);
+    hall.style.height = (window.innerHeight + dist) + 'px';
+    setPans(); update();
+  }
+  function update() {
+    ticking = false;
+    if (!hall.classList.contains('pinned')) return;
+    var r = hall.getBoundingClientRect();
+    var p = Math.min(1, Math.max(0, -r.top / Math.max(1, dist)));
+    track.style.setProperty('--x', (p * dist).toFixed(1) + 'px');
+    bar.style.setProperty('--p', p.toFixed(4));
+    var vw = window.innerWidth, x = p * dist;
+    for (var i = 0; i < doors.length; i++) {
+      var d = doors[i], c = d.offsetLeft + d.offsetWidth / 2 - x - vw / 2;
+      var tt = Math.max(-1, Math.min(1, c / (vw * .62)));
+      d.style.setProperty('--t', tt.toFixed(3));
+      d.style.setProperty('--ta', Math.abs(tt).toFixed(3));
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', layout);
+  if (mq.addEventListener) mq.addEventListener('change', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  window.addEventListener('load', layout);
+  layout();
+
+  // Directory rows and keyboard focus jump to the right spot in the hallway
+  function goTo(id, instant) {
+    var door = document.getElementById(id);
+    if (!door) return;
+    var behavior = reduce || instant ? 'auto' : 'smooth';
+    if (hall.classList.contains('pinned')) {
+      var x = door.offsetLeft - (window.innerWidth - door.offsetWidth) / 2;
+      var p = Math.min(1, Math.max(0, x / Math.max(1, dist)));
+      var top = hall.getBoundingClientRect().top + window.scrollY + p * dist;
+      window.scrollTo({ top: top, behavior: behavior });
+    } else {
+      door.scrollIntoView({ behavior: behavior, block: 'start' });
+    }
+  }
+  document.querySelectorAll('a.row[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); goTo(a.getAttribute('href').slice(1)); });
+  });
+  track.addEventListener('focusin', function (e) {
+    if (!hall.classList.contains('pinned')) return;
+    var door = e.target.closest('.door');
+    if (door) goTo(door.id, true);
+  });
+
+  if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window && !reduce) {
+    var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.closest('.door').classList.toggle('tour', e.intersectionRatio > .75); }); }, { threshold: [0, .75, 1] });
+    track.querySelectorAll('.screen').forEach(function (s) { tio.observe(s); });
+  }
+
   document.getElementById('yr').textContent = new Date().getFullYear();
 })();
 </script>
