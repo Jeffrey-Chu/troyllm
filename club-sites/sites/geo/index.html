@@ -294,19 +294,17 @@ footer b{color:var(--cream);font-weight:700}
 <header class="hero" id="top">
  <div class="wrap hero-grid">
   <div>
-   <span class="tagline">THS Geoguessr · est. 2024</span>
-   <h1>Geoguessr<br>Club<svg class="sq" viewBox="0 0 150 90" fill="none" stroke="#f6f0e0" stroke-width="2" stroke-linecap="round"><path d="M10 60c30-40 80-55 110-35 18 12-5 38-40 40-40 3-55-25-20-40 30-12 70 0 85 15"/><path d="M118 70l12 6-4-13"/></svg></h1>
-   <p class="sub">We get dropped somewhere random on Earth and figure out where we are from road lines, bollards, plants and street signs. <b>Thursdays, Room 322.</b> No experience needed.</p>
+      <h1>Geoguessr<br>Club<svg class="sq" viewBox="0 0 150 90" fill="none" stroke="#f6f0e0" stroke-width="2" stroke-linecap="round"><path d="M10 60c30-40 80-55 110-35 18 12-5 38-40 40-40 3-55-25-20-40 30-12 70 0 85 15"/><path d="M118 70l12 6-4-13"/></svg></h1>
+   <p class="sub">Troy High School's GeoGuessr club. We play, compete in tournaments and learn to read road lines, signs and landscapes to figure out where in the world we are. <b>Thursdays, Room 322.</b> No experience needed.</p>
    <div class="btns"><a class="b y" href="#play">Play a round →</a><a class="b c" href="#join">Get your boarding pass</a></div>
   </div>
   <div class="globe-box">
    <canvas id="globe" aria-label="Spinning globe, drag to rotate"></canvas>
-   <div class="globe-note">drag me!<svg viewBox="0 0 70 40" fill="none" stroke="#f3cf4f" stroke-width="2.4" stroke-linecap="round"><path d="M4 6c18 2 36 12 50 28"/><path d="M44 32l11 3-2-11"/></svg></div>
-   <div class="drop-card" aria-live="polite">
+      <div class="drop-card" aria-live="polite">
     <div class="co" id="dCo">33.8788° N, 117.8865° W</div>
     <div class="pl" id="dPl">Troy High School</div>
     <div class="meta" id="dMe">Fullerton, CA · home base</div>
-    <button class="b r" id="dropBtn">🎲 Drop me somewhere</button>
+    <button class="b r" id="dropBtn">Random location</button>
    </div>
   </div>
  </div>
@@ -315,14 +313,14 @@ footer b{color:var(--cream);font-weight:700}
 
 <main>
 <section id="play"><div class="wrap">
- <div class="head"><div><span class="eyebrow">round one, go</span><h2>Where in the<br>world are we?</h2></div><p>Five rounds, 90 seconds each. Read the clue, drop your pin on the map, hit GUESS. Every extra clue card you flip makes the round worth less.</p></div>
+ <div class="head"><div><h2>Where in the<br>world are we?</h2></div><p>Five rounds, 90 seconds each. Read the clue, place a pin on the map and guess. Each extra clue lowers the points for that round.</p></div>
  <div class="stage" id="stage">
   <div class="hud">
    <div class="pillbox"><div><small>Round</small><b id="hRound">1/5</b></div><div><small>Score</small><b id="hScore">0</b></div><div><small>Best</small><b id="hBest">0</b></div></div>
    <div class="timer calm" id="timer">1:30</div>
   </div>
   <div class="table">
-   <div class="ask">Here are your clues…</div>
+   <div class="ask">Clues</div>
    <div class="deck" id="deck"></div>
   </div>
   <div class="mini" id="mini">
@@ -334,12 +332,12 @@ footer b{color:var(--cream);font-weight:700}
   <div class="reveal" id="reveal"><svg id="rmap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet"><g class="land" id="rland"></g><g id="rlayer"></g></svg>
    <div class="rbar"><div class="place" id="rPlace"></div><div class="meter"><div class="t"><span id="rDist"></span><span id="rPts"></span></div><div class="bar"><i id="rBar"></i></div></div><button class="b y" id="nextBtn">Next round →</button></div></div>
   <div class="final" id="final">
-   <div><div class="hand" style="font-size:24px;color:var(--sky)">final score</div><div class="big" id="fScore">0</div><div class="rank" id="fRank"></div>
+   <div><div class="hand" style="font-size:24px;color:var(--sky)">Final score</div><div class="big" id="fScore">0</div><div class="rank" id="fRank"></div>
     <p id="fLine" style="opacity:.8;max-width:380px"></p>
     <div class="acts"><button class="b y" id="againBtn">Play again</button><button class="b c" id="copyBtn">Copy my score</button></div></div>
    <table id="fTable"></table>
   </div>
-  <div class="splash" id="splash"><span class="hand" style="font-size:26px;color:var(--sky)">no Street View, just vibes</span><h3>Ready to get dropped?</h3><p>You get one clue card for free. Flipping the other two costs 1,000 points each. Hover the map in the corner to make it bigger.</p><button class="b y" id="startBtn">Start game</button></div>
+  <div class="splash" id="splash"><h3>Ready?</h3><p>The first clue is free. Each extra clue costs 1,000 points. Hover over the map to enlarge it.</p><button class="b y" id="startBtn">Start game</button></div>
   <div class="toast" id="toast"></div>
  </div>
 </div></section>
@@ -347,31 +345,29 @@ footer b{color:var(--cream);font-weight:700}
 <section id="board">
  <svg class="plane" viewBox="0 0 64 32" fill="#13201a"><path d="M2 18l22-3 12-13h6l-6 13 18-2 6-6h4l-3 9 3 9h-4l-6-6-18-2 6 13h-6L24 17 2 14z"/></svg>
  <div class="wrap">
- <div class="head"><div><span class="eyebrow">meet the</span><h2>Geoguessr Board</h2></div><p>Their favorite cities are straight from the board post. Hover for shine, click a card to flip it and see the local time there right now.</p></div>
+ <div class="head"><div><h2>The Board</h2></div><p>Click a card to see their favorite city, how far it is from Troy and the local time there.</p></div>
  <div class="cards" id="cards"></div>
- <div class="board-note">Fun fact: two of them picked cities you could drive to after school.</div>
-</div></section>
+ </div></section>
 
 <section id="hl"><div class="wrap">
- <div class="head"><div><span class="eyebrow">quick game</span><h2>Which one is<br>farther from Troy?</h2></div><p>Click the city you think is farther from Troy High. One wrong answer and your streak resets. Harder than it sounds once you get past the obvious ones.</p></div>
+ <div class="head"><div><h2>Which one is<br>farther from Troy?</h2></div><p>Pick the city that is farther from Troy High. A wrong answer resets your streak.</p></div>
  <div class="hl"><button class="city" id="cA"></button><div class="vs">vs</div><button class="city" id="cB"></button></div>
  <div class="hl-bar"><div class="streak"><span id="stN">0</span><small>streak · best <span id="stB">0</span></small></div><div class="flames" id="flames"></div><button class="b c" id="hlNext" style="visibility:hidden">Next pair →</button></div>
 </div></section>
 
 <section id="feed"><div class="wrap">
- <div class="head"><div><span class="eyebrow" style="color:var(--ink)">from @geoguessr_ths</span><h2>The corkboard</h2></div><p>Posts from our Instagram. Drag them around, click to see them big. The video one opens the reel.</p></div>
+ <div class="head"><div><h2>Gallery</h2></div><p>Drag the photos around. Click one to see it bigger.</p></div>
  <div class="corkboard" id="cork">
-  <div class="pol" style="left:2%;top:40px;transform:rotate(-6deg)" data-big="img/flyer.webp"><span class="tape"></span><img src="img/flyer.webp" alt="Geoguessr Club flyer: Room 322, Thursdays"><div class="cap">the OG flyer ✦ Room 322</div></div>
-  <div class="pol" style="left:24%;top:150px;transform:rotate(4deg);width:300px" data-href="https://www.instagram.com/geoguessr_ths/reel/C_epmU-Nh55/"><span class="tape"></span><img src="img/reel.webp" alt="Club president playing GeoGuessr on stream"><span class="play">▶</span><div class="cap">Bud mid-round (watch the reel)</div></div>
-  <div class="pol" style="left:50%;top:20px;transform:rotate(-3deg)" data-big="img/rush.webp"><span class="tape"></span><img src="img/rush.webp" alt="Club Rush poster"><div class="cap">club rush 2026!!</div></div>
-  <div class="pol" style="left:66%;top:250px;transform:rotate(7deg);width:210px" data-big="img/boardcover.webp"><span class="tape"></span><img src="img/boardcover.webp" alt="Geoguessr Board post cover"><div class="cap">new board who dis</div></div>
-  <div class="pol" style="left:38%;top:360px;transform:rotate(-5deg);width:200px" data-big="img/caleb.webp"><span class="tape"></span><img src="img/caleb.webp" alt="Vice president Caleb Jun"><div class="cap">our VP, Caleb</div></div>
-  <div class="pin-note">drag these around ↓<br>no rules on the corkboard</div>
- </div>
+  <div class="pol" style="left:2%;top:40px;transform:rotate(-6deg)" data-big="img/flyer.webp"><span class="tape"></span><img src="img/flyer.webp" alt="Geoguessr Club flyer: Room 322, Thursdays"><div class="cap">Club flyer</div></div>
+  <div class="pol" style="left:24%;top:150px;transform:rotate(4deg);width:300px" data-href="https://www.instagram.com/geoguessr_ths/reel/C_epmU-Nh55/"><span class="tape"></span><img src="img/reel.webp" alt="Club president playing GeoGuessr on stream"><span class="play">▶</span><div class="cap">Watch the reel</div></div>
+  <div class="pol" style="left:50%;top:20px;transform:rotate(-3deg)" data-big="img/rush.webp"><span class="tape"></span><img src="img/rush.webp" alt="Club Rush poster"><div class="cap">Club Rush 2026</div></div>
+  <div class="pol" style="left:66%;top:250px;transform:rotate(7deg);width:210px" data-big="img/boardcover.webp"><span class="tape"></span><img src="img/boardcover.webp" alt="Geoguessr Board post cover"><div class="cap">2026–27 Board</div></div>
+  <div class="pol" style="left:38%;top:360px;transform:rotate(-5deg);width:200px" data-big="img/caleb.webp"><span class="tape"></span><img src="img/caleb.webp" alt="Vice president Caleb Jun"><div class="cap">Caleb Jun, VP</div></div>
+   </div>
 </div></section>
 
 <section id="guide"><div class="wrap">
- <div class="head"><div><span class="eyebrow">the field guide</span><h2>How we actually<br>guess</h2></div><p>The stuff we teach at meetings, the stuff that turns random clicking into actually knowing where you are.</p></div>
+ <div class="head"><div><h2>How we actually<br>guess</h2></div><p>The kinds of clues we cover at meetings.</p></div>
  <div class="notebook"><div class="tabs" id="tabs"></div><div class="page" id="pageC"></div></div>
  <div class="quiz">
   <div class="gl"><span class="hand">pop quiz · <span id="qN">1</span>/5</span><div class="g" id="qG"></div><span style="font-weight:700;font-size:14px">Which country uses this letter?</span></div>
@@ -381,11 +377,10 @@ footer b{color:var(--cream);font-weight:700}
 
 <section id="join"><div class="wrap join-grid">
  <div>
-  <span class="eyebrow" style="color:var(--sky)">now boarding</span>
-  <h2 style="font-size:clamp(44px,5vw,68px)">Come play<br>with us Thursday.</h2>
-  <p>No experience needed. Show up, play a few rounds, learn some tricks and see how fast you get better. Follow the Instagram for tournaments, prizes and schedule changes.</p>
-  <div class="namefield"><label for="pn">your name, for the pass ↓</label><input id="pn" maxlength="22" placeholder="Type your name" autocomplete="off"></div>
-  <a class="b y ig" href="https://www.instagram.com/geoguessr_ths/" target="_blank" rel="noopener">Follow @geoguessr_ths ↗</a>
+    <h2 style="font-size:clamp(44px,5vw,68px)">Join the club</h2>
+  <p>Meetings are on Thursdays in Room 322. No experience needed. Tournaments, prizes and schedule updates are posted on Instagram.</p>
+  <div class="namefield"><label for="pn">Your name</label><input id="pn" maxlength="22" placeholder="Type your name" autocomplete="off"></div>
+  <a class="b y ig" href="https://www.instagram.com/geoguessr_ths/" target="_blank" rel="noopener">Instagram ↗</a>
  </div>
  <div class="pass" id="pass">
   <div class="main">
@@ -403,14 +398,14 @@ footer b{color:var(--cream);font-weight:700}
   </div>
   <div class="stub" id="stub" role="button" tabindex="0" aria-label="Tear off the stub">
    <div><small style="font-weight:800;font-size:10.5px;letter-spacing:.08em;opacity:.55">NEXT DEPARTURE</small><div class="cd" id="cd">—</div><small id="cdL" style="font-size:12px;opacity:.7"></small></div>
-   <div class="tear">✂ tear here<br>to RSVP</div>
+   <div class="tear">✂ tear to RSVP</div>
   </div>
-  <div class="ok-msg" id="okMsg">see you Thursday!</div>
+  <div class="ok-msg" id="okMsg">See you Thursday.</div>
  </div>
 </div></section>
 </main>
 
-<footer><div class="wrap"><span>THS GeoGuessr Club · Troy High School, Fullerton CA · Room 322 per our flyer, check Instagram for updates</span><span class="credit">Website by <b>Troy Web Development Club</b></span></div></footer>
+<footer><div class="wrap"><span>THS GeoGuessr Club · Troy High School, Fullerton CA</span><span class="credit">Website by <b>Troy Web Development Club</b></span></div></footer>
 
 <div class="lb" id="lb"><img id="lbImg" alt=""></div>
 
@@ -521,7 +516,7 @@ function startRound(){
  $('#hRound').textContent=`${r+1}/${ROUNDS}`;
  const k=order[r].k;
  $('#deck').innerHTML=k.map((t,i)=>`<div class="cc ${i===0?'up':''}" data-i="${i}"><div class="in"><div class="f bk"><span class="q">?</span><small>${i===1?'Flip: −1,000 pts':'Flip: −1,000 more'}</small></div><div class="f fr"><span class="n">Clue ${i+1}</span><p>${t}</p></div></div></div>`).join('');
- $('#deck').querySelectorAll('.cc').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;if(locked||c.classList.contains('up'))return;if(i!==flips){toast('Flip them in order');return;}c.classList.add('up');flips++;toast(`Round now worth ${fmt(cap())}`);});
+ $('#deck').querySelectorAll('.cc').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;if(locked||c.classList.contains('up'))return;if(i!==flips){toast('Flip clues in order');return;}c.classList.add('up');flips++;toast(`Round now worth ${fmt(cap())}`);});
  setGuessBtn();resetView();
  tLeft=TIME;tickT();clearInterval(tInt);tInt=setInterval(()=>{tLeft--;tickT();if(tLeft<=0){clearInterval(tInt);doGuess(true);}},1000);
 }
@@ -543,7 +538,7 @@ function doGuess(timeout){
  $('#rBar').style.width='0';$('#reveal').classList.add('on');requestAnimationFrame(()=>requestAnimationFrame(()=>$('#rBar').style.width=(pts/50)+'%'));
  $('#nextBtn').textContent=r===ROUNDS-1?'See results →':'Next round →';
  countUp($('#hScore'),total-pts,total);
- if(pts>=4500)toast('Insane guess 🔥');
+ if(pts>=4500)toast('Great guess');
 }
 function fitReveal(xs,ys){$('#reveal').classList.add('on');const rc=rmap.getBoundingClientRect(),bar=$('.rbar').offsetHeight;const A=rc.height/rc.width,U=(rc.height-bar)/rc.width;
  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);let w=Math.max((x1-x0)+120,((y1-y0)+90)/U,200);w=Math.min(w,1400);const h=w*A;
@@ -555,10 +550,10 @@ $('#againBtn').onclick=newGame;
 function countUp(n,a,b){const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/800);n.textContent=fmt(a+(b-a)*(1-(1-k)**3));if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
 function finish(){
  $('#reveal').classList.remove('on');$('#final').classList.add('on');countUp($('#fScore'),0,total);
- const rk=total>=22000?'human GPS??':total>=16000?'certified cartographer':total>=10000?'solid navigator':total>=5000?'weekend backpacker':'lost tourist (it\'s ok)';
+ const rk=total>=22000?'Expert':total>=16000?'Cartographer':total>=10000?'Navigator':total>=5000?'Explorer':'Beginner';
  $('#fRank').textContent=rk;
- if(total>best){best=total;store.set('thsgeo-best',best);$('#hBest').textContent=fmt(best);$('#fLine').textContent='New personal best! Now come beat the board in Room 322.';}
- else $('#fLine').textContent=`Your best is ${fmt(best)}. Want to get better? That's literally what Thursdays are for.`;
+ if(total>best){best=total;store.set('thsgeo-best',best);$('#hBest').textContent=fmt(best);$('#fLine').textContent='New personal best.';}
+ else $('#fLine').textContent=`Your best: ${fmt(best)}.`;
  $('#fTable').innerHTML=hist.map(h=>`<tr><td>${h.p}</td><td>${h.d==null?'no pin':fmt(h.d)+' km'}</td><td>${fmt(h.pts)}</td></tr>`).join('');
 }
 $('#copyBtn').onclick=async()=>{const txt=`I scored ${fmt(total)}/25,000 on the THS GeoGuessr Club site 🌍 ${hist.map(h=>h.pts>=4000?'🟩':h.pts>=1500?'🟨':'🟥').join('')}`;try{await navigator.clipboard.writeText(txt);toast('Copied!');}catch(e){toast('Could not copy');}};
@@ -661,9 +656,9 @@ $('#qNext').onclick=()=>{if(si===4){qStart();return;}si++;qShow();};qStart();
 /* ---------- BOARDING PASS ---------- */
 const pn=$('#pn');pn.value=store.get('thsgeo-name','');
 const upd=()=>{const v=pn.value.trim();$('#pName').textContent=v||'You';store.set('thsgeo-name',pn.value);let h=0;for(const ch of v)h=(h*31+ch.charCodeAt(0))%997;$('#seat').textContent=(h%30+1)+'ABCDEF'[h%6];};pn.oninput=upd;upd();
-const tear=()=>{const p=$('#pass');p.classList.toggle('torn');const v=pn.value.trim();$('#okMsg').textContent=v?`see you Thursday, ${v.split(' ')[0]}!`:'see you Thursday!';};
+const tear=()=>{const p=$('#pass');p.classList.toggle('torn');const v=pn.value.trim();$('#okMsg').textContent=v?`See you Thursday, ${v.split(' ')[0]}.`:'See you Thursday.';};
 $('#stub').onclick=tear;$('#stub').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tear();}};
-function cd(){const n=new Date();const d=(4-n.getDay()+7)%7;if(d===0){$('#cd').textContent='TODAY';$('#cdL').textContent='it\'s Thursday!';return;}
+function cd(){const n=new Date();const d=(4-n.getDay()+7)%7;if(d===0){$('#cd').textContent='TODAY';$('#cdL').textContent='Today';return;}
  const t=new Date(n);t.setDate(n.getDate()+d);t.setHours(0,0,0,0);const ms=t-n;$('#cd').textContent=`${Math.floor(ms/864e5)}d ${String(Math.floor(ms%864e5/36e5)).padStart(2,'0')}h ${String(Math.floor(ms%36e5/6e4)).padStart(2,'0')}m`;
  $('#cdL').textContent=t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · check IG for holidays';}
 cd();setInterval(cd,30000);
