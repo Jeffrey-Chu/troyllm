@@ -240,12 +240,26 @@ footer p { max-width: 62ch; }
       </div>
 
       <div class="board-stage" id="board">
-        <div class="board" id="marquee-board">
+        <div class="board">
           <div class="felt">
             <div class="rows" id="rows" aria-hidden="true"></div>
           </div>
         </div>
       </div>
+      <div class="board-note">
+        <p>Clubs meeting today are in yellow. Rooms can change, so check each club's Instagram. Key Club posts its dates on Google Classroom.</p>
+        <p>The Science Club meets online every week.</p>
+      </div>
+      <ul class="sr" aria-label="Club meeting directory">
+        <li>Monday: Anime Club, Room 910</li>
+        <li>Monday: Troy Learning League, every other Monday, Room 527</li>
+        <li>Tuesday: Chinese Culture Club, every other Tuesday, Room 324</li>
+        <li>Tuesday: Troy Car Club, every other Tuesday, Room W1</li>
+        <li>Wednesday: VSA, every other Wednesday, Room 412</li>
+        <li>Thursday: GeoGuessr Club, Room 322</li>
+        <li>Friday: Leo Club, 1st and 3rd Fridays, Room W17</li>
+        <li>Key Club: lunch meetings in Room 517, dates on Google Classroom</li>
+      </ul>
       <nav class="index" aria-labelledby="index-title">
         <h2 id="index-title">Jump to a club</h2>
         <ul id="index-list"></ul>
@@ -397,19 +411,19 @@ footer p { max-width: 62ch; }
   var today = new Date().getDay();
   var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-  // Marquee: every club on the page, in hallway order: [board name, detail line, anchor, index label]
+  // Every club on the page, in hallway order: [board name, anchor, index label, day (1-5, 0 = TBA, null = not on board), room]
   var clubs = [
-    ['ANIME CLUB', 'RM 910 / MONDAYS', 'anime', 'Anime Club'],
-    ['CAR CLUB', 'RM W1 / TUESDAYS', 'carclub', 'Car Club'],
-    ['CHINESE CULTURE CLUB', 'RM 324 / TUESDAYS', 'chinese', 'Chinese Culture Club'],
-    ['GEOGUESSR CLUB', 'RM 322 / THURSDAYS', 'geo', 'GeoGuessr Club'],
-    ['KEY CLUB', 'RM 517 / LUNCH', 'key', 'Key Club'],
-    ['LEARNING LEAGUE', 'RM 527 / MONDAYS', 'tll', 'Learning League'],
-    ['LEO CLUB', 'RM W17 / FRIDAYS', 'leo', 'Leo Club'],
-    ['LLM CLUB', 'MEMBER PORTAL', 'llm', 'LLM Club'],
-    ['VSA', 'RM 412 / WEDNESDAYS', 'vsa', 'VSA'],
-    ['THE SCIENCE CLUB', 'ONLINE / WEEKLY', 'science', 'The Science Club'],
-    ['ROOTS & ROADS', 'OCSA', 'roots', 'Roots & Roads']
+    ['ANIME CLUB', 'anime', 'Anime Club', 1, '910'],
+    ['CAR CLUB', 'carclub', 'Car Club', 2, 'W1'],
+    ['CHINESE CULTURE CLUB', 'chinese', 'Chinese Culture Club', 2, '324'],
+    ['GEOGUESSR CLUB', 'geo', 'GeoGuessr Club', 4, '322'],
+    ['KEY CLUB', 'key', 'Key Club', 0, '517'],
+    ['LEARNING LEAGUE', 'tll', 'Learning League', 1, '527'],
+    ['LEO CLUB', 'leo', 'Leo Club', 5, 'W17'],
+    ['LLM CLUB', 'llm', 'LLM Club', null, ''],
+    ['VSA', 'vsa', 'VSA', 3, '412'],
+    ['THE SCIENCE CLUB', 'science', 'The Science Club', null, ''],
+    ['ROOTS & ROADS', 'roots', 'Roots & Roads', null, '']
   ];
 
   // Deterministic jitter so letters sit a little crooked, like real ones.
@@ -446,7 +460,7 @@ footer p { max-width: 62ch; }
       }
       else {
         row = document.createElement(r.href ? 'a' : 'div');
-        row.className = 'row';
+        row.className = 'row' + (r.today ? ' today' : '');
         if (r.href) { row.href = r.href; row.tabIndex = -1; }
         row.appendChild(cell('day', r.day, base));
         var nm = cell('name', r.name, base);
@@ -458,22 +472,22 @@ footer p { max-width: 62ch; }
     });
   }
 
-  var boardRows = [
-    { type: 'title', text: 'NOW SHOWING' },
-    { type: 'blank' },
-    { type: 'big', text: reduce ? clubs.length + ' CLUB SITES' : clubs[0][0], href: reduce ? '#hall' : '#' + clubs[0][2] },
-    { type: 'sub', text: reduce ? 'ON THIS WALL' : clubs[0][1] },
-    { type: 'blank' },
-    { type: 'title', text: 'PRESENTED BY' },
-    { type: 'title', text: 'TROY WEB DEV CLUB' }
-  ];
+  var boardRows = [{ type: 'title', text: 'TROY HIGH CLUB DIRECTORY' }, { type: 'blank' }];
+  clubs.filter(function (c) { return c[3] !== null; })
+    .sort(function (a, b) { return (a[3] || 9) - (b[3] || 9); })
+    .forEach(function (c) {
+      boardRows.push({ day: c[3] ? DAYS[c[3]] : 'TBA', name: c[0], room: 'RM ' + c[4], href: '#' + c[1], today: c[3] === today });
+    });
+  boardRows.push({ type: 'blank' });
+  boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
+  boardRows.push({ type: 'title', text: 'PRESENTED BY TROY WEB DEV CLUB' });
   buildBoard(document.getElementById('rows'), boardRows, 250);
 
   // Jump-to index
   var list = document.getElementById('index-list');
   clubs.forEach(function (c) {
     var li = document.createElement('li'), a = document.createElement('a');
-    a.href = '#' + c[2]; a.textContent = c[3]; li.appendChild(a); list.appendChild(li);
+    a.href = '#' + c[1]; a.textContent = c[2]; li.appendChild(a); list.appendChild(li);
   });
 
   // Second board: letters snap in when it scrolls into view
@@ -571,29 +585,6 @@ footer p { max-width: 62ch; }
     track.querySelectorAll('.screen').forEach(function (s) { tio.observe(s); });
   }
 
-  // Marquee cycling: old letters fall out, the next club's letters snap in
-  var bigRow = document.querySelector('#rows .row.big'), subRow = document.querySelector('#rows .row.sub');
-  var mBoard = document.getElementById('marquee-board');
-  var mi = 0, paused = false, visible = true;
-  function swap(row, text, delay) {
-    var c = row.firstChild, old = c.querySelectorAll('.ch');
-    old.forEach(function (s, i) { s.style.setProperty('--o', (i * 18) + 'ms'); s.classList.add('out'); });
-    setTimeout(function () { c.textContent = ''; n = 0; c.appendChild(letters(text, 0)); }, 420 + old.length * 18 + delay);
-  }
-  function next() {
-    if (paused || !visible || document.hidden) { setTimeout(next, 800); return; }
-    mi = (mi + 1) % clubs.length;
-    swap(bigRow, clubs[mi][0], 0); swap(subRow, clubs[mi][1], 120);
-    bigRow.href = '#' + clubs[mi][2];
-    setTimeout(next, 3600);
-  }
-  if (!reduce && bigRow) {
-    setTimeout(next, 4200);
-    mBoard.addEventListener('mouseenter', function () { paused = true; });
-    mBoard.addEventListener('mouseleave', function () { paused = false; });
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(mBoard);
-  }
-  if (bigRow) bigRow.addEventListener('click', function (e) { e.preventDefault(); goTo(bigRow.getAttribute('href').slice(1)); });
   list.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); goTo(a.getAttribute('href').slice(1)); } });
 
   document.getElementById('yr').textContent = new Date().getFullYear();
