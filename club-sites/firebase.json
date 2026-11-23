@@ -36,6 +36,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -76,6 +94,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
@@ -120,6 +156,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -160,6 +214,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
@@ -204,6 +276,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -244,6 +334,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
@@ -288,6 +396,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -328,6 +454,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
@@ -372,6 +516,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -412,6 +574,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
@@ -456,6 +636,24 @@
               "value": "max-age=31536000"
             }
           ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
         }
       ],
       "predeploy": [
@@ -496,6 +694,24 @@
             {
               "key": "Strict-Transport-Security",
               "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache"
             }
           ]
         }
