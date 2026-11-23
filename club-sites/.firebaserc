@@ -16,6 +16,21 @@
         ],
         "carclub": [
           "troy-car-club"
+        ],
+        "anime": [
+          "troy-anime-club"
+        ],
+        "chinese": [
+          "troy-chinese-culture-club"
+        ],
+        "leo": [
+          "troy-leo-club"
+        ],
+        "roots": [
+          "troy-roots-and-roads"
+        ],
+        "science": [
+          "troy-science-club"
         ]
       }
     }

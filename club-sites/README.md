@@ -23,7 +23,7 @@ Rules are in the root `firestore.rules` (one rules file per Firestore database).
 
 ## Go live automatically (GitHub Actions)
 
-Pushing to `main` or `club-sites` runs `.github/workflows/deploy-club-sites.yml`: it runs the rule tests, then deploys the rules and the four sites. It needs one secret, added once by the Firebase project owner:
+Pushing to `main` or `club-sites` runs `.github/workflows/deploy-club-sites.yml`: it runs the rule tests, then deploys the rules and all the club sites. It needs one secret, added once by the Firebase project owner:
 
 1. Google Cloud console for `troy-high-llm` → IAM & Admin → Service accounts → Create. Give it the roles **Firebase Hosting Admin**, **Firebase Rules Admin** and **Service Usage Consumer**. Keys → Add key → JSON.
 2. GitHub repo → Settings → Secrets and variables → Actions → New secret named `FIREBASE_SERVICE_ACCOUNT`, paste the whole JSON.
@@ -51,7 +51,7 @@ If a site name is taken, pick another and update `club-sites/.firebaserc`.
 
 Then:
 
-1. Firebase console → Authentication → Settings → Authorized domains: add the four `*.web.app` addresses. Sign-in won't work on them until you do. Also make sure the Google sign-in provider is enabled.
+1. Firebase console → Authentication → Settings → Authorized domains: add the four sign-in sites (`troy-vsa`, `troy-learning-league`, `superdw-crystals`, `troy-car-club` `.web.app`). Sign-in won't work on them until you do. Also make sure the Google sign-in provider is enabled.
 2. Each officer / shop owner signs in on their site once. Then:
    ```sh
    gcloud auth login
@@ -70,3 +70,17 @@ Then:
 ## Editing a site
 
 Edit `sites/<site>/index.html` (and `src/<site>.js` for Firebase code), then `npm run build:clubs`. Output goes to `club-sites/dist/` (not committed).
+
+## Static club sites
+
+Anime Club (`sites/anime`), Chinese Culture Club (`sites/chinese`), Leo Club (`sites/leo`), Roots & Roads (`sites/roots`) and The Science Club (`sites/science`) are plain pages with no sign-in or database. `build.mjs` copies them as they are; each has its own hosting target in `firebase.json` and `.firebaserc`:
+
+| Site | Address |
+|---|---|
+| Anime Club | https://troy-anime-club.web.app |
+| Chinese Culture Club | https://troy-chinese-culture-club.web.app |
+| Leo Club | https://troy-leo-club.web.app |
+| Roots & Roads | https://troy-roots-and-roads.web.app |
+| The Science Club | https://troy-science-club.web.app |
+
+To add another static site: put it in `sites/<name>/index.html`, add `<name>` to `staticSites` in `build.mjs`, copy one of these targets in `firebase.json`, add the target in `.firebaserc`, and add the hosting site name to the list in `.github/workflows/deploy-club-sites.yml`.

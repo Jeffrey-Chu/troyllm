@@ -1,6 +1,6 @@
 name: Deploy club sites
 
-# Tests the Firestore rules, then deploys the rules and the four club sites to troy-high-llm.
+# Tests the Firestore rules, then deploys the rules and the club sites to troy-high-llm.
 # Needs one repo secret: FIREBASE_SERVICE_ACCOUNT (JSON key, see club-sites/README.md).
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
       - name: Create hosting sites (skips ones that exist)
         working-directory: club-sites
         run: |
-          for s in troy-vsa troy-learning-league superdw-crystals troy-car-club; do
+          for s in troy-vsa troy-learning-league superdw-crystals troy-car-club troy-anime-club troy-chinese-culture-club troy-leo-club troy-roots-and-roads troy-science-club; do
             npx firebase hosting:sites:get "$s" --project "$PROJECT" >/dev/null 2>&1 \
               || npx firebase hosting:sites:create "$s" --project "$PROJECT"
           done

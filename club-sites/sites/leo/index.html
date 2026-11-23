@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troy Leo Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF5EC; --paper:#FFFDF8; --red:#8E1B1B; --red-dk:#6F1414; --gold:#D9A23A;
+  --ink:#231A14; --muted:#6B5C50; --line:#E6DCCB;
+  --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:24px}
+section{padding:96px 0;scroll-margin-top:72px}
+.eyebrow{font-size:16px;font-weight:500;color:var(--red)}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,4.2vw,46px);line-height:1.12;letter-spacing:-.01em;margin-top:10px}
+.lead{color:var(--muted);max-width:60ch;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:12px 20px;border-radius:8px;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-primary:hover{background:#E8B652}
+.btn-ghost{border:1px solid rgba(250,245,236,.45);color:var(--cream)}
+.btn-ghost:hover{background:rgba(250,245,236,.1);border-color:var(--cream)}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;background:rgba(250,245,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:700;font-size:19px}
+.brand img{width:36px;height:36px;border-radius:50%}
+.nav nav{display:flex;align-items:center;gap:6px}
+.nav nav a{text-decoration:none;font-size:15px;font-weight:500;color:var(--muted);padding:8px 12px;border-radius:6px}
+.nav nav a:hover{color:var(--ink);background:#F1E9DA}
+.nav nav a.join{background:var(--red);color:#fff;margin-left:6px}
+.nav nav a.join:hover{background:var(--red-dk)}
+@media(max-width:760px){.nav nav a:not(.join){display:none}}
+
+/* hero */
+.hero{background:var(--red);color:var(--cream);padding:40px 0;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:20px;align-items:center;position:relative;min-height:620px}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;min-height:0}.lion-col{order:-1}}
+.hero .eyebrow{color:var(--gold)}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(48px,7vw,84px);line-height:1;letter-spacing:-.015em;margin:14px 0 22px}
+.hero p{font-size:19px;line-height:1.6;max-width:32em;color:rgba(250,245,236,.88)}
+.hero .actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.lion-col{display:flex;flex-direction:column;align-items:center}
+.lion-hint{font-weight:600;font-size:15px;letter-spacing:.04em;color:var(--gold);margin-top:-10px;position:relative;z-index:1;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-4px)}}
+@media(max-width:900px){.lion-hint{margin-top:8px}}
+.lion-btn{width:min(640px,94vw);margin:-30px -60px -10px 0;cursor:pointer;border-radius:50%;outline-offset:8px}
+@media(max-width:900px){.lion-btn{width:min(520px,96vw);margin:0}}
+.lion-btn:focus-visible{outline:2px solid var(--gold)}
+.lion-btn svg{width:100%;display:block;transition:transform .3s ease}
+.lion-btn:hover svg{transform:translateY(-6px) rotate(-2deg) scale(1.02)}
+.lion .mouth-open,.lion .brow-mad{display:none}
+.lion.open .mouth-open,.lion.open .brow-mad{display:inline}
+.lion.open .mouth-shut,.lion.open .brow{display:none}
+.lion .eye{transition:transform .12s;transform-box:fill-box;transform-origin:center}
+.lion .jaw-top,.lion .jaw-bot{transition:transform .09s ease-in;transform-box:fill-box}
+.lion .jaw-top{transform-origin:center bottom}.lion .jaw-bot{transform-origin:center top}
+.lion.snap .jaw-top{transform:translateY(16px)}
+.lion.snap .jaw-bot{transform:translateY(-16px)}
+#biteDim{position:fixed;inset:0;background:rgba(20,8,6,0);pointer-events:none;z-index:300;transition:background .25s}
+#biteDim.on{background:rgba(20,8,6,.55)}
+.bite-clone{position:fixed;z-index:301;pointer-events:none;transition:transform .32s cubic-bezier(.2,1.25,.4,1)}
+.flash{position:fixed;inset:0;background:#fff;opacity:0;z-index:302;pointer-events:none}
+.flash.on{animation:flash .18s}
+@keyframes flash{30%{opacity:.35}}
+.shake{animation:shake .25s}
+@keyframes shake{25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-3px)}75%{transform:translate(-3px,2px)}}
+
+/* facts */
+.facts{background:var(--paper);border-bottom:1px solid var(--line);position:relative;z-index:1}
+.facts .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+.fact{padding:26px 22px;border-left:1px solid var(--line)}
+.fact:first-child{border-left:0;padding-left:0}
+.fact dt{font-size:14px;color:var(--muted)}
+.fact dd{font-weight:600;margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fact small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.copy{font-size:13px;font-weight:600;color:var(--red);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.copy:hover{border-color:var(--red)}
+code{font-family:ui-monospace,Menlo,monospace;font-size:16px;background:#F1E9DA;padding:2px 8px;border-radius:5px}
+@media(max-width:760px){.facts .wrap{grid-template-columns:1fr}.fact{border-left:0;padding-left:0;border-top:1px solid var(--line)}.fact:first-child{border-top:0}}
+
+/* what we do */
+.what{display:grid;grid-template-columns:1fr 1fr;gap:28px 56px;margin-top:36px;max-width:900px}
+@media(max-width:700px){.what{grid-template-columns:1fr}}
+.what dt{font-weight:700;font-size:18px}
+.what dd{color:var(--muted);margin-top:4px}
+
+/* events */
+.ev-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.filters{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:4px}
+.filters button{font-size:14px;font-weight:600;padding:8px 14px;border-radius:7px;color:var(--muted)}
+.filters button.on{background:var(--red);color:#fff}
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+@media(max-width:900px){.ev-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ev-grid{grid-template-columns:1fr}}
+.ev{cursor:pointer}
+.ev.hide{display:none}
+.ev .ph{aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#EFE6D6;border:1px solid var(--line)}
+.ev .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.ev:hover .ph img{transform:scale(1.035)}
+.ev .meta{margin-top:14px;font-size:14px;color:var(--muted)}
+.ev h3{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.25;margin-top:4px}
+.ev p{color:var(--muted);font-size:15.5px;margin-top:6px}
+
+/* ckd */
+.ckd{background:var(--paper);border-block:1px solid var(--line)}
+.ckd .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center}
+@media(max-width:860px){.ckd .wrap{grid-template-columns:1fr}}
+.reel{position:relative;display:block;border-radius:12px;overflow:hidden;max-width:300px;margin:0 auto;text-decoration:none;border:1px solid var(--line)}
+.reel .play{position:absolute;inset:auto 14px 14px 14px;background:rgba(255,253,248,.95);border-radius:8px;padding:10px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px}
+.reel .play i{width:26px;height:26px;border-radius:50%;background:var(--red);display:grid;place-items:center;color:#fff;font-style:normal;font-size:10px}
+
+/* join */
+.steps{margin-top:28px;padding-left:22px;max-width:70ch;display:grid;gap:14px}
+.steps li{padding-left:6px}
+.steps li::marker{font-weight:700;color:var(--red)}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+@media(max-width:860px){.faq-grid{grid-template-columns:1fr;gap:20px}}
+details{border-bottom:1px solid var(--line);padding:20px 0}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-weight:600;font-size:18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--red);font-size:22px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-top:10px;max-width:62ch}
+
+footer{background:var(--ink);color:#D9CFC2;padding:64px 0 32px}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr}}
+footer h4{color:#fff;font-size:15px;font-weight:600;margin-bottom:12px}
+footer ul{list-style:none;display:grid;gap:8px}
+footer a{text-decoration:none}footer a:hover{color:#fff;text-decoration:underline}
+.f-brand{display:flex;gap:14px;align-items:center}
+.f-brand img{width:56px;height:56px;border-radius:50%}
+.f-brand b{font-family:var(--serif);font-size:22px;color:#fff}
+.f-bot{border-top:1px solid #3B3029;margin-top:44px;padding-top:20px;font-size:14px;color:#9C8F82}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(20,14,10,.9);z-index:400;display:none;align-items:center;justify-content:center;padding:24px}
+.lb.on{display:flex}
+.lb figure{max-width:min(520px,92vw)}
+.lb img{max-height:78vh;border-radius:8px;margin:0 auto}
+.lb figcaption{color:#F0E8DC;text-align:center;margin-top:14px;font-size:15px}
+.lb figcaption a{color:var(--gold)}
+.lb button{position:absolute;color:#fff;font-size:30px;width:48px;height:48px;border-radius:50%}
+.lb button:hover{background:rgba(255,255,255,.12)}
+.lb .x{top:14px;right:14px}.lb .pv{left:14px;top:calc(50% - 24px)}.lb .nx{right:14px;top:calc(50% - 24px)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,100px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:8px;font-size:14px;font-weight:600;z-index:500;transition:transform .3s;visibility:hidden}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+</style>
+</head>
+<body>
+<div id="biteDim"></div><div class="flash" id="flash"></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Flyer viewer">
+  <button class="x" id="lbX" aria-label="Close">×</button><button class="pv" id="lbP" aria-label="Previous">‹</button>
+  <figure><img id="lbI" alt=""><figcaption id="lbC"></figcaption></figure>
+  <button class="nx" id="lbN" aria-label="Next">›</button>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo.jpg" alt="">Troy Leo Club</a>
+    <nav><a href="#about">About</a><a href="#events">Events</a><a href="#ckd">CKD</a><a href="#faq">FAQ</a><a href="#join" class="join">Join</a></nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Troy High School, Fullerton</div>
+      <h1>Troy Leo Club</h1>
+      <p>The Troy High chapter of Lions Clubs International. We organize volunteer events, enter Leo competitions, share scholarship and grant opportunities, and run outreach for chronic kidney disease awareness.</p>
+      <div class="actions"><a class="btn btn-primary" href="#join">How to join</a><a class="btn btn-ghost" href="https://www.instagram.com/troyhighleoclub/" target="_blank" rel="noopener">Instagram ↗</a></div>
+    </div>
+    <div class="lion-col">
+      <button class="lion-btn" id="lionBtn" aria-label="Lion mascot — click it"></button>
+      <div class="lion-hint">click me ↑</div>
+    </div>
+  </div>
+</section>
+
+<div class="facts">
+  <dl class="wrap">
+    <div class="fact"><dt>Meetings</dt><dd>1st &amp; 3rd Fridays, lunch</dd></div>
+    <div class="fact"><dt>Room</dt><dd>W17 <small>Latest flyer — rooms change, check Instagram</small></dd></div>
+    <div class="fact"><dt>Google Classroom</dt><dd><code>fwpiiobi</code><button class="copy" data-copy="fwpiiobi">Copy</button></dd></div>
+  </dl>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <h2>About the club</h2>
+    <p class="lead">Leo Clubs are the youth program of Lions Clubs International. At Troy, members earn volunteer hours at events, and attending meetings counts toward hours through meeting minutes.</p>
+    <dl class="what">
+      <div><dt>Volunteering</dt><dd>Community events like Veterans Day, and floral decorating for the Lions International Rose Parade float over winter break.</dd></div>
+      <div><dt>Competitions</dt><dd>Leo contests like #HeartofaLeo, where we submitted a Project Kidney video.</dd></div>
+      <div><dt>Scholarships and grants</dt><dd>Announced at meetings and posted to Google Classroom.</dd></div>
+      <div><dt>CKD awareness</dt><dd>Outreach and videos about chronic kidney disease.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="events" style="padding-top:0">
+  <div class="wrap">
+    <div class="ev-head">
+      <h2>Recent events</h2>
+      <div class="filters" role="tablist">
+        <button class="on" data-f="all">All</button><button data-f="2026">2026–27</button><button data-f="2025">2025–26</button>
+      </div>
+    </div>
+    <div class="ev-grid" id="evGrid"></div>
+  </div>
+</section>
+
+<section class="ckd" id="ckd">
+  <div class="wrap">
+    <div>
+      <h2>Chronic kidney disease often goes unnoticed</h2>
+      <p class="lead">CKD usually has no symptoms early on, so many people don't know they have it. About 1 in 10 people worldwide have it. Our outreach reel and the CKD × LEO promo video were made to get more people checked.</p>
+    </div>
+    <a class="reel" href="https://www.instagram.com/troyhighleoclub/reel/DUKi9A8CEf-/" target="_blank" rel="noopener"><img src="img/ckd-reel.jpg" alt="Still from the Troy Leo CKD outreach reel"><span class="play"><i>▶</i>Watch the reel on Instagram</span></a>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <h2>How to join</h2>
+    <ol class="steps">
+      <li><b>Join the Google Classroom</b> with code <code>fwpiiobi</code>. Announcements, sign-ups and requirements are posted there.</li>
+      <li><b>Come to a meeting</b> on the 1st or 3rd Friday at lunch. Check Instagram for the room.</li>
+      <li><b>Sign up for events</b> through the forms posted on Instagram and Classroom. The <a href="https://docs.google.com/document/d/1KdOf-EgKWxefmSa0_8Xajm5zSoeEvGqBtCDrMAYlu5s/edit?tab=t.h0lily6k03uh" target="_blank" rel="noopener">Troy LEO Calendar</a> has the full schedule.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap faq-grid">
+    <div><h2>Common questions</h2><p class="lead">Anything else? Message <a href="https://www.instagram.com/troyhighleoclub/" target="_blank" rel="noopener">@troyhighleoclub</a>.</p></div>
+    <div>
+      <details><summary>Who can join?</summary><p>Any Troy High student. Join the Classroom and come to a meeting.</p></details>
+      <details><summary>Do meetings count as volunteer hours?</summary><p>Yes. Attending earns meeting minutes that count as volunteer hours. Events count separately.</p></details>
+      <details><summary>What is the Rose Parade float event?</summary><p>Lions International enters a float in the Rose Parade. Leos help with floral decorating at Phoenix Decorating in Irwindale over winter break (Dec 26–31 last season). Requirements are on Google Classroom.</p></details>
+      <details><summary>What is the IGEM interest form?</summary><p>A form to gauge interest in IGEM. Fill out the <a href="https://forms.cloud.microsoft/r/K7HqAeLtJJ" target="_blank" rel="noopener">IGEM Interest Form</a> if you want to be involved.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand"><img src="img/logo.jpg" alt="Troy Leo Club logo"><div><b>Troy Leo Club</b><div style="font-size:14px">A Lions Clubs International youth club</div></div></div>
+      <div><h4>Links</h4><ul>
+        <li><a href="https://www.instagram.com/troyhighleoclub/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://docs.google.com/document/d/1KdOf-EgKWxefmSa0_8Xajm5zSoeEvGqBtCDrMAYlu5s/edit?tab=t.h0lily6k03uh" target="_blank" rel="noopener">Troy LEO Calendar</a></li>
+        <li><a href="https://forms.cloud.microsoft/r/K7HqAeLtJJ" target="_blank" rel="noopener">IGEM Interest Form</a></li>
+        <li><a href="https://www.lionsclubs.org/en/member-resource-center" target="_blank" rel="noopener">LCIF Resources</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>800019019@fjuhsd.org <button class="copy" style="color:var(--gold);border-color:#4a3c33" data-copy="800019019@fjuhsd.org">Copy</button></li><li>Troy High School, Fullerton, CA</li></ul></div>
+    </div>
+    <div class="f-bot" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap"><span>© Troy Leo Club. Flyers from @troyhighleoclub.</span><span>Website by the <b style="color:#E9DFD2">Troy Web Development Club</b></span></div>
+  </div>
+</footer>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const IG='https://www.instagram.com/troyhighleoclub/';
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1800)};
+/* ---------- lion ---------- */
+function lionSVG(){
+  let mane='';
+  [[16,136,44,'#9C4A1C',0],[14,118,40,'#E07A2E',.2]].forEach(([n,R,r,c,o])=>{for(let i=0;i<n;i++){const a=i/n*Math.PI*2+o;mane+=`<circle cx="${(200+Math.cos(a)*R).toFixed(1)}" cy="${(210+Math.sin(a)*R).toFixed(1)}" r="${r}" fill="${c}" stroke="#3A2416" stroke-width="5"/>`}mane+=`<circle cx="200" cy="210" r="${R}" fill="${c}"/>`});
+  const teethT=[0,1,2,3,4].map(i=>`<path d="M${166+i*17} 272l8.5 13 8.5-13z" fill="#fff"/>`).join('');
+  const teethB=[0,1,2,3].map(i=>`<path d="M${174+i*17} 318l8.5-12 8.5 12z" fill="#fff"/>`).join('');
+  return `<svg class="lion" viewBox="0 0 400 420" aria-hidden="true">
+  <g>${mane}</g>
+  <circle cx="128" cy="118" r="30" fill="#F4C04E" stroke="#3A2416" stroke-width="5"/><circle cx="128" cy="118" r="15" fill="#F2A7A0"/>
+  <circle cx="272" cy="118" r="30" fill="#F4C04E" stroke="#3A2416" stroke-width="5"/><circle cx="272" cy="118" r="15" fill="#F2A7A0"/>
+  <ellipse cx="200" cy="215" rx="108" ry="102" fill="#F4C04E" stroke="#3A2416" stroke-width="5"/>
+  <path d="M180 120q20 18 40 0" fill="none" stroke="#E07A2E" stroke-width="6" stroke-linecap="round"/>
+  <ellipse cx="200" cy="265" rx="64" ry="48" fill="#FBE6BE"/>
+  <circle cx="140" cy="236" r="16" fill="#F2A7A0" opacity=".7"/><circle cx="260" cy="236" r="16" fill="#F2A7A0" opacity=".7"/>
+  <g class="eye"><circle cx="160" cy="198" r="15" fill="#3A2416"/><circle cx="165" cy="192" r="5" fill="#fff"/></g>
+  <g class="eye"><circle cx="240" cy="198" r="15" fill="#3A2416"/><circle cx="245" cy="192" r="5" fill="#fff"/></g>
+  <path class="brow" d="M146 174q14-10 28-4M226 170q14-6 28 4" fill="none" stroke="#3A2416" stroke-width="5" stroke-linecap="round"/><path class="brow-mad" d="M142 166l34 16M258 166l-34 16" fill="none" stroke="#3A2416" stroke-width="7" stroke-linecap="round"/>
+  <path d="M184 236h32q6 0 2 7l-12 13q-4 4-8 0l-12-13q-4-7-2-7z" fill="#3A2416"/>
+  <g class="mouth-shut"><path d="M200 256v14M200 270q-14 14-28 2M200 270q14 14 28 2" fill="none" stroke="#3A2416" stroke-width="5" stroke-linecap="round"/></g>
+  <g class="mouth-open">
+    <path d="M158 268q42 8 84 0q-2 56-42 56t-42-56z" fill="#5E1212" stroke="#3A2416" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M178 306q22-12 44 0q-6 14-22 14t-22-14z" fill="#E36F78"/>
+    <g class="jaw-top">${teethT}</g><g class="jaw-bot">${teethB}</g>
+  </g></svg>`;
+}
+const btn=$('#lionBtn');btn.innerHTML=lionSVG();const lion=btn.querySelector('svg');
+
+/* eyes follow cursor */
+addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height*.47),d=Math.hypot(dx,dy)||1,k=Math.min(7,d/40);
+  btn.querySelectorAll('.eye').forEach(el=>el.style.transform=`translate(${dx/d*k}px,${dy/d*k}px)`)});
+
+/* bite: lion lunges out of the page at you */
+let biting=false;
+function bite(){
+  if(biting)return;biting=true;
+  const r=btn.getBoundingClientRect();
+  const clone=document.createElement('div');clone.className='bite-clone';clone.innerHTML=lionSVG();
+  Object.assign(clone.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px'});
+  const cl=clone.querySelector('svg');cl.style.width='100%';
+  document.body.appendChild(clone);btn.style.visibility='hidden';
+  const scale=Math.min(innerWidth,innerHeight)*1.15/r.width;
+  const tx=innerWidth/2-(r.left+r.width/2),ty=innerHeight/2-(r.top+r.height*.72);
+  $('#biteDim').classList.add('on');
+  requestAnimationFrame(()=>{cl.classList.add('open');clone.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`});
+  const snap=(t)=>setTimeout(()=>{cl.classList.add('snap');$('#flash').classList.remove('on');void document.body.offsetWidth;$('#flash').classList.add('on');document.body.classList.remove('shake');void document.body.offsetWidth;document.body.classList.add('shake');setTimeout(()=>cl.classList.remove('snap'),120)},t);
+  snap(360);snap(620);
+  setTimeout(()=>{cl.classList.remove('open');clone.style.transition='transform .45s cubic-bezier(.5,0,.3,1)';clone.style.transform='none';$('#biteDim').classList.remove('on')},900);
+  setTimeout(()=>{clone.remove();btn.style.visibility='';biting=false},1380);
+}
+btn.addEventListener('click',bite);
+
+
+$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);toast('Copied '+b.dataset.copy)}catch(e){toast(b.dataset.copy)}});
+
+const F=[
+ {img:'veterans',d:'2026-11-11',y:'2026',t:'Veterans Day volunteer event',x:'Volunteering on our day off. Sign-up form was posted on Instagram.',u:'p/DfgSVBgm5hB'},
+ {img:'oct-meeting',d:'2026-10-23',y:'2026',t:'Club meeting in W17',x:'Activities for the upcoming month. Outreach applications were due that night.',u:'p/De1RaQeIL-w'},
+ {img:'first-meeting',d:'2026-09-30',y:'2026',t:'First meeting of the year',x:'Room W19. An introduction to Leo, first events, and how to get involved.',u:'p/Dd5WBgbI2pL'},
+ {img:'clubrush-2026',d:'2026-09-21',y:'2026',t:'Club Rush 2026',x:'Thanks to everyone who stopped by our photo op.',u:'p/DdksxHjm1CX'},
+ {img:'clubrush-table44',d:'2026-09-17',y:'2026',t:'Club Rush, Table 44',x:'September 17–18. Free candy at the table.',u:'p/DdXaiHMj6zh'},
+ {img:'yearbook',d:'2026-01-29',y:'2025',t:'Yearbook photo',x:'Thursday, Jan 29 at 12:55 by the 1000s buildings. Members wore red.',u:'p/DUEpXrsEhNw'},
+ {img:'rose-parade',d:'2025-12-26',y:'2025',t:'Rose Parade float decorating',x:'Floral decorating for the 2026 Lions International float, Dec 26–31, in Irwindale.',u:'p/DSarjOiktKJ'},
+ {img:'dec-meeting',d:'2025-12-12',y:'2025',t:'Club meeting in Room 334',x:'Upcoming events, competitions, scholarships and grants.',u:'p/DSK52PCCdNU'},
+ {img:'heartofaleo',d:'2025-11-24',y:'2025',t:'#HeartofaLeo video contest',x:'Our contest submission for #HeartofaLeo and #ProjectKidney.',u:'reel/DRc_fP7CeQZ'},
+];
+const fmt=d=>new Date(d+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+$('#evGrid').innerHTML=F.map((f,i)=>`<article class="ev" data-y="${f.y}" data-i="${i}" tabindex="0"><div class="ph"><img src="img/${f.img}.jpg" alt="${f.t} flyer" loading="lazy"></div><div class="meta">${fmt(f.d)}</div><h3>${f.t}</h3><p>${f.x}</p></article>`).join('');
+$$('.filters button').forEach(b=>b.onclick=()=>{$$('.filters button').forEach(x=>x.classList.toggle('on',x===b));$$('.ev').forEach(e=>e.classList.toggle('hide',b.dataset.f!=='all'&&e.dataset.y!==b.dataset.f))});
+let li=0;const vis=()=>$$('.ev:not(.hide)').map(e=>+e.dataset.i);
+function open(i){li=i;const f=F[i];$('#lbI').src=`img/${f.img}.jpg`;$('#lbI').alt=f.t;$('#lbC').innerHTML=`${f.t} · ${fmt(f.d)} · <a href="${IG}${f.u}/" target="_blank" rel="noopener">View on Instagram</a>`;$('#lb').classList.add('on')}
+const close=()=>$('#lb').classList.remove('on');
+const step=k=>{const v=vis(),p=v.indexOf(li);open(v[(p+k+v.length)%v.length])};
+$('#evGrid').addEventListener('click',e=>{const a=e.target.closest('.ev');if(a)open(+a.dataset.i)});
+$('#evGrid').addEventListener('keydown',e=>{const a=e.target.closest('.ev');if(a&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open(+a.dataset.i)}});
+$('#lbX').onclick=close;$('#lbN').onclick=()=>step(1);$('#lbP').onclick=()=>step(-1);
+$('#lb').addEventListener('click',e=>{if(e.target.id==='lb')close()});
+addEventListener('keydown',e=>{if(!$('#lb').classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+})();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-// Builds the four club sites into club-sites/dist/<site>/ with no third-party scripts:
+// Builds the club sites into club-sites/dist/<site>/ with no third-party scripts:
 // inline scripts become files (so the CSP can forbid inline JS), Firebase is bundled,
 // and TLL's React/Tailwind/Babel CDN copies are replaced by a local bundle and CSS file.
 import { build } from 'esbuild';
@@ -62,5 +62,14 @@ for (const site of ['vsa', 'superdw', 'carclub']) {
   writeFileSync(join(out, 'index.html'), html);
 }
 
+// Static sites (no sign-in, no Firebase): copied as they are. Their CSP in firebase.json allows
+// inline scripts because the pages use inline onclick handlers.
+const staticSites = ['anime', 'chinese', 'leo', 'roots', 'science'];
+for (const site of staticSites) {
+  const src = join(here, 'sites', site);
+  if (!existsSync(join(src, 'index.html'))) throw new Error(`${site}: index.html missing`);
+  cpSync(src, join(dist, site), { recursive: true });
+}
+
 rmSync(tmp, { recursive: true, force: true });
-console.log('Built club-sites/dist: vsa, tll, superdw, carclub');
+console.log(`Built club-sites/dist: vsa, tll, superdw, carclub, ${staticSites.join(', ')}`);
