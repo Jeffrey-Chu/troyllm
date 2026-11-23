@@ -83,6 +83,7 @@ Anime Club (`sites/anime`), Chinese Culture Club (`sites/chinese`), Leo Club (`s
 | Roots & Roads | https://troy-roots-and-roads.web.app |
 | The Science Club | https://troy-science-club.web.app |
 | Troy Clubs (hub of all sites) | https://troy-clubs.web.app |
+| THS GeoGuessr Club | https://troy-geoguessr-club.web.app |
 
 To add another static site: put it in `sites/<name>/index.html`, add `<name>` to `staticSites` in `build.mjs`, copy one of these targets in `firebase.json`, add the target in `.firebaserc`, and add the hosting site name to the list in `.github/workflows/deploy-club-sites.yml`.
 

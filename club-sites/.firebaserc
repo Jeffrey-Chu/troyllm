@@ -34,6 +34,9 @@
         ],
         "hub": [
           "troy-clubs"
+        ],
+        "geo": [
+          "troy-geoguessr-club"
         ]
       }
     }

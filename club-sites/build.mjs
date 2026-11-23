@@ -64,7 +64,7 @@ for (const site of ['vsa', 'superdw', 'carclub']) {
 
 // Static sites (no sign-in, no Firebase): copied as they are. Their CSP in firebase.json allows
 // inline scripts because the pages use inline onclick handlers.
-const staticSites = ['anime', 'chinese', 'leo', 'roots', 'science', 'hub'];
+const staticSites = ['anime', 'chinese', 'leo', 'roots', 'science', 'hub', 'geo'];
 for (const site of staticSites) {
   const src = join(here, 'sites', site);
   if (!existsSync(join(src, 'index.html'))) throw new Error(`${site}: index.html missing`);
