@@ -331,6 +331,30 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 .over.on .over-in>:is(.tag,h1,.sub,.win2,.rew2,.lore2,.row,.cards){animation:fadeUp .55s cubic-bezier(.2,.9,.3,1) both}
 .over.on .over-in>h1{animation-delay:.06s}.over.on .over-in>.sub{animation-delay:.12s}.over.on .over-in>.win2{animation-delay:.18s}.over.on .over-in>.rew2{animation-delay:.3s}.over.on .over-in>.lore2,.over.on .over-in>.cards{animation-delay:.38s}.over.on .over-in>.row{animation-delay:.45s}
 @media(prefers-reduced-motion:reduce){.over.on .over-in>*{animation:none!important}}
+/* v8 adventure title + loading */
+body .logo .t-kick{display:flex;align-items:center;gap:12px;color:#e8c98a;opacity:.95}
+.logo .t-kick::before,.logo .t-kick::after{content:"";height:1px;width:36px;background:linear-gradient(90deg,transparent,#e8c98a)}
+.logo .t-kick::after{background:linear-gradient(90deg,#e8c98a,transparent)}
+body .logo .t-mark{background:linear-gradient(100deg,#8a5a1a 0%,#f6dc94 22%,#fff6d8 34%,#e0a84a 52%,#9a6420 70%,#f2d48a 88%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+ text-shadow:none;filter:drop-shadow(0 3px 0 rgba(40,20,4,.55)) drop-shadow(0 10px 30px rgba(255,190,90,.22));animation:goldSheen 7s ease-in-out infinite}
+@keyframes goldSheen{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+.logo .t-swash{color:#e8c98a}
+#boot{background:radial-gradient(120% 80% at 50% 38%,#16303a 0%,#0a1a22 55%,#04090c 100%)}
+#boot::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
+#bootGo,#tGo{background:linear-gradient(180deg,#f6d88a,#d89a3a 60%,#b0742a);color:#2a1606;border:1px solid #ffe8b0;box-shadow:0 0 0 3px rgba(232,176,79,.18),0 10px 30px rgba(232,160,60,.3),inset 0 1px 0 rgba(255,255,255,.6);font-weight:600;letter-spacing:.02em}
+#bootGo:hover,#tGo:hover{filter:brightness(1.08)}
+#bootGo{padding:14px 34px;font-size:1.05rem}
+.ready #bootGo{animation:goPulse 2.4s ease-in-out infinite}
+@keyframes goPulse{0%,100%{box-shadow:0 0 0 3px rgba(232,176,79,.18),0 10px 30px rgba(232,160,60,.3),inset 0 1px 0 rgba(255,255,255,.6)}50%{box-shadow:0 0 0 8px rgba(232,176,79,.08),0 10px 40px rgba(232,160,60,.45),inset 0 1px 0 rgba(255,255,255,.6)}}
+.boot-tag{color:#c8a870}.boot-bar i{background:#e8b04f;box-shadow:0 0 8px #e8b04f}
+.titleui .t-in{position:relative;padding:22px 24px 20px;border-radius:18px;background:linear-gradient(160deg,rgba(10,24,30,.78),rgba(6,14,18,.62));border:1px solid rgba(232,201,138,.28);box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,240,200,.08)}
+.titleui .t-in::before,.titleui .t-in::after{content:"";position:absolute;width:22px;height:22px;border:2px solid #e8c98a;opacity:.7;pointer-events:none}
+.titleui .t-in::before{top:-1px;left:-1px;border-right:0;border-bottom:0;border-radius:18px 0 0 0}
+.titleui .t-in::after{bottom:-1px;right:-1px;border-left:0;border-top:0;border-radius:0 0 18px 0}
+.titleui .t-sub{color:#efe2c4}
+.titleui .t-next b{color:#f2d48a}
+@media(max-width:560px){.titleui .t-in{padding:16px 14px 14px}.logo .t-kick::before,.logo .t-kick::after{width:18px}}
+@media(prefers-reduced-motion:reduce){.logo .t-mark,.ready #bootGo{animation:none}}
 /* v7 loot, ranks, duel */
 .t-row2{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.t-row2 .btn{padding:8px 14px;font-size:.85rem}
 .lootrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 6px}
@@ -528,7 +552,7 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
  <canvas id="bootCv"></canvas>
  <div id="bootLogo" class="logo"></div>
  <div class="boot-foot">
-  <p class="boot-sub">A voyage across the islands of myth, and everything alive between them.</p>
+  <p class="boot-sub">Thirty legends of the sea, and everything alive between them.</p>
   <p class="boot-tag mono" id="bootTag">Culturing plankton</p>
   <div class="boot-bar"><i id="bootBar"></i></div>
   <div class="boot-go"><button class="btn" id="bootGo">Set sail</button><span class="boot-note mono">Best with sound on</span></div>
@@ -2159,7 +2183,7 @@ const BOSS3=[
  {kind:"serpent",v:"levi",deco:"spikes",humps:4,hr:1.5,nr:1.35,skin:"#10202a",fin:"#2a4050",atk:{s:"breath",c:["#ff8a2a","#ffd060","#ff3a1a"],name:"burning lamps from its mouth"},cult:"all"}
 ];
 /* the hero's attack is drawn from the myth of the place */
-const CULT_KEY=c=>/Sail/.test(c)?"sail":/Japan/.test(c)?"jp":/Arabian/.test(c)?"arab":/Chinese/.test(c)?"cn":/Greek|Greco/.test(c)?"greek":/Egypt/.test(c)?"egypt":/Slavic/.test(c)?"slav":/Irish/.test(c)?"irish":/Hindu/.test(c)?"hindu":/Arthur/.test(c)?"arthur":/Norse/.test(c)?"norse":/Aztec/.test(c)?"aztec":/Polynes/.test(c)?"poly":"sail";
+const CULT_KEY=c=>/Mesopotam/.test(c)?"meso":/Persian/.test(c)?"persia":/Korean/.test(c)?"kr":/Anglo/.test(c)?"saxon":/Sail/.test(c)?"sail":/Japan/.test(c)?"jp":/Arabian/.test(c)?"arab":/Chinese/.test(c)?"cn":/Greek|Greco/.test(c)?"greek":/Egypt/.test(c)?"egypt":/Slavic/.test(c)?"slav":/Irish/.test(c)?"irish":/Hindu/.test(c)?"hindu":/Arthur/.test(c)?"arthur":/Norse/.test(c)?"norse":/Aztec/.test(c)?"aztec":/Polynes/.test(c)?"poly":"sail";
 const PATK={
  sail:{name:"a full broadside",k:"volley",m:"ball",c:"#ffd070"},
  jp:{name:"Kusanagi's wind blade",k:"line",m:"crescent",c:"#bff4ff"},
@@ -2173,6 +2197,10 @@ const PATK={
  arthur:{name:"Excalibur",k:"sky",m:"sword",c:"#d8ecff"},
  norse:{name:"Mjölnir",k:"arc",m:"hammer",c:"#9fd8ff",ret:true},
  aztec:{name:"Xiuhcoatl, the fire serpent",k:"spiral",c:"#ff6a2a",c2:"#3ae0c8"},
+ meso:{name:"the axe of Gilgamesh",k:"arc",m:"axe",c:"#ffd890"},
+ persia:{name:"Rostam's arrow",k:"line",m:"arrow",c:"#9fffd8"},
+ kr:{name:"Jumong's arrow",k:"line",m:"arrow",c:"#e0b0ff"},
+ saxon:{name:"Beowulf's grip",k:"sky",m:"sword",c:"#ffd080"},
  poly:{name:"Māui's fishhook",k:"arc",m:"hook",c:"#e8e0c8"}
 };
 /* chest designs: shape dome | flat | clam | ark | egg */
@@ -2219,6 +2247,114 @@ const LOOT3={
 const RARITY=[{k:"common",name:"Common",c:"#c9bfa6"},{k:"rare",name:"Rare",c:"#7fd8ff"},{k:"legendary",name:"Legendary",c:"#ffcf6a"}];
 ISL.forEach(I=>{const m=MON3[I.id];if(m)I.mon=Object.assign({},I.mon,m,{v:m.v||""})});
 BOSS.forEach((b,i)=>Object.assign(b,BOSS3[i]));
+
+/* ============ v8: thirty islands, ten seas, story-true monsters ============ */
+/* reworked monsters for the original islands: the story's real figure, not a sea serpent */
+Object.assign(MON3,{
+ onogoro:{name:"Izanami, Queen of Yomi",kind:"sorceress",v:"yomi",skin:"#141018",belly:"#e8e0e4",eye:"#c8ffea",lore:"When Izanagi looked on his dead wife in the underworld, Izanami sent the hags of Yomi chasing him back to the world above.",atk:{s:"proj",m:"wraith",n:3,c:"#c8ffea",name:"the hags of Yomi"}},
+ thule:{name:"Boreas, the North Wind",kind:"titan",v:"wind",skin:"#a8b8c4",cloth:"#5a7a9a",acc:"#dfe8f0",lore:"The winged god of the north wind, who lived beyond the Rhipaean mountains on the road to Thule.",atk:{s:"wave",c:"#e8f6ff",name:"a blast of the north wind"}},
+ sekhet:{name:"Ammit, Devourer of Hearts",kind:"beast",v:"ammit",skin:"#c89a4a",belly:"#d8b070",acc:"#2a4ab8",lore:"At the weighing of the heart, Ammit waits beside the scales. A heart heavier than the feather of Ma'at is hers to eat.",atk:{s:"lunge",name:"her devouring jaws"}},
+ ryugu:{name:"Ryūjin, the Dragon King",kind:"titan",v:"king",wpn:"jewel",skin:"#2a6a5a",cloth:"#1a4a5a",acc:"#e0b048",lore:"The dragon king of the sea, who rules the tides with two jewels, one to raise them and one to calm them.",atk:{s:"proj",m:"orb",n:1,c:"#9ff8ff",name:"the tide-raising jewel"}},
+ huaguo:{name:"The Jade Emperor's heavenly host",kind:"army",skin:"#d8a830",lore:"When the Monkey King declared himself Great Sage Equal to Heaven, the Jade Emperor sent a hundred thousand heavenly soldiers against Flower-Fruit Mountain.",atk:{s:"proj",m:"spear",n:5,c:"#ffe8a0",name:"a rain of celestial spears"}},
+ jotun:{name:"Hrungnir, the stone giant",kind:"titan",v:"stone",wpn:"rock",skin:"#7a7a80",lore:"The strongest of the giants, with a head and a heart of stone. He met Thor in single combat and hurled a whetstone at him.",atk:{s:"proj",m:"rock",n:1,c:"#c8d0d8",name:"a hurled whetstone"}},
+ aztlan:{name:"Coyolxauhqui, the moon warrior",kind:"sorceress",v:"moon",skin:"#2a2a4a",belly:"#c8a888",eye:"#fff0c8",lore:"She led her four hundred brothers against their mother on Coatepec, the serpent mountain, and was cast into the sky as the moon.",atk:{s:"proj",m:"orb",n:3,c:"#fff0c8",name:"the bells of the moon"}}
+});
+/* three new seas, placed before the last one */
+const ISL8=[
+{id:"cedar",name:"The Cedar Forest",cult:"Mesopotamian",mus:"ar",topic:"l",obs:["Humbaba","giant"],
+ myth:"The sacred forest of the gods on the Cedar Mountain. Gilgamesh and his friend Enkidu crossed seven mountains to reach it and cut down its tallest tree.",
+ ship:{id:"magan",name:"Magan Reed Ship",sub:"Boat of Uruk",hull:"skiff",sail:"square",c:["#a8884a","#e8dcb8","#2a6ab8"],ex:["oars"],text:"Bundled reeds sealed with bitumen, the kind of hull that carried copper and cedar between Uruk and the Gulf."},
+ bio:"A cedar lifts water forty metres with no pump. Evaporation from its needles pulls an unbroken column up through the xylem, held together by hydrogen bonds.",
+ pal:{sky:["#1a2a22","#c89a5a"],sea:["#2a4a48","#0a1a1c"],land:["#3a5a32","#1a2a1a"],acc:"#e8c070",glow:"#ffd890",night:0,sun:"#ffe0a8"},
+ mon:{name:"Humbaba, guardian of the cedars",kind:"titan",v:"humbaba",wpn:"tree",skin:"#8a6a3a",acc:"#5a3a14",cloth:"#3a2a14",eye:"#ffcf6a",lore:"His roar is the flood, his mouth is fire, his breath is death. Enlil set him to guard the Cedar Forest.",atk:{s:"breath",c:["#ffb040","#ff7020","#ffe0a0"],name:"his breath of fire"}},
+ fx:"embers",tr:{name:"The Axe of Gilgamesh",art:"axe",lore:"Forged in Uruk for the journey to the Cedar Forest. Each axe weighed three talents, and Gilgamesh swung it to fell the tallest cedar."}},
+{id:"qaf",name:"Mount Qaf",cult:"Persian",mus:"ar",topic:"o",obs:["The White Div","giant"],
+ myth:"The emerald mountain at the edge of the world, home of the Simurgh. In the Shahnameh, Rostam passed through seven trials and slew the White Div in his cave.",
+ ship:{id:"simurgh",name:"Simurgh-Prowed Dhow",hull:"dhow",sail:"lateen",c:["#6a4a2a","#f0e8d0","#3ab8a0"],ex:["swan","lanterns"],text:"Her prow is carved as the Simurgh, the great bird who raised the hero Zal and gave him a feather to call her in need."},
+ bio:"Rostam cured the blinded king with the White Div's blood. Real blood carries oxygen on hemoglobin and delivers it to every tissue, the eyes included.",
+ pal:{sky:["#0e2a2a","#5aa88a"],sea:["#1a4a48","#061a1c"],land:["#2a6a4a","#0e2a20"],acc:"#c8f0d8",glow:"#7fffd0",night:0,sun:"#e8fff0"},
+ mon:{name:"The White Div",kind:"titan",v:"div",wpn:"mace",skin:"#e8e4dc",cloth:"#3a3a48",acc:"#9a9aa8",eye:"#ff5a3a",lore:"A giant demon, white as snow, who held the Shah of Iran captive and blind. Rostam fought him in his cave and tore out his liver.",atk:{s:"proj",m:"rock",n:2,c:"#e8e4dc",name:"a hurled millstone"}},
+ fx:"",tr:{name:"Feather of the Simurgh",art:"feather",lore:"Burn it and the Simurgh comes. She saved Rostam's life with it, healing his wounds by drawing her feathers across them."}},
+{id:"iram",name:"Iram of the Pillars",cult:"Arabian Nights",mus:"ar",topic:"k",obs:["The jinni of the bottle","giant"],
+ myth:"The lost city of a thousand pillars, swallowed by the sands. A fisherman nearby netted a brass bottle sealed with Solomon's seal, and a jinni poured out in smoke.",
+ ship:{id:"sambuk",name:"Brass-Bound Sambuk",hull:"dhow",sail:"lateen",c:["#8a5a2a","#f4e4c4","#d8a038"],ex:["lanterns","rays"],text:"A pearling sambuk bound in brass bands, her lamps fed from a bottle that never runs dry."},
+ bio:"A sealed vessel is a microbe's world. Yeast in a stoppered jar switches to fermentation when the oxygen runs out, turning sugar into ethanol and carbon dioxide.",
+ pal:{sky:["#2a1a3a","#e8905a"],sea:["#3a4a6a","#0e1426"],land:["#c89a5a","#6a4a2a"],acc:"#ffd890",glow:"#ffb860",night:0,sun:"#ffe8b0"},
+ mon:{name:"The Jinni of the Brass Bottle",kind:"titan",v:"jinn",skin:"#3a5aa8",cloth:"#5a6aa8",acc:"#e0b048",eye:"#ffe07a",lore:"Imprisoned by Solomon for eighteen centuries, he swore to kill whoever freed him. The fisherman tricked him back into the bottle.",atk:{s:"breath",c:["#7a9aff","#c8d8ff","#ffe07a"],name:"a storm of smoke"}},
+ fx:"",tr:{name:"The Brass Bottle",art:"jar",lore:"Stoppered with lead and stamped with the seal of Solomon. Whatever you do, do not open it."}},
+{id:"crete",name:"The Labyrinth of Crete",cult:"Greek",mus:"gr",topic:"i",obs:["The Minotaur","giant"],
+ myth:"Daedalus built the maze beneath King Minos's palace to hold the Minotaur. Theseus went in with Ariadne's ball of thread and came out alive.",
+ ship:{id:"theseus",name:"Ship of Theseus",hull:"greek",sail:"square",c:["#2a2420","#1a1a1a","#c8a048"],ex:["oars","eye"],text:"Black-sailed, as she was when Theseus sailed home and forgot to raise the white sail. The Athenians kept her for centuries, replacing every plank."},
+ bio:"The Minotaur was half bull, half man. Real hybrids follow Mendel's rules: a mule gets one set of chromosomes from each parent, and the unmatched sets make it sterile.",
+ pal:{sky:["#1a2440","#e8a87a"],sea:["#1a4a7a","#061428"],land:["#c8b08a","#6a5a48"],acc:"#ffe0a8",glow:"#ffd48a",night:0,sun:"#fff0c8"},
+ mon:{name:"The Minotaur",kind:"titan",v:"minotaur",wpn:"axe",skin:"#5a3a2a",cloth:"#a8242a",acc:"#e0b048",eye:"#ff6a3a",lore:"Son of Pasiphaë and the white bull of Poseidon. Every nine years, Athens sent seven youths and seven maidens into his maze.",atk:{s:"lunge",name:"the double axe"}},
+ fx:"",tr:{name:"Ariadne's Crown",art:"diamond",lore:"Dionysus gave it to Ariadne and later threw it into the sky, where it still shines as the Corona Borealis."}},
+{id:"gorgon",name:"Isle of the Gorgons",cult:"Greek",mus:"gr",topic:"m",obs:["Medusa","heads"],
+ myth:"At the far edge of the western ocean lived the three Gorgon sisters. Perseus cut off Medusa's head, watching her only in the mirror of his polished shield.",
+ ship:{id:"perseus",name:"Perseus's Winged Galley",hull:"greek",sail:"striped",c:["#e8e0d0","#e8e8f0","#5a8ac8"],ex:["swan","oars"],text:"Her prow carries Pegasus, the winged horse that sprang from Medusa's neck."},
+ bio:"Medusa's gaze froze men in place. Real paralysing toxins, like the tetrodotoxin of pufferfish, block the sodium channels that nerves need to fire.",
+ pal:{sky:["#0e1a1a","#4a6a5a"],sea:["#1a3a3a","#04100e"],land:["#5a6a5a","#1e2a24"],acc:"#c8e8c8",glow:"#a8ffb8",night:1,sun:"#e0f0e0"},
+ mon:{name:"Medusa",kind:"sorceress",v:"gorgon",skin:"#2a3a2a",belly:"#b8c8a8",eye:"#c8ff8a",lore:"The only mortal Gorgon. Her hair was living snakes, and one look turned any creature to stone.",atk:{s:"proj",m:"orb",n:1,c:"#c8ff8a",name:"the petrifying gaze"}},
+ fx:"",tr:{name:"The Mirrored Shield",art:"mirror",lore:"Athena's polished bronze shield. Perseus never looked at Medusa directly, only at her reflection."}},
+{id:"heorot",name:"Heorot",cult:"Anglo-Saxon",mus:"no",topic:"r",obs:["Grendel","giant"],
+ myth:"The great mead-hall of the Danish king Hrothgar. For twelve years Grendel came at night and carried off its warriors, until Beowulf sailed from Geatland.",
+ ship:{id:"geat",name:"Beowulf's Longship",hull:"longship",sail:"striped",c:["#4a3424","#c8a878","#a83a2a"],ex:["shields"],text:"Fourteen Geats rowed her across the whale-road to Denmark, shields hung along her sides."},
+ bio:"Grendel struck only at night and returned to his mere. Animals keep territories and daily rhythms too, timed by internal clocks and defended against intruders.",
+ pal:{sky:["#0a0e18","#2a3448"],sea:["#1a2a38","#040a10"],land:["#2a3a2a","#0e160e"],acc:"#e8c890",glow:"#ffc870",night:1,sun:"#e8e0d0"},
+ mon:{name:"Grendel",kind:"titan",v:"grendel",skin:"#3a4a3a",cloth:"#1a2018",eye:"#ffb040",lore:"A descendant of Cain who hated the sound of the hall's harp. Beowulf fought him bare-handed and tore off his arm.",atk:{s:"lunge",name:"his tearing claws"}},
+ fx:"",tr:{name:"Hrunting",art:"sword",lore:"The sword Unferth lent Beowulf for the fight in the mere. It had never failed a hero until it met Grendel's mother."}},
+{id:"onigashima",name:"Onigashima",cult:"Japanese",mus:"jp",topic:"p",obs:["The Oni chief","giant"],
+ myth:"The island of the oni. Momotarō, the boy born from a peach, sailed there with a dog, a monkey and a pheasant and defeated the demons.",
+ ship:{id:"momo",name:"Momotarō's Peach Boat",hull:"skiff",sail:"straw",c:["#8a5a3a","#f0e0c0","#ff8a8a"],ex:["banner"],text:"A small river boat flying a banner with a peach on it, crewed by a dog, a monkey and a pheasant."},
+ bio:"Momotarō won with a team, each ally with a different job. The immune system works the same way: macrophages, B cells and T cells each take a different part of the fight.",
+ pal:{sky:["#2a0e1a","#c84a4a"],sea:["#3a1a2a","#10040a"],land:["#4a2a2a","#1a0a0a"],acc:"#ffc0a0",glow:"#ff8a6a",night:0,sun:"#ffd0b0"},
+ mon:{name:"The Oni chief",kind:"titan",v:"oni",wpn:"club",skin:"#c83a2a",cloth:"#e8c040",acc:"#e8e0c8",eye:"#ffe060",lore:"A horned demon in a tiger-skin loincloth, armed with an iron kanabō studded with spikes.",atk:{s:"lunge",name:"the iron kanabō"}},
+ fx:"",tr:{name:"Uchide no Kozuchi",art:"hammer",lore:"The oni's magic mallet. Shake it, and whatever you wish for falls out."}},
+{id:"gumiho",name:"Gumiho Mountain",cult:"Korean",mus:"cn",topic:"q",obs:["The nine-tailed fox","beast"],
+ myth:"In Korean tales a fox that lives a thousand years grows nine tails and can take human form. It hides a glowing bead in its mouth that holds its power.",
+ ship:{id:"geobuk",name:"Geobukseon",sub:"Turtle Ship",hull:"turtle",sail:"battened",c:["#3a3a2a","#c8b088","#c83a2a"],ex:["dragon"],text:"Admiral Yi Sun-sin's armoured turtle ship, roofed in iron spikes, with a dragon head at the bow that breathes smoke."},
+ bio:"The gumiho was said to hunger for human livers. The real liver clears toxins from the blood and turns spare nitrogen into urea for the kidneys to excrete.",
+ pal:{sky:["#1a1a2a","#8a6aa8"],sea:["#2a2a4a","#08081a"],land:["#3a3a4a","#14141e"],acc:"#f0e0ff",glow:"#e0b0ff",night:1,sun:"#f0e8ff"},
+ mon:{name:"The Gumiho",kind:"beast",v:"fox",skin:"#f0ece4",eye:"#e0b0ff",lore:"A nine-tailed fox who takes the form of a beautiful woman. If someone swallows her fox bead, they gain her knowledge.",atk:{s:"proj",m:"orb",n:3,c:"#e0b0ff",name:"fox-fire"}},
+ fx:"petals",tr:{name:"The Fox Bead",art:"pearls",lore:"Yeowu guseul, the glowing marble a gumiho keeps in its mouth. It holds a thousand years of the fox's power."}},
+{id:"nian",name:"Isle of the Nian",cult:"Chinese",mus:"cn",topic:"n",obs:["The Nian","beast"],
+ myth:"Every New Year's Eve the Nian came out of the sea to devour crops and villagers, until people learned it feared the colour red, fire and loud noise.",
+ ship:{id:"springjunk",name:"Red-Sailed Spring Junk",hull:"junk",sail:"battened",c:["#6a2a1a","#c82a2a","#ffd060"],ex:["lanterns"],text:"Red sails, red lanterns and strings of firecrackers. Nothing the Nian will come near."},
+ bio:"The Nian came once a year, like clockwork. Seasonal animals track the year by day length: melatonin from the pineal gland rises with longer nights and triggers breeding, molting and migration.",
+ pal:{sky:["#1a0a0a","#a83a2a"],sea:["#2a1414","#0a0404"],land:["#4a2a1a","#1a0a06"],acc:"#ffd080",glow:"#ff6a4a",night:1,sun:"#ffd0a0"},
+ mon:{name:"The Nian",kind:"beast",v:"nian",skin:"#4a6a5a",acc:"#c8302a",eye:"#ffe060",lore:"A horned beast from beneath the sea that feeds at the turn of the year. The firecrackers and red banners of Chinese New Year began as ways to drive it off.",atk:{s:"lunge",name:"its New Year hunger"}},
+ fx:"embers",tr:{name:"The New Year Gong",art:"bell",lore:"Beaten at midnight with firecrackers and drums. The Nian has never come back to a village that keeps the noise going."}}
+];
+const BOSS8=[
+ {name:"The Bull of Heaven",kind:"beast",v:"bull",skin:"#1a1a38",rim:.18,acc:"#e8c060",big:true,atk:{s:"lunge",name:"the charge of the sky-bull"},cult:"meso",
+  fact:"Ishtar sent the Bull of Heaven to punish Gilgamesh, and each snort opened a pit that swallowed a hundred men. The real aurochs, the wild ancestor of cattle, stood almost two metres at the shoulder. The last one died in Poland in 1627."},
+ {name:"Polyphemus",kind:"titan",v:"cyclops",wpn:"rock",skin:"#8a6a4a",cloth:"#4a3a24",big:true,atk:{s:"proj",m:"rock",n:1,c:"#c8b8a0",name:"a boulder torn from the cliff"},cult:"greek",
+  fact:"The Cyclops who trapped Odysseus in his cave. Fossil skulls of dwarf elephants on Mediterranean islands have one large central opening for the trunk, which may have started the legend."},
+ {name:"Kumbhakarna",kind:"titan",v:"kumbha",wpn:"club",wc:"#2a2a2a",skin:"#2a3a5a",cloth:"#c8902a",acc:"#e8c060",big:true,atk:{s:"lunge",name:"the waking giant's blow"},cult:"hindu",
+  fact:"Ravana's giant brother, who slept for six months at a time and was woken to fight Rama. Real hibernators like ground squirrels cool to almost 0 °C and wake briefly every couple of weeks."}
+];
+const LEGS8=[["The Sea of Old Kingdoms","Review: water, blood and microbes"],["The Sea of Heroes","Review: genes, nerves and behavior"],["The Eastern Sea","Review: immunity, kidneys and clocks"]];
+const BOSSPAL8=[{sky:["#0a0e22","#3a2a5a"],sea:["#141a3a","#03040c"],glow:"#c8b0ff"},{sky:["#140e0a","#4a3020"],sea:["#22180e","#080402"],glow:"#ffc070"},{sky:["#0a0a1a","#2a2a4a"],sea:["#141a2a","#04060c"],glow:"#9ad0ff"}].map(p=>({...p,land:["#1a2a30","#0c171b"],acc:p.glow,night:1,sun:"#dfe8ee",storm:1}));
+/* Makara becomes Talos, the bronze giant who guarded Crete's coast and threw rocks at the Argo */
+Object.assign(BOSS[3],{name:"Talos",kind:"titan",v:"bronze",wpn:"rock",skin:"#b8803a",acc:"#e8b060",metal:true,big:true,atk:{s:"proj",m:"rock",n:3,c:"#ffd090",name:"hurled boulders"},cult:"greek",
+ fact:"A giant of living bronze who circled Crete three times a day and threw rocks at the Argo. One vein ran from his neck to his ankle, sealed by a single bronze nail. Medea pulled it out and his ichor ran out like molten lead."});
+LOOT3.b3=["Bronze rivet","Talos's ankle nail","Vial of ichor"];
+ISL.splice(18,0,...ISL8);LEGS.splice(6,0,...LEGS8);BOSS.splice(6,0,...BOSS8);BOSSPAL.splice(6,0,...BOSSPAL8);
+/* loot keys for sea bosses follow the sea index */
+{const old6=LOOT3.b6;LOOT3.b6=["Aurochs horn","Ishtar's lapis tether","Heart of the Bull of Heaven"];LOOT3.b7=["Cave-door chip","Odysseus's 'Nobody' token","The Cyclops's eye-stake"];LOOT3.b8=["Sleeping-mat thread","Rama's arrow fletching","Kumbhakarna's crown"];LOOT3.b9=old6}
+Object.assign(LOOT3,{
+ cedar:["Cedar resin","Enkidu's sandal","The seven terrors of Humbaba"],qaf:["Emerald shard of Qaf","Rakhsh's horseshoe","Rostam's tiger-skin cloak"],iram:["Pillar-capital fragment","Fisherman's net","The seal of Solomon"],
+ crete:["Labyrinth floor tile","Ball of Ariadne's thread","Bronze bull's horn of Minos"],gorgon:["Stone sparrow","Hermes's winged sandal","The cap of invisibility"],heorot:["Mead-hall horn","Grendel's claw","Golden collar of Wealhtheow"],
+ onigashima:["Kibi dango","Oni's tiger-skin scrap","Straw cloak of invisibility"],gumiho:["White fox hair","Mask of Hahoe","The nine-tail bell"],nian:["Firecracker string","Red spring couplet","Lantern of the Lantern Festival"]
+});
+Object.assign(CHEST3,{
+ cedar:{sh:"ark",w:"#6a4a2a",m:"#3a6ab8",e:"stud"},qaf:{sh:"dome",w:"#2a5a4a",m:"#e0c060",e:"wing"},iram:{sh:"dome",w:"#a87a3a",m:"#e8c060",e:"stud",met:1},
+ crete:{sh:"flat",w:"#a8302a",m:"#e0b048",e:"meander"},gorgon:{sh:"clam",w:"#5a6a5a",m:"#c8d0c8",e:"skull"},heorot:{sh:"flat",w:"#4a3424",m:"#c8a050",e:"stud"},
+ onigashima:{sh:"flat",w:"#1a1a1a",m:"#e0b048",e:"mon",lac:1},gumiho:{sh:"egg",w:"#e8e4dc",m:"#a88ae0",e:"none"},nian:{sh:"flat",w:"#b0201a",m:"#ffd060",e:"mon",lac:1}
+});
+var ISLE_SHAPE_ADD=({cedar:["peak",14,16],qaf:["peak",18,15],iram:["flat",3,19],crete:["hill",9,17],gorgon:["peak",11,14],heorot:["hill",6,17],onigashima:["peak",13,14],gumiho:["peak",15,15],nian:["hill",7,16]});
+ISL8.forEach(I=>{I.mon=Object.assign({},I.mon,{v:I.mon.v||"",n:0})});
+ISL.forEach(I=>{const m=MON3[I.id];if(m&&["onogoro","thule","sekhet","ryugu","huaguo","jotun","aztlan"].includes(I.id))I.mon=Object.assign({},m,{v:m.v||"",n:0})});
 
 /* ============ ART: ships, islands, creatures (inline SVG) ============ */
 const INK="#071319";
@@ -2877,6 +3013,7 @@ function fbm(x,y,s=0,o=4){let a=0,amp=.5,f=1;for(let i=0;i<o;i++){a+=amp*vnoise(
 const ISLE_SHAPE={skull:["hill",7,15],onogoro:["peak",12,13],magnetic:["peak",17,16],penglai:["hill",4,17],thule:["peak",9,17],sekhet:["flat",2.4,19],buyan:["hill",8,15],aeaea:["hill",8,17],
  erytheia:["mesa",9,17],tir:["hill",6,19],hybrasil:["ring",4,17],ogygia:["hill",10,16],lanka:["peak",13,18],ryugu:["hill",4,15],roc:["peak",19,15],avalon:["hill",7,17],ka:["hill",6,17],
  huaguo:["karst",8,17],jotun:["peak",15,18],aztlan:["flat",3,18],hawaiki:["volcano",15,17]};
+if(typeof ISLE_SHAPE_ADD!=="undefined")Object.assign(ISLE_SHAPE,ISLE_SHAPE_ADD);
 function isleBuild(I){
  const id=I.id,P=I.pal,[kind,HH,R]=ISLE_SHAPE[id]||["hill",8,16],seed=ISL.indexOf(I)*3.17+1,g=new T3.Group(),anim=[];
  const sand=C3(mix(P.land[0],"#d9c79a",.55)),l0=C3(P.land[0]),l1=C3(P.land[1]),rock=C3(mix(P.land[1],"#6a6e72",.45)),snow=C3("#eef6f8"),acc=P.acc;
@@ -3126,9 +3263,12 @@ function monBuild(spec){
   const prof=[[2.7,-.6],[2.3,.4],[1.6,2],[1,3.6],[.74,4.6],[.86,5.4],[.6,6.1]].map(([r,y])=>new T3.Vector2(r*S,y*S));fig.add(mesh(new T3.LatheGeometry(prof,30),robeM));
   fig.add(mesh(new T3.TorusGeometry(2.55*S,.1*S,6,40),goldM,[0,-.2*S,0],[Math.PI/2,0,0]),mesh(new T3.TorusGeometry(.78*S,.08*S,6,24),goldM,[0,4.6*S,0],[Math.PI/2,0,0]));
   fig.add(mesh(new T3.SphereGeometry(.55*S,16,12),skinM,[0,6.8*S,0],null,[1,1.12,1]),mesh(new T3.SphereGeometry(.62*S,14,10,0,Math.PI*2,0,Math.PI*.62),hairM,[.1*S,6.9*S,0]),mesh(new T3.ConeGeometry(.75*S,3*S,10,1,true),hairM,[.35*S,5.6*S,0]));
-  fig.add(mesh(new T3.TorusGeometry(.5*S,.07*S,6,20),goldM,[0,7.3*S,0],[Math.PI/2,0,0]));[1,-1].forEach(d=>{const e=glowSprite(.45*S,.95);e.position.set(-.5*S,6.85*S,d*.2*S);fig.add(e)});
+  fig.add(mesh(new T3.TorusGeometry(.5*S,.07*S,6,20),goldM,[0,7.3*S,0],[Math.PI/2,0,0]));
+  if(spec.v==="gorgon"){const snM=M("#3a6a3a",{map:scaleTex(),roughness:.5});for(let k=0;k<14;k++){const a=k/14*Math.PI*2,r0=V3(.1*S+Math.cos(a)*.45*S,7.1*S,Math.sin(a)*.5*S),c=new T3.CatmullRomCurve3([r0,r0.clone().add(V3(Math.cos(a)*.6*S,.5*S,Math.sin(a)*.6*S)),r0.clone().add(V3(Math.cos(a)*1.1*S,.1*S+(k%3)*.2*S,Math.sin(a)*1.1*S)),r0.clone().add(V3(Math.cos(a)*1.4*S,.6*S,Math.sin(a)*1.3*S))]);fig.add(mesh(new T3.TubeGeometry(c,10,.07*S,5),snM));fig.add(mesh(new T3.SphereGeometry(.11*S,8,6),snM,[c.points[3].x,c.points[3].y,c.points[3].z],null,[1.4,.8,1]))}}
+  if(spec.v==="moon"){const disc=mesh(new T3.CircleGeometry(2.2*S,40),new T3.MeshBasicMaterial({color:C3("#f4ecd8"),transparent:true,opacity:.85}),[1.2*S,6.6*S,0],[0,-Math.PI/2,0]);fig.add(disc);const hl=glowSprite(7*S,.45,"#fff0c8");hl.position.set(1.3*S,6.6*S,0);fig.add(hl);[1,-1].forEach(d=>fig.add(mesh(new T3.SphereGeometry(.22*S,10,8),goldM,[-.3*S,6.4*S,d*.75*S])))}
+  if(spec.v==="yomi"){for(let k=0;k<6;k++){const a=k/6*Math.PI*2;fig.add(mesh(new T3.ConeGeometry(.18*S,2.4*S,5),hairM,[.2*S+Math.cos(a)*.5*S,5.2*S,Math.sin(a)*.6*S],[Math.sin(a)*.2,0,Math.cos(a)*.15]))}}[1,-1].forEach(d=>{const e=glowSprite(.45*S,.95);e.position.set(-.5*S,6.85*S,d*.2*S);fig.add(e)});
   const arms=[1,-1].map(d=>chain(8,.22*S,.16*S,0)),staff=new T3.Group();root.add(staff);staff.add(mesh(new T3.CylinderGeometry(.07*S,.09*S,6*S,7),goldM,[0,-.5*S,0]),mesh(new T3.SphereGeometry(.38*S,16,12),orbM,[0,2.7*S,0]));const orbG=glowSprite(3*S,.7);orbG.position.y=2.7*S;staff.add(orbG);
-  const pigs=[0,1,2].map(k=>{const g=grp(mesh(new T3.SphereGeometry(.5,12,8),M("#e8a8a0"),[0,0,0],null,[1.45,1,1]),mesh(new T3.CylinderGeometry(.2,.22,.25,10),M("#d88880"),[-.75,.05,0],[0,0,Math.PI/2]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,.22]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,-.22]));g.scale.setScalar(S);root.add(g);return g});
+  const pigs=(spec.v?[]:[0,1,2]).map(k=>{const g=grp(mesh(new T3.SphereGeometry(.5,12,8),M("#e8a8a0"),[0,0,0],null,[1.45,1,1]),mesh(new T3.CylinderGeometry(.2,.22,.25,10),M("#d88880"),[-.75,.05,0],[0,0,Math.PI/2]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,.22]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,-.22]));g.scale.setScalar(S);root.add(g);return g});
   upd=(t,st)=>{const L=Math.max(0,st.L);fig.position.y=.6+Math.sin(t*.8)*.25;fig.rotation.y=Math.sin(t*.3)*.12;const fy=fig.position.y;
    const shR=V3(0,6.1*S+fy,1*S),shL=V3(0,6.1*S+fy,-1*S),hR=V3(-1.3*S,4.8*S+fy,1.7*S).lerp(V3(-.8*S,8.6*S+fy,1.1*S),Math.min(1,L*1.6)),hL=V3(-1.7*S,5.2*S+fy,-1.5*S).lerp(V3(-3.4*S,6.4*S+fy,-.6*S),L);
    arms[0].set([shR,shR.clone().lerp(hR,.5).add(V3(.3*S,-.4*S,.4*S)),hR]);arms[1].set([shL,shL.clone().lerp(hL,.5).add(V3(.3*S,-.4*S,-.4*S)),hL]);
@@ -3202,6 +3342,149 @@ function monBuild(spec){
    tail.rotation.y=Math.sin(t*(2.4+Lp*6))*.4;jaw.rotation.z=.05+Lp*.6+(st.hurt||0)*.3}}
 
  return{root,mats,parts,update:upd,kind}}
+
+/* ============ v8: story-true figures (titans, beasts, the heavenly host) ============ */
+/* Same contract as monBuild: faces -x, update(t,st) with st.L (attack 0..1), st.tgt, st.hurt. Limbs are rigid groups (no per-frame geometry work). */
+function monBuild2(spec){
+ const kind=spec.kind,v=spec.v||"",big=!!spec.big,glow=spec.glow||"#8ff5cf",root=new T3.Group(),mats=[],parts={};
+ const M=(c,o)=>{const m=new T3.MeshStandardMaterial(Object.assign({color:C3(c),roughness:.6,emissive:C3("#000000")},o||{}));mats.push(m);return m};
+ const V3=(x,y,z)=>new T3.Vector3(x,y,z);
+ const glowSp=(s,o=.9,c=glow)=>{const sp=new T3.Sprite(new T3.SpriteMaterial({map:softDot(),color:C3(c),transparent:true,blending:T3.AdditiveBlending,depthWrite:false,opacity:o}));sp.scale.setScalar(s);return sp};
+ const eyeM=new T3.MeshBasicMaterial({color:C3(spec.eye||glow)});
+ const eyes=(g,x,y,z,r)=>[1,-1].forEach(d=>{g.add(mesh(new T3.SphereGeometry(r,10,8),eyeM,[x,y,d*z]));const s=glowSp(r*7,.7,spec.eye||glow);s.position.set(x-.05,y,d*z);g.add(s)});
+ const bone=M("#efe6cf",{roughness:.5}),dark=M("#0c0a0c",{roughness:.8});
+ let upd=()=>{};
+ if(kind==="titan"){
+  const S=(big?1.3:1)*(spec.size||1),skinC=spec.skin||"#7a5a4a";
+  const stone=v==="stone",metal=v==="bronze";
+  const sk=M(skinC,stone?{map:rockTex(),flatShading:true,roughness:.9}:metal?{metalness:.85,roughness:.3,emissive:C3(mix(skinC,"#000000",.6))}:{map:scaleTex(),roughness:.62});
+  const cloth=M(spec.cloth||mix(skinC,"#000000",.5),{roughness:.8,side:T3.DoubleSide}),gold=M(spec.acc||"#e0b048",{metalness:.8,roughness:.32});
+  const fig=new T3.Group();root.add(fig);parts.body=fig;
+  const hunch=v==="grendel"?.35:0,smoke=v==="jinn";
+  // legs (wading), or a smoke tail for the jinni
+  const legs=[];if(smoke){const tail=mesh(new T3.ConeGeometry(1.5*S,4.5*S,16,1,true),M(spec.cloth||"#6a7aa8",{transparent:true,opacity:.38,emissive:C3(glow),emissiveIntensity:.12,side:T3.DoubleSide,depthWrite:false}),[0,1.2*S,0],[Math.PI,0,0]);fig.add(tail);parts.tail=tail;
+   for(let k=0;k<5;k++){const c=new T3.Sprite(new T3.SpriteMaterial({map:cloudTex(40+k),color:C3(mix(spec.cloth||"#6a7aa8","#ffffff",.3)),transparent:true,opacity:.55,depthWrite:false}));c.scale.set(4*S,2*S,1);c.position.set((k-2)*.6*S,(-.2+k*.5)*S,(k%2?1:-1)*.5*S);fig.add(c)}}
+  else[1,-1].forEach(d=>{const g=new T3.Group();g.position.set(0,3*S,d*.75*S);g.add(mesh(new T3.CylinderGeometry(.62*S,.5*S,3.4*S,10),stone?sk:spec.legs?M(spec.legs):sk,[0,-1.7*S,0]));fig.add(g);legs.push(g)});
+  // torso
+  const tor=new T3.Group();tor.position.y=3*S;fig.add(tor);
+  const chestR=v==="kumbha"?1.9:v==="grendel"?1.25:1.4;
+  const prof=[[1*S,0],[1.15*S,.6*S],[1.25*S*chestR/1.4*1.05,1.8*S],[1.45*S*chestR/1.4,2.8*S],[.6*S,3.6*S]].map(([r,y])=>new T3.Vector2(r,y));
+  tor.add(mesh(new T3.LatheGeometry(prof,stone?7:16),sk,[0,0,0],null,[1,1,.78]));
+  if(v==="kumbha")tor.add(mesh(new T3.SphereGeometry(1.55*S,16,12),sk,[-.35*S,1.1*S,0],null,[1,1,1.05]));
+  // waist cloth / robe / armour
+  if(v==="king"||v==="wind"){tor.add(mesh(new T3.LatheGeometry([[1.3,-2.4],[1.25,-.6],[1.2,.8],[1.45,2.6],[.6,3.5]].map(([r,y])=>new T3.Vector2(r*S,y*S)),18),cloth,[0,0,0],null,[1.03,1,.82]))}
+  else if(!smoke)tor.add(mesh(new T3.CylinderGeometry(1.12*S,1.25*S,1*S,14,1,true),cloth,[0,.2*S,0],null,[1,1,.8]));
+  if(metal||v==="kumbha"||v==="king")tor.add(mesh(new T3.TorusGeometry(1.15*S,.1*S,6,24),gold,[0,.75*S,0],[Math.PI/2,0,0],[1,.8,1]));
+  if(v==="wind")for(let k=0;k<2;k++){const d=k?1:-1,w=new T3.Shape();w.moveTo(0,0);w.quadraticCurveTo(1.5,2.6,4.2,3.4);w.quadraticCurveTo(3.2,1.6,3.6,.4);w.quadraticCurveTo(2.2,.6,1.6,-1.2);w.closePath();
+   const wm=mesh(new T3.ShapeGeometry(w),M(spec.acc||"#c8d8e8",{side:T3.DoubleSide,emissive:C3(glow),emissiveIntensity:.15}),[.9*S,2.6*S,d*.5*S],[0,d*-.9,0]);wm.scale.setScalar(S*1.2);tor.add(wm);(parts.wings=parts.wings||[]).push(wm)}
+  // head
+  const hd=new T3.Group();hd.position.set(-.15*S-hunch*1.2*S,3.95*S-hunch*.8*S,0);tor.add(hd);parts.head=hd;
+  const hs=v==="kumbha"?1.25:1;
+  if(v==="minotaur"){hd.add(mesh(new T3.SphereGeometry(.85*S,16,12),sk,[0,.1*S,0],null,[1.1,1,.95]),mesh(new T3.CylinderGeometry(.45*S,.6*S,1.1*S,12),sk,[-.8*S,-.15*S,0],[0,0,Math.PI/2+.3]),mesh(new T3.SphereGeometry(.42*S,12,8),dark,[-1.3*S,-.3*S,0],null,[.5,.8,1.1]));
+   [1,-1].forEach(d=>{const h=new T3.CatmullRomCurve3([V3(0,.5*S,d*.6*S),V3(0,.8*S,d*1.4*S),V3(-.4*S,1.5*S,d*1.8*S),V3(-.9*S,1.8*S,d*1.6*S)]);hd.add(mesh(new T3.TubeGeometry(h,10,.13*S,6),bone));hd.add(mesh(new T3.TorusGeometry(.18*S,.05*S,6,12),gold,[-1.42*S,-.35*S,0],[0,Math.PI/2,0]))});eyes(hd,-.62*S,.35*S,.42*S,.09*S)}
+  else{hd.add(mesh(new T3.SphereGeometry(.85*S*hs,18,14),sk,[0,0,0],null,[1,1.12,.95]));
+   const ey=v==="cyclops"?0:1;if(ey)eyes(hd,-.72*S*hs,.2*S*hs,.32*S*hs,(v==="grendel"?.13:.1)*S);
+   else{hd.add(mesh(new T3.SphereGeometry(.38*S,16,12),M("#f2ece0",{roughness:.3}),[-.68*S,.22*S,0]));hd.add(mesh(new T3.SphereGeometry(.2*S,12,10),eyeM,[-.98*S,.22*S,0]));const s=glowSp(2*S,.8,spec.eye||glow);s.position.set(-1.1*S,.22*S,0);hd.add(s)}
+   // mouth
+   hd.add(mesh(new T3.BoxGeometry(.12*S,.12*S,.6*S*hs),dark,[-.8*S*hs,-.35*S*hs,0]));
+   if(v==="oni"||v==="kumbha"||v==="humbaba"||v==="div"||v==="grendel")[1,-1].forEach(d=>hd.add(mesh(new T3.ConeGeometry(.07*S,.32*S,5),bone,[-.82*S*hs,-.3*S*hs,d*.22*S],[0,0,0])));
+   if(v==="oni"||v==="div"){const n=v==="oni"?2:2;[1,-1].slice(0,n).forEach(d=>{const h=new T3.CatmullRomCurve3(v==="div"?[V3(0,.7*S,d*.4*S),V3(.4*S,1.3*S,d*.9*S),V3(1.1*S,1.4*S,d*1.1*S),V3(1.4*S,.9*S,d*1.2*S)]:[V3(-.1*S,.75*S,d*.35*S),V3(-.15*S,1.3*S,d*.45*S),V3(-.35*S,1.7*S,d*.4*S)]);hd.add(mesh(new T3.TubeGeometry(h,8,.12*S,6),bone))})}
+   if(v==="humbaba"){for(let k=0;k<14;k++){const a=k/14*Math.PI*2;hd.add(mesh(new T3.ConeGeometry(.22*S,.9*S,5),M(spec.acc||"#6a4a1a",{roughness:.9}),[.15*S,Math.sin(a)*.95*S,Math.cos(a)*.95*S],[a,0,0]))}
+    for(let k=0;k<4;k++)hd.add(mesh(new T3.TorusGeometry(.22*S+k*.06*S,.03*S,4,14,Math.PI),dark,[-.7*S,.55*S-k*.18*S,0],[0,Math.PI/2,0]))}
+   if(v==="king"||v==="kumbha"){const cr=new T3.Group();cr.position.y=.85*S*hs;hd.add(cr);cr.add(mesh(new T3.CylinderGeometry(.62*S*hs,.7*S*hs,.55*S,12,1,true),gold));for(let k=0;k<6;k++){const a=k/6*Math.PI*2;cr.add(mesh(new T3.ConeGeometry(.12*S,.5*S,4),gold,[Math.cos(a)*.62*S*hs,.45*S,Math.sin(a)*.62*S*hs]))}
+    if(v==="king"){[1,-1].forEach(d=>{const w=new T3.CatmullRomCurve3([V3(-.85*S,-.2*S,d*.2*S),V3(-1.4*S,-.5*S,d*.6*S),V3(-1.5*S,-1.3*S,d*.9*S),V3(-1.1*S,-2*S,d*1.1*S)]);hd.add(mesh(new T3.TubeGeometry(w,12,.04*S,4),gold));
+      const ant=new T3.CatmullRomCurve3([V3(0,.9*S,d*.3*S),V3(.4*S,1.6*S,d*.6*S),V3(1*S,2.1*S,d*.7*S)]);hd.add(mesh(new T3.TubeGeometry(ant,8,.07*S,5),bone))});
+     hd.add(mesh(new T3.ConeGeometry(.5*S,1.4*S,10),M("#e8e0cc",{roughness:.8}),[-.55*S,-1*S,0],[Math.PI,0,0]))}}
+   if(v==="wind"){hd.add(mesh(new T3.ConeGeometry(.65*S,1.6*S,12),M("#e8eef2",{roughness:.9}),[-.4*S,-1*S,0],[Math.PI,0,.2]));hd.add(mesh(new T3.SphereGeometry(.9*S,14,10,0,Math.PI*2,0,Math.PI*.55),M("#dfe8ee",{roughness:.9}),[.1*S,.15*S,0]))}
+   if(v==="jinn"){hd.add(mesh(new T3.ConeGeometry(.3*S,1.1*S,8),M("#1a1a2a"),[.1*S,1.3*S,0]));hd.add(mesh(new T3.TorusGeometry(.18*S,.05*S,6,14),gold,[-.1*S,-.2*S,.95*S],[0,Math.PI/2,0]))}
+   if(v==="bronze"){hd.add(mesh(new T3.SphereGeometry(.92*S,16,10,0,Math.PI*2,0,Math.PI*.5),gold,[0,.1*S,0]));hd.add(mesh(new T3.BoxGeometry(1.4*S,.35*S,.12*S),M("#a8242a",{roughness:.8}),[.3*S,1.1*S,0]))}
+   if(v==="cyclops"){hd.add(mesh(new T3.SphereGeometry(.95*S,14,10,0,Math.PI*2,0,Math.PI*.45),M("#2a1e14",{roughness:.95}),[.05*S,.15*S,0]));hd.add(mesh(new T3.ConeGeometry(.55*S,1.2*S,10),M("#3a2a1a",{roughness:.95}),[-.45*S,-1*S,0],[Math.PI,0,.25]))}
+   if(v==="stone"){for(let k=0;k<3;k++){const a=(k-1)*.7;hd.add(mesh(new T3.ConeGeometry(.22*S,.9*S,4),sk,[.1*S,.95*S,Math.sin(a)*.5*S],[a,0,0]))}}}
+  // arms: shoulder group -> forearm group -> hand/weapon
+  const arms=[1,-1].map(d=>{const sh=new T3.Group();sh.position.set(-hunch*.6*S,3.25*S,d*1.55*S*(chestR/1.4));tor.add(sh);
+   const up=mesh(new T3.CylinderGeometry(.42*S,.36*S,2*S,10),sk,[0,-1*S,0]);sh.add(up);sh.add(mesh(new T3.SphereGeometry(.5*S,10,8),metal||v==="kumbha"?gold:sk));
+   const fa=new T3.Group();fa.position.y=-2*S;sh.add(fa);fa.add(mesh(new T3.CylinderGeometry(.36*S,.3*S,(v==="grendel"?2.6:1.9)*S,10),sk,[0,-.95*S*(v==="grendel"?1.35:1),0]));
+   const hand=new T3.Group();hand.position.y=-(v==="grendel"?2.6:1.95)*S;fa.add(hand);hand.add(mesh(new T3.SphereGeometry(.42*S,10,8),sk,[0,0,0],null,[1,1.1,.8]));
+   if(v==="grendel")for(let f=0;f<4;f++)hand.add(mesh(new T3.ConeGeometry(.07*S,.6*S,4),bone,[-.3*S,-.3*S,(f-1.5)*.16*S],[0,0,-2.6]));
+   return{sh,fa,hand,d}});
+  // weapon in the right hand
+  const W=spec.wpn||"",wp=new T3.Group();arms[0].hand.add(wp);
+  if(W==="club"){wp.add(mesh(new T3.CylinderGeometry(.32*S,.18*S,4.2*S,10),M(spec.wc||"#2a2a30",{metalness:.5,roughness:.5}),[0,-1.6*S,0]));for(let k=0;k<12;k++){const a=k*2.4;wp.add(mesh(new T3.ConeGeometry(.09*S,.26*S,4),gold,[Math.cos(a)*.3*S,-(1.2+k*.22)*S,Math.sin(a)*.3*S],[0,0,Math.PI/2*(Math.cos(a)>0?-1:1)]))}wp.rotation.z=.3}
+  else if(W==="axe"){wp.add(mesh(new T3.CylinderGeometry(.09*S,.09*S,4*S,6),M("#5a3a24"),[0,-1.2*S,0]));wp.add(mesh(new T3.BoxGeometry(1.1*S,.9*S,.1*S),gold,[-.45*S,-2.9*S,0]))}
+  else if(W==="mace"){wp.add(mesh(new T3.CylinderGeometry(.1*S,.1*S,3.2*S,6),M("#5a3a24"),[0,-1*S,0]));wp.add(mesh(new T3.SphereGeometry(.6*S,10,8),gold,[0,-2.8*S,0]));[1,-1].forEach(d=>wp.add(mesh(new T3.ConeGeometry(.2*S,.6*S,6),gold,[0,-2.8*S,d*.6*S],[d*Math.PI/2,0,0])))}
+  else if(W==="rock"){wp.add(mesh(new T3.DodecahedronGeometry(.95*S,0),M("#6a6a70",{map:rockTex(),flatShading:true}),[0,-.6*S,0]))}
+  else if(W==="jewel"){const j=mesh(new T3.SphereGeometry(.42*S,16,12),new T3.MeshBasicMaterial({color:C3(glow)}),[0,-.45*S,0]);wp.add(j);const s=glowSp(3*S,.8);s.position.y=-.45*S;wp.add(s);parts.orb=s}
+  else if(W==="tree"){wp.add(mesh(new T3.CylinderGeometry(.22*S,.32*S,5*S,7),M("#4a3424",{roughness:.95}),[0,-1.5*S,0]));wp.add(mesh(new T3.ConeGeometry(1*S,2.4*S,7),M("#2a4a2a"),[0,-4.3*S,0],[Math.PI,0,0]))}
+  const S0=S;parts.dome=hd;
+  upd=(t,st)=>{const L=st.L,Lp=Math.max(0,L),hu=st.hurt||0,br=Math.sin(t*1.1);
+   fig.position.set(-Lp*1.6*S0+hu*.6,(smoke?1.2*S0+Math.sin(t*.9)*.35:-.4*S0+br*.06),Math.sin(t*.35)*.3);fig.rotation.y=Math.sin(t*.3)*.1;
+   tor.rotation.z=hunch*.6+Lp*.28-hu*.2+br*.02;hd.rotation.z=-Lp*.15+Math.sin(t*.7)*.05;hd.rotation.y=Math.sin(t*.45)*.18;
+   legs.forEach((g,k)=>{g.rotation.z=(k?1:-1)*.05+Lp*.25*(k?1:-.4)});
+   const wind=Math.min(1,Lp*2.2),swing=Math.max(0,Lp*2.2-1.1);
+   arms.forEach(({sh,fa,d},k)=>{if(k===0){sh.rotation.z=lerp(.25,-2.3,wind)+swing*2.6+Math.sin(t*.9)*.05;sh.rotation.x=d*(.15+wind*.2);fa.rotation.z=lerp(-.35,-.9,wind)+swing*.6}
+    else{sh.rotation.z=.3+Math.sin(t*.9+1)*.07-Lp*.5;sh.rotation.x=d*.18;fa.rotation.z=-.5-Lp*.4}});
+   if(parts.wings)parts.wings.forEach((w,k)=>{w.rotation.x=Math.sin(t*1.6+k*Math.PI)*.12*(k?1:-1)});
+   if(parts.orb)parts.orb.material.opacity=.55+.3*Math.sin(t*3)+Lp*.4;
+   if(parts.tail){parts.tail.rotation.x=Math.PI+Math.sin(t*1.3)*.12;parts.tail.rotation.z=Math.sin(t*.9)*.1}}}
+ else if(kind==="beast"){
+  const S=(big?1.45:1)*(spec.size||1),skinC=spec.skin||"#4a3a2a";
+  const sk=M(skinC,{map:scaleTex(),roughness:.6,metalness:0,emissive:C3("#000000")}),bel=M(spec.belly||mix(skinC,"#e8dcc0",.45),{roughness:.7}),acc=M(spec.acc||"#e0b048",{metalness:.7,roughness:.35});
+  const body=new T3.Group();root.add(body);parts.body=body;
+  const fox=v==="fox",croc=v==="ammit";
+  body.add(mesh(new T3.SphereGeometry(1.6*S,20,14),sk,[0,2.4*S,0],null,[fox?1.55:1.45,fox?.75:.95,fox?.7:.85]));
+  if(v==="bull"||v==="nian")body.add(mesh(new T3.SphereGeometry(1.35*S,16,12),sk,[-1.1*S,2.95*S,0],null,[1,1.05,.95]));
+  if(croc)body.add(mesh(new T3.SphereGeometry(1.2*S,14,10),M("#b8883a",{roughness:.8}),[-.9*S,2.7*S,0],null,[1,1,1]));
+  // legs
+  const legs=[[-1.4,1],[-1.4,-1],[1.5,1],[1.5,-1]].map(([x,d],k)=>{const g=new T3.Group();g.position.set(x*S,2.1*S,d*.75*S*(fox?.8:1));body.add(g);
+   const lm=croc&&k>1?M("#6a4a2a",{roughness:.7}):sk;g.add(mesh(new T3.CylinderGeometry(.38*S*(fox?.6:1),.28*S*(fox?.6:1),2.4*S,8),lm,[0,-1.2*S,0]));g.add(mesh(new T3.SphereGeometry(.34*S*(fox?.7:1),8,6),v==="bull"?dark:lm,[-.05*S,-2.35*S,0],null,[1.2,.6,1]));return g});
+  // neck + head
+  const hd=new T3.Group();hd.position.set(-2.3*S,(fox?3.1:3.2)*S,0);body.add(hd);parts.head=hd;
+  const jaw=new T3.Group();hd.add(jaw);
+  if(v==="bull"){hd.add(mesh(new T3.BoxGeometry(1.4*S,1.1*S,1.1*S),sk,[-.3*S,0,0]),mesh(new T3.CylinderGeometry(.48*S,.55*S,.6*S,12),bel,[-1.1*S,-.3*S,0],[0,0,Math.PI/2]));
+   [1,-1].forEach(d=>{const h=new T3.CatmullRomCurve3([V3(0,.45*S,d*.5*S),V3(.1*S,.6*S,d*1.3*S),V3(-.5*S,1.2*S,d*1.8*S),V3(-1.2*S,1.6*S,d*1.6*S)]);hd.add(mesh(new T3.TubeGeometry(h,12,.16*S,6),acc))});
+   hd.add(mesh(new T3.TorusGeometry(.2*S,.05*S,6,12),acc,[-1.42*S,-.35*S,0],[0,Math.PI/2,0]));eyes(hd,-.7*S,.25*S,.5*S,.1*S);
+   for(let k=0;k<5;k++)body.add(mesh(new T3.SphereGeometry(.18*S,8,6),new T3.MeshBasicMaterial({color:C3(glow)}),[.2*S+k*.55*S-1.2*S,3.55*S,(k%2?.3:-.3)*S]))}
+  else if(croc){hd.add(mesh(new T3.SphereGeometry(.7*S,14,10),M("#3a5a2a",{map:scaleTex(),roughness:.6}),[0,0,0],null,[1.1,.8,.9]));const sn=M("#3a5a2a",{map:scaleTex(),roughness:.6});hd.add(mesh(new T3.BoxGeometry(2*S,.42*S,.7*S),sn,[-1.3*S,.05*S,0]));jaw.position.set(-.2*S,-.3*S,0);jaw.add(mesh(new T3.BoxGeometry(2*S,.28*S,.62*S),sn,[-1.1*S,0,0]));
+   for(let k=0;k<8;k++)[1,-1].forEach(d=>{hd.add(mesh(new T3.ConeGeometry(.05*S,.22*S,4),bone,[-.6*S-k*.22*S,-.2*S,d*.3*S],[Math.PI,0,0]));jaw.add(mesh(new T3.ConeGeometry(.05*S,.2*S,4),bone,[-.4*S-k*.22*S,.18*S,d*.26*S]))});
+   for(let k=0;k<12;k++){const a=k/12*Math.PI*2;hd.add(mesh(new T3.ConeGeometry(.16*S,.8*S,4),M("#c8902a",{roughness:.9}),[.45*S,Math.sin(a)*.6*S,Math.cos(a)*.6*S],[a,0,-.4]))}
+   hd.add(mesh(new T3.CylinderGeometry(.75*S,.8*S,.5*S,12,1,true),M("#2a4ab8",{side:T3.DoubleSide,roughness:.4}),[.5*S,-.2*S,0],[0,0,Math.PI/2]));eyes(hd,-.3*S,.35*S,.35*S,.09*S)}
+  else if(fox){const fur=M(spec.skin||"#e8e2d8",{roughness:.8});hd.add(mesh(new T3.SphereGeometry(.65*S,14,10),fur,[0,0,0]),mesh(new T3.ConeGeometry(.42*S,1.3*S,12),fur,[-.85*S,-.1*S,0],[0,0,Math.PI/2]),mesh(new T3.SphereGeometry(.1*S,8,6),dark,[-1.5*S,-.08*S,0]));
+   [1,-1].forEach(d=>hd.add(mesh(new T3.ConeGeometry(.24*S,.7*S,4),fur,[.05*S,.7*S,d*.35*S],[d*.2,0,0])));eyes(hd,-.42*S,.22*S,.3*S,.08*S);jaw.position.set(-.4*S,-.3*S,0);jaw.add(mesh(new T3.ConeGeometry(.25*S,.9*S,8),fur,[-.5*S,0,0],[0,0,Math.PI/2]))}
+  else{/* nian: lion-faced beast with a single horn */const mane=M(spec.acc||"#c83a2a",{roughness:.9});hd.add(mesh(new T3.SphereGeometry(.9*S,16,12),sk,[0,0,0]),mesh(new T3.BoxGeometry(1*S,.7*S,1*S),sk,[-.8*S,-.1*S,0]));
+   for(let k=0;k<16;k++){const a=k/16*Math.PI*2;hd.add(mesh(new T3.ConeGeometry(.28*S,1.1*S,5),mane,[.35*S,Math.sin(a)*1*S,Math.cos(a)*1*S],[a,0,-.5]))}
+   hd.add(mesh(new T3.ConeGeometry(.16*S,1.2*S,6),M("#e8d8a0",{metalness:.4,roughness:.35}),[-.3*S,1.1*S,0],[0,0,.35]));eyes(hd,-.85*S,.35*S,.4*S,.12*S);
+   jaw.position.set(-.5*S,-.45*S,0);jaw.add(mesh(new T3.BoxGeometry(1*S,.3*S,.95*S),sk,[-.35*S,0,0]));for(let k=0;k<5;k++)jaw.add(mesh(new T3.ConeGeometry(.06*S,.28*S,4),bone,[-.8*S,.2*S,(k-2)*.18*S]))}
+  // tails
+  const tails=[];const nT=fox?9:1;for(let k=0;k<nT;k++){const base=new T3.Group();base.position.set(2.2*S,2.7*S,0);body.add(base);const a=nT>1?(k/(nT-1)-.5)*2.2:0;base.rotation.x=a;let par=base;const segs=[];
+   for(let i=0;i<4;i++){const sg=new T3.Group();sg.position.x=i?(fox?.75:.6)*S:0;par.add(sg);const r=(fox?.32-i*.04:.14)*S;sg.add(mesh(new T3.SphereGeometry(fox?r*1.5:r,8,6),fox?M(i===3?"#ffffff":spec.skin||"#e8e2d8",{roughness:.85,emissive:C3(glow),emissiveIntensity:i===3?.6:.08}):sk,[(fox?.38:.3)*S,0,0],null,[fox?1.4:2.2,1,1]));segs.push(sg);par=sg}
+   if(fox){const f=glowSp(1.4*S,.55);f.position.x=.4*S;par.add(f)}tails.push({segs,a,base,k})}
+  parts.dome=hd;
+  upd=(t,st)=>{const L=st.L,Lp=Math.max(0,L),hu=st.hurt||0,ch=Math.min(1,Lp*1.6);
+   body.position.set(-ch*2.4*S+hu*.6,-.5*S+Math.abs(Math.sin(t*(1+Lp*4)))*.12*S,Math.sin(t*.4)*.3);body.rotation.z=-ch*.12+hu*.15+(fox?Math.sin(t*1.2)*.03:0);body.rotation.y=Math.sin(t*.35)*.12;
+   hd.rotation.z=(v==="bull"?-ch*.5:ch*.2)+Math.sin(t*.8)*.06;jaw.rotation.z=.05+ch*.55+hu*.3;
+   legs.forEach((g,k)=>{g.rotation.z=Math.sin(t*(1.6+ch*7)+k*Math.PI*.5+(k>1?Math.PI:0))*(.08+ch*.45)});
+   tails.forEach(({segs,a,base,k})=>{base.rotation.z=.7+(fox?.4:0)+Math.sin(t*1.1+k)*.12;segs.forEach((s,i)=>{s.rotation.z=Math.sin(t*1.6+k*.7+i*.8)*.22;s.rotation.y=Math.sin(t*1.2+k+i)*.15})})}}
+ else if(kind==="army"){
+  const S=big?1.7:1,gold=M("#e8c060",{metalness:.8,roughness:.3}),robe=M(spec.skin||"#c8a030",{roughness:.6,emissive:C3("#3a2a08")}),jade=M("#5ac8a0",{roughness:.35,metalness:.2}),face=M("#f0d8b8",{roughness:.55}),red=M("#b02a2a",{roughness:.6});
+  const cloud=(w,h,seed,col="#f6f0e0")=>{const g=new T3.Group();for(let k=0;k<4;k++){const c=new T3.Sprite(new T3.SpriteMaterial({map:cloudTex(seed+k),color:C3(col),transparent:true,opacity:.95,depthWrite:false}));c.scale.set(w*(1-k*.12),h,1);c.position.set((k-1.5)*w*.18,k%2*.15,(k%2?.3:-.3));g.add(c)}return g};
+  // the Jade Emperor, seated on a cloud throne
+  const emp=new T3.Group();emp.position.set(2.6*S,4.4*S,0);root.add(emp);parts.body=emp;emp.add(cloud(7*S,2.6*S,60,"#fff4d8"));
+  emp.add(mesh(new T3.LatheGeometry([[1.4,-.2],[1.3,.6],[1,1.8],[.55,2.7]].map(([r,y])=>new T3.Vector2(r*S,y*S)),16),robe,[0,.3*S,0]));emp.add(mesh(new T3.SphereGeometry(.48*S,14,10),face,[0,3.3*S,0]));
+  emp.add(mesh(new T3.BoxGeometry(1.1*S,.12*S,.9*S),gold,[0,3.85*S,0]));for(let k=0;k<6;k++)[1,-1].forEach(d=>emp.add(mesh(new T3.CylinderGeometry(.02*S,.02*S,.7*S,4),jade,[d*.5*S-.0,3.5*S,(k-2.5)*.15*S])));
+  emp.add(mesh(new T3.ConeGeometry(.3*S,.9*S,8),M("#1a1a1a"),[-.25*S,2.9*S,0],[Math.PI,0,.3]));const hal=glowSp(6*S,.45,"#ffe8a0");hal.position.set(.4*S,3.4*S,0);emp.add(hal);
+  [1,-1].forEach(d=>emp.add(mesh(new T3.BoxGeometry(.4*S,.12*S,.9*S),jade,[-.7*S,2*S,d*.4*S],[0,0,-.4])));
+  // the host of heavenly soldiers
+  const sol=[];const nS=6;for(let k=0;k<nS;k++){const g=new T3.Group();const row=k%2,col=Math.floor(k/2);g.position.set(-1.2*S+row*1.6*S,(.9+col*.9+row*.5)*S,(col-1)*3.4*S+(row?1.3:-1.3)*S);root.add(g);
+   g.add(cloud(2.8*S,1.1*S,64+k));g.add(mesh(new T3.CylinderGeometry(.4*S,.55*S,1.5*S,8),k%3===0?red:gold,[0,.95*S,0]));g.add(mesh(new T3.SphereGeometry(.28*S,10,8),face,[0,1.95*S,0]));
+   g.add(mesh(new T3.ConeGeometry(.34*S,.55*S,8),gold,[0,2.3*S,0]));g.add(mesh(new T3.BoxGeometry(.06*S,.5*S,.06*S),red,[0,2.6*S,0]));
+   const sp=new T3.Group();sp.position.set(-.2*S,1.2*S,.45*S);g.add(sp);sp.add(mesh(new T3.CylinderGeometry(.04*S,.04*S,3.2*S,5),M("#5a3a24"),[0,.6*S,0]),mesh(new T3.ConeGeometry(.12*S,.45*S,5),gold,[0,2.3*S,0]));
+   if(k===1){const fl=mesh(new T3.PlaneGeometry(1.1*S,1.6*S),M("#c82a2a",{side:T3.DoubleSide,emissive:C3("#3a0808")}),[.55*S,1.6*S,0]);sp.add(fl)}
+   sol.push({g,sp,k,y0:g.position.y,x0:g.position.x})}
+  parts.dome=emp;
+  upd=(t,st)=>{const L=st.L,Lp=Math.max(0,L),hu=st.hurt||0;emp.position.y=4.4*S+Math.sin(t*.6)*.3+hu*.4;emp.rotation.y=Math.sin(t*.25)*.1;hal.material.opacity=.35+.15*Math.sin(t*1.5)+Lp*.3;
+   sol.forEach(({g,sp,k,y0,x0})=>{g.position.y=y0+Math.sin(t*1.1+k*1.3)*.25;g.position.x=x0-Lp*1.2*S;sp.rotation.z=lerp(.15,-1.3,Math.min(1,Lp*1.8))+Math.sin(t*.8+k)*.05})}}
+ return{root,mats,parts,update:upd,kind}}
+{const _mb=monBuild;monBuild=function(spec){return spec&&(spec.kind==="titan"||spec.kind==="beast"||spec.kind==="army")?monBuild2(spec):_mb(spec)}}
 
 /* ============ 3D SCENE ============ */
 const WAVES=[[1,.2,.18,1.1,.34],[.6,-.8,.31,1.5,.21],[-.3,1,.55,2.1,.11],[.9,.45,1.1,2.9,.055],[-.7,.7,2.2,3.8,.028]].map(([x,z,k,w,a])=>{const l=Math.hypot(x,z);return[x/l,z/l,k,w,a]});
@@ -3389,7 +3672,7 @@ const Scene=(()=>{
   cloudG.children.forEach(c=>{c.material.color.copy(p.hor.clone().lerp(new T3.Color(1,1,1),p.night?.05:.55).lerp(p.top,p.storm*.6));c.material.opacity=(p.night?.45:.8)*(1+p.storm*.2)})}
  /* ----- builders ----- */
  function setIsle(n){if(isle){scene.remove(isle);disposeTree(isle);isle=null}if(n.type!=="isl")return;isle=bakeIsle(n.isl);isle.position.copy(ISO);scene.add(isle)}
- function setMon(n){if(mon){scene.remove(mon.root);disposeTree(mon.root);mon=null}const sp=nodeMon(n);mon=monBuild(Object.assign({},sp));mon.spec=sp;mon.big=sp.big;const mm=mon;bakeStatic(mm.root,(t,L)=>mm.update(t,{L,tgt:new T3.Vector3(-11,0,2),hurt:0,all:true,who:0}));addRim(mon.root,mix(sp.glow,"#ffffff",.35),sp.big?.55:.45);mon.root.position.copy(monP);scene.add(mon.root);mon.gone=false;mon.rise=1}
+ function setMon(n){if(mon){scene.remove(mon.root);disposeTree(mon.root);mon=null}const sp=nodeMon(n);mon=monBuild(Object.assign({},sp));mon.spec=sp;mon.big=sp.big;const mm=mon;bakeStatic(mm.root,(t,L)=>mm.update(t,{L,tgt:new T3.Vector3(-11,0,2),hurt:0,all:true,who:0}));addRim(mon.root,mix(sp.glow,"#ffffff",.35),sp.rim!=null?sp.rim:sp.big?.55:.45);mon.root.position.copy(monP);scene.add(mon.root);mon.gone=false;mon.rise=1}
  function bakeIsle(I){const g=isleBuild(I);const a=g.userData.anim;return bakeStatic(g,t=>a.forEach(f=>f(t)))}
  function setShip(s){if(ship){scene.remove(ship);disposeTree(ship)}shipSpec=s;ship=shipBuild(s);const sr=ship;bakeStatic(sr,t=>shipTick(sr,t));addRim(sr,"#cfe4ec",.22);ship.scale.setScalar(.95);scene.add(ship)}
  /* ----- monster driving ----- */
@@ -3550,11 +3833,11 @@ const Scene=(()=>{
    st.mode="play";const from=PL;if(chest){const c=chest;chest=null;tween(.8,p=>{c.scale.setScalar(1.5*(1-p))}).then(()=>{scene.remove(c);disposeTree(c)})}
    st.camOver=st.camOver?{pos:st.camOver.pos,tgt:st.camOver.tgt,t0:time,dur:1.6,w:1}:null;if(st.camOver){const c=st.camOver;tween(1.6,p=>{c.w=1-ease(p)}).then(()=>{st.camOver=null})}
    setShip(currentShip());
-   await tween(1.6,p=>{st.speed=easeIn(p)*26;st.yawT=-.28*ease(p);st.pitchT=-.05*ease(p)});
+   await tween(1.15,p=>{st.speed=easeIn(p)*26;st.yawT=-.28*ease(p);st.pitchT=-.05*ease(p)});
    oldIsle=isle;isle=null;node=n;boss=n.type==="boss";PA=from;PB=pal(nodePal(n));pt=0;layout();onMid&&onMid();
    if(n.type==="isl"){isle=bakeIsle(n.isl);isle.position.copy(ISO);isle.position.x+=150;scene.add(isle)}
    setMon(n);mon.rise=0;mon.root.visible=false;
-   await tween(2.2,p=>{if(isle)isle.position.x=ISO.x+150*(1-easeOut(p));st.speed=26*(1-easeOut(p))+(p<1?2:0);if(p>.9&&oldIsle){scene.remove(oldIsle);disposeTree(oldIsle);oldIsle=null}});
+   await tween(1.7,p=>{if(isle)isle.position.x=ISO.x+150*(1-easeOut(p));st.speed=26*(1-easeOut(p))+(p<1?2:0);if(p>.9&&oldIsle){scene.remove(oldIsle);disposeTree(oldIsle);oldIsle=null}});
    st.speed=0;st.yawT=0;st.pitchT=0;if(oldIsle){scene.remove(oldIsle);disposeTree(oldIsle);oldIsle=null}
    mon.root.visible=true;Sound.fx("roar");splash(monP.clone(),80,"#eef6f8",7);ripple(monP.x,monP.z,2);st.shake=.5;
    await tween(1.1,p=>{mon.rise=easeOut(p)});res()})},
@@ -3563,7 +3846,7 @@ const Scene=(()=>{
 /* ============ GAME v2: one continuous voyage ============ */
 const NODES=[];
 LEGS.forEach((L,li)=>{for(let k=0;k<3;k++)NODES.push({type:"isl",isl:ISL[li*3+k],leg:li,num:li*3+k+1});NODES.push({type:"boss",boss:BOSS[li],leg:li})});
-const CAP=5,ROMAN=["I","II","III","IV","V","VI","VII"];
+const CAP=5,ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X"];
 const fresh=()=>({unlocked:0,stars:{},ships:[],treasures:[],charms:{lens:1,nacre:1,tide:1},seen:{},stats:{},missed:[],best:0,mode:"normal",deck:{},diff:"medium",loot:{},rank:{t:0},deckV:0});
 function loadSave(){
  const d=fresh(),s=store.get("save",null);if(!s||typeof s!=="object")return d;
@@ -3586,7 +3869,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
 /* ---------------- BOOT: cleavage → wordmark ---------------- */
 const fr=x=>x-Math.floor(x);
 function markShip(c="#ede4cf",flag="#ff7a5c"){return `<g class="mk-ship"><path d="M-11 0 L11 0 Q9 5 4 6 L-6 6 Q-10 4 -11 0Z" fill="${c}"/><path d="M0 -1 V-17" stroke="${c}" stroke-width="1.3"/><path d="M1 -16 Q9 -9 8 -2 L1 -2Z" fill="${c}"/><path d="M-1 -14 Q-7 -8 -7 -2 L-1 -2Z" fill="${c}" opacity=".75"/><path d="M0 -17 L6 -15.5 L0 -14Z" fill="${flag}"/></g>`}
-function logoHTML(){return `<span class="mono t-kick">A voyage across the living seas</span><h1 class="t-mark">BioShip</h1>
+function logoHTML(){return `<span class="mono t-kick">Thirty legends · One ship</span><h1 class="t-mark">BioShip</h1>
 <svg class="t-swash" viewBox="0 0 320 40" aria-hidden="true"><defs><filter id="inkw"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="3"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter></defs>
 <g filter="url(#inkw)" fill="none" stroke="currentColor" stroke-linecap="round"><path class="sw1" pathLength="1" d="M4 26 C26 20 44 31 70 25 S118 17 146 24 S196 31 222 24 S280 16 316 23" stroke-width="1.7"/><path class="sw2" pathLength="1" d="M40 33 C60 29 78 36 100 32 S140 27 162 31" stroke-width="1" opacity=".55"/></g>
 <g transform="translate(238 23)"><g class="mk-bob">${markShip("currentColor")}</g></g></svg>`}
@@ -3600,7 +3883,7 @@ function boot(){
  function plan(){
   const narrow=W<640;nodes=NODES.map((n,i)=>{const u=i/(NODES.length-1);let x,y;
    if(narrow){const row=Math.floor(i/7),cu=(i%7)/6,dir=row%2?-1:1;x=W*(.5+dir*(cu-.5)*.78);y=H*(.47+row*.085)+Math.sin(cu*Math.PI)*H*.02*(row%2?-1:1)}
-   else{x=W*(.07+.86*u);y=H*(.6+.1*Math.sin(u*Math.PI*2.6+.5))+(h(i)-.5)*H*.03}
+   else{const per=Math.ceil(NODES.length/2),row=Math.floor(i/per),cu=(i%per)/(per-1),dir=row?-1:1;x=W*(.5+dir*(cu-.5)*.88);y=H*(.5+row*.2+.045*Math.sin(cu*Math.PI*3+row))+(h(i)-.5)*H*.02}
    const pts=Array.from({length:9},(_,k)=>{const a=k/9*Math.PI*2,r=(n.type==="boss"?0:1)*(5+h(i,k+2)*4)*(narrow?.8:1)*(1+(i%3)*.15);return[Math.cos(a)*r*1.35,Math.sin(a)*r*.75]});
    return{x,y,n,pts,at:u}});
   rose=narrow?{x:W*.84,y:H*.16,r:Math.min(W,H)*.09}:{x:W*.86,y:H*.2,r:Math.min(W,H)*.1};
@@ -3677,7 +3960,7 @@ function showCard(n){return new Promise(async res=>{
  const c=$("#card"),isl=n.type==="isl",first=NODES.indexOf(n)%4===0;
  c.innerHTML=`${first?`<span class="mono c-sea">Sea ${ROMAN[n.leg]} · ${esc(LEGS[n.leg][0])}</span>`:""}<span class="mono c-k">${isl?"Island "+n.num+" of "+ISL.length+" · "+esc(n.isl.cult):"Sea boss · "+esc(LEGS[n.leg][0])}</span><h2>${[...nodeName(n)].map((ch,k)=>`<i style="animation-delay:${k*35}ms">${ch===" "?"&nbsp;":esc(ch)}</i>`).join("")}</h2><span class="c-line"></span><p>${isl?"Guarded by "+esc(n.isl.mon.name):"Five hits to break it"}</p>`;
  c.classList.remove("on");void c.offsetWidth;c.classList.add("on");Sound.fx("gong");
- await wait(2300);c.classList.remove("on");c.classList.add("off");await wait(500);c.classList.remove("off");res()})}
+ await new Promise(r=>{const tm=setTimeout(r,1800),sk=()=>{clearTimeout(tm);removeEventListener("pointerdown",sk);r()};setTimeout(()=>addEventListener("pointerdown",sk,{once:true}),300)});c.classList.remove("on");c.classList.add("off");await wait(350);c.classList.remove("off");res()})}
 function startRun(i){
  const n=NODES[i],b=n.type==="boss";
  const DF=curDiff();R={i,n,boss:b,hull:DF.hull,maxHull:DF.hull,need:(b?5:3)+DF.need,hits:0,miss:0,qn:0,used:new Set(),nacre:false,q:null,done:false,limit:(b?25:30)+DF.time};Scene.mode("play");
@@ -4033,7 +4316,7 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 7.2 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
 
