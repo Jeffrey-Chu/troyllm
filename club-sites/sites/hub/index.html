@@ -55,10 +55,22 @@ h1, h2, h3, p { margin: 0; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 76px; }
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--ink); font-family: var(--display); font-stretch: 85%; font-weight: 800; font-size: 1.3rem; letter-spacing: .01em; }
 .brand b { display: inline-grid; place-items: center; height: 30px; padding: 2px 8px 0; border-radius: 3px; background: var(--felt); color: var(--letter); font-stretch: 75%; font-weight: 700; font-size: 1rem; letter-spacing: .06em; box-shadow: 0 0 0 2px #aab3bd, 0 2px 0 3px rgba(0,0,0,.12); }
-.top nav { display: flex; gap: 1.75rem; }
-.top nav a { color: var(--ink); text-decoration: none; font-weight: 700; }
-.top nav a:hover { color: var(--link); }
-@media (max-width: 720px) { .top nav a:nth-child(n+4) { display: none; } .top nav { gap: 1.1rem; } }
+.tabs { display: flex; gap: .35rem; }
+.tabs a { display: inline-flex; align-items: center; height: 2.3rem; padding: 3px .8rem 0; border-radius: 4px; color: var(--ink); text-decoration: none; font-family: var(--display); font-stretch: 82%; font-weight: 700; font-size: 1.02rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; transition: background .15s, color .15s; }
+.tabs a:hover { background: rgba(23,33,47,.08); }
+.tabs a[aria-current="page"] { background: var(--felt); color: var(--today); box-shadow: 0 0 0 2px #a9b2bc, 0 3px 0 2px rgba(23,33,47,.12); }
+@media (max-width: 980px) {
+  .top .wrap { flex-wrap: wrap; height: auto; padding: .9rem 0 .6rem; gap: .6rem; }
+  .tabs { width: 100%; overflow-x: auto; padding: 4px 2px 6px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+}
+[hidden] { display: none !important; }
+body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
+main { flex: 1; display: flex; flex-direction: column; }
+.panel { flex: 1; }
+.panel[data-tab="sites"], .panel[data-tab="projects"] { background: var(--paper); }
+.panel[data-tab="team"] { background: var(--felt); }
+.panel:focus { outline: none; }
 
 /* Hero */
 .hero { padding: clamp(1rem, 3vw, 2.25rem) 0 clamp(3.5rem, 7vw, 6rem); overflow: hidden; }
@@ -213,6 +225,34 @@ a.row.big:hover .ch { color: #ffe489; }
 .next li span { color: var(--slate); }
 .next .ask { margin-top: 1.4rem; font-weight: 700; }
 
+/* Home: right now */
+.now { margin-top: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 860px) { .now { grid-template-columns: 1fr; } }
+.now-card { display: grid; grid-template-columns: auto 1fr; gap: .15rem 1rem; align-items: center; padding: 1rem 1.1rem; background: var(--paper); border: 1px solid rgba(23,33,47,.16); border-radius: 6px; color: var(--ink); text-decoration: none; box-shadow: 0 10px 22px -18px rgba(23,33,47,.6); transition: transform .15s, box-shadow .15s; }
+.now-card:hover { transform: translateY(-2px); box-shadow: 0 16px 26px -18px rgba(23,33,47,.7); }
+.now-card .plate { grid-row: 1 / 3; }
+.now-card strong { font-size: 1.05rem; }
+.now-card span:last-child { color: var(--slate); font-size: .93rem; }
+
+/* Sites: backend + find */
+.backend { background: var(--felt); color: var(--letter); padding: clamp(2.5rem, 5vw, 3.75rem) 0; }
+.backend .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.5rem 4rem; align-items: start; }
+@media (max-width: 860px) { .backend .wrap { grid-template-columns: 1fr; } }
+.backend .plate { background: #111315; color: var(--today); box-shadow: 0 0 0 2px #4b525a; }
+.backend h2 { margin-top: 1rem; font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: .92; }
+.backend-body p { color: #c9ced4; max-width: 60ch; }
+.backend-body p + p { margin-top: .8rem; }
+.backend .by { color: #9aa1a8; font-size: .9rem; }
+.backend .links { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .6rem 1.35rem; align-items: center; }
+.backend .links a:not(.btn) { color: #fff; font-weight: 700; }
+.btn.light { background: var(--letter); color: var(--ink); }
+.btn.light:hover { background: var(--today); color: var(--ink); }
+.find { display: grid; gap: .5rem; justify-items: start; }
+.find input { width: min(22rem, 100%); height: 2.6rem; padding: 2px .85rem 0; border: 2px solid var(--ink); border-radius: 4px; background: #fff; font: 600 1rem var(--text); }
+.find p { color: var(--slate); font-size: .95rem; }
+.none { color: var(--slate); font-size: 1.1rem; padding: 2rem 0; }
+.hall { border-top: 0; }
+
 /* Shared section type */
 .sec { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
 .sec h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.3rem, 5vw, 4rem); line-height: .92; }
@@ -229,7 +269,7 @@ a.row.big:hover .ch { color: #ffe489; }
 .post small { flex-basis: 100%; color: var(--slate); }
 
 /* Sign-out sheet (archive) */
-.archive { background: var(--paper); border-top: 6px solid var(--ink); }
+.archive { background: var(--paper); }
 .filters { display: flex; flex-wrap: wrap; gap: .5rem; }
 .filters button { height: 2.3rem; padding: 2px .9rem 0; border: 2px solid var(--ink); border-radius: 999px; background: transparent; font: 700 .92rem var(--text); color: var(--ink); cursor: pointer; }
 .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
@@ -237,24 +277,27 @@ a.row.big:hover .ch { color: #ffe489; }
   background-image: linear-gradient(90deg, transparent 4.2rem, #f0a3a3 4.2rem, #f0a3a3 calc(4.2rem + 1px), transparent calc(4.2rem + 1px)); }
 .sheet-top { display: grid; grid-template-columns: 4.2rem 1fr 11rem 8.5rem; padding: .9rem 0 .6rem; border-bottom: 2px solid #9fb6d6; font: 700 .78rem var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
 .sheet-top span { padding-left: 1rem; }
-.sheet details { border-bottom: 1px solid #c9d6e8; }
-.sheet details[hidden] { display: none; }
-.sheet summary { display: grid; grid-template-columns: 4.2rem 1fr 11rem 8.5rem; align-items: center; min-height: 3.4rem; cursor: pointer; list-style: none; }
+.sheet .line { border-bottom: 1px solid #c9d6e8; }
+.sheet .noexp .proj::after { content: none; }
+.sheet .noexp .sum { cursor: default; }
+
+.sheet .sum { display: grid; grid-template-columns: 4.2rem 1fr 11rem 8.5rem; align-items: center; min-height: 3.4rem; cursor: pointer; list-style: none; }
 .sheet summary::-webkit-details-marker { display: none; }
-.sheet summary > span { padding: .55rem 0 .45rem 1rem; }
+.sheet summary.sum:hover .proj { color: var(--link); }
+.sheet .sum > span { padding: .55rem 0 .45rem 1rem; }
 .sheet .yr { font: 700 1rem var(--display); font-stretch: 80%; color: var(--slate); text-align: right; padding-right: .7rem !important; padding-left: 0 !important; }
 .sheet .proj { font-weight: 700; font-size: 1.08rem; }
 .sheet .proj::after { content: "+"; display: inline-block; margin-left: .5rem; color: var(--slate); font-weight: 400; transition: transform .2s; }
 .sheet details[open] .proj::after { transform: rotate(45deg); }
 .sheet .for { color: var(--slate); font-size: .95rem; }
-.sheet summary:hover .proj { color: var(--link); }
+
 .stamp { display: inline-block; padding: 3px .5rem 1px; border: 2px solid currentColor; border-radius: 3px; font: 800 .74rem var(--display); font-stretch: 85%; letter-spacing: .12em; transform: rotate(var(--rot, -3deg)); white-space: nowrap; }
-.stamp.live { color: #1d7a46; } .stamp.wip { color: #b8650b; } .stamp.next { color: #6b7380; } .stamp.done { color: #1d4fc4; }
+.stamp.retired { color: #9b3b3b; text-decoration: line-through; text-decoration-thickness: 1px; } .stamp.live { color: #1d7a46; } .stamp.wip { color: #b8650b; } .stamp.next { color: #6b7380; } .stamp.done { color: #1d4fc4; }
 .sheet .note { padding: 0 1.25rem 1.1rem calc(4.2rem + 1rem); color: var(--ink); max-width: 72ch; }
 .sheet .note a { font-weight: 700; }
 @media (max-width: 720px) {
   .sheet-top { display: none; }
-  .sheet summary { grid-template-columns: 3.4rem 1fr auto; padding-right: .7rem; }
+  .sheet .sum { grid-template-columns: 3.4rem 1fr auto; padding-right: .7rem; }
   .sheet .for { grid-column: 2 / 3; grid-row: 2; padding-top: 0 !important; }
   .sheet .st { grid-column: 3; grid-row: 1 / 3; }
   .sheet { background-image: linear-gradient(90deg, transparent 3.4rem, #f0a3a3 3.4rem, #f0a3a3 calc(3.4rem + 1px), transparent calc(3.4rem + 1px)); }
@@ -262,7 +305,10 @@ a.row.big:hover .ch { color: #ffe489; }
 }
 
 /* About the club */
-.about { border-top: 6px solid var(--ink); }
+.about { }
+.facts.two { margin-top: 2.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .facts.two { grid-template-columns: 1fr; } .facts.two .fact { padding-left: 0; border-left: 0; } }
+.fact a { font-weight: 700; }
 .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
 @media (max-width: 960px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
@@ -302,27 +348,29 @@ footer a { color: #fff; }
 </style>
 </head>
 <body class="wall">
-<a class="skip" href="#hall">Skip to our work</a>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top"><b aria-hidden="true">TW</b>Troy Web Development</a>
-    <nav aria-label="Sections">
-      <a href="#hall">Work</a>
-      <a href="#archive">Archive</a>
-      <a href="#about">About</a>
-      <a href="#team">Team</a>
-      <a href="#next">Get a site</a>
+    <a class="brand" href="#home"><b aria-hidden="true">TW</b>Troy Web Development</a>
+    <nav class="tabs" aria-label="Pages">
+      <a href="#home" data-to="home">Home</a>
+      <a href="#sites" data-to="sites">Sites</a>
+      <a href="#projects" data-to="projects">Projects</a>
+      <a href="#about" data-to="about">About</a>
+      <a href="#team" data-to="team">Team</a>
+      <a href="#join" data-to="join">Get a site</a>
     </nav>
   </div>
 </header>
 
-<main id="top">
+<main id="main">
+<div class="panel" data-tab="home" tabindex="-1">
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
       <div class="hero-text">
         <h1 id="hero-title">Troy Web Development.</h1>
-        <p>Troy High's web development club, est. 2023. We started out giving lectures on how the web works. Now we build the websites Troy clubs actually use.</p>
+        <p>Troy High's web development club. Since 2023 we've built websites for clubs across campus, plus a few outside it.</p>
       </div>
 
       <div class="board-stage" id="board">
@@ -337,11 +385,11 @@ footer a { color: #fff; }
         <p>The Science Club meets online every week.</p>
       </div>
       <form class="post" id="post" autocomplete="off">
-        <label for="post-in">Put something on the board</label>
+        <label for="post-in">Write on the board</label>
         <input id="post-in" maxlength="66" placeholder="GO WARRIORS" spellcheck="false">
         <button class="chip" type="submit">Post</button>
         <button class="chip ghost" type="button" id="post-reset">Directory</button>
-        <small>Only you see it. Letters only stay up until you reload.</small>
+        <small>Just for you. It resets when you reload.</small>
       </form>
       <ul class="sr" aria-label="Club meeting directory">
         <li>Monday: Anime Club, Room 910</li>
@@ -353,10 +401,31 @@ footer a { color: #fff; }
         <li>Friday: Leo Club, 1st and 3rd Fridays, Room W17</li>
         <li>Key Club: lunch meetings in Room 517, dates on Google Classroom</li>
       </ul>
+      <div class="now">
+        <a class="now-card" href="#sites"><span class="plate word">NEW</span><strong>Key Club and GeoGuessr Club</strong><span>Our two newest sites went up this month.</span></a>
+        <a class="now-card" href="#about"><span class="plate word">THU</span><strong>Every other Thursday</strong><span>Lunch in Room 411. Anyone can come.</span></a>
+        <a class="now-card" href="#backend"><span class="plate word">JC</span><strong>One backend for every site</strong><span>Jeffrey Chu's Firebase project hosts all of them.</span></a>
+      </div>
       <nav class="index" aria-labelledby="index-title">
         <h2 id="index-title">Jump to a site</h2>
         <ul id="index-list"></ul>
       </nav>
+    </div>
+  </section>
+</div>
+<div class="panel" data-tab="sites" tabindex="-1" hidden>
+  <section class="backend" id="backend" aria-labelledby="backend-title">
+    <div class="wrap">
+      <div>
+        <span class="plate word">TROY-HIGH-LLM</span>
+        <h2 id="backend-title">The backend.</h2>
+      </div>
+      <div class="backend-body">
+        <p>Every site on this page is hosted on one Firebase project, troy-high-llm. Jeffrey Chu set it up and manages it, along with the club's GitHub. It handles Google sign-in, a separate locked-down database for each site, and deploys every site automatically whenever someone pushes.</p>
+        <p>It started as the points system for the Troy High LLM club: members request to join, officers approve them, and awarded points can't be edited after the fact.</p>
+        <p class="by">Made by Jeffrey Chu</p>
+        <div class="links"><a class="btn light" href="https://troy-high-llm.web.app">Open the console</a><a href="https://github.com/Jeffrey-Chu/troyllm">GitHub</a></div>
+      </div>
     </div>
   </section>
 
@@ -364,13 +433,14 @@ footer a { color: #fff; }
     <div class="hall-sticky">
       <div class="wrap">
         <div class="hall-head">
-          <h2 id="hall-title">Walk the hall.</h2>
-          <p><span class="on-hover">Hover a site to scroll through it.</span><span class="on-touch">Each site scrolls by as you reach it.</span> Every one was designed and built by our members.</p>
+          <h2 id="hall-title">Sites.</h2>
+          <div class="find"><label class="sr" for="find-in">Find a site</label><input id="find-in" type="search" placeholder="Find a site" autocomplete="off"><p><span class="on-hover">Hover a preview to scroll through it.</span><span class="on-touch">Previews scroll as you reach them.</span> <span id="find-count"></span></p></div>
         </div>
         <div class="progress" aria-hidden="true"><i></i></div>
       </div>
       <div class="track-outer">
         <div class="track wrap" id="track">
+          <p class="none" id="find-none" hidden>No site matches that.</p>
 
           <article class="door" id="anime">
             <a class="screen" href="https://troy-anime-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-anime-club.web.app</span></span><img src="img/anime.webp" width="960" height="1320" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
@@ -444,11 +514,6 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
           </article>
 
-          <div class="divider">
-            <h3>Beyond Troy High.</h3>
-            <p>Sites we built for a science nonprofit, a student group at the Orange County School of the Arts, and a small crystal shop.</p>
-          </div>
-
           <article class="door" id="science">
             <a class="screen" href="https://troy-science-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-science-club.web.app</span></span><img src="img/science.webp" width="960" height="600" alt="" decoding="async"></a>
             <div class="plaque"><span class="plate word">ONLINE</span><div><h3>The Science Club</h3><p class="who">Nonprofit for middle and high school students</p></div></div>
@@ -474,11 +539,6 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://superdw-crystals.web.app">Visit site</a><a href="https://www.instagram.com/deffning/">Instagram</a></div>
           </article>
 
-          <div class="divider">
-            <h3>Our own stuff.</h3>
-            <p>Things members built that aren't for one club.</p>
-          </div>
-
           <article class="door" id="bioship">
             <a class="screen" href="bioship" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-clubs.web.app/bioship</span></span><img src="img/bioship.webp" width="960" height="720" alt="" decoding="async"></a>
             <div class="plaque"><span class="plate word">PLAY</span><div><h3>BioShip</h3><p class="who">A biology quiz game</p></div></div>
@@ -487,59 +547,60 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="bioship">Play BioShip</a></div>
           </article>
 
-          <article class="door" id="llm">
-            <a class="screen type" href="https://troy-high-llm.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-high-llm.web.app</span></span><span class="mini">TROY HIGH LLM<small>POINTS + OFFICER CONSOLE</small></span></a>
-            <div class="plaque"><span class="plate word">JC</span><div><h3>Troy High LLM</h3><p class="who">Points system and hosting</p></div></div>
-            <p class="what">The Firebase backend behind the LLM club's points, and the project every site in this hall is hosted on.</p>
-            <p class="by">Made by Jeffrey Chu</p>
-            <div class="links"><a class="btn" href="https://troy-high-llm.web.app">Open it</a><a href="https://github.com/Jeffrey-Chu/troyllm">Code</a></div>
-          </article>
-
         </div>
       </div>
     </div>
   </section>
-
+</div>
+<div class="panel" data-tab="projects" tabindex="-1" hidden>
   <section class="sec archive" id="archive" aria-labelledby="archive-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="archive-title">The sign-out sheet.</h2>
-          <p class="lede">Everything we've taken on since 2023, finished or not. Tap a line for the story.</p>
+          <h2 id="archive-title">Projects.</h2>
+          <p class="lede">Everything the club has worked on since 2023, including sites that are retired. Open a line for details.</p>
         </div>
         <div class="filters" role="group" aria-label="Filter projects">
           <button type="button" data-f="all" aria-pressed="true">All</button>
-          <button type="button" data-f="live" aria-pressed="false">Live and done</button>
+          <button type="button" data-f="live" aria-pressed="false">Live</button>
+          <button type="button" data-f="done" aria-pressed="false">Finished</button>
           <button type="button" data-f="wip" aria-pressed="false">In progress</button>
           <button type="button" data-f="next" aria-pressed="false">Up next</button>
+          <button type="button" data-f="retired" aria-pressed="false">Retired</button>
         </div>
       </div>
       <div class="sheet" id="sheet">
         <div class="sheet-top" aria-hidden="true"><span></span><span>Project</span><span>For</span><span>Status</span></div>
-          <details data-s="done"><summary><span class="yr">2023</span><span class="proj">Web Development Education</span><span class="for">The club itself</span><span class="st"><span class="stamp done" style="--rot:-3deg">FOUNDED</span></span></summary><p class="note">The club started as Web Development Education. Members gave lectures on HTML, CSS, JavaScript and how a site goes live. Co-founded by Yeowon Yoon.</p></details>
-          <details data-s="done"><summary><span class="yr">2023–</span><span class="proj">troywebdev.com</span><span class="for">Troy student orgs</span><span class="st"><span class="stamp done" style="--rot:2deg">LAUNCHED</span></span></summary><p class="note">The club's first directory site, used by more than 100 student organizations. Led by Yeowon Yoon. This site picks up where it left off.</p></details>
-          <details data-s="done"><summary><span class="yr">2023–</span><span class="proj">Tutoring initiative</span><span class="for">Troy students</span><span class="st"><span class="stamp done" style="--rot:-2deg">400+ HOURS</span></span></summary><p class="note">Members tutored other students and logged more than 400 verified volunteer hours.</p></details>
-          <details data-s="done"><summary><span class="yr">2023–</span><span class="proj">Troy Tech Fair</span><span class="for">Prospective students</span><span class="st"><span class="stamp done" style="--rot:2deg">EVERY YEAR</span></span></summary><p class="note">Picked out of 125 Troy clubs to show prospective students what we do, every year since we started. Next one is Troy Tech Welcome on Dec 2. Ask in class if you want to help at the table.</p></details>
-          <details data-s="done"><summary><span class="yr">2023–</span><span class="proj">International Food Fest</span><span class="for">Troy High</span><span class="st"><span class="stamp done" style="--rot:-1.5deg">EVERY YEAR</span></span></summary><p class="note">We've had a spot at Food Fest every year.</p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">Troy High LLM points backend</span><span class="for">Troy High LLM club</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">Made by Jeffrey Chu. A Firebase backend with Google sign-in, officer approval, and points that can't be edited after they're awarded, and rules tests for all of it. It also hosts the shared Firebase project every club site on this page runs on. <a href="https://troy-high-llm.web.app">troy-high-llm.web.app</a></p></details>
-          <details data-s="wip"><summary><span class="yr">2026</span><span class="proj">OCHSWA Championship Shelf</span><span class="for">Wrestling, for Mr. Nguyen</span><span class="st"><span class="stamp wip" style="--rot:-2.5deg">IN PROGRESS</span></span></summary><p class="note">A bookshelf of wrestling association records: one volume per season that opens into a page-turning flipbook. Made by Wesley Shen and Ryan Jian. The shelf is built; the season records still need to be scanned in before it goes public.</p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">VSA, Learning League, Car Club</span><span class="for">Club commissions</span><span class="st"><span class="stamp live" style="--rot:-3deg">LIVE</span></span></summary><p class="note">VSA has meeting check-in with a word of the day. Learning League has a tutor finder. Car Club has a BMW you can get in and drive. Made by Ryan Jian.</p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">Anime, Chinese Culture, Leo, Key, GeoGuessr</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:2deg">LIVE</span></span></summary><p class="note">Five more Troy club sites, each built around the club's own posts and photos. Made by Ryan Jian, with Daniel Li on Anime, Jason Lee on Key Club and Kaleb Lopez on Leo.</p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">SUPER DW</span><span class="for">Daphne's crystal shop</span><span class="st"><span class="stamp live" style="--rot:-1.5deg">LIVE</span></span></summary><p class="note">A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer. Made by Ryan Jian. <a href="https://superdw-crystals.web.app">superdw-crystals.web.app</a></p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">The Science Club, Roots &amp; Roads</span><span class="for">Outside Troy</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">A science nonprofit and an OCSA student group that interviews immigrants in Orange County. Made by Ryan Jian.</p></details>
-          <details data-s="live"><summary><span class="yr">2026</span><span class="proj">BioShip</span><span class="for">Biology students</span><span class="st"><span class="stamp live" style="--rot:-2.5deg">LIVE</span></span></summary><p class="note">A biology quiz game with 1,225 questions. Made by Ryan Jian. <a href="bioship">Play it here</a>.</p></details>
-          <details data-s="next"><summary><span class="yr">2026</span><span class="proj">Troy Robotics</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:1.5deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
-          <details data-s="next"><summary><span class="yr">2026</span><span class="proj">Troy Enterprise Circle</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:-3deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
+          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023</span><span class="proj">Web Development Education</span><span class="for">The club</span><span class="st"><span class="stamp done" style="--rot:-3deg">FOUNDED</span></span></summary><p class="note">Founded by Yeowon Yoon as a lecture club. Members taught each other HTML, CSS, JavaScript and how a site goes live.</p></details>
+          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">Troy Tech Fair</span><span class="for">Prospective students</span><span class="st"><span class="stamp done" style="--rot:2deg">EVERY YEAR</span></span></summary><p class="note">Picked out of 125 clubs every year since 2023 to show prospective students what we build. This year's Troy Tech Welcome is Dec 2.</p></details>
+          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">International Food Fest</span><span class="for">Troy High</span><span class="st"><span class="stamp done" style="--rot:-1.5deg">EVERY YEAR</span></span></summary><p class="note">We've been at Food Fest every year.</p></details>
+          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">Tutoring initiative</span><span class="for">Troy students</span><span class="st"><span class="stamp done" style="--rot:3deg">400+ HOURS</span></span></summary><p class="note">Members tutored other students and logged more than 400 verified volunteer hours.</p></details>
+          <details class="line" data-s="retired"><summary class="sum"><span class="yr">Past</span><span class="proj">troywebdev.com</span><span class="for">Troy student orgs</span><span class="st"><span class="stamp retired" style="--rot:-2.5deg">RETIRED</span></span></summary><p class="note">The club's first site, a directory used by more than 100 student organizations. Led by Yeowon Yoon. It's offline now, and this site took its place.</p></details>
+          <details class="line" data-s="retired"><summary class="sum"><span class="yr">Past</span><span class="proj">Club kiosk</span><span class="for">Troy clubs</span><span class="st"><span class="stamp retired" style="--rot:1.5deg">RETIRED</span></span></summary><p class="note">A kiosk website for clubs. Retired.</p></details>
+          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy Dermatology Club</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:-3deg">DELIVERED</span></span></div></div>
+          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy A Friend in Me</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:2deg">DELIVERED</span></span></div></div>
+          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy Act of Kindness</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:-1.5deg">DELIVERED</span></span></div></div>
+          <details class="line" data-s="done"><summary class="sum"><span class="yr">Past</span><span class="proj">More club sites</span><span class="for">Club sites</span><span class="st"><span class="stamp done" style="--rot:3deg">DELIVERED</span></span></summary><p class="note">Other sites from earlier years.</p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy High LLM backend</span><span class="for">Every site here</span><span class="st"><span class="stamp live" style="--rot:-2.5deg">LIVE</span></span></summary><p class="note">Made by Jeffrey Chu. The Firebase project that hosts every club site, and the LLM club's points system. Jeffrey also manages the club's GitHub. <a href="#backend">More about it</a></p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">VSA, Learning League, Car Club</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:1.5deg">LIVE</span></span></summary><p class="note">VSA has meeting check-in with a word of the day. Learning League has a tutor finder. Car Club has a BMW you can get in and drive. Made by Ryan Jian.</p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">Anime, Chinese Culture, Leo, Key, GeoGuessr</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:-3deg">LIVE</span></span></summary><p class="note">Built around each club's own posts and photos. Made by Ryan Jian, with Daniel Li on Anime, Jason Lee on Key Club and Kaleb Lopez on Leo.</p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">The Science Club, Roots &amp; Roads</span><span class="for">Outside Troy</span><span class="st"><span class="stamp live" style="--rot:2deg">LIVE</span></span></summary><p class="note">A science nonprofit, and an OCSA student group that interviews immigrants in Orange County. Made by Ryan Jian.</p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">SUPER DW</span><span class="for">Daphne's crystal shop</span><span class="st"><span class="stamp live" style="--rot:-1.5deg">LIVE</span></span></summary><p class="note">A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer. Made by Ryan Jian.</p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">BioShip</span><span class="for">Biology students</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">A biology quiz game with 1,225 questions. Made by Ryan Jian. <a href="bioship">Play it</a></p></details>
+          <details class="line" data-s="wip"><summary class="sum"><span class="yr">2026</span><span class="proj">OCHSWA Championship Shelf</span><span class="for">Wrestling, for Mr. Nguyen</span><span class="st"><span class="stamp wip" style="--rot:-2.5deg">IN PROGRESS</span></span></summary><p class="note">A shelf of wrestling association records, one volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in. Made by Wesley Shen and Ryan Jian.</p></details>
+          <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Robotics</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:1.5deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
+          <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Enterprise Circle</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:-3deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
       </div>
     </div>
   </section>
-
+</div>
+<div class="panel" data-tab="about" tabindex="-1" hidden>
   <section class="sec about" id="about" aria-labelledby="about-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
           <h2 id="about-title">About the club.</h2>
-          <p class="lede">Troy Web Development started in 2023 as Web Development Education, where members taught each other how to build for the web. It still does that. Now most meetings go into real sites for real clubs.</p>
+          <p class="lede">Troy Web Development started in 2023 as Web Development Education, a club where members taught each other how to build for the web. We still teach, but most meetings now go into building and updating sites for Troy clubs.</p>
         </div>
       </div>
       <div class="facts">
@@ -548,9 +609,14 @@ footer a { color: #fff; }
         <div class="fact"><span class="plate word">WHO</span><h3>Anyone at Troy</h3><p>No experience needed. Come to a meeting, pick a project, and learn by building it.</p></div>
         <div class="fact"><span class="plate word">YEARLY</span><h3>Tech Fair and Food Fest</h3><p>Picked for the Troy Tech Fair out of 125 clubs every year since 2023, and at Food Fest every year too.</p></div>
       </div>
+      <div class="facts two">
+        <div class="fact"><span class="plate word">START</span><h3>How it started</h3><p>Yeowon Yoon co-founded the club in 2023 and led it through 2026. Our first site, troywebdev.com, was a directory used by more than 100 student organizations. It and our old club kiosk site are retired now. This site replaces both.</p></div>
+        <div class="fact"><span class="plate word">CODE</span><h3>Where the code lives</h3><p>Every site lives in one GitHub repository, managed by Jeffrey Chu, and goes live automatically on Firebase when changes are pushed. <a href="https://github.com/Jeffrey-Chu/troyllm">See the repo</a>.</p></div>
+      </div>
     </div>
   </section>
-
+</div>
+<div class="panel" data-tab="team" tabindex="-1" hidden>
   <section class="sec team" id="team" aria-labelledby="team-title">
     <div class="wrap">
       <div class="sec-head">
@@ -579,7 +645,8 @@ footer a { color: #fff; }
       <p class="roll-foot">Advisor: Mr. Nguyen</p>
     </div>
   </section>
-
+</div>
+<div class="panel" data-tab="join" tabindex="-1" hidden>
   <section class="next" id="next" aria-labelledby="next-title">
     <div class="wrap">
       <div>
@@ -588,13 +655,13 @@ footer a { color: #fff; }
         </div>
       </div>
       <div>
-        <h2 id="next-title">Your club could be next.</h2>
-        <p class="lede">We built every site on this page. We can build one for your club too.</p>
+        <h2 id="next-title">Get a site for your club.</h2>
+        <p class="lede">Ask any member or come to a meeting. A member takes the lead and builds it with your officers.</p>
         <ul>
-          <li><strong>Designed around your club</strong><span>Your colors, photos and voice, not a fill-in template.</span></li>
-          <li><strong>Its own web address</strong><span>A fast, secure site to share in your bio and on flyers.</span></li>
-          <li><strong>Tools your members use</strong><span>Meeting check-in, tutor sign-ups, newsletters or order forms when you need them.</span></li>
-          <li><strong>Kept up to date</strong><span>New officers, rooms and events added as your club changes.</span></li>
+          <li><strong>Built from your club's own stuff</strong><span>Your photos, colors, posts and meeting info.</span></li>
+          <li><strong>Your own address</strong><span>Something like troy-key-club.web.app, for your bio and flyers.</span></li>
+          <li><strong>Features if you need them</strong><span>Meeting check-in, tutor sign-ups, order forms.</span></li>
+          <li><strong>Updates after launch</strong><span>New officers, rooms and events when they change.</span></li>
         </ul>
         <div class="try">
           <label for="club-in">What's your club called?</label>
@@ -605,12 +672,13 @@ footer a { color: #fff; }
       </div>
     </div>
   </section>
+</div>
 </main>
 
 <footer>
   <div class="wrap">
-    <p>Troy High Web Development Club. Est. 2023 as Web Development Education. Room 411, Troy High School, Fullerton. Meeting details come from each club's own site, so check their Instagram for the latest.</p>
-    <p>© <span id="yr">2026</span> Troy Web Development Club</p>
+    <p>Troy Web Development, Troy High's web development club. Est. 2023 as Web Development Education. Room 411, Troy High School, Fullerton. Meeting details come from each club's own site, so check their Instagram for the latest.</p>
+    <p>© <span id="yr">2026</span> Troy Web Development</p>
   </div>
 </footer>
 
@@ -634,8 +702,7 @@ footer a { color: #fff; }
     ['THE SCIENCE CLUB', 'science', 'The Science Club', null, ''],
     ['ROOTS & ROADS', 'roots', 'Roots & Roads', null, ''],
     ['SUPER DW', 'superdw', 'SUPER DW', null, ''],
-    ['BIOSHIP', 'bioship', 'BioShip', null, ''],
-    ['TROY HIGH LLM', 'llm', 'Troy High LLM', null, '']
+    ['BIOSHIP', 'bioship', 'BioShip', null, '']
   ];
 
   // Deterministic jitter so letters sit a little crooked, like real ones.
@@ -692,7 +759,7 @@ footer a { color: #fff; }
     });
   boardRows.push({ type: 'blank' });
   boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
-  boardRows.push({ type: 'title', text: 'TECH WELCOME DEC 2 · SEE YOU THERE' });
+  boardRows.push({ type: 'title', text: 'TROY TECH WELCOME · DEC 2' });
   var heroRows = document.getElementById('rows');
   buildBoard(heroRows, boardRows, 250);
 
@@ -717,8 +784,7 @@ footer a { color: #fff; }
     var rows = [{ type: 'blank' }, { type: 'blank' }];
     if (lines.length < 3) rows.push({ type: 'blank' });
     lines.forEach(function (l) { rows.push({ type: 'big', text: l }); });
-    rows.push({ type: 'blank' });
-    rows.push({ type: 'title', text: 'POSTED BY A VISITOR' });
+
     swapBoard(rows);
   });
   document.getElementById('post-reset').addEventListener('click', function () { postIn.value = ''; swapBoard(boardRows); });
@@ -735,7 +801,7 @@ footer a { color: #fff; }
   function buildNext() {
     if (nextRows.childNodes.length) return;
     buildBoard(nextRows, [
-      { type: 'title', text: 'NOW BOOKING' },
+      { type: 'title', text: 'REQUESTS OPEN' },
       { type: 'blank' },
       { day: '???', name: 'YOUR CLUB', room: 'RM ???' },
       { type: 'blank' }
@@ -752,8 +818,8 @@ footer a { color: #fff; }
     b.addEventListener('click', function () {
       var f = b.dataset.f;
       fbtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      document.querySelectorAll('#sheet details').forEach(function (d) {
-        d.hidden = !(f === 'all' || d.dataset.s === f || (f === 'live' && d.dataset.s === 'done'));
+      document.querySelectorAll('#sheet .line').forEach(function (d) {
+        d.hidden = !(f === 'all' || d.dataset.s === f);
       });
     });
   });
@@ -813,7 +879,7 @@ footer a { color: #fff; }
     bar.style.setProperty('--p', p.toFixed(4));
     var vw = window.innerWidth, x = p * dist;
     for (var i = 0; i < doors.length; i++) {
-      var d = doors[i], c = d.offsetLeft + d.offsetWidth / 2 - x - vw / 2;
+      var d = doors[i]; if (d.hidden) continue; var c = d.offsetLeft + d.offsetWidth / 2 - x - vw / 2;
       var tt = Math.max(-1, Math.min(1, c / (vw * .62)));
       d.style.setProperty('--t', tt.toFixed(3));
       d.style.setProperty('--ta', Math.abs(tt).toFixed(3));
@@ -840,9 +906,44 @@ footer a { color: #fff; }
       door.scrollIntoView({ behavior: behavior, block: 'start' });
     }
   }
-  document.querySelectorAll('a.row[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (e) { e.preventDefault(); goTo(a.getAttribute('href').slice(1)); });
+  // Find a site
+  var findIn = document.getElementById('find-in'), findNone = document.getElementById('find-none'), findCount = document.getElementById('find-count');
+  findIn.addEventListener('input', function () {
+    var q = findIn.value.trim().toLowerCase(), shown = 0;
+    doors.forEach(function (d) { var hit = !q || d.textContent.toLowerCase().indexOf(q) > -1; d.hidden = !hit; if (hit) shown++; });
+    findNone.hidden = shown > 0;
+    findCount.textContent = q ? shown + (shown === 1 ? ' site' : ' sites') : '';
+    window.scrollTo(0, hall.getBoundingClientRect().top + window.scrollY - 10);
+    layout();
   });
+
+  // Tabs
+  var TABS = ['home', 'sites', 'projects', 'about', 'team', 'join'];
+  var panels = document.querySelectorAll('.panel'), tabLinks = document.querySelectorAll('.tabs a');
+  var current = null;
+  function show(tab) {
+    if (tab === current) return;
+    current = tab;
+    panels.forEach(function (p) { p.hidden = p.dataset.tab !== tab; });
+    tabLinks.forEach(function (a) { if (a.dataset.to === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    document.title = (tab === 'home' ? '' : { sites: 'Sites', projects: 'Projects', about: 'About', team: 'Team', join: 'Get a site' }[tab] + ' · ') + 'Troy Web Development';
+    if (tab === 'sites') { layout(); }
+    if (tab === 'join') buildNext();
+  }
+  function route() {
+    var id = decodeURIComponent(location.hash.slice(1)) || 'home';
+    if (TABS.indexOf(id) > -1) { show(id); window.scrollTo(0, 0); return; }
+    var el = document.getElementById(id);
+    var panel = el && el.closest('.panel');
+    if (!panel) { show('home'); return; }
+    show(panel.dataset.tab);
+    requestAnimationFrame(function () {
+      if (el.classList.contains('door')) goTo(id, true);
+      else window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 10);
+    });
+  }
+  window.addEventListener('hashchange', route);
+  route();
   track.addEventListener('focusin', function (e) {
     if (!hall.classList.contains('pinned')) return;
     var door = e.target.closest('.door');
@@ -854,7 +955,11 @@ footer a { color: #fff; }
     track.querySelectorAll('.screen').forEach(function (s) { tio.observe(s); });
   }
 
-  list.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); goTo(a.getAttribute('href').slice(1)); } });
+  // Clicking a link to the hash you're already on should still jump there
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); current = null; route(); }
+  });
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 })();
