@@ -154,13 +154,13 @@ footer .credit{width:100%;border-top:1px solid rgba(255,255,255,.25);padding-top
   <div>
     <h1>Chinese <em>Culture</em> Club</h1>
     <div class="zh">中国文化社</div>
-    <p>Troy High's Chinese Cultural Appreciation Club. Join us in Room 324 at lunch every other Tuesday.</p>
+    <p>Troy High's Chinese Cultural Appreciation Club. Join us in Room W14 at lunch every other Tuesday.</p>
     <div class="btns"><a class="btn red" href="https://forms.gle/rVQprTiWXszwpzbp8" target="_blank" rel="noopener">Interest form</a><a class="btn" href="#events">Our events</a></div>
   </div>
   <div class="fan" id="fan"></div>
 </div></header>
 
-<div class="bar"><div class="wrap"><span><b>Room 324</b> · Lunch · Every other Tuesday</span><span>Next meeting: <b id="nb">—</b></span><a href="https://www.instagram.com/troyhs_ccc/" target="_blank" rel="noopener">@troyhs_ccc ↗</a></div></div>
+<div class="bar"><div class="wrap"><span><b>Room W14</b> · Lunch · Every other Tuesday</span><span>Next meeting: <b id="nb">—</b></span><a href="https://www.instagram.com/troyhs_ccc/" target="_blank" rel="noopener">@troyhs_ccc ↗</a></div></div>
 
 <section id="events"><div class="wrap">
   <div class="sh"><h2>Events</h2><div class="tabs" id="tabs"><button class="on" data-y="2526">2025–26</button><button data-y="2425">2024–25</button><button data-y="all">All</button></div></div>
@@ -184,7 +184,7 @@ footer .credit{width:100%;border-top:1px solid rgba(255,255,255,.25);padding-top
     <div class="steps">
       <div class="step"><i>1</i><div><b>Fill out the interest form</b><span><a href="https://forms.gle/rVQprTiWXszwpzbp8" target="_blank" rel="noopener">forms.gle/rVQprTiWXszwpzbp8</a></span></div></div>
       <div class="step"><i>2</i><div><b>Follow @troyhs_ccc</b><span>Every meeting gets posted on <a href="https://www.instagram.com/troyhs_ccc/" target="_blank" rel="noopener">Instagram</a>, usually the day before.</span></div></div>
-      <div class="step"><i>3</i><div><b>Come to Room 324</b><span>At lunch on meeting Tuesdays. There are almost always snacks.</span></div></div>
+      <div class="step"><i>3</i><div><b>Come to Room W14</b><span>At lunch on meeting Tuesdays. There are almost always snacks.</span></div></div>
     </div>
   </div>
   <div class="next">
@@ -262,11 +262,11 @@ addEventListener('keydown',e=>{if(!$('#lb').classList.contains('on'))return;if(e
 /* next meeting */
 (()=>{const add=(x,n)=>{const y=new Date(x);y.setDate(y.getDate()+n);return y};const t=new Date(new Date().toDateString());let d=new Date(2026,2,31);while(d<t)d=add(d,14);
  const n=Math.round((d-t)/864e5),f=x=>x.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
- $('#nb').textContent=f(d);$('#nd').textContent=f(d);$('#ni').textContent=n===0?'Today at lunch':n===1?'Tomorrow at lunch':`In ${n} days · Room 324`;
+ $('#nb').textContent=f(d);$('#nd').textContent=f(d);$('#ni').textContent=n===0?'Today at lunch':n===1?'Tomorrow at lunch':`In ${n} days · Room W14`;
  $('#nl').innerHTML=[1,2,3].map(i=>`<li><span>Then</span><span>${f(add(d,14*i))}</span></li>`).join('')})();
 
 /* faq */
-const Q=[['When and where do you meet?','Room 324 at lunch, every other Tuesday.'],
+const Q=[['When and where do you meet?','Room W14 at lunch, every other Tuesday.'],
 ['How do I join?','Fill out the interest form, follow @troyhs_ccc, and come to a meeting.'],
 ['Is there food?','Almost every time. We\'ve had tang yuan, egg tarts, jellies, candy and a potluck.'],
 ['What happens at meetings?','It changes each time: papercutting, lucky knots, a culture Kahoot, a chopstick relay for Lunar New Year, and more.'],
