@@ -4360,19 +4360,19 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 8.2 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8.3 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
 
 /* ============ TEMPORARY beta walkthrough mode (delete this file + its build.py entry to remove) ============ */
 /* Turn on: add ?test=1 to the URL, or tap the build line on the title screen 5 times. Turn off: ?test=0 or tap 5 times again. */
-const TEST=(()=>{let on=false;try{const q=new URLSearchParams(location.search).get("test");if(q==="1")localStorage.setItem("bioship-test","1");if(q==="0")localStorage.removeItem("bioship-test");on=localStorage.getItem("bioship-test")==="1"}catch(e){}return on})();
+let TEST=(()=>{let on=false;try{const q=new URLSearchParams(location.search).get("test");if(q==="1")localStorage.setItem("bioship-test","1");if(q==="0")localStorage.removeItem("bioship-test");on=localStorage.getItem("bioship-test")==="1"}catch(e){}return on})();
 {const css=document.createElement("style");css.textContent=`
 .tbar{position:fixed;left:50%;top:calc(6px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;display:flex;gap:6px;align-items:center;padding:6px;border-radius:999px;background:rgba(40,10,10,.88);border:1px solid #ff7a5c;box-shadow:0 8px 24px rgba(0,0,0,.4);font:600 .78rem var(--sans)}
 .tbar b{color:#ff9a80;font:600 .62rem var(--mono);letter-spacing:.12em;padding:0 6px}
 .tbar button,.tbar select{border-radius:999px;border:1px solid rgba(255,154,128,.5);background:rgba(255,122,92,.14);color:#ffe2d8;padding:6px 10px;font:600 .76rem var(--sans)}
 .tbar select{max-width:42vw;background:#2a0e0a}
-@media(max-width:620px){.tbar{top:calc(100px + env(safe-area-inset-top,0px));transform:translateX(-50%) scale(.88)}}`;document.head.appendChild(css)}
+@media(max-width:620px){.tbar{top:calc(100px + env(safe-area-inset-top,0px));transform:translateX(-50%) scale(.88)}body:has(.titleui.on) .tbar{top:auto;bottom:calc(6px + env(safe-area-inset-bottom,0px))}}`;document.head.appendChild(css)}
 function testBar(){let b=$("#tbar");if(!TEST){if(b)b.remove();return}
  if(!b){b=document.createElement("div");b.className="tbar";b.id="tbar";document.body.appendChild(b)}
  b.innerHTML=`<b>BETA TEST</b><select id="tPick" aria-label="Jump to stop">${NODES.map((n,i)=>`<option value="${i}" ${i===curIndex()?"selected":""}>${i+1}. ${n.type==="boss"?"Boss: ":""}${esc(nodeName(n))}</option>`).join("")}</select><button id="tJump">Go</button><button id="tWin">Auto-win</button>`;
@@ -4385,6 +4385,9 @@ function testJump(i){if(busy)return;cancelAnimationFrame(timerRaf);closeOver();i
 {const _rs=rankSubmit;rankSubmit=function(d){if(TEST)return;return _rs(d)}}
 {const v=$("#tVer");if(v){let n=0,t=0;v.style.cursor="default";v.addEventListener("click",()=>{const now=Date.now();n=now-t<700?n+1:1;t=now;if(n>=5){n=0;try{TEST?localStorage.removeItem("bioship-test"):localStorage.setItem("bioship-test","1")}catch(e){}location.reload()}});if(TEST)v.textContent+=" · beta test mode"}}
 testBar();
+/* visible title-screen switch for the beta (no URL flag needed) */
+{const row=$(".t-row2");if(row){const b=document.createElement("button");b.className="btn ghost sm";b.id="tBeta";const lab=()=>{b.textContent=TEST?"Beta test: on":"Beta test";b.style.borderColor=TEST?"#ff7a5c":"";b.style.color=TEST?"#ffb8a6":""};lab();
+ b.onclick=()=>{Sound.fx("tap");TEST=!TEST;try{TEST?localStorage.setItem("bioship-test","1"):localStorage.removeItem("bioship-test")}catch(e){}lab();testBar();const v=$("#tVer");if(v)v.textContent=v.textContent.replace(" · beta test mode","")+(TEST?" · beta test mode":"")};row.appendChild(b)}}
 
 </script>
 </body>
