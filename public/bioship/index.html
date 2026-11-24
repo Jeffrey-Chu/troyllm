@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#071319">
 <title>BioShip</title>
+<script src="firebase-config.js"></script>
+<script src="net.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Cinzel+Decorative:wght@700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
  --ink:#071319;--deep:#0b1d25;--panel:#0e232c;--panel-2:#12303a;--line:#1e434d;--line-2:#2a5a64;
@@ -544,6 +546,45 @@ body .logo .t-mark{background:linear-gradient(100deg,#8a5a1a 0%,#f6dc94 22%,#fff
 .tabs{flex-wrap:wrap}
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* v8.1 title: engraved ivory wordmark that fits short screens */
+body .logo .t-mark{font-family:"Cinzel Decorative","Cinzel",Georgia,serif;font-style:normal;font-weight:700;font-variation-settings:normal;letter-spacing:.02em;line-height:1.02;
+ font-size:clamp(2.5rem,min(8.6vw,10.5vh),5.2rem);background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#f1e4c3;animation:none;filter:none;
+ text-shadow:0 1px 0 rgba(255,250,235,.55),0 2px 0 #7a5528,0 3px 0 #5a3c1a,0 5px 2px rgba(0,0,0,.45),0 14px 34px rgba(0,0,0,.5)}
+body .logo .t-kick{color:#d8c49c}
+body .logo .t-kick::before{background:linear-gradient(90deg,transparent,#d8c49c)}body .logo .t-kick::after{background:linear-gradient(90deg,#d8c49c,transparent)}
+body .logo .t-swash{color:#d8c49c;width:clamp(200px,34vw,360px);margin:2px 0 10px 4px}
+#bootLogo .t-swash{margin:2px auto 0}
+#bootGo,#tGo{background:#f1e4c3;color:#1c140a;border:1px solid #fff6e0;box-shadow:0 0 0 3px rgba(241,228,195,.12),0 3px 0 #8a6a3a,0 12px 28px rgba(0,0,0,.4);font-weight:600}
+#bootGo:hover,#tGo:hover{background:#fff3d6;filter:none}
+.ready #bootGo{animation:none}
+.titleui{align-items:center;padding:12px 20px calc(12px + var(--safe-b))}
+.titleui .t-in{max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.titleui .t-in::-webkit-scrollbar{display:none}
+@media(max-height:720px){.titleui .t-in{padding:14px 20px 12px}.titleui .t-sub{font-size:.98rem;margin:0 0 8px}.titleui .t-next{margin:0 0 10px}.titleui .t-mode{margin:0 0 8px}.titleui .t-mode .seg button{padding:5px 10px}.titleui .seg-note{display:none}.titleui .t-row2{margin-top:8px}.titleui .t-ver{margin-top:6px}}
+@media(max-height:600px){.titleui .t-sub{display:none}body .logo .t-swash{width:200px;margin-bottom:6px}.titleui .t-row .btn{padding-top:9px;padding-bottom:9px}}
+/* reward overlay blends over the island instead of cutting to black */
+.over{background:radial-gradient(100% 70% at 50% 20%,rgba(18,53,64,.86) 0%,rgba(7,19,25,.95) 75%)}
+.over.on{animation:fade .5s ease}
+.over.out{display:block;animation:fadeOut .35s ease forwards;pointer-events:none}
+@keyframes fadeOut{to{opacity:0}}
+
+/* v8.2 crossed-off stops */
+.xmark{position:absolute;inset:-6px;width:calc(100% + 12px);height:calc(100% + 12px);pointer-events:none;overflow:visible}
+.xmark path{fill:none;stroke:#ff7a5c;stroke-width:4.2;stroke-linecap:round;filter:drop-shadow(0 1px 0 rgba(0,0,0,.5))}
+.xmark.draw path{stroke-dasharray:1;stroke-dashoffset:1;animation:xdraw .32s cubic-bezier(.4,.1,.3,1) forwards;animation-delay:var(--xd,0s)}
+.xmark.draw path+path{animation-delay:calc(var(--xd,0s) + .3s)}
+@keyframes xdraw{to{stroke-dashoffset:0}}
+.node{overflow:visible}
+.vstrip{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin:14px auto 4px;max-width:560px}
+.vsea{display:flex;flex-direction:column;align-items:center;gap:3px}.vsea>.mono{font-size:.5rem;color:var(--dim)}
+.vsea>div{display:flex;gap:3px}
+.vs{position:relative;display:block;width:13px;height:13px;border-radius:50%;border:1px solid rgba(237,228,207,.35);background:rgba(14,35,44,.7)}
+.vs.b{border-radius:3px;border-color:rgba(255,122,92,.5)}
+.vs.done{background:rgba(237,228,207,.14)}
+.vs.next{border-color:var(--glow);box-shadow:0 0 8px rgba(143,245,207,.6)}
+.vs .xmark{inset:-4px;width:21px;height:21px}.vs .xmark path{stroke-width:5}
+@media(prefers-reduced-motion:reduce){.xmark.draw path{animation:none;stroke-dashoffset:0}}
 </style>
 </head>
 <body>
@@ -3737,7 +3778,7 @@ const Scene=(()=>{
   if(!st.drag){st.yawT*=Math.pow(.25,dt);st.pitchT*=Math.pow(.25,dt)}st.yaw+=(st.yawT-st.yaw)*Math.min(1,dt*6);st.pitch+=(st.pitchT-st.pitch)*Math.min(1,dt*6);
   let cp=camBase.pos.clone(),ct=camBase.tgt.clone();
   if(st.mode==="title"){const a=Math.sin(time*.07)*.22;cp.sub(ct).applyAxisAngle(new T3.Vector3(0,1,0),a).add(ct);cp.y+=Math.sin(time*.11)*.6}
-  if(st.camOver){const c=st.camOver,p=clamp((time-c.t0)/c.dur,0,1),e=ease(p);cp.lerp(c.pos,e*c.w);ct.lerp(c.tgt,e*c.w);if(c.after&&p>=1&&!c.doneFired){c.doneFired=true;c.after()}}
+  if(st.camOver){const c=st.camOver,p=clamp((time-c.t0)/c.dur,0,1),e=ease(p),eT=ease(Math.min(1,p*1.5));cp.lerp(c.pos,e*c.w);ct.lerp(c.tgt,eT*c.w);if(c.after&&p>=1&&!c.doneFired){c.doneFired=true;c.after()}}
   const off=cp.clone().sub(ct);off.applyAxisAngle(new T3.Vector3(0,1,0),st.yaw);const right=new T3.Vector3().crossVectors(off,new T3.Vector3(0,1,0)).normalize();off.applyAxisAngle(right,st.pitch);cp=ct.clone().add(off);
   st.shake*=Math.pow(.05,dt);if(st.shake>.01)cp.add(new T3.Vector3(rnd(-1,1),rnd(-1,1),0).multiplyScalar(st.shake*.35));
   cam.position.copy(cp);cam.lookAt(ct);cam.position.y=Math.max(cam.position.y,waveH(cam.position.x,cam.position.z,time,1,st.flow)+.8);
@@ -3820,7 +3861,7 @@ const Scene=(()=>{
    chest=buildChest(I);chest.position.set(isle.position.x+lx,hy,isle.position.z+lz);chest.rotation.y=.35;chest.scale.setScalar(1.5);scene.add(chest);
    chest.userData.tick=(t)=>{const u=chest.userData;u.halo.material.opacity=.35+.2*Math.sin(t*3)+u.open*.6;if(!u.open&&Math.random()<.08)emit(1,{p:chest.position.clone().add(new T3.Vector3(rnd(-1.4,1.4),rnd(.5,2.4),rnd(-1,1))),c:"#ffe9a8",speed:.4,up:.9,size:1,life:1.2,g:-.5})};
    const tgt=chest.position.clone().add(new T3.Vector3(0,1.3,0)),pos=chest.position.clone().add(new T3.Vector3(-5.5,4.2,11));
-   st.camOver={pos,tgt,t0:time,dur:2.4,w:1,after:res};st.mode="play"})},
+   st.camOver={pos,tgt,t0:time,dur:3,w:1,after:res};st.mode="play"})},
   onChestTap(fn){if(chest)chest.userData.onTap=fn},
   openChest(I){return new Promise(async res=>{if(!ok||!chest)return res();const u=chest.userData;chest.userData.onTap=null;Sound.fx("chest");
    const tex=treasureTex(I.tr.art,I.pal.glow);await tween(.45,p=>{chest.rotation.z=Math.sin(p*40)*.04*(1-p);chest.position.y+=Math.sin(p*60)*.004});
@@ -3831,7 +3872,7 @@ const Scene=(()=>{
    const t0=time;chest.userData.tick2=true;const prev=chest.userData.tick;chest.userData.tick=(t)=>{prev(t);sp.position.y=3.5+Math.sin((t-t0)*1.6)*.15;u.beam.material.opacity=.25+.1*Math.sin(t*2)};res()})},
   voyage(n,onMid){return new Promise(async res=>{if(!ok){onMid&&onMid();return res()}
    st.mode="play";const from=PL;if(chest){const c=chest;chest=null;tween(.8,p=>{c.scale.setScalar(1.5*(1-p))}).then(()=>{scene.remove(c);disposeTree(c)})}
-   st.camOver=st.camOver?{pos:st.camOver.pos,tgt:st.camOver.tgt,t0:time,dur:1.6,w:1}:null;if(st.camOver){const c=st.camOver;tween(1.6,p=>{c.w=1-ease(p)}).then(()=>{st.camOver=null})}
+   st.camOver=st.camOver?{pos:st.camOver.pos,tgt:st.camOver.tgt,t0:time-10,dur:1,w:1}:null;if(st.camOver){const c=st.camOver;tween(1.6,p=>{c.w=1-ease(p)}).then(()=>{st.camOver=null})}
    setShip(currentShip());
    await tween(1.15,p=>{st.speed=easeIn(p)*26;st.yawT=-.28*ease(p);st.pitchT=-.05*ease(p)});
    oldIsle=isle;isle=null;node=n;boss=n.type==="boss";PA=from;PB=pal(nodePal(n));pt=0;layout();onMid&&onMid();
@@ -3915,6 +3956,7 @@ function boot(){
    if(d.n.type==="boss"){c.strokeStyle="rgba(255,122,92,.85)";c.lineWidth=1.5;c.beginPath();for(let j=0;j<3;j++){const xx=-9+j*6;c.moveTo(xx-3,2);c.quadraticCurveTo(xx,-5*k,xx+3,2)}c.stroke();c.beginPath();c.moveTo(-14,2);c.lineTo(10,2);c.globalAlpha=k*.4;c.stroke()}
    else{c.scale(.6+.4*easeOut(k),.6+.4*easeOut(k));c.beginPath();d.pts.forEach(([x,y],j)=>j?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fillStyle=mix(d.n.isl.pal.land[0],"#0b1d25",.35);c.fill();c.strokeStyle="rgba(237,228,207,.8)";c.lineWidth=1;c.stroke();
     c.strokeStyle="rgba(237,228,207,.25)";for(let r=1;r<3;r++){c.beginPath();d.pts.forEach(([x,y],j)=>j?c.lineTo(x*(1+r*.35),y*(1+r*.35)):c.moveTo(x*(1+r*.35),y*(1+r*.35)));c.closePath();c.setLineDash([1,3]);c.stroke();c.setLineDash([])}}
+   if(i<P.unlocked){c.globalAlpha=k*.9;c.strokeStyle="#ff7a5c";c.lineWidth=2.2;c.lineCap="round";c.beginPath();c.moveTo(-6,-6);c.quadraticCurveTo(0,-1,6,6);c.moveTo(6,-6);c.quadraticCurveTo(1,0,-6,6);c.stroke()}
    if(!narrow){c.globalAlpha=k*.55;c.fillStyle=d.n.type==="boss"?"#ff9a80":"#ede4cf";c.font='500 9px "IBM Plex Mono",monospace';c.textAlign="center";c.fillText(nodeName(d.n).toUpperCase(),0,(i%2?-16:22))}
    c.restore()});
   // ship at route head
@@ -4054,8 +4096,8 @@ function useCharm(c){
 $$(".charm").forEach(b=>b.onclick=()=>useCharm(b.dataset.c));
 function grantCharms(n){const got=[];for(let i=0;i<n;i++){const open=["lens","nacre","tide"].filter(c=>P.charms[c]<CAP);if(!open.length)break;const c=open[Math.random()*open.length|0];P.charms[c]++;got.push(c)}return got}
 const CHARM_NAME={lens:"Lens",nacre:"Nacre",tide:"Slack tide"};
-function overlay(html){$("#overIn").innerHTML=html;const o=$("#over");o.classList.add("on");o.scrollTop=0;fillIcons(o)}
-function closeOver(){$("#over").classList.remove("on")}
+function overlay(html){$("#overIn").innerHTML=html;const o=$("#over");clearTimeout(closeOver.t);o.classList.remove("out");o.classList.add("on");o.scrollTop=0;fillIcons(o)}
+function closeOver(){const o=$("#over");if(!o.classList.contains("on"))return;o.classList.remove("on");o.classList.add("out");clearTimeout(closeOver.t);closeOver.t=setTimeout(()=>o.classList.remove("out"),360)}
 const starRow=n=>`<div class="starrow">${[0,1,2].map(k=>`<i class="${k<n?"":"off"}">${ICON.star}</i>`).join("")}</div>`;
 async function win(){
  busy=true;const i=R.i,n=R.n,stars=R.miss===0?3:R.miss===1?2:1,prevShip=currentShip();cancelAnimationFrame(timerRaf);
@@ -4073,7 +4115,7 @@ async function win(){
    overlay(`<span class="mono tag">Island ${n.num} of ${ISL.length} cleared</span><h1>${esc(T.name)}</h1><p class="sub">${esc(I.mon.name)} defeated</p>${starRow(stars)}
    <div class="win2"><figure><div class="tr-hero">${treasureSVG(T.art,I.pal.glow)}</div><figcaption class="mono">Treasure</figcaption></figure>
    <figure><div class="morph" id="morph">${newShip?`<div class="old">${shipSVG(prevShip)}</div><div class="new">${shipSVG(S)}</div><canvas></canvas>`:`<div class="new" style="animation-delay:.2s">${shipSVG(S)}</div>`}<span class="wl"></span></div><figcaption class="mono">${newShip?"New ship":"Ship"} · ${esc(S.name)}</figcaption></figure></div>
-   ${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
+   ${voyStrip(i)}${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
    <div class="lore2"><details><summary><span class="mono">The story</span>${esc(I.cult)}</summary><p>${esc(I.myth)}</p><p>${esc(T.lore)}</p></details>
    <details><summary><span class="mono">Your ship</span>${esc(S.name)}</summary><p>${esc(S.text)}</p></details>
    <details><summary><span class="mono">Biology link</span>${esc(TOPIC[I.topic].name)}</summary><p>${esc(I.bio)}</p></details></div>
@@ -4082,7 +4124,7 @@ async function win(){
   Scene.onChestTap(open);$("#chestBtn").onclick=open;
  }else{
   overlay(`<span class="mono tag" style="color:var(--coral)">Sea boss defeated</span><h1>${esc(n.boss.name)}</h1><p class="sub">${esc(LEGS[n.leg][0])} is behind you</p>${starRow(stars)}
-  ${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
+  ${voyStrip(i)}${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
   <div class="lore2"><details><summary><span class="mono">The story</span>${esc(n.boss.name)}</summary><p>${esc(n.boss.fact)}</p></details></div>
   <div class="row stick"><button class="btn" id="contBtn">${end?"Finish the voyage":"Into "+esc(LEGS[n.leg+1][0])}</button></div>`);
   $("#contBtn").onclick=()=>sailOn(i);
@@ -4092,8 +4134,7 @@ async function sailOn(i){
  if(busy)return;Sound.fx("tap");closeOver();R=null;
  if(i>=NODES.length-1)return finale();
  busy=true;const n=NODES[i+1];setCine(true);$(".hud").classList.add("off");Sound.fx("sail");
- await Scene.voyage(n,()=>Sound.mood(n.type==="boss"?"boss":n.isl.mus));
- await showCard(n);busy=false;$(".hud").classList.remove("off");startRun(i+1);
+ await Promise.all([Scene.voyage(n,()=>Sound.mood(n.type==="boss"?"boss":n.isl.mus)),wait(1700).then(()=>showCard(n))]);busy=false;$(".hud").classList.remove("off");startRun(i+1);
 }
 function vaultFx(col){
  const cv=$("#vaultCv");if(!cv||REDUCED)return;const r=cv.getBoundingClientRect(),c=cv.getContext("2d"),d=Math.min(2,devicePixelRatio||1);cv.width=r.width*d;cv.height=r.height*d;c.scale(d,d);
@@ -4153,6 +4194,9 @@ $("#leaveBtn").onclick=()=>{
 };
 function closeVeil(){$("#veil").classList.remove("on")}
 
+/* v8.2: completed stops are crossed off the chart */
+const xMark=(anim,delay=0)=>`<svg class="xmark${anim?" draw":""}" viewBox="0 0 40 40" aria-hidden="true" style="--xd:${delay}s"><path pathLength="1" d="M9 8 C14 14 21 21 31 32"/><path pathLength="1" d="M31 9 C24 15 17 23 8 31"/></svg>`;
+function voyStrip(just){let h='<div class="vstrip" aria-label="Voyage progress">';LEGS.forEach((L,li)=>{h+=`<div class="vsea"><span class="mono">${ROMAN[li]}</span><div>`;NODES.forEach((n,i)=>{if(n.leg!==li)return;const done=i<P.unlocked,now=i===just;h+=`<i class="vs ${n.type==="boss"?"b":""} ${done?"done":""} ${i===P.unlocked?"next":""}" title="${esc(nodeName(n))}">${done?xMark(now,now?.9:0):""}</i>`});h+="</div></div>"});return h+"</div>"}
 /* ---------------- LOGBOOK ---------------- */
 let logTab="chart";
 function chartHTML(w){
@@ -4161,8 +4205,8 @@ function chartHTML(w){
   if(i%4===0){h+=`<div class="leg" style="top:${y}px"><span class="mono">Sea ${ROMAN[n.leg]}</span><h3>${LEGS[n.leg][0]}</h3><p>${LEGS[n.leg][1]}</p></div>`;y+=140}
   const x=w/2+Math.sin(i*1.1+.5)*amp;pts.push([x,y]);
   const st=P.stars[i]||0,state=i<P.unlocked?"done":i===P.unlocked?"open":"locked",side=x<w/2?"r":"l",known=i<=P.unlocked;
-  h+=`<div class="node ${n.type==="boss"?"boss":""} ${state}" style="left:${x}px;top:${y}px"><span>${n.type==="isl"?n.num:"Boss"}</span></div>`;
-  h+=`<div class="nlabel ${side}" style="top:${y}px;${side==="r"?`left:${x}px`:`right:${w-x}px`}"><b>${known?esc(nodeName(n)):"Uncharted"}</b><span class="mono">${known?esc(n.type==="isl"?n.isl.cult:"Guardian"):"· · ·"}</span>${st?`<div class="stars">${[0,1,2].map(k=>`<i class="${k<st?"":"off"}">${ICON.star}</i>`).join("")}</div>`:""}</div>`;
+  const xa=state==="done"&&i===P.unlocked-1&&P.xShown!==i;if(xa){P.xShown=i;save()}h+=`<div class="node ${n.type==="boss"?"boss":""} ${state}" style="left:${x}px;top:${y}px"><span>${n.type==="isl"?n.num:"Boss"}</span>${state==="done"?xMark(xa,.3):""}</div>`;
+  h+=`<div class="nlabel ${side}" style="top:${y}px;${side==="r"?`left:${x}px`:`right:${w-x}px`}"><b>${known?esc(nodeName(n)):"Uncharted"}</b><span class="mono">${known?esc(n.type==="isl"?n.isl.cult:"Sea boss"):"· · ·"}</span>${st?`<div class="stars">${[0,1,2].map(k=>`<i class="${k<st?"":"off"}">${ICON.star}</i>`).join("")}</div>`:""}</div>`;
   y+=n.type==="boss"?116:100});
  y+=40;let d=`M${pts[0][0]} ${pts[0][1]}`,dOn=d;
  for(let i=1;i<pts.length;i++){const[a,b]=[pts[i-1],pts[i]],m=(b[1]-a[1])/2,seg=` C${a[0]} ${a[1]+m} ${b[0]} ${b[1]-m} ${b[0]} ${b[1]}`;d+=seg;if(i<=Math.min(P.unlocked,pts.length-1))dOn+=seg}
@@ -4224,7 +4268,7 @@ addEventListener("keydown",e=>{
 fillIcons();sndIcon();boot();
 
 /* ============ v7: loot, ranked voyage, 1v1 duels ============ */
-const cap=async n=>{try{return window.claude&&typeof window.claude.use==="function"?await window.claude.use(n):null}catch(e){return null}};
+const cap=async n=>{try{if(window.claude&&typeof window.claude.use==="function")return await window.claude.use(n);return window.BIOSHIP_NET&&window.BIOSHIP_NET.enabled?await window.BIOSHIP_NET.use(n):null}catch(e){return null}};
 const nodeKey=n=>n.type==="isl"?n.isl.id:"b"+n.leg;
 const QBN=Object.values(QB).reduce((a,b)=>a+b.length,0),DECKV=71000+QBN;
 function freshDeck(t){const n=QB[t].length,n0=Math.min(n,QB_ORIG_N[t]||0),ix=[...Array(n).keys()];return shuffle(ix.slice(n0)).concat(shuffle(ix.slice(0,n0)))}
@@ -4316,9 +4360,31 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 8 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8.2 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
+
+/* ============ TEMPORARY beta walkthrough mode (delete this file + its build.py entry to remove) ============ */
+/* Turn on: add ?test=1 to the URL, or tap the build line on the title screen 5 times. Turn off: ?test=0 or tap 5 times again. */
+const TEST=(()=>{let on=false;try{const q=new URLSearchParams(location.search).get("test");if(q==="1")localStorage.setItem("bioship-test","1");if(q==="0")localStorage.removeItem("bioship-test");on=localStorage.getItem("bioship-test")==="1"}catch(e){}return on})();
+{const css=document.createElement("style");css.textContent=`
+.tbar{position:fixed;left:50%;top:calc(6px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;display:flex;gap:6px;align-items:center;padding:6px;border-radius:999px;background:rgba(40,10,10,.88);border:1px solid #ff7a5c;box-shadow:0 8px 24px rgba(0,0,0,.4);font:600 .78rem var(--sans)}
+.tbar b{color:#ff9a80;font:600 .62rem var(--mono);letter-spacing:.12em;padding:0 6px}
+.tbar button,.tbar select{border-radius:999px;border:1px solid rgba(255,154,128,.5);background:rgba(255,122,92,.14);color:#ffe2d8;padding:6px 10px;font:600 .76rem var(--sans)}
+.tbar select{max-width:42vw;background:#2a0e0a}
+@media(max-width:620px){.tbar{top:calc(100px + env(safe-area-inset-top,0px));transform:translateX(-50%) scale(.88)}}`;document.head.appendChild(css)}
+function testBar(){let b=$("#tbar");if(!TEST){if(b)b.remove();return}
+ if(!b){b=document.createElement("div");b.className="tbar";b.id="tbar";document.body.appendChild(b)}
+ b.innerHTML=`<b>BETA TEST</b><select id="tPick" aria-label="Jump to stop">${NODES.map((n,i)=>`<option value="${i}" ${i===curIndex()?"selected":""}>${i+1}. ${n.type==="boss"?"Boss: ":""}${esc(nodeName(n))}</option>`).join("")}</select><button id="tJump">Go</button><button id="tWin">Auto-win</button>`;
+ $("#tJump").onclick=()=>testJump(+$("#tPick").value);$("#tWin").onclick=testWin}
+function testWin(){if(!R||busy||R.done)return;cancelAnimationFrame(timerRaf);R.hits=R.need;R.miss=0;R.done=true;win()}
+function testJump(i){if(busy)return;cancelAnimationFrame(timerRaf);closeOver();if(R){R=null}
+ P.unlocked=i;for(let k=0;k<i;k++){if(!P.stars[k])P.stars[k]=3;const n=NODES[k];if(n.type==="isl"){if(!P.treasures.includes(n.isl.id))P.treasures.push(n.isl.id);if(!P.ships.includes(n.isl.ship.id))P.ships.push(n.isl.ship.id)}}save();
+ $("#chestCue").classList.remove("on");setCine(true);busy=true;showCard(NODES[i]).then(()=>{busy=false;testBar();Scene.set(NODES[i]);titleUI(false);startRun(i)})}
+/* keep test runs off the leaderboard */
+{const _rs=rankSubmit;rankSubmit=function(d){if(TEST)return;return _rs(d)}}
+{const v=$("#tVer");if(v){let n=0,t=0;v.style.cursor="default";v.addEventListener("click",()=>{const now=Date.now();n=now-t<700?n+1:1;t=now;if(n>=5){n=0;try{TEST?localStorage.removeItem("bioship-test"):localStorage.setItem("bioship-test","1")}catch(e){}location.reload()}});if(TEST)v.textContent+=" · beta test mode"}}
+testBar();
 
 </script>
 </body>
