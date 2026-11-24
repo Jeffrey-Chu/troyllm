@@ -311,6 +311,26 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 }
 @media(max-height:620px){#play #qText{font-size:.95rem;margin-bottom:8px}#play .opt{padding:6px 10px;font-size:.84rem}#play .qmeta{padding:8px 0 0}#play .charm{min-height:28px}}
 .t-ver{font-size:.56rem;color:var(--dim);margin-top:10px;letter-spacing:.12em}
+/* v8 readable reward screen */
+.win2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px;align-items:end}
+.win2 figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.win2 figcaption{font-size:.6rem;color:var(--muted)}
+.win2 .tr-hero{margin:0;width:min(140px,34vw)}
+.win2 .morph{margin:0;width:100%;max-width:240px}
+.rew2{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px}
+.lore2{text-align:left;margin:16px 0 8px;border-top:1px solid var(--line)}
+.lore2 details{border-bottom:1px solid var(--line)}
+.lore2 summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:10px;padding:12px 4px;font:500 1rem var(--serif);color:var(--bone)}
+.lore2 summary::-webkit-details-marker{display:none}
+.lore2 summary .mono{font-size:.6rem;color:var(--glow);min-width:8.5em}
+.lore2 summary::after{content:"+";margin-left:auto;font:400 1.1rem var(--mono);color:var(--muted);transition:transform .25s}
+.lore2 details[open] summary::after{transform:rotate(45deg)}
+.lore2 details p{margin:0 4px 12px;color:var(--bone-2);font-size:1rem;line-height:1.6;max-width:38em;animation:fadeUp .35s both}
+.over .row.stick{position:sticky;bottom:0;padding:14px 0 calc(6px + var(--safe-b));margin-top:8px;background:linear-gradient(transparent,var(--ink) 40%)}
+@media(max-width:420px){.lore2 summary .mono{min-width:7em}}
+.over.on .over-in>:is(.tag,h1,.sub,.win2,.rew2,.lore2,.row,.cards){animation:fadeUp .55s cubic-bezier(.2,.9,.3,1) both}
+.over.on .over-in>h1{animation-delay:.06s}.over.on .over-in>.sub{animation-delay:.12s}.over.on .over-in>.win2{animation-delay:.18s}.over.on .over-in>.rew2{animation-delay:.3s}.over.on .over-in>.lore2,.over.on .over-in>.cards{animation-delay:.38s}.over.on .over-in>.row{animation-delay:.45s}
+@media(prefers-reduced-motion:reduce){.over.on .over-in>*{animation:none!important}}
 /* v7 loot, ranks, duel */
 .t-row2{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.t-row2 .btn{padding:8px 14px;font-size:.85rem}
 .lootrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 6px}
@@ -508,7 +528,7 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
  <canvas id="bootCv"></canvas>
  <div id="bootLogo" class="logo"></div>
  <div class="boot-foot">
-  <p class="boot-sub">A voyage across twenty-one islands of myth, and everything alive between them.</p>
+  <p class="boot-sub">A voyage across the islands of myth, and everything alive between them.</p>
   <p class="boot-tag mono" id="bootTag">Culturing plankton</p>
   <div class="boot-bar"><i id="bootBar"></i></div>
   <div class="boot-go"><button class="btn" id="bootGo">Set sail</button><span class="boot-note mono">Best with sound on</span></div>
@@ -530,12 +550,12 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
   <div class="titleui" id="titleUI">
    <div class="t-in">
     <div class="logo" id="tLogo"></div>
-    <p class="t-sub">Twenty-one islands of myth. Seven guardians. One ship that becomes every legend it survives.</p>
+    <p class="t-sub">Sail the islands of myth. Answer biology to beat each monster and claim its treasure.</p>
     <p class="t-next mono" id="tNext"></p>
     <div class="t-mode" id="tDiff"></div>
     <div class="t-mode" id="tMode"></div>
     <div class="t-row"><button class="btn" id="tGo">Begin the voyage</button><button class="btn ghost" id="tLog"><span class="ico" data-i="book"></span>Logbook</button><button class="iconbtn sndBtn" aria-label="Toggle sound"><span class="ico sndIco"></span></button><button class="t-reset" id="tReset" hidden>Reset progress</button></div>
-    <div class="t-row2"><button class="btn ghost sm" id="tDuel">1v1 duel</button><button class="btn ghost sm" id="tRank">Leaderboard</button></div>
+    <div class="t-row2"><button class="btn ghost sm" id="tDuel">1v1 duel</button><button class="btn ghost sm" id="tRank">Leaderboard</button><button class="btn ghost sm" id="tGfx"></button></div>
     <p class="mono t-ver" id="tVer"></p>
    </div>
   </div>
@@ -2672,6 +2692,11 @@ const Sound=(()=>{
 
 /* ============ 3D helpers (three.js r149, inlined) ============ */
 const T3=window.THREE;
+/* v8 graphics tier: "fast" swaps PBR for Lambert shading (much cheaper on Chromebooks/phones) */
+const GFX=(()=>{let v=null;try{v=localStorage.getItem("bioship-gfx")}catch(e){}if(v==="fast"||v==="pretty")return v;
+ const ua=navigator.userAgent,weak=/CrOS|Android|iPhone|iPad|Mobile/.test(ua)||(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;return weak?"fast":"pretty"})();
+if(GFX==="fast"&&T3){const L0=new T3.MeshLambertMaterial(),Base=T3.MeshLambertMaterial;
+ T3.MeshStandardMaterial=class extends Base{constructor(p){const q={};if(p)for(const k in p)if(L0[k]!==undefined)q[k]=p[k];super(q)}}}
 const C3=h=>new T3.Color(h);
 function cvTex(w,h,draw,rep){const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");draw(x,w,h);const t=new T3.CanvasTexture(c);t.anisotropy=4;if(rep){t.wrapS=t.wrapT=T3.RepeatWrapping;t.repeat.set(rep[0],rep[1])}return t}
 const hash1=(n)=>fr(Math.sin(n*127.1)*43758.5453);
@@ -2723,7 +2748,7 @@ function bakeStatic(root,tick){
  return root}
 /* adaptive resolution: keeps the frame rate up by trading pixels, never features */
 const Quality={dpr:1,cap:1.5,acc:0,n:0,lock:0,set(R3,v){this.dpr=clamp(v,.5,this.cap);R3.setPixelRatio(this.dpr)},
- init(R3){const d=devicePixelRatio||1,big=screen.width*screen.height>2.2e6;this.cap=Math.min(d,1.25);this.set(R3,Math.min(d,big?.85:1))},
+ init(R3){const d=devicePixelRatio||1,big=screen.width*screen.height>2.2e6;const fast=typeof GFX!=="undefined"&&GFX==="fast";this.cap=Math.min(d,fast?1:1.25);this.set(R3,Math.min(d,fast?.85:big?.85:1))},
  step(R3,rdt,onChange){if(rdt>.2)return;this.acc+=rdt;this.n++;if(this.acc<1.2)return;const fps=this.n/this.acc;this.acc=0;this.n=0;if(this.lock>0){this.lock--;return}
   if(fps<50&&this.dpr>.5){this.set(R3,this.dpr-(fps<32?.2:.1));this.lock=1;onChange&&onChange()}else if(fps>58.5&&this.dpr<this.cap){this.set(R3,this.dpr+.05);this.lock=4;onChange&&onChange()}}};
 /* rim light: lifts silhouettes off the dark water so creatures read clearly */
@@ -3569,7 +3594,7 @@ function boot(){
  const cv=$("#bootCv"),c=cv.getContext("2d");let W,H,dpr,raf,t0=performance.now(),done=false,ready=false,nodes=[],rose,DUR=REDUCED?600:3400;
  $("#bootLogo").innerHTML=logoHTML();
  try{const l=document.createElement("link");l.rel="icon";l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -22 32 32"><rect x="-16" y="-22" width="32" height="32" rx="7" fill="#071319"/>${markShip("#ede4cf")}</svg>`);document.head.appendChild(l)}catch(e){}
- const tags=["Inking the chart","Plotting twenty-one islands","Marking the seven guardians","Trimming the sails","Ready"];
+ const tags=["Inking the chart","Plotting the islands","Waking the monsters","Trimming the sails","Ready"];
  const h=(i,s=1)=>fr(Math.sin(i*127.1+s*311.7)*43758.5453);
  function size(){dpr=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr|0;cv.height=H*dpr|0;c.setTransform(dpr,0,0,dpr,0,0);plan()}
  function plan(){
@@ -3638,7 +3663,7 @@ function toTitle(){
  const tl=$("#tLogo");if(!tl.firstChild)tl.innerHTML=logoHTML().replace('id="inkw"','id="inkw2"').replace("url(#inkw)","url(#inkw2)");
  if(typeof D!=="undefined"&&D)duelLeave();R=null;closeOver();show("play");setCine(true);
  const i=curIndex(),n=NODES[i],done=P.unlocked>=NODES.length;Scene.set(n);Sound.mood("map");
- $("#tNext").innerHTML=done?`Voyage complete · ${P.treasures.length} of 21 treasures`:P.unlocked===0?`Your voyage begins at <b>${esc(nodeName(n))}</b>`:`Next: ${n.type==="boss"?"Boss":"Island "+n.num} · <b>${esc(nodeName(n))}</b>`;
+ $("#tNext").innerHTML=done?`Voyage complete · ${P.treasures.length} of ${ISL.length} treasures`:P.unlocked===0?`Your voyage begins at <b>${esc(nodeName(n))}</b>`:`Next: ${n.type==="boss"?"Boss":"Island "+n.num} · <b>${esc(nodeName(n))}</b>`;
  $("#tGo").textContent=done?"Sail again from the start":P.unlocked===0?"Begin the voyage":"Continue the voyage";
  modeUI();Scene.mode("title");titleUI(true);
 }
@@ -3650,7 +3675,7 @@ async function beginFromTitle(){
 }
 function showCard(n){return new Promise(async res=>{
  const c=$("#card"),isl=n.type==="isl",first=NODES.indexOf(n)%4===0;
- c.innerHTML=`${first?`<span class="mono c-sea">Sea ${ROMAN[n.leg]} · ${esc(LEGS[n.leg][0])}</span>`:""}<span class="mono c-k">${isl?"Island "+n.num+" of 21 · "+esc(n.isl.cult):"Guardian of "+esc(LEGS[n.leg][0])}</span><h2>${[...nodeName(n)].map((ch,k)=>`<i style="animation-delay:${k*35}ms">${ch===" "?"&nbsp;":esc(ch)}</i>`).join("")}</h2><span class="c-line"></span><p>${isl?"Guarded by "+esc(n.isl.mon.name):"Five hits to break it"}</p>`;
+ c.innerHTML=`${first?`<span class="mono c-sea">Sea ${ROMAN[n.leg]} · ${esc(LEGS[n.leg][0])}</span>`:""}<span class="mono c-k">${isl?"Island "+n.num+" of "+ISL.length+" · "+esc(n.isl.cult):"Sea boss · "+esc(LEGS[n.leg][0])}</span><h2>${[...nodeName(n)].map((ch,k)=>`<i style="animation-delay:${k*35}ms">${ch===" "?"&nbsp;":esc(ch)}</i>`).join("")}</h2><span class="c-line"></span><p>${isl?"Guarded by "+esc(n.isl.mon.name):"Five hits to break it"}</p>`;
  c.classList.remove("on");void c.offsetWidth;c.classList.add("on");Sound.fx("gong");
  await wait(2300);c.classList.remove("on");c.classList.add("off");await wait(500);c.classList.remove("off");res()})}
 function startRun(i){
@@ -3762,21 +3787,21 @@ async function win(){
   await Scene.landfall(I);
   const cue=$("#chestCue");cue.querySelector("b").textContent=I.name;cue.classList.add("on");let opened=false;
   const open=async()=>{if(opened)return;opened=true;cue.classList.remove("on");if(!P.treasures.includes(I.id)){P.treasures.push(I.id);save()}await Scene.openChest(I);await wait(400);
-   overlay(`<span class="mono tag">Landfall · island ${n.num} of 21</span><h1>${esc(T.name)}</h1><p class="sub">The treasure of ${esc(I.name)} · ${esc(I.mon.name)} defeated</p>${starRow(stars)}
-   <div class="tr-hero">${treasureSVG(T.art,I.pal.glow)}</div><p class="trlore" style="margin:0 auto 18px;max-width:36em">${esc(T.lore)}</p>
-   <div class="morph" id="morph">${newShip?`<div class="old">${shipSVG(prevShip)}</div><div class="new">${shipSVG(S)}</div><canvas></canvas>`:`<div class="new" style="animation-delay:.2s">${shipSVG(S)}</div>`}<span class="wl"></span></div>
-   <p class="shipname">${esc(S.name)}${S.sub?`<small>${esc(S.sub)}</small>`:""}</p>
-   <p class="mono" style="color:var(--muted);margin:0 0 4px">${newShip?"Your ship transforms":"Already in your fleet"}</p>
-   <div class="cards"><div class="card"><span class="mono">The myth · ${esc(I.cult)}</span><p>${esc(I.myth)}</p></div>
-   <div class="card"><span class="mono">Ship transformation</span><p>${esc(S.text)}</p></div>
-   <div class="card"><span class="mono">Why biology lives here · ${esc(TOPIC[I.topic].name)}</span><p>${esc(I.bio)}</p></div></div>
-   ${lootRow(n,stars,newLoot)}${rew}<div class="row"><button class="btn" id="contBtn">Sail on</button></div>`);
+   overlay(`<span class="mono tag">Island ${n.num} of ${ISL.length} cleared</span><h1>${esc(T.name)}</h1><p class="sub">${esc(I.mon.name)} defeated</p>${starRow(stars)}
+   <div class="win2"><figure><div class="tr-hero">${treasureSVG(T.art,I.pal.glow)}</div><figcaption class="mono">Treasure</figcaption></figure>
+   <figure><div class="morph" id="morph">${newShip?`<div class="old">${shipSVG(prevShip)}</div><div class="new">${shipSVG(S)}</div><canvas></canvas>`:`<div class="new" style="animation-delay:.2s">${shipSVG(S)}</div>`}<span class="wl"></span></div><figcaption class="mono">${newShip?"New ship":"Ship"} · ${esc(S.name)}</figcaption></figure></div>
+   ${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
+   <div class="lore2"><details><summary><span class="mono">The story</span>${esc(I.cult)}</summary><p>${esc(I.myth)}</p><p>${esc(T.lore)}</p></details>
+   <details><summary><span class="mono">Your ship</span>${esc(S.name)}</summary><p>${esc(S.text)}</p></details>
+   <details><summary><span class="mono">Biology link</span>${esc(TOPIC[I.topic].name)}</summary><p>${esc(I.bio)}</p></details></div>
+   <div class="row stick"><button class="btn" id="contBtn">Sail on</button></div>`);
    if(newShip){Sound.fx("morph");morphFx()}$("#contBtn").onclick=()=>sailOn(i)};
   Scene.onChestTap(open);$("#chestBtn").onclick=open;
  }else{
-  overlay(`<span class="mono tag" style="color:var(--coral)">Guardian defeated</span><h1>${esc(n.boss.name)}</h1><p class="sub">${esc(LEGS[n.leg][0])} is behind you</p>${starRow(stars)}
-  <div class="cards"><div class="card"><span class="mono">From the bestiary</span><p>${esc(n.boss.fact)}</p></div></div>
-  ${lootRow(n,stars,newLoot)}${rew}<div class="row"><button class="btn" id="contBtn">${end?"Finish the voyage":"Into "+esc(LEGS[n.leg+1][0])}</button></div>`);
+  overlay(`<span class="mono tag" style="color:var(--coral)">Sea boss defeated</span><h1>${esc(n.boss.name)}</h1><p class="sub">${esc(LEGS[n.leg][0])} is behind you</p>${starRow(stars)}
+  ${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
+  <div class="lore2"><details><summary><span class="mono">The story</span>${esc(n.boss.name)}</summary><p>${esc(n.boss.fact)}</p></details></div>
+  <div class="row stick"><button class="btn" id="contBtn">${end?"Finish the voyage":"Into "+esc(LEGS[n.leg+1][0])}</button></div>`);
   $("#contBtn").onclick=()=>sailOn(i);
  }
 }
@@ -3829,9 +3854,9 @@ function modeUI(){diffUI();const locked=P.unlocked>0,m=$("#tMode");if(!m)return;
  r.hidden=P.unlocked===0&&!P.treasures.length&&!Object.keys(P.stats).length}
 function finale(){
  let tot=0;Object.values(P.stars).forEach(v=>tot+=+v||0);
- overlay(`<span class="mono tag">Voyage complete</span><h1>Home to Hawaiki</h1><p class="sub">Twenty-one islands, seven guardians, one ship rebuilt twenty-one times.</p>
+ overlay(`<span class="mono tag">Voyage complete</span><h1>Home to Hawaiki</h1><p class="sub">Every island cleared. One ship, rebuilt by every legend it survived.</p>
  <div class="morph"><div class="new" style="animation-delay:.2s">${shipSVG(currentShip())}</div><span class="wl"></span></div>
- <div class="cards"><div class="card"><span class="mono">Final tally</span><p>${tot} of ${NODES.length*3} stars and ${P.treasures.length} of 21 treasures. Your treasures stay in the hold if you sail again.</p></div></div>
+ <div class="cards"><div class="card"><span class="mono">Final tally</span><p>${tot} of ${NODES.length*3} stars and ${P.treasures.length} of ${ISL.length} treasures. Your treasures stay in the hold if you sail again.</p></div></div>
  <div class="row"><button class="btn" id="mapBtn">Return to port</button></div>`);
  $("#mapBtn").onclick=()=>toTitle();
 }
@@ -3882,7 +3907,7 @@ function openLog(){
   <li><b>Reference text.</b> OpenStax, <i>Biology 2e</i> (Rice University, CC BY 4.0). Each question cites the chapter it draws on.</li>
   <li><b>Classic experiments cited.</b> Meselson & Stahl, Hershey & Chase, Griffith, Avery–MacLeod–McCarty, Miller & Urey, Anfinsen, Engelmann, Spemann & Mangold, Gurdon, Takahashi & Yamanaka, Paine, Gause, Lorenz, Tinbergen and von Frisch.</li>
   <li><b>Myths and treasures.</b> Drawn from the Kojiki, the Liezi, Journey to the West, Urashima Tarō, the Ramayana, One Thousand and One Nights, the Odyssey and Argonautica, Hesiod and Apollodorus, Pytheas via Strabo, the Book of the Dead, the Tale of the Shipwrecked Sailor, the Fenian and Mythological Cycles, Geoffrey of Monmouth and Preiddeu Annwn, the Prose and Poetic Edda (Þrymskviða), Russian folk tales, Mexica tradition, and Māori and wider Polynesian oral tradition.</li></ol>`;
- overlay(`<span class="mono tag">Ship’s logbook</span><h1>Logbook</h1><p class="sub">${P.treasures.length} of 21 treasures · ${P.ships.length} of 21 ships</p>
+ overlay(`<span class="mono tag">Ship’s logbook</span><h1>Logbook</h1><p class="sub">${P.treasures.length} of ${ISL.length} treasures · ${P.ships.length} of ${ISL.length} ships</p>
  <div class="tabs">${Object.entries(tabs).map(([k,v])=>`<button class="${logTab===k?"on":""}" data-t="${k}">${v}</button>`).join("")}</div>${body}
  <div class="settings"><button class="btn ghost sm" id="sndBtn2">${Sound.on?"Sound: on":"Sound: off"}</button><button class="btn ghost sm" id="resetBtn">New voyage</button><button class="btn sm" id="closeLog">Close</button></div>`);
  if(logTab==="chart"){const box=$("#chartBox");box.innerHTML=chartHTML(box.clientWidth||Math.min(560,innerWidth-40))}
@@ -3979,7 +4004,7 @@ async function duelLobby(room,code,host){await duelLeave();Sound.fx("tap");const
    if(!D.host&&o&&o.presence.go&&!D.goSeen){D.goSeen=1;setTimeout(()=>duelStart(),2400)}}});
  render()}
 async function duelStart(){if(!D||D.started)return;D.started=true;closeOver();titleUI(false);Sound.fx("gong");
- const oppShip=[SHIP0,...ISL.map(I=>I.ship)].find(s=>s.id===(D.opp&&D.opp.ship))||SHIP0,n=NODES.filter(x=>x.type==="isl")[Math.floor(seeded(D.code)()*21)];
+ const oppShip=[SHIP0,...ISL.map(I=>I.ship)].find(s=>s.id===(D.opp&&D.opp.ship))||SHIP0,n=NODES.filter(x=>x.type==="isl")[Math.floor(seeded(D.code)()*ISL.length)];
  Scene.set(n);Scene.duel(oppShip);Scene.mode("play");Sound.mood(n.isl.mus);
  let names={};try{const u=await cap("user");if(u&&D.oppBy)names=await u.profiles([D.oppBy])}catch(e){}D.oppName=(names[D.oppBy]&&names[D.oppBy].name)||"Rival";
  $("#hudSea").textContent="1v1 duel · "+D.code;$("#hudName").textContent="You vs "+D.oppName;
@@ -4008,7 +4033,9 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 7.1 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 7.2 · "+QBN.toLocaleString()+" questions"}
+{const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
+ b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
 
 </script>
 </body>
