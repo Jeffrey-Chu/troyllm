@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Troy Clubs: every Troy High club website in one place</title>
-<meta name="description" content="Find Troy High clubs, see when and where they meet, and open their websites. Made by Troy Web Development Club.">
-<meta property="og:title" content="Troy Clubs">
-<meta property="og:description" content="Every Troy High club website in one place, with meeting days and rooms.">
+<title>Troy High Web Development Club · Est. 2023</title>
+<meta name="description" content="Troy High Web Development Club, est. 2023. We teach web development and build websites for Troy High clubs. Selected for the Troy Tech Fair every year.">
+<meta property="og:title" content="Troy High Web Development Club">
+<meta property="og:description" content="Est. 2023. We teach web development and build websites for Troy High clubs.">
 <meta name="theme-color" content="#cfd7e1">
 <link rel="preload" href="fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23222528'/%3E%3Ctext x='16' y='22' font-family='Arial Narrow,Arial' font-weight='700' font-size='15' fill='%23f2f1ec' text-anchor='middle'%3ETC%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23222528'/%3E%3Ctext x='16' y='22' font-family='Arial Narrow,Arial' font-weight='700' font-size='15' fill='%23f2f1ec' text-anchor='middle'%3ETW%3C/text%3E%3C/svg%3E">
 <style>
 @font-face { font-family: Archivo; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(fonts/archivo-wdth.woff2) format('woff2'); }
 @font-face { font-family: Atkinson; font-weight: 400; font-display: swap; src: url(fonts/atkinson-400.woff2) format('woff2'); }
@@ -58,7 +58,7 @@ h1, h2, h3, p { margin: 0; }
 .top nav { display: flex; gap: 1.75rem; }
 .top nav a { color: var(--ink); text-decoration: none; font-weight: 700; }
 .top nav a:hover { color: var(--link); }
-@media (max-width: 600px) { .top nav a:last-child { display: none; } .top nav { gap: 1.1rem; } }
+@media (max-width: 680px) { .top nav a:nth-child(n+3) { display: none; } .top nav { gap: 1.1rem; } }
 
 /* Hero */
 .hero { padding: clamp(1rem, 3vw, 2.25rem) 0 clamp(3.5rem, 7vw, 6rem); overflow: hidden; }
@@ -212,6 +212,32 @@ a.row.big:hover .ch { color: #ffe489; }
 .next li span { color: var(--slate); }
 .next .ask { margin-top: 1.4rem; font-weight: 700; }
 
+/* About + team */
+.sec { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
+.sec h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.3rem, 5vw, 4rem); line-height: .92; }
+.sec .lede { margin-top: 1rem; font-size: 1.15rem; color: var(--slate); max-width: 52ch; }
+.about { background: var(--paper); border-top: 6px solid var(--ink); }
+.about .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (max-width: 900px) { .about .wrap { grid-template-columns: 1fr; } }
+.stats { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.stats li { background: var(--felt); color: var(--letter); border-radius: 6px; padding: 1rem .9rem .85rem; box-shadow: 0 0 0 2px #a9b2bc; }
+.stats b { display: block; font-family: var(--display); font-stretch: 75%; font-weight: 700; font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1; color: var(--today); }
+.stats span { display: block; margin-top: .35rem; font-size: .88rem; color: #c9ced4; line-height: 1.35; }
+.timeline { list-style: none; margin: 0; padding: 0; border-left: 3px solid var(--ink); }
+.timeline li { position: relative; padding: 0 0 1.6rem 1.5rem; }
+.timeline li::before { content: ""; position: absolute; left: -9px; top: .35rem; width: 15px; height: 15px; border-radius: 50%; background: var(--today); box-shadow: 0 0 0 3px var(--ink); }
+.timeline .yr { font-family: var(--display); font-stretch: 78%; font-weight: 700; font-size: 1.05rem; letter-spacing: .06em; color: var(--slate); }
+.timeline strong { display: block; font-size: 1.15rem; margin-top: .1rem; }
+.timeline p { color: var(--slate); margin-top: .2rem; max-width: 52ch; }
+.team .wrap > p.lede { margin-bottom: 2rem; }
+.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.people li { display: flex; align-items: center; gap: .9rem; padding: 1rem; border-radius: 8px; background: var(--paper); border: 1px solid rgba(23,33,47,.14); }
+.people .av { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 4px; background: var(--felt); color: var(--letter); font-family: var(--display); font-stretch: 78%; font-weight: 700; font-size: 1.2rem; letter-spacing: .04em; box-shadow: 0 0 0 2px #a9b2bc; }
+.people .nm { display: block; font-weight: 700; font-size: 1.08rem; }
+.people .rl { display: block; color: var(--slate); font-size: .92rem; }
+.team h3 { font-family: var(--display); font-stretch: 78%; font-weight: 800; font-size: 1.6rem; margin: 2.5rem 0 1rem; }
+.people.alumni .av { background: var(--today); color: var(--ink); box-shadow: 0 0 0 2px var(--ink); }
+
 footer { background: var(--ink); color: #c9d1db; padding: 2.25rem 0 2.75rem; font-size: .95rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; }
 footer p { max-width: 62ch; }
@@ -219,14 +245,15 @@ footer a { color: #fff; }
 </style>
 </head>
 <body class="wall">
-<a class="skip" href="#hall">Skip to the club sites</a>
+<a class="skip" href="#about">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top"><b aria-hidden="true">TC</b>Troy Clubs</a>
+    <a class="brand" href="#top"><b aria-hidden="true">TW</b>Troy Web Development</a>
     <nav aria-label="Sections">
-      <a href="#board">Directory</a>
-      <a href="#hall">Club sites</a>
+      <a href="#about">About</a>
+      <a href="#hall">Our work</a>
+      <a href="#team">Team</a>
       <a href="#next">Get a site</a>
     </nav>
   </div>
@@ -236,8 +263,8 @@ footer a { color: #fff; }
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
       <div class="hero-text">
-        <h1 id="hero-title">Every Troy club website in one place.</h1>
-        <p>Find a club, see where it meets, and open its site to check in, sign up or follow along.</p>
+        <h1 id="hero-title">Troy High Web Development. Est.&nbsp;2023.</h1>
+        <p>We teach web development and build real websites for Troy High clubs. Every club site below is ours.</p>
       </div>
 
       <div class="board-stage" id="board">
@@ -268,12 +295,32 @@ footer a { color: #fff; }
     </div>
   </section>
 
+  <section class="sec about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div>
+        <h2 id="about-title">From lectures to launches.</h2>
+        <p class="lede">Troy Web Development Club started in 2023 as Web Development Education, a club where members lectured on how to build for the web. Today we still teach, and we put it to work: designing and building websites for clubs at Troy High and beyond.</p>
+        <ul class="stats">
+          <li><b>2023</b><span>Founded as Web Development Education</span></li>
+          <li><b>Every year</b><span>Picked for Troy Tech Fair out of 125 clubs</span></li>
+          <li><b>10+</b><span>Club websites designed and built</span></li>
+        </ul>
+      </div>
+      <ol class="timeline">
+        <li><span class="yr">2023</span><strong>Founded as Web Development Education</strong><p>Members gave lectures on web development: HTML, CSS, JavaScript and how sites go live.</p></li>
+        <li><span class="yr">Every year since 2023</span><strong>Selected for Troy Tech Fair</strong><p>Chosen out of 125 clubs to show prospective students what Troy tech clubs do, every single year since we started.</p></li>
+        <li><span class="yr">Every year since 2023</span><strong>Troy Food Fest</strong><p>We've taken part in Food Fest every year since we started.</p></li>
+        <li><span class="yr">Now</span><strong>Troy Web Development Club</strong><p>Renamed and building websites for Troy High clubs, plus a science nonprofit and an OCSA student group.</p></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="hall" id="hall" aria-labelledby="hall-title">
     <div class="hall-sticky">
       <div class="wrap">
         <div class="hall-head">
-          <h2 id="hall-title">Walk the hall.</h2>
-          <p><span class="on-hover">Hover a site to scroll through it.</span><span class="on-touch">Each site scrolls by as you reach it.</span> Every one was designed and built by Troy Web Development Club.</p>
+          <h2 id="hall-title">Our work.</h2>
+          <p><span class="on-hover">Hover a site to scroll through it.</span><span class="on-touch">Each site scrolls by as you reach it.</span> Every one was designed and built by our members.</p>
         </div>
         <div class="progress" aria-hidden="true"><i></i></div>
       </div>
@@ -369,6 +416,22 @@ footer a { color: #fff; }
     </div>
   </section>
 
+  <section class="sec team" id="team" aria-labelledby="team-title">
+    <div class="wrap">
+      <h2 id="team-title">Contributors.</h2>
+      <p class="lede">The people who design, build and ship our sites.</p>
+      <ul class="people">
+        <li><span class="av" aria-hidden="true">JC</span><span><span class="nm">Jeffrey Chu</span><span class="rl">Contributor</span></span></li>
+        <li><span class="av" aria-hidden="true">RJ</span><span><span class="nm">Ryan Jian</span><span class="rl">Contributor</span></span></li>
+        <li><span class="av" aria-hidden="true">W</span><span><span class="nm">Wesley</span><span class="rl">Contributor</span></span></li>
+      </ul>
+      <h3>Alumni</h3>
+      <ul class="people alumni">
+        <li><span class="av" aria-hidden="true">YY</span><span><span class="nm">Yeowon Yoon</span><span class="rl">Alumni</span></span></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="next" id="next" aria-labelledby="next-title">
     <div class="wrap">
       <div>
@@ -378,14 +441,14 @@ footer a { color: #fff; }
       </div>
       <div>
         <h2 id="next-title">Your club could be next.</h2>
-        <p class="lede">Troy Web Development Club built every site on this page. We can build one for your club too.</p>
+        <p class="lede">We built every site on this page. We can build one for your club too.</p>
         <ul>
           <li><strong>Designed around your club</strong><span>Your colors, photos and voice, not a fill-in template.</span></li>
           <li><strong>Its own web address</strong><span>A fast, secure site to share in your bio and on flyers.</span></li>
           <li><strong>Tools your members use</strong><span>Meeting check-in, tutor sign-ups, newsletters or order forms when you need them.</span></li>
           <li><strong>Kept up to date</strong><span>New officers, rooms and events added as your club changes.</span></li>
         </ul>
-        <p class="ask">Ask any Troy Web Development Club member to get started, or see all our work at <a href="https://troy-web-dev-club.web.app">troy-web-dev-club.web.app</a>.</p>
+        <p class="ask">Ask any Troy Web Development Club member to get started, or come to a meeting: every other Thursday at lunch in Room 411.</p>
       </div>
     </div>
   </section>
@@ -393,7 +456,7 @@ footer a { color: #fff; }
 
 <footer>
   <div class="wrap">
-    <p>Troy Clubs is made by Jeffrey Chu, Ryan Jian and Wesley of <a href="https://troy-web-dev-club.web.app">Troy Web Development Club</a>. Meeting details come from each club's own site. Check the club's Instagram for the latest.</p>
+    <p>Troy High Web Development Club, est. 2023 as Web Development Education. Built by Jeffrey Chu, Ryan Jian and Wesley. Club meeting details come from each club's own site; check their Instagram for the latest.</p>
     <p>© <span id="yr">2026</span> Troy Web Development Club</p>
   </div>
 </footer>
@@ -465,7 +528,7 @@ footer a { color: #fff; }
     });
   }
 
-  var boardRows = [{ type: 'title', text: 'TROY HIGH CLUB DIRECTORY' }, { type: 'blank' }];
+  var boardRows = [{ type: 'title', text: 'TROY WEB DEV · EST 2023' }, { type: 'title', text: 'CLUBS WE BUILT FOR' }, { type: 'blank' }];
   clubs.filter(function (c) { return c[3] !== null; })
     .sort(function (a, b) { return (a[3] || 9) - (b[3] || 9); })
     .forEach(function (c) {
@@ -473,7 +536,7 @@ footer a { color: #fff; }
     });
   boardRows.push({ type: 'blank' });
   boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
-  boardRows.push({ type: 'title', text: 'PRESENTED BY TROY WEB DEV CLUB' });
+  boardRows.push({ type: 'title', text: 'WEB DEV MEETS THU · RM 411' });
   buildBoard(document.getElementById('rows'), boardRows, 250);
 
   // Jump-to index
