@@ -283,6 +283,34 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
  #play.cine .deck{transform:translateX(105%);border-left:1px solid rgba(143,245,207,.16)}
  #play .timer{border-radius:0}
 }
+/* v7.1 compact deck: fits short laptop screens and phones, scene stays visible */
+#play .deck{height:auto;max-height:min(58dvh,500px);overflow-y:auto;overscroll-behavior:contain;padding:0 14px calc(10px + var(--safe-b))}
+#play.cine .deck{padding:0 14px calc(10px + var(--safe-b))}
+#play .qmeta{padding:10px 0 2px}
+#play #qText{font-size:clamp(.98rem,2.1vw,1.1rem);line-height:1.36;margin:2px 0 10px}
+#play .opts{gap:6px}
+#play .opt{padding:8px 11px;font-size:.9rem;line-height:1.3;gap:10px;border-radius:10px}
+#play .opt .k{flex-basis:22px;height:22px;font-size:.7rem;border-radius:6px}
+#play .charms{margin:8px 0 0;gap:6px}
+#play .charm{min-height:32px;font-size:.78rem;border-radius:10px;gap:6px}
+#play .charm .ico{width:15px;height:15px}
+#play .fb{margin-top:10px;padding:12px}
+#play .fb .verdict{font-size:1.02rem}
+#play .fb p{font-size:.86rem;margin-bottom:6px}
+#play .fb .src{margin:6px 0 10px}
+@media(max-width:619px){#play .opts{grid-template-columns:1fr}}
+@media(min-width:620px) and (max-width:819px){#play .opts{grid-template-columns:1fr 1fr}}
+@media(min-width:820px){
+ #play .deck{top:0;bottom:0;left:auto;right:0;height:auto;max-height:none;width:min(440px,36vw);min-width:340px;border-top:0;border-left:1px solid rgba(143,245,207,.16);border-radius:0;display:flex;flex-direction:column;justify-content:flex-start;
+  background:linear-gradient(90deg,rgba(9,24,31,.55),rgba(7,19,25,.9) 30%);box-shadow:-18px 0 50px rgba(0,0,0,.35);padding:0 18px 12px}
+ #play .deck-in{width:100%;margin:auto 0}
+ #play .opts{grid-template-columns:1fr}
+ #play.cine .deck{transform:translateX(105%);opacity:0;border-left:1px solid rgba(143,245,207,.16);padding:0 18px 12px}
+ #play .timer{border-radius:0;position:absolute;top:0;left:0;right:0;margin:0}
+ #play .hud{transition:right .6s}#play:not(.cine) .hud{right:max(340px,min(440px,36vw))}
+}
+@media(max-height:620px){#play #qText{font-size:.95rem;margin-bottom:8px}#play .opt{padding:6px 10px;font-size:.84rem}#play .qmeta{padding:8px 0 0}#play .charm{min-height:28px}}
+.t-ver{font-size:.56rem;color:var(--dim);margin-top:10px;letter-spacing:.12em}
 /* v7 loot, ranks, duel */
 .t-row2{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.t-row2 .btn{padding:8px 14px;font-size:.85rem}
 .lootrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 6px}
@@ -508,6 +536,7 @@ button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
     <div class="t-mode" id="tMode"></div>
     <div class="t-row"><button class="btn" id="tGo">Begin the voyage</button><button class="btn ghost" id="tLog"><span class="ico" data-i="book"></span>Logbook</button><button class="iconbtn sndBtn" aria-label="Toggle sound"><span class="ico sndIco"></span></button><button class="t-reset" id="tReset" hidden>Reset progress</button></div>
     <div class="t-row2"><button class="btn ghost sm" id="tDuel">1v1 duel</button><button class="btn ghost sm" id="tRank">Leaderboard</button></div>
+    <p class="mono t-ver" id="tVer"></p>
    </div>
   </div>
   <div class="card" id="card"></div>
@@ -2046,7 +2075,7 @@ u:[
 if(typeof module!=="undefined")module.exports=QB_EXTRA;
 
 /* merged into the live bank */
-const QB_MERGED=(()=>{let n=0;for(const t in QB_EXTRA){if(QB[t]){QB[t]=QB[t].concat(QB_EXTRA[t]);n+=QB_EXTRA[t].length}}return n})();
+const QB_ORIG_N={};const QB_MERGED=(()=>{let n=0;for(const t in QB_EXTRA){if(QB[t]){QB_ORIG_N[t]=QB[t].length;QB[t]=QB[t].concat(QB_EXTRA[t]);n+=QB_EXTRA[t].length}}return n})();
 
 /* ============ v2: each island's monster, treasure and weather ============ */
 const MYTH={
@@ -2693,10 +2722,10 @@ function bakeStatic(root,tick){
   G.computeBoundingSphere();const m=new T3.Mesh(G,gp.mat);m.userData.baked=true;gp.A.add(m)});
  return root}
 /* adaptive resolution: keeps the frame rate up by trading pixels, never features */
-const Quality={dpr:1,cap:1.5,acc:0,n:0,lock:0,set(R3,v){this.dpr=clamp(v,.6,this.cap);R3.setPixelRatio(this.dpr)},
- init(R3){const d=devicePixelRatio||1,small=Math.min(screen.width,screen.height)<700;this.cap=Math.min(d,small?1.5:1.75);this.set(R3,Math.min(this.cap,small?1.15:1.35))},
+const Quality={dpr:1,cap:1.5,acc:0,n:0,lock:0,set(R3,v){this.dpr=clamp(v,.5,this.cap);R3.setPixelRatio(this.dpr)},
+ init(R3){const d=devicePixelRatio||1,big=screen.width*screen.height>2.2e6;this.cap=Math.min(d,1.25);this.set(R3,Math.min(d,big?.85:1))},
  step(R3,rdt,onChange){if(rdt>.2)return;this.acc+=rdt;this.n++;if(this.acc<1.2)return;const fps=this.n/this.acc;this.acc=0;this.n=0;if(this.lock>0){this.lock--;return}
-  if(fps<45&&this.dpr>.6){this.set(R3,this.dpr-(fps<30?.25:.12));this.lock=1;onChange&&onChange()}else if(fps>58&&this.dpr<this.cap){this.set(R3,this.dpr+.08);this.lock=2;onChange&&onChange()}}};
+  if(fps<50&&this.dpr>.5){this.set(R3,this.dpr-(fps<32?.2:.1));this.lock=1;onChange&&onChange()}else if(fps>58.5&&this.dpr<this.cap){this.set(R3,this.dpr+.05);this.lock=4;onChange&&onChange()}}};
 /* rim light: lifts silhouettes off the dark water so creatures read clearly */
 function addRim(root,col,amt){const seen=new Set();root.traverse(o=>{const m=o.material;if(!m||Array.isArray(m)||seen.has(m)||!m.isMeshStandardMaterial)return;seen.add(m);
  const u={value:C3(col).multiplyScalar(amt)};m.userData.rim=u;m.onBeforeCompile=sh=>{sh.uniforms.uRim=u;sh.fragmentShader=sh.fragmentShader.replace("void main() {","uniform vec3 uRim;\nvoid main() {").replace("#include <dithering_fragment>","{float rimF=pow(1.0-abs(dot(normalize(normal),normalize(vViewPosition))),2.6);gl_FragColor.rgb+=uRim*rimF;}\n#include <dithering_fragment>")};m.customProgramCacheKey=()=>"rim";m.needsUpdate=true})}
@@ -3200,12 +3229,12 @@ const Scene=(()=>{
  const pal=p=>({top:C3(p.sky[0]),hor:C3(p.sky[1]),deep:C3(p.sea[1]),sh:C3(p.sea[0]),glow:C3(p.glow),sun:C3(p.sun),night:p.night?1:0,aur:p.aurora?1:0,mist:p.mist||0,storm:p.storm?1:0,fx:p.fx||"",land:C3(p.land[0])});
  const lerpPal=(a,b,t)=>{const o={};for(const k in b){if(b[k]&&b[k].isColor)o[k]=a[k].clone().lerp(b[k],t);else if(typeof b[k]==="number")o[k]=lerp(a[k],b[k],t);else o[k]=t<.5?a[k]:b[k]}return o};
  function init(){
-  try{R3=new T3.WebGLRenderer({antialias:true,powerPreference:"high-performance"})}catch(e){ok=false;host.innerHTML=`<div class="nogl">This browser could not start 3D graphics.</div>`;return}
+  try{R3=new T3.WebGLRenderer({antialias:false,powerPreference:"high-performance"})}catch(e){ok=false;host.innerHTML=`<div class="nogl">This browser could not start 3D graphics.</div>`;return}
   Quality.init(R3);host.appendChild(R3.domElement);
   scene=new T3.Scene();cam=new T3.PerspectiveCamera(40,1,.1,2000);
   hemi=new T3.HemisphereLight(0xffffff,0x223344,.9);scene.add(hemi);sun=new T3.DirectionalLight(0xffffff,1.1);scene.add(sun);scene.add(sun.target);amb=new T3.AmbientLight(0xffffff,.18);scene.add(amb);
   const wu={uTime:{value:0},uAmp:{value:1},uFlow:{value:0},uW:{value:WAVES.map(w=>new T3.Vector4(w[0],w[1],w[2],w[3]))},uA:{value:WAVES.map(w=>w[4])},uDeep:{value:C3("#05131a")},uShallow:{value:C3("#123138")},uSkyTop:{value:C3("#000")},uHor:{value:C3("#000")},uSun:{value:C3("#fff")},uFog:{value:C3("#000")},uGlow:{value:C3("#8ff5cf")},uSunDir:{value:new T3.Vector3(.3,.3,-1)},uShip:{value:new T3.Vector3()},uFogNear:{value:60},uFogFar:{value:380},uNight:{value:0},uWake:{value:1},uRip:{value:Array.from({length:6},()=>new T3.Vector4(0,0,-99,0))}};
-  const axis=(core0,core1,lo,hi)=>{const a=[];for(let v=core0;v<=core1+1e-6;v+=.75)a.push(v);let s=.75,v=core0;while(v>lo){s*=1.06;v-=s;a.unshift(Math.max(lo,v))}s=.75;v=a[a.length-1];while(v<hi){s*=1.06;v+=s;a.push(Math.min(hi,v))}return a};
+  const axis=(core0,core1,lo,hi)=>{const a=[];for(let v=core0;v<=core1+1e-6;v+=1.05)a.push(v);let s=1.05,v=core0;while(v>lo){s*=1.1;v-=s;a.unshift(Math.max(lo,v))}s=1.05;v=a[a.length-1];while(v<hi){s*=1.1;v+=s;a.push(Math.min(hi,v))}return a};
   const xs=axis(-24,24,-360,360),zs=axis(-30,20,-600,110),wg=new T3.BufferGeometry(),wp=new Float32Array(xs.length*zs.length*3),wi=[];
   zs.forEach((z,j)=>xs.forEach((x,i)=>{const o=(j*xs.length+i)*3;wp[o]=x;wp[o+2]=z}));
   for(let j=0;j<zs.length-1;j++)for(let i=0;i<xs.length-1;i++){const a=j*xs.length+i,b=a+1,c=a+xs.length,d=c+1;wi.push(a,c,b,b,c,d)}
@@ -3357,7 +3386,7 @@ const Scene=(()=>{
   if(mon.kind==="bird"||mon.kind==="fog"||mon.kind==="ghost"){}else mon.root.position.y+=waveH(mon.root.position.x,mon.root.position.z,time,1,st.flow)*.4;
   const tgt=mon.root.worldToLocal(shipP.clone());mon.update(time,{L,tgt,hurt,all:mon.kind==="heads"&&a&&a.type==="attack"&&a.all,who:a&&a.who})}
  /* ----- frame ----- */
- function frame(now){if(!on)return;raf=requestAnimationFrame(frame);const rdt=Math.min(.25,(now-(last||now))/1000),dt=Math.min(.05,rdt);last=now;time+=rdt;fpsAvg=fpsAvg*.95+rdt*.05;Quality.step(R3,rdt,()=>{parts.material.uniforms.uScale.value=weatherPts.material.uniforms.uScale.value=H*R3.getPixelRatio()*.5});
+ function frame(now){if(!on)return;raf=requestAnimationFrame(frame);if(last&&now-last<15.5)return;const rdt=Math.min(.25,(now-(last||now))/1000),dt=Math.min(.05,rdt);last=now;time+=rdt;fpsAvg=fpsAvg*.95+rdt*.05;Quality.step(R3,rdt,()=>{parts.material.uniforms.uScale.value=weatherPts.material.uniforms.uScale.value=H*R3.getPixelRatio()*.5});
   {const I=st.ins,T=st.insT,f=Math.min(1,rdt*3.2);if(Math.abs(I.r-T.r)>.5||Math.abs(I.b-T.b)>.5){I.r+=(T.r-I.r)*f;I.b+=(T.b-I.b)*f;layout()}else if(I.r!==T.r||I.b!==T.b){I.r=T.r;I.b=T.b;layout()}}
   if(pt<1){pt=Math.min(1,pt+dt/1.8);PL=lerpPal(PA,PB,ease(pt));applyPal(PL)}
   const u=water.material.uniforms;st.flow+=st.speed*dt;u.uTime.value=time;u.uFlow.value=st.flow;sky.material.uniforms.uTime.value=time;
@@ -3602,7 +3631,7 @@ function boot(){
 let R=null,timerRaf=0,busy=false;
 const curIndex=()=>Math.min(P.unlocked,NODES.length-1);
 function setCine(on){$("#play").classList.toggle("cine",on);deckInsets()}
-function deckInsets(){const d=$("#deck"),c=$("#play").classList.contains("cine");if(c||!d)return Scene.insets(0,0);const wide=matchMedia("(min-width:1000px) and (min-height:560px)").matches;Scene.insets(wide?d.offsetWidth:0,wide?0:d.offsetHeight)}
+function deckInsets(){const d=$("#deck"),c=$("#play").classList.contains("cine");if(c||!d)return Scene.insets(0,0);const wide=matchMedia("(min-width:820px)").matches;Scene.insets(wide?d.offsetWidth:0,wide?0:d.offsetHeight)}
 addEventListener("resize",()=>{deckInsets();Scene.resize()});
 function titleUI(on){$("#titleUI").classList.toggle("on",on);$(".hud").classList.toggle("off",on)}
 function toTitle(){
@@ -3645,12 +3674,13 @@ function pickQ(){
  // v6: per-topic shuffled decks, so no question repeats until its whole topic has been seen
  const topics=R.boss?[0,1,2].map(k=>ISL[R.n.leg*3+k].topic):[R.n.isl.topic];
  const leg=R.n.leg,base=R.boss?2.4:(leg<2?1:leg<5?1.4:1.8),target=clamp(base+R.qn*.45+curDiff().q,1,3);
- if(!P.deck||P.deckV!==QBN){P.deck={};P.deckV=QBN}const cand=[];
+ if(!P.deck||P.deckV!==DECKV){P.deck={};P.deckV=DECKV}const cand=[];
  topics.forEach(t=>{let d=P.deck[t];const n=QB[t].length;
   if(!Array.isArray(d)||d.some(k=>!(k>=0&&k<n)))d=[];
-  if(!d.filter(k=>!R.used.has(t+k)).length)d=P.deck[t]=shuffle(QB[t].map((_,k)=>k));
-  d.forEach(k=>{if(!R.used.has(t+k))cand.push({t,k})})});
- let best=null,bs=1e9;cand.forEach(c=>{const sc=Math.abs(QB[c.t][c.k][6]-target)+Math.random()*.9;if(sc<bs){bs=sc;best=c}});
+  if(!d.filter(k=>!R.used.has(t+k)).length)d=P.deck[t]=freshDeck(t);
+  d.forEach((k,pos)=>{if(!R.used.has(t+k))cand.push({t,k,pos:pos+Math.random()})})});
+ cand.sort((a,b)=>a.pos-b.pos);const win=cand.slice(0,10);
+ let best=win.find(c=>Math.abs(QB[c.t][c.k][6]-target)<=.75)||win[0]||null;
  if(!best){R.used.clear();return pickQ()}
  R.used.add(best.t+best.k);P.deck[best.t]=P.deck[best.t].filter(k=>k!==best.k);save();
  const q=QB[best.t][best.k],opts=shuffle([{t:q[1],ok:1},{t:q[2]},{t:q[3]},{t:q[4]}]);
@@ -3888,7 +3918,8 @@ fillIcons();sndIcon();boot();
 /* ============ v7: loot, ranked voyage, 1v1 duels ============ */
 const cap=async n=>{try{return window.claude&&typeof window.claude.use==="function"?await window.claude.use(n):null}catch(e){return null}};
 const nodeKey=n=>n.type==="isl"?n.isl.id:"b"+n.leg;
-const QBN=Object.values(QB).reduce((a,b)=>a+b.length,0);
+const QBN=Object.values(QB).reduce((a,b)=>a+b.length,0),DECKV=71000+QBN;
+function freshDeck(t){const n=QB[t].length,n0=Math.min(n,QB_ORIG_N[t]||0),ix=[...Array(n).keys()];return shuffle(ix.slice(n0)).concat(shuffle(ix.slice(0,n0)))}
 function curDiff(){return P.mode==="ranked"?DIFF.medium:(DIFF[P.diff]||DIFF.medium)}
 /* ---------- loot ---------- */
 function lootSVG(t,c){const g=["#c9bfa6","#7fd8ff","#ffcf6a"][t];
@@ -3977,6 +4008,7 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
+{const v=$("#tVer");if(v)v.textContent="Build 7.1 · "+QBN.toLocaleString()+" questions"}
 
 </script>
 </body>
