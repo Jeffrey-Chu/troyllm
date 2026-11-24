@@ -778,6 +778,18 @@
       ],
       "predeploy": [
         "npm --prefix .. run build:clubs"
+      ],
+      "redirects": [
+        {
+          "source": "/",
+          "destination": "https://troy-clubs.web.app",
+          "type": 302
+        },
+        {
+          "source": "/index.html",
+          "destination": "https://troy-clubs.web.app",
+          "type": 302
+        }
       ]
     }
   ]
