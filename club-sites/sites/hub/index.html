@@ -43,6 +43,8 @@ button, input, textarea { font: inherit; color: inherit; }
 ::selection { background: var(--cyan); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
 [hidden] { display: none !important; }
+.tch { display: none; }
+@media (hover: none) { .hov { display: none; } .tch { display: inline; } }
 .wrap { width: var(--wrap); margin: 0 auto; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .mono { font-family: var(--mono); }
@@ -358,6 +360,77 @@ tbody tr:hover td.go { color: var(--cyan); }
 .m-blocks div span { display: block; color: #777; font-size: .76rem; margin-top: .2rem; }
 @keyframes pop { from { transform: scale(.94); opacity: 0; } }
 
+/* ---------------- phones ---------------- */
+.board-wrap > *, .play > *, .join-grid > *, .alum > *, .sec-head > * { min-width: 0; }
+@media (max-width: 700px) {
+  :root { --wrap: calc(100vw - 32px); }
+  body { font-size: 16px; }
+  .sec { padding: 3.5rem 0; }
+  .sec-head { margin-bottom: 1.6rem; }
+  .hero { min-height: 0; }
+  .hero .wrap { padding: 3rem 0 3.5rem; }
+  .hero-logo { width: 58px; height: 58px; border-radius: 14px; margin-bottom: 1.3rem; }
+  .hero h1 { font-size: clamp(2.6rem, 13vw, 3.6rem); }
+  .hero .ctas .btn { flex: 1 1 auto; justify-content: center; }
+  .metaline { margin-top: 1.8rem; gap: .5rem 1rem; font-size: .7rem; }
+  .wall { height: 380px; margin-top: 1.6rem; }
+  .wall-in { width: 1500px; gap: 14px; transform: translate(-50%, -50%) rotateX(24deg) rotateZ(-8deg); }
+  .wrow { gap: 14px; }
+  .tile { width: 220px; height: 144px; border-radius: 9px; }
+  .pbar { overflow-x: auto; scrollbar-width: none; }
+  .pbar::-webkit-scrollbar { display: none; }
+  .pbar .dots { display: none; }
+  .ptab { flex: none; }
+  .editor { grid-template-columns: 34px 1fr; min-height: 260px; font-size: .78rem; }
+  .gutter { padding-right: 6px; }
+  .code { padding: 1rem .7rem; }
+  .preview { min-height: 280px; }
+  .stage { padding: 1.4rem; overflow: hidden; }
+  .board { padding: 12px; }
+  .frows { min-width: 0; gap: 3px; }
+  .t { height: 22px; font-size: 12px; }
+  .post input { font-size: .82rem; }
+  .cta-strip { padding: 1.6rem; }
+  .cta-strip .btn { width: 100%; justify-content: center; }
+  .controls { width: 100%; }
+  .search, .search input { width: 100%; }
+  .chips { width: 100%; justify-content: space-between; }
+  .chips button { padding: 0 .5rem; flex: 1; }
+  #surprise { width: 100%; justify-content: center; }
+  .card { padding: 9px; border-radius: 14px; }
+  .info h3 { font-size: 1.45rem; }
+  .tbl-wrap { overflow: visible; border: 0; background: none; }
+  table { min-width: 0; }
+  table, tbody { display: block; }
+  thead { display: none; }
+  tbody tr { display: grid; grid-template-columns: 1fr auto; gap: .2rem .8rem; padding: .9rem 1rem; margin-bottom: .6rem; border: 1px solid var(--line2) !important; border-radius: 12px; background: var(--bg2); }
+  tbody td { padding: 0; }
+  td.nm { grid-column: 1; grid-row: 1; }
+  tbody td:nth-child(5) { grid-column: 2; grid-row: 1; align-self: start; }
+  tbody td:nth-child(2) { grid-column: 1 / -1; font-size: .85rem; }
+  tbody td:nth-child(3) { grid-column: 1; font-size: .85rem; }
+  td.yr { grid-column: 2; text-align: right; font-size: .76rem; }
+  td.go { display: none; }
+  .tl { grid-template-columns: 1fr; gap: 2.2rem; padding-top: 0; padding-left: 1.6rem; margin-top: 3rem; }
+  .tl::before { top: 0; bottom: 0; left: 0; right: auto; width: 2px; height: auto; background: linear-gradient(180deg, var(--line2), var(--lime) 40%, var(--cyan)); }
+  .tl > div::before { top: 6px; left: calc(-1.6rem - 6px); }
+  .pipe { padding: 1.5rem; margin-top: 3rem; }
+  .b-top span { display: none; }
+  .b-body { padding: .7rem .8rem .8rem; }
+  .b-foot .bars { width: 40px; }
+  .back { padding: 1rem; }
+  .back li { font-size: .8rem; }
+  .alum { padding: 1.1rem; gap: 1.4rem; }
+  .alum .badge { max-width: 240px; margin: 0 auto; width: 100%; }
+  .thennow { flex-wrap: wrap; gap: .6rem; font-size: .72rem; }
+  .thennow i { width: 34px; }
+  .mock { position: relative; top: 0; transform: none; }
+  .m-hero h4 { font-size: 1.9rem; }
+  .cfg-out .btn { width: 100%; justify-content: center; }
+  .cmdk { padding-top: 8vh; }
+}
+@media (max-width: 380px) { .tabs a { font-size: .84rem; padding: .45rem .3rem; } }
+
 /* footer */
 footer { margin-top: auto; border-top: 1px solid var(--line); background: #050817; }
 footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; padding: 3rem 0 2rem; }
@@ -421,7 +494,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
     <div class="wrap">
       <p class="kicker">Live right now</p>
       <h2 class="h2" id="wall-title">What we've shipped.</h2>
-      <p class="lede">Every one of these is a real site people use. Hover to pause, click one to open it in Projects.</p>
+      <p class="lede">Every one of these is a real site people use. <span class="hov">Hover to pause, click</span><span class="tch">Tap</span> one to open it in Projects.</p>
     </div>
     <div class="wall" id="wall"><div class="wall-in" id="wall-in"></div></div>
   </section>
@@ -495,7 +568,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
         <div>
           <p class="kicker">Projects</p>
           <h2 class="h2">Projects.</h2>
-          <p class="lede">Every site we've built that's live right now. Hover a preview to scroll through the real page. Older and unfinished work is in the table at the bottom.</p>
+          <p class="lede">Every site we've built that's live right now. <span class="hov">Hover a preview to scroll through the real page.</span><span class="tch">Previews scroll through the real page as you reach them.</span> Older and unfinished work is in the table at the bottom.</p>
         </div>
         <div class="controls">
           <label class="search"><span class="sr">Find a site</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="find" type="search" placeholder="Find a site" autocomplete="off"></label>
@@ -569,7 +642,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
     <div class="wrap">
       <p class="kicker">Team</p>
       <h2 class="h2">Team.</h2>
-      <p class="lede">The board runs the club. Members build with us, and every site credits whoever made it. Tilt a card, then click it to see what they've built.</p>
+      <p class="lede">The board runs the club. Members build with us, and every site credits whoever made it. <span class="hov">Tilt a card, then click it</span><span class="tch">Tap a card</span> to see what they've built.</p>
       <div class="tgroup"><h3>2026 board <em id="c-board"></em></h3><div class="badges" id="board-badges"></div></div>
       <div class="tgroup"><h3>Members who shipped a project <em id="c-mem"></em></h3><div class="badges sm" id="member-badges"></div></div>
       <div class="tgroup"><h3>Alumni</h3><div id="alumni"></div></div>
@@ -619,7 +692,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
     </div>
     <div><h4>Meet us</h4><ul><li><p style="margin:0">Every other Thursday, lunch</p></li><li><p style="margin:0">Room 411, Troy High School</p></li><li><p style="margin:0">Fullerton, CA</p></li></ul></div>
     <div><h4>Links</h4><ul><li><a href="#projects">Projects</a></li><li><a href="#join">Get a site</a></li><li><a href="bioship">Play BioShip</a></li><li><a href="https://github.com/Jeffrey-Chu/troyllm">GitHub</a></li></ul></div>
-    <div class="copy"><span>© <span id="yr">2026</span> Troy Web Development</span><span>Press <kbd>/</kbd> to search</span></div>
+    <div class="copy"><span>© <span id="yr">2026</span> Troy Web Development</span><span class="hov">Press <kbd>/</kbd> to search</span></div>
   </div>
 </footer>
 
@@ -643,7 +716,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   function toast(m) { var t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 2200); }
   $('#yr').textContent = new Date().getFullYear();
 
-  var SITES = [{"id": "anime", "name": "Anime Club", "who": "THS Anime Club", "what": "Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.", "when": "Every Monday, lunch", "by": "Ryan Jian, Daniel Li", "plate": "910", "url": "https://troy-anime-club.web.app", "host": "troy-anime-club.web.app", "h": 1320, "day": "1", "board": "ANIME CLUB", "links": [["https://www.instagram.com/troyanimeclub/", "Instagram"], ["https://discord.gg/4hMCYW8b3T", "Discord"]]}, {"id": "carclub", "name": "Troy Car Club", "who": "Car culture and maintenance", "what": "How cars work, how to look after one, and the history behind them. No car, license or experience needed.", "when": "Every other Tuesday", "by": "Ryan Jian", "plate": "W1", "url": "https://troy-car-club.web.app", "host": "troy-car-club.web.app", "h": 2800, "day": "2", "board": "CAR CLUB", "links": [["https://www.instagram.com/troyhighcarclub/", "Instagram"]]}, {"id": "chinese", "name": "Chinese Culture Club", "who": "中国文化社", "what": "Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.", "when": "Every other Tuesday, lunch", "by": "Ryan Jian", "plate": "324", "url": "https://troy-chinese-culture-club.web.app", "host": "troy-chinese-culture-club.web.app", "h": 2428, "day": "2", "board": "CHINESE CULTURE CLUB", "links": [["https://www.instagram.com/troyhs_ccc/", "Instagram"]]}, {"id": "geo", "name": "GeoGuessr Club", "who": "THS GeoGuessr Club", "what": "Play GeoGuessr together, compete in tournaments and get better every week. No experience needed.", "when": "Thursdays", "by": "Ryan Jian", "plate": "322", "url": "https://troy-geoguessr-club.web.app", "host": "troy-geoguessr-club.web.app", "h": 2647, "day": "4", "board": "GEOGUESSR CLUB", "links": [["https://www.instagram.com/geoguessr_ths/", "Instagram"]]}, {"id": "key", "name": "Key Club", "who": "Student-led service club", "what": "Volunteer, earn service hours and meet Key Clubbers from across Division 30 North.", "when": "Lunch meetings, dates on Google Classroom", "by": "Ryan Jian, Jason Lee", "plate": "517", "url": "https://troy-key-club.web.app", "host": "troy-key-club.web.app", "h": 2800, "day": "", "board": "KEY CLUB", "links": [["https://www.instagram.com/troyhighkeyclub/", "Instagram"], ["https://linktr.ee/troykeyclub", "Links"]]}, {"id": "mvp", "name": "Music Vision Productions", "who": "Student-run music collective", "what": "Pairs young artists with student designers, marketers, producers and videographers. Free for student artists.", "when": "Thursdays at lunch, Room E-25", "by": "Scarlett Cheng", "plate": "E-25", "url": "https://troy-mvp-music.web.app", "host": "troy-mvp-music.web.app", "h": 2800, "day": "4", "board": "MVP MUSIC", "links": [["https://www.instagram.com/troy.mvpmusic/", "Instagram"]]}, {"id": "tll", "name": "Troy Learning League", "who": "Peer tutoring", "what": "Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.", "when": "Every other Monday, lunch", "by": "Ryan Jian", "plate": "527", "url": "https://troy-learning-league.web.app", "host": "troy-learning-league.web.app", "h": 2800, "day": "1", "board": "LEARNING LEAGUE", "links": [["https://www.instagram.com/troy.learning.league/", "Instagram"]]}, {"id": "leo", "name": "Leo Club", "who": "Lions Clubs International", "what": "Volunteer events, Leo competitions, scholarships, and outreach for chronic kidney disease awareness.", "when": "1st and 3rd Fridays, lunch", "by": "Ryan Jian, Kaleb Lopez", "plate": "W17", "url": "https://troy-leo-club.web.app", "host": "troy-leo-club.web.app", "h": 2800, "day": "5", "board": "LEO CLUB", "links": [["https://www.instagram.com/troyhighleoclub/", "Instagram"]]}, {"id": "vsa", "name": "VSA", "who": "Vietnamese Student Association", "what": "Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.", "when": "Every other Wednesday, lunch", "by": "Ryan Jian", "plate": "412", "url": "https://troy-vsa.web.app", "host": "troy-vsa.web.app", "h": 2800, "day": "3", "board": "VSA", "links": [["https://www.instagram.com/troyvsa/", "Instagram"]]}, {"id": "science", "name": "The Science Club", "who": "Nonprofit for middle and high school students", "what": "Research groups, national competitions and Science Bowl training, from biology and physics to AI.", "when": "Online, every week", "by": "Ryan Jian", "plate": "ONLINE", "url": "https://troy-science-club.web.app", "host": "troy-science-club.web.app", "h": 600, "day": "", "board": "THE SCIENCE CLUB", "links": []}, {"id": "roots", "name": "Roots &amp; Roads", "who": "Orange County School of the Arts", "what": "A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.", "when": "", "by": "Ryan Jian", "plate": "OCSA", "url": "https://troy-roots-and-roads.web.app", "host": "troy-roots-and-roads.web.app", "h": 2262, "day": "", "board": "ROOTS &AMP; ROADS", "links": [["https://www.instagram.com/roots.nroads/", "Instagram"]]}, {"id": "superdw", "name": "SUPER DW", "who": "Daphne's crystals and bracelets", "what": "Hand-strung crystal bracelets, a crystal chart, and a designer for building your own.", "when": "", "by": "Ryan Jian", "plate": "SHOP", "url": "https://superdw-crystals.web.app", "host": "superdw-crystals.web.app", "h": 2775, "day": "", "board": "SUPER DW", "links": [["https://www.instagram.com/deffning/", "Instagram"]]}, {"id": "bioship", "name": "BioShip", "who": "A biology quiz game", "what": "Sail a ship through a biology world map, answering questions from AP Biology up to USABO. Build 9.0.", "when": "", "by": "Ryan Jian, Emerson Lin", "plate": "PLAY", "url": "bioship", "host": "troy-clubs.web.app/bioship", "h": 720, "day": "", "board": "BIOSHIP", "links": []}];
+  var SITES = [{"id": "anime", "name": "Anime Club", "who": "THS Anime Club", "what": "Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.", "when": "Every Monday, lunch", "by": "Ryan Jian, Daniel Li", "plate": "910", "url": "https://troy-anime-club.web.app", "host": "troy-anime-club.web.app", "h": 1320, "day": "1", "board": "ANIME CLUB", "links": [["https://www.instagram.com/troyanimeclub/", "Instagram"], ["https://discord.gg/4hMCYW8b3T", "Discord"]]}, {"id": "carclub", "name": "Troy Car Club", "who": "Car culture and maintenance", "what": "How cars work, how to look after one, and the history behind them. No car, license or experience needed.", "when": "Every other Tuesday", "by": "Ryan Jian", "plate": "W1", "url": "https://troy-car-club.web.app", "host": "troy-car-club.web.app", "h": 2800, "day": "2", "board": "CAR CLUB", "links": [["https://www.instagram.com/troyhighcarclub/", "Instagram"]]}, {"id": "chinese", "name": "Chinese Culture Club", "who": "中国文化社", "what": "Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.", "when": "Every other Tuesday, lunch", "by": "Ryan Jian", "plate": "324", "url": "https://troy-chinese-culture-club.web.app", "host": "troy-chinese-culture-club.web.app", "h": 2428, "day": "2", "board": "CHINESE CULTURE CLUB", "links": [["https://www.instagram.com/troyhs_ccc/", "Instagram"]]}, {"id": "geo", "name": "GeoGuessr Club", "who": "THS GeoGuessr Club", "what": "Play GeoGuessr together, compete in tournaments and get better every week. No experience needed.", "when": "Thursdays", "by": "Ryan Jian", "plate": "322", "url": "https://troy-geoguessr-club.web.app", "host": "troy-geoguessr-club.web.app", "h": 2647, "day": "4", "board": "GEOGUESSR CLUB", "links": [["https://www.instagram.com/geoguessr_ths/", "Instagram"]]}, {"id": "key", "name": "Key Club", "who": "Student-led service club", "what": "Volunteer, earn service hours and meet Key Clubbers from across Division 30 North.", "when": "Lunch meetings, dates on Google Classroom", "by": "Ryan Jian, Jason Lee", "plate": "517", "url": "https://troy-key-club.web.app", "host": "troy-key-club.web.app", "h": 2800, "day": "", "board": "KEY CLUB", "links": [["https://www.instagram.com/troyhighkeyclub/", "Instagram"], ["https://linktr.ee/troykeyclub", "Links"]]}, {"id": "mvp", "name": "Music Vision Productions", "who": "Student-run music collective", "what": "Pairs young artists with student designers, marketers, producers and videographers. Free for student artists.", "when": "Thursdays at lunch, Room E-25", "by": "Scarlett Cheng", "plate": "E-25", "url": "https://troy-mvp-music.web.app", "host": "troy-mvp-music.web.app", "h": 2800, "day": "4", "board": "MVP MUSIC", "links": [["https://www.instagram.com/troy.mvpmusic/", "Instagram"]]}, {"id": "tll", "name": "Troy Learning League", "who": "Peer tutoring", "what": "Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.", "when": "Every other Monday, lunch", "by": "Ryan Jian", "plate": "527", "url": "https://troy-learning-league.web.app", "host": "troy-learning-league.web.app", "h": 2800, "day": "1", "board": "LEARNING LEAGUE", "links": [["https://www.instagram.com/troy.learning.league/", "Instagram"]]}, {"id": "leo", "name": "Leo Club", "who": "Lions Clubs International", "what": "Volunteer events, Leo competitions, scholarships, and outreach for chronic kidney disease awareness.", "when": "1st and 3rd Fridays, lunch", "by": "Ryan Jian, Kaleb Lopez", "plate": "W17", "url": "https://troy-leo-club.web.app", "host": "troy-leo-club.web.app", "h": 2800, "day": "5", "board": "LEO CLUB", "links": [["https://www.instagram.com/troyhighleoclub/", "Instagram"]]}, {"id": "vsa", "name": "VSA", "who": "Vietnamese Student Association", "what": "Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.", "when": "Every other Wednesday, lunch", "by": "Ryan Jian", "plate": "412", "url": "https://troy-vsa.web.app", "host": "troy-vsa.web.app", "h": 2800, "day": "3", "board": "VSA", "links": [["https://www.instagram.com/troyvsa/", "Instagram"]]}, {"id": "science", "name": "The Science Club", "who": "Nonprofit for middle and high school students", "what": "Research groups, national competitions and Science Bowl training, from biology and physics to AI.", "when": "Online, every week", "by": "Ryan Jian", "plate": "ONLINE", "url": "https://troy-science-club.web.app", "host": "troy-science-club.web.app", "h": 600, "day": "", "board": "THE SCIENCE CLUB", "links": []}, {"id": "roots", "name": "Roots & Roads", "who": "Orange County School of the Arts", "what": "A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.", "when": "", "by": "Ryan Jian", "plate": "OCSA", "url": "https://troy-roots-and-roads.web.app", "host": "troy-roots-and-roads.web.app", "h": 2262, "day": "", "board": "ROOTS & ROADS", "links": [["https://www.instagram.com/roots.nroads/", "Instagram"]]}, {"id": "superdw", "name": "SUPER DW", "who": "Daphne's crystals and bracelets", "what": "Hand-strung crystal bracelets, a crystal chart, and a designer for building your own.", "when": "", "by": "Ryan Jian", "plate": "SHOP", "url": "https://superdw-crystals.web.app", "host": "superdw-crystals.web.app", "h": 2775, "day": "", "board": "SUPER DW", "links": [["https://www.instagram.com/deffning/", "Instagram"]]}, {"id": "bioship", "name": "BioShip", "who": "A biology quiz game", "what": "Sail a ship through a biology world map, answering questions from AP Biology up to USABO. Build 9.0.", "when": "", "by": "Ryan Jian, Emerson Lin", "plate": "PLAY", "url": "bioship", "host": "troy-clubs.web.app/bioship", "h": 720, "day": "", "board": "BIOSHIP", "links": []}];
   var PROJECTS = [{"name": "Anime Club", "short": "Weekly showcases, Kahoots and raffles", "for": "THS Anime Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Daniel Li", "door": "anime", "url": ""}, {"name": "Troy Car Club", "short": "Car culture and maintenance", "for": "Troy Car Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "carclub", "url": ""}, {"name": "Chinese Culture Club", "short": "中国文化社", "for": "Chinese Culture Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "chinese", "url": ""}, {"name": "GeoGuessr Club", "short": "Road-sign theme with a working compass", "for": "THS GeoGuessr Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "geo", "url": ""}, {"name": "Key Club", "short": "Service hours and Division 30 North", "for": "Troy Key Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Jason Lee", "door": "key", "url": ""}, {"name": "Music Vision Productions", "short": "Student-run music collective", "for": "MVP", "year": "2026", "s": "live", "label": "LIVE", "by": "Scarlett Cheng", "door": "mvp", "url": ""}, {"name": "Troy Learning League", "short": "Tutor finder and hours log", "for": "Peer tutoring club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "tll", "url": ""}, {"name": "Leo Club", "short": "Lions Clubs International", "for": "Troy Leo Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Kaleb Lopez", "door": "leo", "url": ""}, {"name": "VSA", "short": "Meeting check-in with a word of the day", "for": "Vietnamese Student Association", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "vsa", "url": ""}, {"name": "The Science Club", "short": "Research groups and Science Bowl", "for": "Science nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "science", "url": ""}, {"name": "Roots & Roads", "short": "Immigrant stories in Orange County", "for": "OCSA student group", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "roots", "url": ""}, {"name": "SUPER DW", "short": "Crystal shop with a bracelet designer", "for": "Small business", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "door": "superdw", "url": ""}, {"name": "BioShip", "short": "Biology quiz game, build 9.0", "for": "Biology students", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Emerson Lin", "door": "bioship", "url": ""}, {"name": "Troy High LLM backend", "short": "Firebase project our sites are hosted on", "for": "Club infrastructure", "year": "2026", "s": "live", "label": "LIVE", "by": "Jeffrey Chu", "door": "", "url": "https://troy-high-llm.web.app"}, {"name": "OCHSWA Championship Shelf", "short": "Wrestling records as page-turning flipbooks", "for": "Wrestling, for Mr. Nguyen", "year": "2026", "s": "work", "label": "IN PROGRESS", "by": "Wesley Shen, Ryan Jian", "door": "", "url": ""}, {"name": "Troy Robotics", "short": "Club website", "for": "Troy Robotics", "year": "2026", "s": "work", "label": "UP NEXT", "by": "", "door": "", "url": ""}, {"name": "troywebdev.com", "short": "The club's first site, a club directory", "for": "Troy student orgs", "year": "2023", "s": "past", "label": "RETIRED", "by": "Yeowon Yoon", "door": "", "url": ""}, {"name": "Club kiosk", "short": "Kiosk site for clubs", "for": "Troy clubs", "year": "Past", "s": "past", "label": "RETIRED", "by": "", "door": "", "url": ""}, {"name": "Troy Dermatology Club", "short": "Club website", "for": "Troy club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "door": "", "url": ""}, {"name": "Troy A Friend in Me", "short": "Club website", "for": "Troy club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "door": "", "url": ""}, {"name": "Troy Act of Kindness", "short": "Club website", "for": "Troy club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "door": "", "url": ""}, {"name": "More club sites", "short": "From earlier years", "for": "Various", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "door": "", "url": ""}];
   var byId = {}; SITES.forEach(function (s) { byId[s.id] = s; });
   $('#n-live').textContent = SITES.length;
@@ -795,7 +868,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   load(0);
 
   /* ---------------- split-flap board ---------------- */
-  var COLS = 30, ROWS = 12, frows = $('#frows'), rowEls = [], today = new Date().getDay();
+  var NARROW = innerWidth < 700, COLS = NARROW ? 20 : 30, ROWS = 12, frows = $('#frows'), rowEls = [], today = new Date().getDay();
   var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'], DAYN = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   var CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   frows.style.setProperty('--cols', COLS);
@@ -825,12 +898,13 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   }
   var dir = [{ t: center('CLUB DIRECTORY') }, { t: '' }];
   SITES.filter(function (s) { return s.day !== ''; }).sort(function (a, b) { return ((+a.day + 6) % 7) - ((+b.day + 6) % 7); }).forEach(function (s) {
-    var name = s.board, room = 'RM ' + s.plate, d = DAYS[+s.day];
+    var name = s.board, room = NARROW ? '' : 'RM ' + s.plate, d = DAYS[+s.day];
+    if (NARROW) name = name.replace('CHINESE CULTURE CLUB', 'CHINESE CULTURE');
     var mid = COLS - d.length - room.length - 2;
-    dir.push({ t: d + ' ' + (name + ' '.repeat(mid)).slice(0, mid) + ' ' + room, href: '#' + s.id, label: s.name, cls: +s.day === today ? 'today' : '' });
+    dir.push({ t: d + ' ' + (name + ' '.repeat(mid)).slice(0, mid) + (room ? ' ' + room : ''), href: '#' + s.id, label: s.name, cls: +s.day === today ? 'today' : '' });
   });
   while (dir.length < ROWS - 1) dir.push({ t: '' });
-  dir[ROWS - 1] = { t: center('TODAY IS ' + DAYN[today]), cls: 'hl' };
+  dir[ROWS - 1] = { t: center((NARROW ? '' : 'TODAY IS ') + DAYN[today]), cls: 'hl' };
   var boardOn = false;
   function startBoard() { if (boardOn) return; boardOn = true; var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { setBoard(dir); io.disconnect(); } }, { threshold: .25 }); io.observe(frows); }
   function clock() { var d = new Date(); $('#clock').textContent = DAYS[d.getDay()] + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
@@ -840,7 +914,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
     var words = $('#post-in').value.toUpperCase().replace(/[^A-Z0-9 &!?.,'#@:\-]/g, '').split(/\s+/).filter(Boolean), out = [], line = '';
     words.forEach(function (w) { w = w.slice(0, COLS - 2); if ((line + ' ' + w).trim().length > COLS - 2) { out.push(line); line = w; } else line = (line + ' ' + w).trim(); });
     if (line) out.push(line); if (!out.length) return;
-    var L = [{ t: center('A MESSAGE FROM YOU'), cls: 'hl' }]; for (var i = 1; i < ROWS; i++) L.push({ t: '' });
+    var L = [{ t: center(NARROW ? 'FROM YOU' : 'A MESSAGE FROM YOU'), cls: 'hl' }]; for (var i = 1; i < ROWS; i++) L.push({ t: '' });
     var top = Math.max(2, Math.floor((ROWS - out.length) / 2));
     out.slice(0, ROWS - 3).forEach(function (s, i) { L[top + i] = { t: center(s) }; });
     setBoard(L);
