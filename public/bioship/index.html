@@ -629,6 +629,69 @@ body .logo .t-swash{color:var(--ink-m)}
 @keyframes inkIn{from{filter:blur(6px);opacity:0;letter-spacing:.2em}to{filter:none;opacity:1}}
 @media(max-height:720px){.titleui .t-in{padding:16px 22px 12px}}
 @media(max-width:560px){body .logo .t-kick{letter-spacing:.18em;font-size:.72rem}body .logo .t-kick::before,body .logo .t-kick::after{width:14px}}
+
+/* v8.5 every overlay is a page of the ship's log: parchment, ink, one red accent, no glow */
+.over{--bone:#2b1b0b;--bone-2:#3e2a14;--muted:#6a5032;--dim:#866c48;--line:rgba(60,40,16,.2);--line-2:rgba(60,40,16,.4);--glow:#8a2418;--glow-2:#8a2418;--amber:#9a6a1a;--coral:#a42c1c;--deep:rgba(255,248,228,.5);
+ color:#2b1b0b;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(140% 100% at 50% 0%,#f6ecd0 0%,#ecdcb3 55%,#dcc492 100%)}
+.over::before{content:"";position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(110,70,20,.35)}
+.over-in{max-width:600px;position:relative}
+.over h1{font:400 clamp(2.1rem,8vw,3rem)/1.05 var(--fell);letter-spacing:.02em;color:#2b1b0b}
+.over .sub{font:italic 400 1.08rem var(--fellI);color:#5c4426}
+.over .tag,.over .mono.tag{color:#8a2418;font:400 .8rem var(--fell);letter-spacing:.22em;text-transform:none}
+.over .starrow{color:#9a6a1a;gap:10px;margin:14px 0 4px}.over .starrow i{width:26px;height:26px}.over .starrow i.off{color:rgba(60,40,16,.22)}
+.over .btn{min-height:52px;border-radius:999px;font:400 1.15rem var(--fell);letter-spacing:.08em;color:#fbead2;border:0;background:radial-gradient(circle at 34% 28%,#d2553c 0%,#a42c1c 45%,#7a1a10 100%);box-shadow:inset 0 2px 0 rgba(255,200,170,.35),inset 0 -3px 0 rgba(60,8,4,.45),0 3px 0 #5a120a,0 8px 18px rgba(90,20,10,.3)}
+.over .btn.ghost{background:rgba(255,248,228,.45);color:#2b1b0b;border:1px solid rgba(60,40,16,.5);box-shadow:none;font-family:var(--fellI);letter-spacing:.02em;text-shadow:none}
+.over .btn:focus-visible,.over summary:focus-visible{outline:2px solid #2b1b0b;outline-offset:3px}
+.over .row.stick{background:linear-gradient(rgba(236,220,179,0),#e8d6a8 45%)}
+.over .card{background:transparent;border:0;border-top:1px solid rgba(60,40,16,.3);border-radius:0;padding:14px 2px}
+.over .card .mono{color:#8a2418}.over .card p{color:#3e2a14;font-size:1rem;line-height:1.55}
+.over .tr-hero{filter:drop-shadow(0 3px 0 rgba(60,40,16,.18));animation:none}
+.over .win2 figcaption{font:italic 400 .95rem var(--fellI);color:#5c4426;letter-spacing:0;text-transform:none}
+.over .morph .wl{background:linear-gradient(90deg,transparent,rgba(60,40,16,.5),transparent)}
+.over .tabs button{border-radius:3px;border-color:rgba(60,40,16,.35);color:#5c4426;font-family:var(--fellI);font-size:1rem}
+.over .tabs button.on{background:#2b1b0b;color:#f3e6c6;border-color:#2b1b0b}
+/* ship's ledger (loot) */
+.ledger{text-align:left;margin:18px 0 6px}
+.ledger h2{font:400 .85rem var(--fell);letter-spacing:.22em;color:#8a2418;margin:0 0 6px;text-align:center}
+.ledger ol{list-style:none;margin:0;padding:0;border-top:1px solid rgba(60,40,16,.45);border-bottom:1px solid rgba(60,40,16,.45)}
+.ledger li{display:grid;grid-template-columns:6.5em 1fr auto;gap:12px;align-items:baseline;padding:11px 4px;border-top:1px dashed rgba(60,40,16,.25);animation:fadeUp .45s both;animation-delay:var(--d)}
+.ledger li:first-child{border-top:0}
+.lg-r{font:400 .82rem var(--fell);letter-spacing:.12em;color:#6a5032}
+.lg-n{font:400 1.08rem/1.3 var(--fellI);color:#2b1b0b}
+.lg-s{font:italic 400 .9rem var(--fellI);color:#6a5032}
+.ledger li.lock .lg-n{color:#8d744e;font-style:italic}
+.ledger li.new .lg-s{color:#8a2418;font-style:normal;font-family:var(--fell);letter-spacing:.1em}
+.ledger li:nth-child(3) .lg-r{color:#9a6a1a}
+.lg-hint{font:italic 400 .95rem var(--fellI);color:#6a5032;margin:8px 0 0;text-align:center}
+.rw-charm{font:italic 400 1.02rem var(--fellI);color:#3e2a14;margin:10px 0 0}.rw-charm b{font-style:normal;font-family:var(--fell);letter-spacing:.06em;color:#8a2418;font-weight:400}
+.over .rew2{display:block}
+/* voyage chart strip: ink dots, crossed when done */
+.over .vstrip{gap:8px 14px;margin:16px auto 4px}
+.over .vs-k{font:400 .7rem var(--fell);color:#866c48;letter-spacing:.1em}
+.over .vs{width:12px;height:12px;border:1.5px solid rgba(60,40,16,.55);background:transparent}
+.over .vs.b{border-radius:2px;border-color:rgba(138,36,24,.7)}
+.over .vs.done{background:rgba(60,40,16,.12)}
+.over .vs.next{border-color:#8a2418;box-shadow:0 0 0 2px rgba(138,36,24,.25)}
+.over .xmark path{stroke:#8a2418;filter:none}
+/* lore: ruled entries */
+.over .lore2{border-top:1px solid rgba(60,40,16,.45)}
+.over .lore2 details{border-bottom:1px solid rgba(60,40,16,.25)}
+.over .lore2 summary{font:400 1.08rem var(--fellI);color:#2b1b0b;min-height:48px;align-items:center}
+.over .lore2 summary .mono{font:400 .78rem var(--fell);letter-spacing:.14em;color:#8a2418;text-transform:none}
+.over .lore2 summary::after{color:#6a5032}
+.over .lore2 details p{color:#3e2a14;font-size:1.02rem;line-height:1.6}
+/* logbook pieces that still had dark cards */
+.over .lg,.over .loot{background:rgba(255,248,228,.35);border-color:rgba(60,40,16,.3);box-shadow:none}
+.over .loot b{color:#2b1b0b}.over .loot.locked{opacity:.5}
+.over .node{background:#f3e6c6;border-color:rgba(60,40,16,.5);color:#2b1b0b}
+.over .node.open{border-color:#8a2418;box-shadow:0 0 0 3px rgba(138,36,24,.2)}
+.over .route path[stroke="#8ff5cf"]{stroke:#8a2418}
+.over .route path[stroke="#2a5a64"]{stroke:rgba(60,40,16,.5)}
+.over .leg .mono{color:#8a2418}
+.over .ranks li.me{background:rgba(138,36,24,.08)}
+.over .route .node.done{background:#f3e6c6;color:#2b1b0b;border-color:#2b1b0b}
+.over .route .node.locked{background:transparent;border-color:rgba(60,40,16,.4);color:#6a5032}
+@media(max-width:420px){.ledger li{grid-template-columns:5.6em 1fr auto;gap:8px}.lg-n{font-size:1rem}}
 </style>
 </head>
 <body>
@@ -2728,7 +2791,7 @@ function treasureSVG(art,glow="#ffd070"){
  switch(art){
  case "coin":g=`<circle cx="50" cy="52" r="30" fill="${G}" ${st}/><circle cx="50" cy="52" r="23" fill="none" stroke="#8a5a1a" stroke-width="2"/><path d="M38 50 Q38 36 50 36 Q62 36 62 50 Q62 58 56 60 L56 66 L44 66 L44 60 Q38 58 38 50Z" fill="#8a5a1a"/><circle cx="45" cy="50" r="3.4" fill="#fff1b0"/><circle cx="55" cy="50" r="3.4" fill="#fff1b0"/>${shine(66,30)}`;break;
  case "spear":g=`<path d="M22 88 L70 26" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M22 88 L70 26" stroke="#8a4a2a" stroke-width="4" stroke-linecap="round"/><path d="M66 30 L82 8 L76 34Z" fill="${S}" ${st}/>${[[40,64,"#e0443a"],[48,54,"#3fae6a"],[56,44,"#4a8ae0"]].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="4.5" fill="${c}" ${st} stroke-width="1.4"/>`).join("")}<path d="M70 30 q8 6 2 14" stroke="#e8f4ff" stroke-width="2" fill="none"/><circle cx="74" cy="48" r="2.5" fill="#bfe8ff"/>${shine(80,12)}`;break;
- case "lode":g=`<path d="M30 80 L22 50 L40 22 L66 18 L80 44 L72 76 Z" fill="url(#${id}obs)" ${st}/><path d="M40 22 L48 50 L22 50 M48 50 L72 76 M48 50 L80 44" stroke="#3a4a5a" stroke-width="1.6" fill="none"/><g stroke="${glow}" stroke-width="1.6" fill="none" opacity=".8"><path d="M14 30 Q4 52 16 74"/><path d="M86 28 Q98 52 86 76"/></g><path d="M58 8 l10 0 M63 3 v10" stroke="#b9c4d6" stroke-width="2.4"/>`;break;
+ case "lode":g=`<path d="M14 88 L20 64 L34 54 L50 58 L66 52 L80 62 L88 88 Z" fill="url(#${id}obs)" ${st}/><path d="M34 54 L40 72 L20 64 M40 72 L50 88 M40 72 L66 52 M66 70 L80 62 M66 70 L70 88" stroke="#6a7686" stroke-width="1.2" fill="none" opacity=".7"/><g stroke="#4a5058" stroke-width="2.4" stroke-linecap="round"><path d="M18 72 l-9 -3"/><path d="M22 80 l-10 2"/><path d="M84 70 l9 -4"/><path d="M86 80 l10 0"/><path d="M58 86 l2 9"/></g><g fill="#8a9098"><circle cx="9" cy="69" r="1.8"/><circle cx="12" cy="82" r="1.8"/><circle cx="93" cy="66" r="1.8"/><circle cx="96" cy="80" r="1.8"/></g><path d="M40 56 Q42 50 48 49 L58 48 Q64 47 66 52 L64 56 L42 57 Z" fill="${B}" ${st}/><path d="M64 50 Q70 42 68 36 L72 34 L74 40 Q74 48 66 53" fill="${B}" ${st}/><path d="M44 56 L42 62 M48 56 L48 62 M58 56 L58 62 M62 55 L64 61" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/><path d="M41 52 Q35 54 34 60" stroke="${INK}" stroke-width="1.8" fill="none"/><path d="M50 48 L49 36 Q50 30 55 30 Q59 31 58 36 L56 48 Z" fill="${B}" ${st}/><circle cx="54" cy="24" r="5" fill="${B}" ${st}/><path d="M50 21 Q54 13 58 21" fill="${G}" ${st}/><path d="M57 36 L70 20" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/><path d="M68 16 L73 21 L70 24 Z" fill="${S}" ${st}/>${shine(30,40)}`;break;
  case "peach":g=`<path d="M50 30 Q22 30 22 58 Q24 86 50 88 Q76 86 78 58 Q78 30 50 30Z" fill="#f59a8a" ${st}/><path d="M50 30 Q42 56 50 88" stroke="#d9665a" stroke-width="2.4" fill="none"/><path d="M50 30 Q60 14 80 14 Q72 30 52 30Z" fill="#3fae6a" ${st}/><path d="M50 30 Q40 18 28 20 Q34 30 50 30Z" fill="#2f8a50" ${st}/><ellipse cx="36" cy="50" rx="7" ry="12" fill="#ffd8cc" opacity=".7"/>`;break;
  case "amber":g=`<path d="M50 14 Q76 18 82 48 Q84 78 52 88 Q20 86 18 56 Q18 24 50 14Z" fill="url(#${id}amb)" ${st}/><g transform="translate(50 54) rotate(-20)" fill="#3a1a04" opacity=".85"><ellipse rx="9" ry="4"/><circle cx="-11" r="3.5"/><path d="M-4 -3 q-6 -14 -18 -14 M2 -3 q4 -14 16 -16 M-6 3 l-6 8 M0 3 l0 9 M6 3 l6 8" stroke="#3a1a04" stroke-width="1.4" fill="none"/><ellipse cx="-6" cy="-9" rx="8" ry="3" fill="#fff" opacity=".35" transform="rotate(-30)"/></g><ellipse cx="38" cy="30" rx="9" ry="5" fill="#fff" opacity=".45" transform="rotate(-30 38 30)"/>`;break;
  case "feather":g=`<path d="M50 92 Q48 50 56 10" stroke="#e8dcc0" stroke-width="2.4" fill="none"/><path d="M55 12 Q80 30 70 62 Q62 80 50 88 Q48 60 55 12Z" fill="#f6efe0" ${st}/><path d="M55 12 Q34 32 38 64 Q42 80 50 88 Q48 60 55 12Z" fill="#ffffff" ${st}/>${[24,34,44,54,64,74].map(y=>`<path d="M${53-y*.02} ${y} q10 4 16 ${y*.06}" stroke="#c9bfa6" stroke-width="1" fill="none"/>`).join("")}<circle cx="50" cy="90" r="3" fill="${G}"/>`;break;
@@ -3627,7 +3690,7 @@ const Scene=(()=>{
   scene=new T3.Scene();cam=new T3.PerspectiveCamera(40,1,.1,2000);
   hemi=new T3.HemisphereLight(0xffffff,0x223344,.9);scene.add(hemi);sun=new T3.DirectionalLight(0xffffff,1.1);scene.add(sun);scene.add(sun.target);amb=new T3.AmbientLight(0xffffff,.18);scene.add(amb);
   const wu={uTime:{value:0},uAmp:{value:1},uFlow:{value:0},uW:{value:WAVES.map(w=>new T3.Vector4(w[0],w[1],w[2],w[3]))},uA:{value:WAVES.map(w=>w[4])},uDeep:{value:C3("#05131a")},uShallow:{value:C3("#123138")},uSkyTop:{value:C3("#000")},uHor:{value:C3("#000")},uSun:{value:C3("#fff")},uFog:{value:C3("#000")},uGlow:{value:C3("#8ff5cf")},uSunDir:{value:new T3.Vector3(.3,.3,-1)},uShip:{value:new T3.Vector3()},uFogNear:{value:60},uFogFar:{value:380},uNight:{value:0},uWake:{value:1},uRip:{value:Array.from({length:6},()=>new T3.Vector4(0,0,-99,0))}};
-  const axis=(core0,core1,lo,hi)=>{const a=[];for(let v=core0;v<=core1+1e-6;v+=1.05)a.push(v);let s=1.05,v=core0;while(v>lo){s*=1.1;v-=s;a.unshift(Math.max(lo,v))}s=1.05;v=a[a.length-1];while(v<hi){s*=1.1;v+=s;a.push(Math.min(hi,v))}return a};
+  const WS=typeof GFX!=="undefined"&&GFX==="fast"?1.45:1.05,axis=(core0,core1,lo,hi)=>{const a=[];for(let v=core0;v<=core1+1e-6;v+=WS)a.push(v);let s=WS,v=core0;while(v>lo){s*=1.1;v-=s;a.unshift(Math.max(lo,v))}s=WS;v=a[a.length-1];while(v<hi){s*=1.1;v+=s;a.push(Math.min(hi,v))}return a};
   const xs=axis(-24,24,-360,360),zs=axis(-30,20,-600,110),wg=new T3.BufferGeometry(),wp=new Float32Array(xs.length*zs.length*3),wi=[];
   zs.forEach((z,j)=>xs.forEach((x,i)=>{const o=(j*xs.length+i)*3;wp[o]=x;wp[o+2]=z}));
   for(let j=0;j<zs.length-1;j++)for(let i=0;i<xs.length-1;i++){const a=j*xs.length+i,b=a+1,c=a+xs.length,d=c+1;wi.push(a,c,b,b,c,d)}
@@ -4150,14 +4213,14 @@ async function win(){
  const got=grantCharms(n.type==="boss"?2:1);
  let newShip=null;if(n.type==="isl"&&!P.ships.includes(n.isl.ship.id)){P.ships.push(n.isl.ship.id);newShip=n.isl.ship}
  save();busy=false;
- const rew=got.length?got.map(c=>`<span class="reward">${ico(c)}+1 ${CHARM_NAME[c]}</span>`).join(" "):`<span class="reward">Charm hold is full</span>`;
+ const rew=got.length?`<p class="rw-charm">Charm found: ${got.map(c=>`<b>${CHARM_NAME[c]}</b>`).join(" and ")}</p>`:`<p class="rw-charm">Your charm hold is full.</p>`;
  const end=i===NODES.length-1;
  if(n.type==="isl"){const I=n.isl,S=I.ship,T=I.tr;
   await Scene.landfall(I);
   const cue=$("#chestCue");cue.querySelector("b").textContent=I.name;cue.classList.add("on");let opened=false;
   const open=async()=>{if(opened)return;opened=true;cue.classList.remove("on");if(!P.treasures.includes(I.id)){P.treasures.push(I.id);save()}await Scene.openChest(I);await wait(400);
    overlay(`<span class="mono tag">Island ${n.num} of ${ISL.length} cleared</span><h1>${esc(T.name)}</h1><p class="sub">${esc(I.mon.name)} defeated</p>${starRow(stars)}
-   <div class="win2"><figure><div class="tr-hero">${treasureSVG(T.art,I.pal.glow)}</div><figcaption class="mono">Treasure</figcaption></figure>
+   <div class="win2"><figure><div class="tr-hero">${treasureSVG(T.art,I.pal.glow)}</div><figcaption class="mono">Raised from ${esc(I.name)}</figcaption></figure>
    <figure><div class="morph" id="morph">${newShip?`<div class="old">${shipSVG(prevShip)}</div><div class="new">${shipSVG(S)}</div><canvas></canvas>`:`<div class="new" style="animation-delay:.2s">${shipSVG(S)}</div>`}<span class="wl"></span></div><figcaption class="mono">${newShip?"New ship":"Ship"} · ${esc(S.name)}</figcaption></figure></div>
    ${voyStrip(i)}${lootRow(n,stars,newLoot)}<div class="rew2">${rew}</div>
    <div class="lore2"><details><summary><span class="mono">The story</span>${esc(I.cult)}</summary><p>${esc(I.myth)}</p><p>${esc(T.lore)}</p></details>
@@ -4240,7 +4303,7 @@ function closeVeil(){$("#veil").classList.remove("on")}
 
 /* v8.2: completed stops are crossed off the chart */
 const xMark=(anim,delay=0)=>`<svg class="xmark${anim?" draw":""}" viewBox="0 0 40 40" aria-hidden="true" style="--xd:${delay}s"><path pathLength="1" d="M9 8 C14 14 21 21 31 32"/><path pathLength="1" d="M31 9 C24 15 17 23 8 31"/></svg>`;
-function voyStrip(just){let h='<div class="vstrip" aria-label="Voyage progress">';LEGS.forEach((L,li)=>{h+=`<div class="vsea"><span class="mono">${ROMAN[li]}</span><div>`;NODES.forEach((n,i)=>{if(n.leg!==li)return;const done=i<P.unlocked,now=i===just;h+=`<i class="vs ${n.type==="boss"?"b":""} ${done?"done":""} ${i===P.unlocked?"next":""}" title="${esc(nodeName(n))}">${done?xMark(now,now?.9:0):""}</i>`});h+="</div></div>"});return h+"</div>"}
+function voyStrip(just){let h='<div class="vstrip" aria-label="Voyage progress">';LEGS.forEach((L,li)=>{h+=`<div class="vsea"><span class="vs-k">${ROMAN[li]}</span><div>`;NODES.forEach((n,i)=>{if(n.leg!==li)return;const done=i<P.unlocked,now=i===just;h+=`<i class="vs ${n.type==="boss"?"b":""} ${done?"done":""} ${i===P.unlocked?"next":""}" title="${esc(nodeName(n))}">${done?xMark(now,now?.9:0):""}</i>`});h+="</div></div>"});return h+"</div>"}
 /* ---------------- LOGBOOK ---------------- */
 let logTab="chart";
 function chartHTML(w){
@@ -4323,7 +4386,9 @@ function lootSVG(t,c){const g=["#c9bfa6","#7fd8ff","#ffcf6a"][t];
  if(t===1)return `<svg viewBox="0 0 48 48"><path d="M24 6 38 18 24 42 10 18Z" fill="${g}" opacity=".22"/><path d="M24 6 38 18 24 42 10 18Z M10 18H38 M24 6 19 18 24 42 29 18Z" fill="none" stroke="${g}" stroke-width="1.6"/><circle cx="24" cy="19" r="3" fill="${c}"/></svg>`;
  return `<svg viewBox="0 0 48 48"><g stroke="${g}" stroke-width="1.2" opacity=".55">${[...Array(12)].map((_,k)=>{const a=k/12*Math.PI*2;return `<path d="M${24+Math.cos(a)*15} ${24+Math.sin(a)*15}L${24+Math.cos(a)*22} ${24+Math.sin(a)*22}"/>`}).join("")}</g><path d="M24 9 28.5 19.5 40 20.5 31 28 34 39.5 24 33 14 39.5 17 28 8 20.5 19.5 19.5Z" fill="${g}"/><circle cx="24" cy="25" r="4" fill="${c}"/></svg>`}
 function awardLoot(n,stars){P.loot=P.loot||{};const k=nodeKey(n),prev=P.loot[k]||0,got=[];for(let t=prev;t<stars;t++)got.push(t);if(stars>prev)P.loot[k]=stars;return got}
-function lootRow(n,stars,got){const L=LOOT3[nodeKey(n)]||["Relic","Rare relic","Legendary relic"],have=(P.loot||{})[nodeKey(n)]||0,c=n.type==="isl"?n.isl.pal.glow:BOSSPAL[n.leg].glow;
+function lootRow(n,stars,got){const L=LOOT3[nodeKey(n)]||["Relic","Rare relic","Legendary relic"],have=(P.loot||{})[nodeKey(n)]||0;
+ return `<section class="ledger"><h2>Ship's ledger</h2><ol>${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<li class="${own?"got":"lock"} ${nw?"new":""}" style="--d:${.3+t*.15}s"><span class="lg-r">${RARITY[t].name}</span><span class="lg-n">${own?esc(L[t]):"Not yet found"}</span><span class="lg-s">${nw?"New":own?"Held":`${t+1} ${t?"stars":"star"}`}</span></li>`}).join("")}</ol>${have<3?`<p class="lg-hint">${have===2?"Clear it with no misses to find the Legendary piece.":"Fewer misses find rarer pieces."}</p>`:""}</section>`}
+function lootRowOld(n,stars,got){const L=LOOT3[nodeKey(n)]||["Relic","Rare relic","Legendary relic"],have=(P.loot||{})[nodeKey(n)]||0,c=n.type==="isl"?n.isl.pal.glow:BOSSPAL[n.leg].glow;
  return `<div class="lootrow">${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<div class="loot r${t} ${own?"":"locked"} ${nw?"new":""}" style="animation-delay:${.25+t*.18}s">${lootSVG(t,c)}<span class="mono">${RARITY[t].name}${nw?" · new":""}</span><b>${own?esc(L[t]):`${t+1} star${t?"s":""} to claim`}</b></div>`}).join("")}</div>
  ${have<3?`<p class="loot-hint">${have===2?"Clear it with no misses to claim the Legendary.":"Fewer misses earn rarer loot."}</p>`:""}`}
 function lootTotal(){return Object.values(P.loot||{}).reduce((a,b)=>a+(+b||0),0)}
@@ -4404,7 +4469,7 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 8.4 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8.5 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
 
@@ -4412,15 +4477,16 @@ $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
 /* Turn on: add ?test=1 to the URL, or tap the build line on the title screen 5 times. Turn off: ?test=0 or tap 5 times again. */
 let TEST=(()=>{let on=false;try{const q=new URLSearchParams(location.search).get("test");if(q==="1")localStorage.setItem("bioship-test","1");if(q==="0")localStorage.removeItem("bioship-test");on=localStorage.getItem("bioship-test")==="1"}catch(e){}return on})();
 {const css=document.createElement("style");css.textContent=`
-.tbar{position:fixed;left:50%;top:calc(6px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;display:flex;gap:6px;align-items:center;padding:6px;border-radius:999px;background:rgba(40,10,10,.88);border:1px solid #ff7a5c;box-shadow:0 8px 24px rgba(0,0,0,.4);font:600 .78rem var(--sans)}
-.tbar b{color:#ff9a80;font:600 .62rem var(--mono);letter-spacing:.12em;padding:0 6px}
-.tbar button,.tbar select{border-radius:999px;border:1px solid rgba(255,154,128,.5);background:rgba(255,122,92,.14);color:#ffe2d8;padding:6px 10px;font:600 .76rem var(--sans)}
-.tbar select{max-width:42vw;background:#2a0e0a}
-@media(max-width:620px){.tbar{top:calc(100px + env(safe-area-inset-top,0px));transform:translateX(-50%) scale(.88)}body:has(.titleui.on) .tbar{top:auto;bottom:calc(6px + env(safe-area-inset-bottom,0px))}}`;document.head.appendChild(css)}
+.tbar{position:fixed;left:calc(8px + env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:4px;align-items:center;padding:3px;border-radius:8px;background:rgba(43,27,11,.9);border:1px solid rgba(243,230,198,.35);font:600 .74rem var(--sans);max-width:calc(100vw - 16px)}
+.tbar button,.tbar select{border-radius:6px;border:1px solid rgba(243,230,198,.3);background:transparent;color:#f3e6c6;padding:6px 9px;font:600 .74rem var(--sans);min-height:32px}
+.tbar #tTog{border:0;color:#ffb8a6;letter-spacing:.06em}
+.tbar .tb-p{display:none;gap:4px}.tbar.open .tb-p{display:flex}
+.tbar select{max-width:46vw;background:#2b1b0b}`;document.head.appendChild(css)}
 function testBar(){let b=$("#tbar");if(!TEST){if(b)b.remove();return}
  if(!b){b=document.createElement("div");b.className="tbar";b.id="tbar";document.body.appendChild(b)}
- b.innerHTML=`<b>BETA TEST</b><select id="tPick" aria-label="Jump to stop">${NODES.map((n,i)=>`<option value="${i}" ${i===curIndex()?"selected":""}>${i+1}. ${n.type==="boss"?"Boss: ":""}${esc(nodeName(n))}</option>`).join("")}</select><button id="tJump">Go</button><button id="tWin">Auto-win</button>`;
- $("#tJump").onclick=()=>testJump(+$("#tPick").value);$("#tWin").onclick=testWin}
+ const open=b.classList.contains("open");
+ b.innerHTML=`<button id="tTog" aria-expanded="${open}" aria-label="Beta test tools">Beta</button><span class="tb-p"><select id="tPick" aria-label="Jump to stop">${NODES.map((n,i)=>`<option value="${i}" ${i===curIndex()?"selected":""}>${i+1}. ${n.type==="boss"?"Boss: ":""}${esc(nodeName(n))}</option>`).join("")}</select><button id="tJump">Go</button><button id="tWin">Win</button></span>`;
+ $("#tTog").onclick=()=>{b.classList.toggle("open");testBar()};$("#tJump").onclick=()=>{b.classList.remove("open");testJump(+$("#tPick").value)};$("#tWin").onclick=()=>{b.classList.remove("open");testBar();testWin()}}
 function testWin(){if(!R||busy||R.done)return;cancelAnimationFrame(timerRaf);R.hits=R.need;R.miss=0;R.done=true;win()}
 function testJump(i){if(busy)return;cancelAnimationFrame(timerRaf);closeOver();if(R){R=null}
  P.unlocked=i;for(let k=0;k<i;k++){if(!P.stars[k])P.stars[k]=3;const n=NODES[k];if(n.type==="isl"){if(!P.treasures.includes(n.isl.id))P.treasures.push(n.isl.id);if(!P.ships.includes(n.isl.ship.id))P.ships.push(n.isl.ship.id)}}save();
