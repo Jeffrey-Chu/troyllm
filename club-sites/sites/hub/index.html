@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,387 +7,486 @@
 <meta name="description" content="Troy High Web Development Club, est. 2023. We teach web development and build websites for Troy High clubs. Selected for the Troy Tech Fair every year.">
 <meta property="og:title" content="Troy Web Development">
 <meta property="og:description" content="Est. 2023. We teach web development and build websites for Troy High clubs.">
-<meta name="theme-color" content="#cfd7e1">
-<link rel="preload" href="fonts/archivo-wdth.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23222528'/%3E%3Ctext x='16' y='22' font-family='Arial Narrow,Arial' font-weight='700' font-size='15' fill='%23f2f1ec' text-anchor='middle'%3ETW%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#f2f0eb">
+<link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23ff4f1f'/%3E%3Ctext x='16' y='21.5' font-family='Menlo,monospace' font-weight='700' font-size='13' fill='%23fff' text-anchor='middle'%3ETW%3C/text%3E%3C/svg%3E">
 <style>
-@font-face { font-family: Archivo; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(fonts/archivo-wdth.woff2) format('woff2'); }
-@font-face { font-family: Atkinson; font-weight: 400; font-display: swap; src: url(fonts/atkinson-400.woff2) format('woff2'); }
-@font-face { font-family: Atkinson; font-weight: 700; font-display: swap; src: url(fonts/atkinson-700.woff2) format('woff2'); }
+@font-face { font-family: Bricolage; font-weight: 200 800; font-stretch: 75% 100%; font-display: swap; src: url(fonts/bricolage.woff2) format('woff2'); }
+@font-face { font-family: JBM; font-weight: 400; font-display: swap; src: url(fonts/jbm-400.woff2) format('woff2'); }
+@font-face { font-family: JBM; font-weight: 600; font-display: swap; src: url(fonts/jbm-600.woff2) format('woff2'); }
 
 :root {
-  --wall: #cfd7e1;
-  --ink: #17212f;
-  --slate: #4b5768;
-  --felt: #222528;
-  --letter: #f2f1ec;
-  --today: #ffcf3a;
-  --link: #1d4fc4;
-  --paper: #f4f6f8;
-  --wrap: 1200px;
-  --display: Archivo, "Arial Narrow", Arial, sans-serif;
-  --text: Atkinson, Verdana, sans-serif;
+  --bg: #f2f0eb; --bg2: #e8e5de; --card: #faf9f6; --ink: #131211; --ink2: #3a3834; --mute: #6e6a63;
+  --line: rgba(19,18,17,.12); --line2: rgba(19,18,17,.24);
+  --acc: #ff4f1f; --acc2: #ffd9cc;
+  --good: #1e9e57; --warn: #e0a100; --next: #3b63ff; --bad: #c9463c;
+  --dark: #121212; --dark2: #1b1b1b; --on-dark: #efece6; --on-dark2: #a29d94;
+  --sans: Bricolage, ui-sans-serif, system-ui, sans-serif;
+  --mono: JBM, ui-monospace, Menlo, Consolas, monospace;
+  --wrap: 1240px;
+}
+[data-theme="dark"] {
+  --bg: #0e0e0d; --bg2: #161615; --card: #181817; --ink: #eeebe4; --ink2: #c9c5bc; --mute: #8e897f;
+  --line: rgba(238,235,228,.11); --line2: rgba(238,235,228,.22); --acc2: #3a1a10;
+  --dark: #050505; --dark2: #121212;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; color: var(--ink); background: var(--wall); font-family: var(--text); font-size: 1.0625rem; line-height: 1.55; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); font-stretch: 100%; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; transition: background .25s, color .25s; }
 img { display: block; max-width: 100%; }
-a { color: var(--link); text-underline-offset: .2em; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 4px; }
-h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3, p, ol, ul, dl { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+::selection { background: var(--acc); color: #fff; }
+[hidden] { display: none !important; }
 .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.skip { position: absolute; left: -999px; top: 8px; z-index: 20; background: var(--ink); color: #fff; padding: .5rem .8rem; border-radius: 6px; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 60; background: var(--ink); color: var(--bg); padding: .5rem .8rem; border-radius: 6px; }
 .skip:focus { left: 8px; }
-
-/* Painted cinderblock wall */
-.wall {
-  background-color: var(--wall);
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.16'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.04'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Crect x='2' y='2' width='236' height='56' rx='3'/%3E%3Crect x='-118' y='62' width='236' height='56' rx='3'/%3E%3Crect x='122' y='62' width='236' height='56' rx='3'/%3E%3C/g%3E%3Cg fill='%2330404f' fill-opacity='.13'%3E%3Crect x='0' y='58' width='240' height='4'/%3E%3Crect x='0' y='118' width='240' height='2'/%3E%3Crect x='0' y='0' width='240' height='2'/%3E%3Crect x='238' y='0' width='4' height='60'/%3E%3Crect x='118' y='60' width='4' height='60'/%3E%3C/g%3E%3C/svg%3E"),
-    radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%);
-  background-size: 240px 120px, 100% 100%;
-}
+.mono { font-family: var(--mono); }
+.kicker { display: flex; align-items: center; gap: .6rem; font: 600 .74rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.kicker b { color: var(--acc); font-weight: 600; }
+.kicker::after { content: ""; flex: 0 0 2.5rem; height: 1px; background: var(--line2); }
+.display { font-family: var(--sans); font-stretch: 78%; font-weight: 720; letter-spacing: -.012em; line-height: .92; }
 
 /* Header */
-.top { position: relative; z-index: 3; }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 76px; }
-.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--ink); font-family: var(--display); font-stretch: 85%; font-weight: 800; font-size: 1.3rem; letter-spacing: .01em; }
-.brand b { display: inline-grid; place-items: center; height: 30px; padding: 2px 8px 0; border-radius: 3px; background: var(--felt); color: var(--letter); font-stretch: 75%; font-weight: 700; font-size: 1rem; letter-spacing: .06em; box-shadow: 0 0 0 2px #aab3bd, 0 2px 0 3px rgba(0,0,0,.12); }
-.tabs { display: flex; gap: .35rem; }
-.tabs a { display: inline-flex; align-items: center; height: 2.3rem; padding: 3px .8rem 0; border-radius: 4px; color: var(--ink); text-decoration: none; font-family: var(--display); font-stretch: 82%; font-weight: 700; font-size: 1.02rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; transition: background .15s, color .15s; }
-.tabs a:hover { background: rgba(23,33,47,.08); }
-.tabs a[aria-current="page"] { background: var(--felt); color: var(--today); box-shadow: 0 0 0 2px #a9b2bc, 0 3px 0 2px rgba(23,33,47,.12); }
-@media (max-width: 980px) {
-  .top .wrap { flex-wrap: wrap; height: auto; padding: .9rem 0 .6rem; gap: .6rem; }
-  .tabs { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; padding: 2px 2px 4px; }
-  .tabs a { justify-content: center; background: rgba(255,255,255,.45); box-shadow: 0 0 0 1px rgba(23,33,47,.15); }
+.top { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
+@supports (backdrop-filter: blur(1px)) { .top { backdrop-filter: saturate(1.2) blur(10px); } }
+.top .wrap { display: flex; align-items: center; gap: 1.5rem; height: 64px; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; font-weight: 680; font-stretch: 85%; font-size: 1.12rem; letter-spacing: -.01em; white-space: nowrap; }
+.mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 7px; background: var(--acc); color: #fff; font: 600 .78rem/1 var(--mono); letter-spacing: -.02em; transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
+.brand:hover .mark { transform: rotate(-8deg) scale(1.06); }
+.tabs { display: flex; gap: .15rem; margin-left: auto; }
+.tabs a { position: relative; display: inline-flex; align-items: baseline; gap: .35rem; padding: .5rem .7rem; border-radius: 6px; text-decoration: none; font-size: .96rem; font-weight: 520; color: var(--ink2); white-space: nowrap; transition: color .15s, background .15s; }
+.tabs a i { font: 400 .68rem var(--mono); font-style: normal; color: var(--mute); }
+.tabs a:hover { color: var(--ink); background: var(--bg2); }
+.tabs a[aria-current="page"] { color: var(--ink); }
+.tabs a[aria-current="page"]::after { content: ""; position: absolute; left: .7rem; right: .7rem; bottom: -13px; height: 2px; background: var(--acc); }
+.tools { display: flex; gap: .4rem; }
+.tool { display: inline-flex; align-items: center; gap: .5rem; height: 34px; padding: 0 .65rem; border: 1px solid var(--line2); border-radius: 7px; background: transparent; cursor: pointer; font-size: .88rem; color: var(--ink2); transition: border-color .15s, color .15s; }
+.tool:hover { border-color: var(--ink); color: var(--ink); }
+kbd { font: 600 .7rem/1 var(--mono); padding: .2rem .35rem; border-radius: 4px; background: var(--bg2); border: 1px solid var(--line); color: var(--mute); }
+.tool svg { width: 16px; height: 16px; }
+@media (max-width: 1060px) {
+  .top .wrap { flex-wrap: wrap; height: auto; padding-top: .7rem; gap: .5rem 1rem; }
+  .tools { margin-left: auto; }
+  .tabs { order: 3; width: 100%; margin: 0 -.7rem; overflow-x: auto; scrollbar-width: none; padding-bottom: .25rem; }
+  .tabs a[aria-current="page"]::after { bottom: 0; }
+  .tool .lbl { display: none; }
 }
-[hidden] { display: none !important; }
-body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
+
 main { flex: 1; display: flex; flex-direction: column; }
 .panel { flex: 1; }
-.panel[data-tab="sites"], .panel[data-tab="projects"] { background: var(--paper); }
-.panel[data-tab="team"] { background: var(--felt); }
 .panel:focus { outline: none; }
+@media (prefers-reduced-motion: no-preference) { .panel { animation: rise .45s cubic-bezier(.2,.8,.2,1) both; } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: .55rem; height: 2.9rem; padding: 0 1.15rem; border: 1px solid var(--ink); border-radius: 8px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; font-size: .98rem; cursor: pointer; transition: background .15s, border-color .15s, color .15s, transform .15s; }
+.btn:hover { background: var(--acc); border-color: var(--acc); color: #fff; }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line2); }
+.btn.ghost:hover { border-color: var(--ink); background: transparent; color: var(--ink); }
+.btn.sm { height: 2.35rem; padding: 0 .85rem; font-size: .9rem; }
+.btn .arr { transition: transform .2s; }
+.btn:hover .arr { transform: translateX(3px); }
+.tlink { font-weight: 600; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 1px; transition: background-size .2s; }
+.tlink:hover { color: var(--acc); }
 
 /* Hero */
-.hero { padding: clamp(1rem, 3vw, 2.25rem) 0 clamp(3.5rem, 7vw, 6rem); overflow: hidden; }
-.hero-text { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.hero h1 { font-family: var(--display); font-weight: 800; font-stretch: 72%; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: .92; letter-spacing: -.01em; max-width: 20ch; text-wrap: balance; }
-.hero-text p { max-width: 30ch; font-size: 1.15rem; color: var(--slate); }
+.hero { padding: clamp(2.25rem, 5vw, 4rem) 0 clamp(2.5rem, 5vw, 3.5rem); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: clamp(2rem, 4.5vw, 4.5rem); align-items: start; }
+@media (max-width: 980px) { .hero .wrap { grid-template-columns: 1fr; } }
+.meta { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font: 600 .74rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.live { display: inline-flex; align-items: center; gap: .45rem; color: var(--ink); }
+.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 0 rgba(30,158,87,.5); animation: ping 2s infinite; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(30,158,87,.55); } 70%, 100% { box-shadow: 0 0 0 8px rgba(30,158,87,0); } }
+.hero-copy { position: relative; }
+.hero h1 { margin-top: 1.4rem; font-size: clamp(3.2rem, 7.4vw, 6.9rem); }
+.hero h1 .hl { position: relative; color: var(--acc); white-space: nowrap; }
+.hero h1 .hl::after { content: ""; position: absolute; left: .02em; right: .02em; bottom: .04em; height: .07em; background: currentColor; transform-origin: 0 50%; }
+@media (prefers-reduced-motion: no-preference) { .hero h1 .hl::after { animation: draw .9s .5s cubic-bezier(.6,0,.2,1) both; } }
+@keyframes draw { from { transform: scaleX(0); } }
+.hero .lede { margin-top: 1.4rem; max-width: 40ch; font-size: clamp(1.08rem, 1.5vw, 1.25rem); color: var(--ink2); }
+.actions { margin-top: 1.9rem; display: flex; flex-wrap: wrap; gap: .65rem; }
+.devbar { margin-top: 2.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; padding-top: 1.1rem; border-top: 1px dashed var(--line2); }
+.devbar .kicker::after { display: none; }
+.switch { display: inline-flex; align-items: center; gap: .55rem; padding: .35rem .7rem .35rem .4rem; border: 1px solid var(--line2); border-radius: 999px; background: transparent; cursor: pointer; font: 600 .78rem var(--mono); color: var(--ink2); }
+.switch i { position: relative; width: 28px; height: 16px; border-radius: 999px; background: var(--bg2); border: 1px solid var(--line2); transition: background .2s; }
+.switch i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--mute); transition: transform .2s, background .2s; }
+.switch[aria-pressed="true"] { border-color: var(--acc); color: var(--ink); }
+.switch[aria-pressed="true"] i { background: var(--acc); border-color: var(--acc); }
+.switch[aria-pressed="true"] i::after { transform: translateX(12px); background: #fff; }
+.devhint { font-size: .86rem; color: var(--mute); }
 
-/* The letterboard */
-.board-stage { perspective: 1400px; }
-.board {
-  --row: clamp(30px, 4.4vw, 54px);
-  --fs: clamp(18px, 2.85vw, 36px);
-  position: relative; padding: clamp(12px, 1.6vw, 18px); border-radius: 8px;
-  background: linear-gradient(135deg, #f4f6f8 0%, #a7b0ba 18%, #eef1f4 34%, #8f99a4 52%, #e7ebef 70%, #9aa4ae 86%, #f1f3f5 100%);
-  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 40px 60px -30px rgba(23,33,47,.55), 0 18px 24px -12px rgba(23,33,47,.35), 0 0 0 1px rgba(23,33,47,.18);
-  transform-origin: 50% 0%;
-}
-.felt {
-  position: relative; overflow: hidden; border-radius: 3px;
-  padding: calc(var(--row) * .6) clamp(14px, 3vw, 40px) calc(var(--row) * .55);
-  background-color: var(--felt);
-  background-image:
-    repeating-linear-gradient(to bottom, rgba(255,255,255,0) 0, rgba(255,255,255,0) calc(var(--row) - 3px), rgba(0,0,0,.6) calc(var(--row) - 3px), rgba(0,0,0,.6) calc(var(--row) - 1px), rgba(255,255,255,.07) calc(var(--row) - 1px), rgba(255,255,255,.07) var(--row)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-position: 0 calc(var(--row) * .6 - 2px), 0 0;
-  box-shadow: inset 0 6px 18px rgba(0,0,0,.6), inset 0 0 0 1px rgba(0,0,0,.5);
-}
-.felt::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 38%); }
-.rows { position: relative; }
-.row { display: grid; grid-template-columns: 4.2ch 1fr auto; align-items: end; column-gap: 1.2ch; height: var(--row); font-family: var(--display); font-stretch: 78%; font-weight: 600; font-size: var(--fs); line-height: 1; color: var(--letter); text-decoration: none; }
-.row.title { grid-template-columns: 1fr; justify-items: center; }
-.row.blank { height: calc(var(--row) * .5); }
-.row .cell { display: flex; align-items: end; white-space: nowrap; padding-bottom: calc(var(--row) * .14); }
-.row .name { min-width: 0; overflow: hidden; }
-.leader { flex: 1; min-width: 1ch; height: .22em; margin: 0 .35em .08em; align-self: end;
-  background: radial-gradient(circle at 50% 50%, var(--letter) 0 32%, transparent 36%) 0 0 / .62em .22em space no-repeat; opacity: .9; }
-.row.today { color: var(--today); }
-.row.today .leader { background-image: radial-gradient(circle at 50% 50%, var(--today) 0 32%, transparent 36%); }
-a.row:hover .ch { color: #fff; }
-a.row.today:hover .ch { color: #ffe489; }
-.ch { display: inline-block; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.55); min-width: .28em; }
-.row.big { height: calc(var(--row) * 2); grid-template-columns: 1fr; justify-items: center; font-size: calc(var(--fs) * 1.75); color: var(--today); font-weight: 700; }
-.row.big .cell { padding-bottom: calc(var(--row) * .2); }
-.row.sub { grid-template-columns: 1fr; justify-items: center; }
-a.row.big:hover .ch { color: #ffe489; }
-.index { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
-.index h2 { font-family: var(--display); font-stretch: 80%; font-weight: 700; font-size: 1.15rem; margin-bottom: .8rem; }
-.index ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem .55rem; }
-.index a { display: inline-flex; align-items: center; height: 2.35rem; padding: 3px .85rem 0; border-radius: 4px; background: var(--felt); color: var(--letter); text-decoration: none; font-family: var(--display); font-stretch: 80%; font-weight: 600; font-size: 1.02rem; letter-spacing: .05em; text-transform: uppercase; box-shadow: 0 0 0 2px #a9b2bc, 0 3px 0 2px rgba(23,33,47,.12); transition: transform .15s, color .15s; }
-.index a:hover { color: var(--today); transform: translateY(-2px); }
-.index a:focus-visible { outline-color: var(--ink); }
-.board-note { margin-top: 1.1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; color: var(--slate); font-size: .98rem; }
-@media (max-width: 640px) {
-  .board { --fs: clamp(15px, 4.6vw, 22px); --row: clamp(28px, 8vw, 38px); }
-  .row { grid-template-columns: 3.4ch 1fr auto; column-gap: .9ch; }
-}
+.src { margin-top: 1.4rem; padding: 1.1rem 1.2rem; border-radius: 10px; background: var(--dark); color: #d8d4cb; font: 400 .8rem/1.75 var(--mono); overflow: auto; max-height: 30rem; white-space: pre; tab-size: 2; border: 1px solid var(--line); }
+.src .ln { display: block; }
+@media (prefers-reduced-motion: no-preference) { .src .ln { animation: type .3s both; animation-delay: calc(var(--i) * 28ms); } }
+@keyframes type { from { opacity: 0; transform: translateX(-6px); } }
+.src .tg { color: #ff8a65; } .src .at { color: #9ec1ff; } .src .st { color: #b5e08a; } .src .cm { color: #6f6b64; }
+body.inspecting .hero-copy [data-ed] { cursor: text; }
+body.inspecting .hero-copy [data-ed]:focus { outline: none; }
+.ins { position: fixed; z-index: 50; pointer-events: none; border: 1px solid var(--acc); background: rgba(255,79,31,.08); transition: all .08s; }
+.ins span { position: absolute; left: -1px; bottom: 100%; margin-bottom: 4px; padding: .18rem .45rem; border-radius: 4px; background: var(--acc); color: #fff; font: 600 .7rem/1.2 var(--mono); white-space: nowrap; }
+.ins span b { font-weight: 400; opacity: .8; margin-left: .45rem; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .js .ch { animation: snap .55s cubic-bezier(.2, 1.6, .4, 1) both; animation-delay: var(--d, 0ms); }
-  .js .ch.out { animation: fall .42s cubic-bezier(.5, 0, .9, .4) both; animation-delay: var(--o, 0ms); }
-  @keyframes fall { from { opacity: 1; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); } to { opacity: 0; transform: translateY(.9em) rotate(calc(var(--r, 0deg) * 9 + 14deg)); } }
-  .js .leader { animation: dots .5s ease-out both; animation-delay: var(--d, 0ms); }
-  @keyframes dots { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: .9; clip-path: inset(0 0 0 0); } }
-  @keyframes snap {
-    0% { opacity: 0; transform: translateY(calc(var(--y, 0px) - .55em)) rotate(calc(var(--r, 0deg) * 6)); }
-    60% { opacity: 1; }
-    100% { opacity: 1; transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); }
-  }
-  @supports (animation-timeline: view()) {
-    .hero .board { animation: recede linear both; animation-timeline: view(); animation-range: exit 5% exit 95%; }
-    @keyframes recede { to { transform: rotateX(28deg) scale(.86) translateY(4%); filter: brightness(.8); } }
-  }
-}
+/* Split-flap board */
+.board { border-radius: 14px; padding: 14px; background: var(--dark); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 60px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.4); color: var(--on-dark); }
+.board-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0 2px 12px; font: 600 .7rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--on-dark2); }
+.board-top .live { color: var(--on-dark); }
+.flaps { container-type: inline-size; }
+.frows { --fs: min(22px, calc((100cqi - 62px) / 24.2)); display: grid; gap: 3px; }
+.frow { display: flex; gap: 2px; text-decoration: none; color: #f1ede3; border-radius: 3px; }
+.t { display: grid; place-items: center; flex: none; width: calc(var(--fs) * .78); height: calc(var(--fs) * 1.32); border-radius: 2px; background: linear-gradient(#262625 0 49%, #070707 49% 51%, #1d1d1c 51%); font: 600 var(--fs)/1 var(--mono); text-transform: uppercase; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset; backface-visibility: hidden; }
+.frow.today { color: #ff7a52; }
+.frow.dim { color: #8d887f; }
+a.frow { cursor: pointer; }
+a.frow:hover .t { background: linear-gradient(#323230 0 49%, #070707 49% 51%, #282827 51%); }
+.board-form { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+.board-form input { flex: 1 1 14rem; height: 2.6rem; padding: 0 .85rem; border: 1px solid var(--line2); border-radius: 8px; background: var(--card); font: 600 .9rem var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.board-form input:focus { outline: none; border-color: var(--acc); }
+.board-note { margin-top: .7rem; font-size: .86rem; color: var(--mute); }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line2); }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { padding: 1.4rem 1.25rem 1.5rem; border-left: 1px solid var(--line); }
+.stat:first-child { border-left: 0; padding-left: 0; }
+@media (max-width: 760px) { .stat:nth-child(3) { border-left: 0; padding-left: 0; } .stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.stat b { display: block; font: 760 clamp(2.4rem, 5vw, 3.8rem)/1 var(--sans); font-stretch: 75%; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: .5rem; font: 600 .72rem/1.35 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+
+/* Home: now + jump */
+.home-low { padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 5rem); }
+.now { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 860px) { .now { grid-template-columns: 1fr; } }
+.now-card { position: relative; display: flex; flex-direction: column; gap: .55rem; padding: 1.3rem 1.3rem 1.4rem; border: 1px solid var(--line2); border-radius: 12px; text-decoration: none; background: var(--card); overflow: hidden; transition: border-color .2s, transform .2s; }
+.now-card:hover { border-color: var(--ink); transform: translateY(-3px); }
+.now-card .kicker::after { display: none; }
+.now-card strong { font: 700 1.45rem/1.05 var(--sans); font-stretch: 80%; letter-spacing: -.015em; }
+.now-card span:last-child { color: var(--mute); font-size: .95rem; }
+.now-card .go { position: absolute; right: 1.1rem; top: 1.1rem; font: 600 1rem var(--mono); color: var(--mute); transition: transform .2s, color .2s; }
+.now-card:hover .go { transform: translate(3px, -3px); color: var(--acc); }
+.jump { margin-top: 2.5rem; }
+.chips { list-style: none; padding: 0; margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip { display: inline-flex; align-items: center; gap: .45rem; height: 2.2rem; padding: 0 .8rem; border: 1px solid var(--line2); border-radius: 999px; background: transparent; text-decoration: none; font-size: .9rem; font-weight: 520; cursor: pointer; white-space: nowrap; transition: border-color .15s, background .15s, color .15s; }
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip small { font: 600 .68rem var(--mono); color: var(--mute); }
+.chip[aria-pressed="true"] small { color: inherit; opacity: .7; }
+
+/* Section heads */
+.sec { padding: clamp(3rem, 6vw, 5rem) 0; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem 3rem; margin-bottom: 2.25rem; }
+.sec-head h2, .h2 { margin-top: .9rem; font-size: clamp(2.8rem, 6.4vw, 5.4rem); }
+.lede2 { margin-top: 1rem; max-width: 52ch; font-size: 1.1rem; color: var(--ink2); }
+
+/* Backend band */
+.backend { background: var(--dark); color: var(--on-dark); padding: clamp(3rem, 6vw, 4.5rem) 0; }
+.backend .kicker { color: var(--on-dark2); }
+.backend .kicker::after { background: rgba(255,255,255,.2); }
+.backend .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 2rem 4rem; }
+@media (max-width: 900px) { .backend .wrap { grid-template-columns: 1fr; } }
+.backend-body p { color: #c3bfb6; max-width: 60ch; }
+.backend-body p + p { margin-top: .8rem; }
+.backend .by { margin-top: 1rem; font: 600 .74rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--on-dark2); }
+.backend .row-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1.4rem; }
+.backend .btn { background: var(--on-dark); color: var(--dark); border-color: var(--on-dark); }
+.backend .btn:hover { background: var(--acc); border-color: var(--acc); color: #fff; }
+.pipe { margin-top: 2rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; }
+.pipe::before { content: ""; position: absolute; left: 6%; right: 6%; top: 1.15rem; height: 1px; background: rgba(255,255,255,.18); }
+.pipe .pulse { position: absolute; top: calc(1.15rem - 3px); left: 6%; width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px 2px rgba(255,79,31,.6); }
+@media (prefers-reduced-motion: no-preference) { .pipe .pulse { animation: travel 3.2s cubic-bezier(.6,0,.4,1) infinite; } }
+@keyframes travel { 0% { left: 6%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 94%; opacity: 0; } }
+.step { position: relative; text-align: center; padding: 0 .3rem; }
+.step i { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; margin: 0 auto; border-radius: 8px; background: var(--dark2); border: 1px solid rgba(255,255,255,.16); font: 600 .78rem var(--mono); font-style: normal; color: var(--on-dark); }
+.step b { display: block; margin-top: .7rem; font: 600 .78rem var(--mono); }
+.step span { display: block; font-size: .8rem; color: var(--on-dark2); line-height: 1.35; margin-top: .2rem; }
 
 /* Hallway */
-.hall { position: relative; background: var(--paper); border-top: 6px solid var(--ink); }
+.hall { position: relative; }
 .hall-sticky { position: relative; }
-.hall-head { padding: clamp(3rem, 6vw, 4.5rem) 0 2rem; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; }
-.hall-head h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.4rem, 5.6vw, 4.6rem); line-height: .92; }
-.hall-head p { max-width: 38ch; color: var(--slate); }
+.hall-head { padding: clamp(3rem, 6vw, 4.5rem) 0 1.75rem; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem 3rem; }
+.find-wrap { display: grid; gap: .7rem; justify-items: start; }
+.field { display: flex; align-items: center; gap: .55rem; width: min(24rem, 100%); height: 2.75rem; padding: 0 .85rem; border: 1px solid var(--line2); border-radius: 9px; background: var(--card); transition: border-color .15s; }
+.field:focus-within { border-color: var(--ink); }
+.field svg { width: 16px; height: 16px; color: var(--mute); flex: none; }
+.field input, .field select { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; outline: none; font-size: .98rem; }
+.field kbd { flex: none; }
+.find-meta { font-size: .86rem; color: var(--mute); }
+.filters { display: flex; flex-wrap: wrap; gap: .4rem; }
 .progress { display: none; }
 .track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.5rem 2.5rem; padding-bottom: clamp(3.5rem, 7vw, 5.5rem); }
 @media (max-width: 760px) { .track { grid-template-columns: 1fr; } }
+.none { color: var(--mute); font-size: 1.1rem; padding: 2rem 0; }
 
-.door { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 24px; }
-.screen {
-  text-decoration: none;
-  --pan: 0px; --dur: 6s;
-  position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10px;
-  background: #e5e9ee; border: 1px solid rgba(23,33,47,.14);
-  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 40px -28px rgba(23,33,47,.6);
-}
-.url { position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 34px; display: flex; align-items: center; padding: 0 12px; background: rgba(245,247,249,.94); border-bottom: 1px solid rgba(23,33,47,.1); backdrop-filter: blur(6px); }
-.url span { display: block; width: 100%; max-width: 360px; margin-inline: auto; padding: 3px 12px 2px; border-radius: 999px; background: #e3e8ee; color: var(--slate); font-size: .8rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.screen img { position: absolute; top: 34px; left: 0; width: 100%; height: auto; transform: translateY(0); transition: transform 1.1s cubic-bezier(.5, 0, .2, 1); will-change: transform; }
-.door:hover .screen img, .door:focus-within .screen img, .door.tour .screen img { transform: translateY(calc(-1 * var(--pan))); transition-duration: var(--dur); transition-timing-function: cubic-bezier(.45, 0, .55, 1); }
+.door { display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 90px; }
+.door.flash .screen { box-shadow: 0 0 0 3px var(--acc), 0 24px 40px -28px rgba(0,0,0,.6); }
+.screen { --pan: 0px; --dur: 6s; position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 12px; background: var(--bg2); border: 1px solid var(--line2); text-decoration: none; box-shadow: 0 24px 40px -30px rgba(0,0,0,.55); transition: box-shadow .3s, transform .3s; }
+.door:hover .screen { transform: translateY(-4px); box-shadow: 0 34px 50px -30px rgba(0,0,0,.6); }
+.url { position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 34px; display: flex; align-items: center; gap: .6rem; padding: 0 12px; background: var(--card); border-bottom: 1px solid var(--line); }
+.url::before { content: ""; flex: none; width: 34px; height: 8px; background: radial-gradient(circle, #ff5f57 3.4px, transparent 4px) 0 0 / 12px 8px, radial-gradient(circle, #febc2e 3.4px, transparent 4px) 12px 0 / 12px 8px no-repeat, radial-gradient(circle, #28c840 3.4px, transparent 4px) 24px 0 / 12px 8px no-repeat; background-repeat: no-repeat; }
+.url span { display: block; flex: 1; max-width: 340px; margin-inline: auto; padding: 3px 12px 2px; border-radius: 6px; background: var(--bg2); color: var(--mute); font: 400 .74rem var(--mono); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.screen img { position: absolute; top: 34px; left: 0; width: 100%; height: auto; transition: transform 1.1s cubic-bezier(.5,0,.2,1); will-change: transform; }
+.door:hover .screen img, .door:focus-within .screen img, .door.tour .screen img { transform: translateY(calc(-1 * var(--pan))); transition-duration: var(--dur); transition-timing-function: cubic-bezier(.45,0,.55,1); }
 @media (prefers-reduced-motion: reduce) { .door:hover .screen img, .door:focus-within .screen img, .door.tour .screen img { transform: none; } }
 .on-touch { display: none; }
 @media (hover: none) { .on-touch { display: inline; } .on-hover { display: none; } }
-.screen .hint { position: absolute; right: 12px; bottom: 12px; z-index: 2; padding: 4px 10px 3px; border-radius: 999px; background: rgba(23,33,47,.82); color: #fff; font-size: .78rem; opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; }
+.screen .hint { position: absolute; right: 12px; bottom: 12px; z-index: 2; padding: .3rem .6rem; border-radius: 6px; background: rgba(18,18,18,.86); color: #fff; font: 600 .7rem var(--mono); opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; }
 .door:hover .screen.pans .hint { opacity: 1; transform: none; }
-.screen.type { display: grid; place-items: center; background: var(--felt); }
-.screen.type .mini { font-family: var(--display); font-stretch: 75%; font-weight: 600; color: var(--letter); font-size: clamp(2rem, 4.4vw, 3.4rem); letter-spacing: .04em; text-align: center; line-height: 1.1; padding-top: 34px; text-shadow: 0 2px 3px rgba(0,0,0,.55); }
-.screen.type .mini small { display: block; font-size: .42em; letter-spacing: .12em; color: #b9bec4; margin-top: .6em; }
+.plaque { margin-top: 1.25rem; display: flex; align-items: center; gap: .9rem; }
+.plate { display: inline-grid; place-items: center; flex: none; min-width: 3.4rem; height: 2.2rem; padding: 0 .6rem; border-radius: 6px; border: 1px solid var(--line2); font: 600 .82rem/1 var(--mono); letter-spacing: .03em; color: var(--ink); background: var(--card); }
+.plate.word { font-size: .7rem; letter-spacing: .08em; }
+.door h3 { font: 720 clamp(1.7rem, 2.6vw, 2.2rem)/1 var(--sans); font-stretch: 78%; letter-spacing: -.02em; }
+.door .who { color: var(--mute); font-size: .92rem; margin-top: .25rem; }
+.door .what { margin-top: .9rem; max-width: 48ch; color: var(--ink2); }
+.door .when { margin-top: .6rem; font: 600 .78rem var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.door .when::before { content: "● "; color: var(--good); }
+.door .by { margin-top: .35rem; font-size: .86rem; color: var(--mute); }
+.door .links { margin-top: auto; padding-top: 1.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.3rem; }
+.door .links .btn { height: 2.45rem; font-size: .92rem; }
+.door .links a:not(.btn) { font-weight: 600; font-size: .95rem; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; }
+.door .links a:not(.btn):hover { color: var(--acc); }
 
-.plaque { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; }
-.plate {
-  display: inline-grid; place-items: center; flex: none; min-width: 4.1rem; height: 2.6rem; padding: 3px .7rem 0;
-  border-radius: 4px; background: var(--felt); color: var(--letter);
-  font-family: var(--display); font-stretch: 80%; font-weight: 700; font-size: 1.35rem; letter-spacing: .05em; line-height: 1;
-  box-shadow: 0 0 0 2px #a9b2bc, 0 0 0 3px rgba(23,33,47,.15), 0 3px 0 3px rgba(23,33,47,.1);
-}
-.plate.word { font-size: 1rem; letter-spacing: .08em; }
-.door h3 { font-family: var(--display); font-stretch: 76%; font-weight: 800; font-size: clamp(1.8rem, 2.8vw, 2.35rem); line-height: 1; }
-.door .who { color: var(--slate); font-size: .95rem; margin-top: .25rem; }
-.door .what { margin-top: .9rem; max-width: 48ch; }
-.door .when { margin-top: .55rem; font-weight: 700; }
-.door .by { margin-top: .45rem; font-size: .88rem; color: var(--slate); }
-.door .links { margin-top: auto; padding-top: 1.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.35rem; }
-.btn { display: inline-flex; align-items: center; height: 2.75rem; padding: 2px 1.15rem 0; border-radius: 7px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 700; }
-.btn:hover { background: var(--link); }
-.links a:not(.btn) { font-weight: 700; }
-
-.divider { display: flex; flex-direction: column; justify-content: center; gap: 1rem; padding: 2rem 0; grid-column: 1 / -1; border-top: 1px solid rgba(23,33,47,.15); }
-.divider h3 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .95; }
-.divider p { color: var(--slate); max-width: 40ch; }
-
-/* Pinned horizontal hallway (desktop, motion allowed) */
-.hall.pinned .hall-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
-.hall.pinned .hall-head { padding: clamp(1.5rem, 4vh, 2.75rem) 0 clamp(1rem, 2.5vh, 1.75rem); }
-.hall.pinned .progress { display: block; height: 4px; background: rgba(23,33,47,.12); border-radius: 2px; overflow: hidden; }
-.hall.pinned .progress i { display: block; height: 100%; width: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
-.hall.pinned .track-outer { flex: 1; min-height: 0; display: flex; align-items: center; }
+.hall.pinned .hall-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; padding-top: 64px; }
+.hall.pinned .hall-head { padding: clamp(1.1rem, 3vh, 2.25rem) 0 clamp(.9rem, 2vh, 1.4rem); }
+.hall.pinned .hall-head .h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); }
+.hall.pinned .progress { display: flex; align-items: center; gap: 1rem; font: 600 .72rem var(--mono); color: var(--mute); }
+.hall.pinned .progress .bar { flex: 1; height: 2px; background: var(--line2); overflow: hidden; }
+.hall.pinned .progress .bar i { display: block; height: 100%; background: var(--acc); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.hall.pinned .track-outer { flex: 1; min-height: 0; display: flex; align-items: center; perspective: 1500px; }
 .hall.pinned .track { display: flex; gap: clamp(2rem, 3.5vw, 3.5rem); padding: 0 max(1.25rem, calc((100vw - var(--wrap)) / 2)) clamp(1rem, 3vh, 2rem); will-change: transform; transform: translate3d(calc(-1 * var(--x, 0px)), 0, 0); }
-.hall.pinned .door { flex: none; width: clamp(380px, 33vw, 500px); transform: perspective(1500px) rotateY(calc(var(--t, 0) * -16deg)) translateZ(calc(var(--ta, 0) * -70px)); transform-origin: calc(50% - var(--t, 0) * 50%) 50%; }
-.hall.pinned .track-outer { perspective: 1500px; }
-.hall.pinned .screen { aspect-ratio: auto; height: clamp(240px, 42vh, 420px); }
+.hall.pinned .door { flex: none; width: clamp(380px, 32vw, 490px); transform: perspective(1500px) rotateY(calc(var(--t, 0) * -14deg)) translateZ(calc(var(--ta, 0) * -60px)); transform-origin: calc(50% - var(--t, 0) * 50%) 50%; opacity: calc(1 - var(--ta, 0) * .35); }
+.hall.pinned .screen { aspect-ratio: auto; height: clamp(230px, 40vh, 410px); }
 .hall.pinned .what { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.hall.pinned .divider { flex: none; width: clamp(280px, 24vw, 360px); border-top: 0; border-left: 1px solid rgba(23,33,47,.15); padding: 0 0 0 2rem; align-self: stretch; }
-@media (max-height: 760px) { .hall.pinned .what { display: none; } }
-
-/* Your club next */
-.next { padding: clamp(4rem, 8vw, 6.5rem) 0; }
-.next .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-@media (max-width: 900px) { .next .wrap { grid-template-columns: 1fr; } }
-.next .board { --row: clamp(30px, 3.6vw, 46px); --fs: clamp(18px, 2.3vw, 30px); }
-.next h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.3rem, 5vw, 4rem); line-height: .92; }
-.next .lede { margin-top: 1rem; font-size: 1.15rem; color: var(--slate); max-width: 42ch; }
-.next ul { list-style: none; margin: 1.75rem 0 0; padding: 0; border-top: 1px solid rgba(23,33,47,.2); }
-.next li { padding: .95rem 0; border-bottom: 1px solid rgba(23,33,47,.2); }
-.next li strong { display: block; }
-.next li span { color: var(--slate); }
-.next .ask { margin-top: 1.4rem; font-weight: 700; }
-
-/* Home: right now */
-.now { margin-top: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-@media (max-width: 860px) { .now { grid-template-columns: 1fr; } }
-.now-card { display: grid; grid-template-columns: auto 1fr; gap: .15rem 1rem; align-items: center; padding: 1rem 1.1rem; background: var(--paper); border: 1px solid rgba(23,33,47,.16); border-radius: 6px; color: var(--ink); text-decoration: none; box-shadow: 0 10px 22px -18px rgba(23,33,47,.6); transition: transform .15s, box-shadow .15s; }
-.now-card:hover { transform: translateY(-2px); box-shadow: 0 16px 26px -18px rgba(23,33,47,.7); }
-.now-card .plate { grid-row: 1 / 3; }
-.now-card strong { font-size: 1.05rem; }
-.now-card span:last-child { color: var(--slate); font-size: .93rem; }
-
-/* Sites: backend + find */
-.backend { background: var(--felt); color: var(--letter); padding: clamp(2.5rem, 5vw, 3.75rem) 0; }
-.backend .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.5rem 4rem; align-items: start; }
-@media (max-width: 860px) { .backend .wrap { grid-template-columns: 1fr; } }
-.backend .plate { background: #111315; color: var(--today); box-shadow: 0 0 0 2px #4b525a; }
-.backend h2 { margin-top: 1rem; font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: .92; }
-.backend-body p { color: #c9ced4; max-width: 60ch; }
-.backend-body p + p { margin-top: .8rem; }
-.backend .by { color: #9aa1a8; font-size: .9rem; }
-.backend .links { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .6rem 1.35rem; align-items: center; }
-.backend .links a:not(.btn) { color: #fff; font-weight: 700; }
-.btn.light { background: var(--letter); color: var(--ink); }
-.btn.light:hover { background: var(--today); color: var(--ink); }
-.find { display: grid; gap: .5rem; justify-items: start; }
-.find input { width: min(22rem, 100%); height: 2.6rem; padding: 2px .85rem 0; border: 2px solid var(--ink); border-radius: 4px; background: #fff; font: 600 1rem var(--text); }
-.find p { color: var(--slate); font-size: .95rem; }
-.none { color: var(--slate); font-size: 1.1rem; padding: 2rem 0; }
-.hall { border-top: 0; }
-
-/* Shared section type */
-.sec { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
-.sec h2 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(2.3rem, 5vw, 4rem); line-height: .92; }
-.sec .lede { margin-top: .9rem; font-size: 1.1rem; color: var(--slate); max-width: 52ch; }
-.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: 2rem; }
-
-/* Write on the board */
-.post { margin-top: 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
-.post label { font-weight: 700; margin-right: .2rem; }
-.post input { flex: 1 1 16rem; max-width: 26rem; height: 2.6rem; padding: 2px .8rem 0; border: 2px solid var(--ink); border-radius: 4px; background: #fff; font: 600 1.05rem var(--display); font-stretch: 85%; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
-.chip { height: 2.6rem; padding: 2px 1rem 0; border: 2px solid var(--ink); border-radius: 4px; background: var(--ink); color: #fff; font: 700 .95rem var(--text); cursor: pointer; }
-.chip.ghost { background: transparent; color: var(--ink); }
-.chip:hover { background: var(--link); border-color: var(--link); color: #fff; }
-.post small { flex-basis: 100%; color: var(--slate); }
+@media (max-height: 780px) { .hall.pinned .what { display: none; } }
 
 /* Projects */
-.archive { background: var(--paper); }
-.seg { display: inline-flex; padding: 4px; gap: 2px; background: #e3e8ee; border-radius: 8px; }
-.seg button { height: 2.2rem; padding: 2px .95rem 0; border: 0; border-radius: 6px; background: transparent; font: 700 .92rem var(--text); color: var(--slate); cursor: pointer; white-space: nowrap; }
-.seg button b { font-weight: 400; margin-left: .3rem; opacity: .7; }
-.seg button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(23,33,47,.18); }
-.seg button:hover:not([aria-pressed="true"]) { color: var(--ink); }
-@media (max-width: 560px) { .seg { display: flex; overflow-x: auto; max-width: 100%; } }
-
-.miles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 2.5rem; background: var(--felt); color: var(--letter); border-radius: 8px; overflow: hidden; }
-@media (max-width: 860px) { .miles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.mile { padding: 1.2rem 1.25rem 1.3rem; border-right: 1px solid rgba(255,255,255,.08); }
-.mile:last-child { border-right: 0; }
-.mile b { display: block; font: 700 clamp(1.6rem, 2.6vw, 2.1rem) var(--display); font-stretch: 75%; letter-spacing: .02em; color: var(--today); line-height: 1; text-shadow: 0 2px 3px rgba(0,0,0,.4); }
-.mile span { display: block; margin-top: .45rem; font-size: .92rem; color: #c5cad0; line-height: 1.4; }
-
-.plist { display: grid; gap: 2rem; }
-.pgroup h3 { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .7rem; font: 700 .82rem var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--slate); }
-.pgroup h3 i { font-style: normal; color: #9aa3ae; }
-.prows { background: #fff; border: 1px solid rgba(23,33,47,.12); border-radius: 8px; overflow: hidden; }
-.prow { display: grid; grid-template-columns: 4.5rem minmax(0, 1.6fr) minmax(0, 1fr) 7.5rem 1.25rem; align-items: center; gap: 1rem; width: 100%; padding: .95rem 1.2rem; border: 0; border-top: 1px solid rgba(23,33,47,.08); background: none; text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: background .12s; }
-.prow:first-child { border-top: 0; }
-.prow:hover, .prow[aria-expanded="true"] { background: #f3f6f9; }
-.prow .y { font: 700 .95rem var(--display); font-stretch: 80%; color: var(--slate); letter-spacing: .04em; }
-.prow .n { font-weight: 700; font-size: 1.04rem; line-height: 1.3; }
-.prow .n small { display: block; font-weight: 400; font-size: .9rem; color: var(--slate); margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.prow .by { font-size: .9rem; color: var(--slate); }
-.prow .go { color: #9aa3ae; font-size: 1.2rem; transition: transform .15s, color .15s; }
-.prow:hover .go { transform: translateX(3px); color: var(--ink); }
+.ptiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+@media (max-width: 760px) { .ptiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ptile { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; padding: 1.1rem 1.15rem 1.15rem; border: 1px solid var(--line2); border-radius: 12px; background: var(--card); text-align: left; cursor: pointer; overflow: hidden; transition: border-color .15s, background .2s, color .2s; }
+.ptile:hover { border-color: var(--ink); }
+.ptile b { font: 760 clamp(2.4rem, 4.5vw, 3.4rem)/1 var(--sans); font-stretch: 75%; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.ptile span { font: 600 .72rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); display: flex; align-items: center; gap: .45rem; }
+.ptile span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--mute)); }
+.ptile[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.ptile[aria-pressed="true"] span { color: inherit; opacity: .75; }
+.ptile .spark { position: absolute; right: 1rem; top: 1rem; display: flex; gap: 3px; align-items: end; height: 26px; }
+.ptile .spark i { width: 5px; border-radius: 1px; background: var(--c, var(--mute)); opacity: .55; }
+.pctl { margin: 1.4rem 0 2rem; display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.pctl .field { width: auto; flex: 1 1 15rem; max-width: 24rem; }
+.pctl .field.sel { flex: 0 1 15rem; }
+.pctl .count { margin-left: auto; font: 600 .74rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--mute); }
+.plist { display: grid; gap: 2.25rem; }
+.pgroup h3 { display: flex; align-items: center; gap: .7rem; margin-bottom: .2rem; padding-bottom: .7rem; border-bottom: 1px solid var(--ink); font: 600 .74rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.pgroup h3 i { font-style: normal; color: var(--mute); font-weight: 400; }
+.prow { display: grid; grid-template-columns: 2.6rem minmax(0, 1.55fr) minmax(0, 1fr) 4.2rem 7.2rem 1.4rem; align-items: center; gap: 1rem; width: 100%; padding: 1.05rem .6rem; border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; cursor: pointer; transition: background .15s, padding .2s; }
+.prow:hover, .prow[aria-expanded="true"] { background: var(--card); padding-left: 1rem; }
+.prow .i { font: 400 .76rem var(--mono); color: var(--mute); transition: color .15s; }
+.prow:hover .i { color: var(--acc); }
+.prow .n { font: 650 1.2rem/1.15 var(--sans); font-stretch: 85%; letter-spacing: -.01em; }
+.prow .n small { display: block; margin-top: .2rem; font: 400 .9rem/1.3 var(--sans); font-stretch: 100%; letter-spacing: 0; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.makers { display: flex; align-items: center; gap: .55rem; min-width: 0; font-size: .88rem; color: var(--ink2); }
+.makers .av { display: flex; }
+.makers .av i { display: grid; place-items: center; width: 1.7rem; height: 1.7rem; margin-left: -.4rem; border-radius: 50%; border: 2px solid var(--bg); background: var(--ink); color: var(--bg); font: 600 .6rem var(--mono); font-style: normal; }
+.makers .av i:first-child { margin-left: 0; }
+.makers .av i.o { background: var(--acc); color: #fff; }
+.makers span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow .y { font: 400 .8rem var(--mono); color: var(--mute); }
+.prow .go { font: 600 1rem var(--mono); color: var(--mute); transition: transform .2s, color .2s; }
+.prow:hover .go { transform: translateX(4px); color: var(--ink); }
 @media (max-width: 760px) {
-  .prow { grid-template-columns: 3.2rem minmax(0, 1fr) auto; gap: .2rem .8rem; }
-  .prow .by { grid-column: 2; grid-row: 2; }
-  .prow .tag { grid-column: 3; grid-row: 1 / 3; }
-  .prow .go { display: none; }
+  .prow { grid-template-columns: minmax(0, 1fr) auto; gap: .5rem .8rem; }
+  .prow .i, .prow .y, .prow .go { display: none; }
+  .prow .makers { grid-column: 1; grid-row: 2; }
+  .prow .tag { grid-column: 2; grid-row: 1 / 3; }
   .prow .n small { white-space: normal; }
 }
-.tag { display: inline-flex; align-items: center; gap: .4rem; justify-self: start; height: 1.6rem; padding: 2px .55rem 0; border-radius: 3px; background: var(--felt); color: var(--letter); font: 700 .72rem var(--display); letter-spacing: .12em; white-space: nowrap; box-shadow: 0 0 0 1px #a9b2bc; }
-.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, #9aa3ae); margin-top: -2px; }
-.tag.live { --c: #3ccf7a; } .tag.wip { --c: var(--today); } .tag.next { --c: #7aa7ff; } .tag.done { --c: #c9ced4; } .tag.retired { --c: #e26d6d; color: #b9bec4; }
+.tag { display: inline-flex; align-items: center; gap: .45rem; justify-self: start; height: 1.65rem; padding: 0 .6rem; border-radius: 999px; border: 1px solid var(--line2); font: 600 .64rem var(--mono); letter-spacing: .08em; white-space: nowrap; color: var(--ink); }
+.tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c, var(--mute)); }
+.tag.live { --c: var(--good); } .tag.wip { --c: var(--warn); } .tag.next { --c: var(--next); } .tag.done { --c: var(--mute); } .tag.retired { --c: var(--bad); color: var(--mute); }
+.tag.live::before { animation: ping 2.2s infinite; }
+.empty { padding: 2rem 0; color: var(--mute); }
+.peek { position: fixed; z-index: 45; left: 0; top: 0; width: 280px; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; pointer-events: none; background: var(--bg2); border: 1px solid var(--line2); box-shadow: 0 30px 50px -20px rgba(0,0,0,.45); opacity: 0; transform: translate(-50%, -50%) scale(.85) rotate(-3deg); transition: opacity .18s, transform .25s cubic-bezier(.2,.9,.3,1.3); }
+.peek.on { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
+.peek img { width: 100%; }
 
-/* Project drawer */
-.scrim { position: fixed; inset: 0; z-index: 30; background: rgba(23,33,47,.35); opacity: 0; transition: opacity .2s; }
+/* Drawer */
+.scrim { position: fixed; inset: 0; z-index: 48; background: rgba(10,10,10,.45); opacity: 0; transition: opacity .2s; }
 .scrim.on { opacity: 1; }
-.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 31; width: min(440px, 100%); display: flex; flex-direction: column; background: var(--paper); box-shadow: -20px 0 40px -20px rgba(23,33,47,.5); transform: translateX(100%); transition: transform .28s cubic-bezier(.2, .8, .2, 1); }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 49; width: min(460px, 100%); display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--line2); transform: translateX(100%); transition: transform .32s cubic-bezier(.2,.8,.2,1); }
 .drawer.on { transform: none; }
 @media (prefers-reduced-motion: reduce) { .drawer, .scrim { transition: none; } }
-.dr-head { padding: 1.4rem 1.5rem 1.5rem; background: var(--felt); color: var(--letter); }
+.dr-shot { position: relative; height: 210px; overflow: hidden; background: var(--bg2); border-bottom: 1px solid var(--line); }
+.dr-shot img { width: 100%; }
+.dr-head { padding: 1.3rem 1.5rem 1.2rem; border-bottom: 1px solid var(--line); }
 .dr-top { display: flex; justify-content: space-between; align-items: center; }
-.dr-x { width: 2.3rem; height: 2.3rem; border: 0; border-radius: 4px; background: rgba(255,255,255,.08); color: #fff; font-size: 1.3rem; cursor: pointer; }
-.dr-x:hover { background: rgba(255,255,255,.16); }
-.dr-head h3 { margin-top: 1.1rem; font: 800 clamp(1.9rem, 4vw, 2.5rem) var(--display); font-stretch: 74%; line-height: .95; }
-.dr-head p { margin-top: .5rem; color: #b9bec4; }
-.dr-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
-.dr-body p { max-width: 52ch; }
-.dr-meta { margin: 1.4rem 0 0; display: grid; grid-template-columns: 6.5rem 1fr; gap: .6rem 1rem; padding-top: 1.2rem; border-top: 1px solid rgba(23,33,47,.12); }
-.dr-meta dt { font: 700 .76rem var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--slate); padding-top: .2rem; }
+.dr-x { width: 2.2rem; height: 2.2rem; border: 1px solid var(--line2); border-radius: 8px; background: var(--card); font-size: 1.2rem; cursor: pointer; }
+.dr-x:hover { border-color: var(--ink); }
+.dr-head h3 { margin-top: 1rem; font: 760 clamp(2rem, 4vw, 2.6rem)/.95 var(--sans); font-stretch: 75%; letter-spacing: -.02em; }
+.dr-head p { margin-top: .45rem; color: var(--mute); }
+.dr-body { flex: 1; overflow-y: auto; padding: 1.4rem 1.5rem; }
+.dr-body > p { color: var(--ink2); max-width: 52ch; }
+.dr-meta { margin-top: 1.4rem; display: grid; grid-template-columns: 6.5rem 1fr; gap: .65rem 1rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+.dr-meta dt { font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding-top: .2rem; }
 .dr-meta dd { margin: 0; }
-.dr-links { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; }
-.dr-links a:not(.btn) { font-weight: 700; }
-.dr-nav { display: flex; justify-content: space-between; padding: .9rem 1.5rem; border-top: 1px solid rgba(23,33,47,.12); }
-.dr-nav button { border: 0; background: none; font: 700 .92rem var(--text); color: var(--link); cursor: pointer; padding: .3rem 0; }
-.dr-nav button:disabled { color: #b4bcc6; cursor: default; }
+.dr-links { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .7rem 1.3rem; align-items: center; }
+.dr-links .note { color: var(--mute); }
+.dr-nav { display: flex; justify-content: space-between; padding: .9rem 1.5rem; border-top: 1px solid var(--line); }
+.dr-nav button { border: 0; background: none; font: 600 .78rem var(--mono); color: var(--ink); cursor: pointer; padding: .3rem 0; }
+.dr-nav button:hover:not(:disabled) { color: var(--acc); }
+.dr-nav button:disabled { color: var(--line2); cursor: default; }
 
+/* About */
+.tl { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+@media (max-width: 900px) { .tl { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .tl { grid-template-columns: 1fr; } }
+.tl li { position: relative; padding: 1.6rem 1.4rem 1.6rem 0; }
+.tl li::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.tl li:last-child::before { background: var(--acc); border-color: var(--acc); }
+.tl b { display: block; font: 760 2.3rem/1 var(--sans); font-stretch: 75%; letter-spacing: -.02em; }
+.tl strong { display: block; margin-top: .8rem; font-weight: 650; }
+.tl p { margin-top: .3rem; color: var(--mute); font-size: .95rem; }
+.facts { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; } }
+.fact { padding: 1.4rem; border: 1px solid var(--line2); border-radius: 12px; background: var(--card); }
+.fact .kicker::after { display: none; }
+.fact h3 { margin-top: .9rem; font: 720 1.55rem/1.05 var(--sans); font-stretch: 80%; letter-spacing: -.015em; }
+.fact p { margin-top: .5rem; color: var(--ink2); }
+.fact a { font-weight: 600; }
+.fact.wide { grid-column: span 3; display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 3rem; }
+@media (max-width: 900px) { .fact.wide { grid-column: auto; grid-template-columns: 1fr; } }
 
-.about { }
-.facts.two { margin-top: 2.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 760px) { .facts.two { grid-template-columns: 1fr; } .facts.two .fact { padding-left: 0; border-left: 0; } }
-.fact a { font-weight: 700; }
-.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
-@media (max-width: 960px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
-.fact { padding: 1.4rem 1.4rem 1.6rem 0; border-bottom: 1px solid rgba(23,33,47,.2); }
-.fact + .fact { padding-left: 1.4rem; border-left: 1px solid rgba(23,33,47,.2); }
-@media (max-width: 960px) { .fact:nth-child(odd) { padding-left: 0; border-left: 0; } }
-@media (max-width: 560px) { .fact { padding-left: 0 !important; border-left: 0 !important; } }
-.fact h3 { margin-top: 1rem; font-family: var(--display); font-stretch: 76%; font-weight: 800; font-size: 1.6rem; line-height: 1; }
-.fact p { margin-top: .5rem; color: var(--slate); }
+/* Team */
+.people { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.person { display: flex; flex-direction: column; gap: .3rem; padding: 1.3rem; border: 1px solid var(--line2); border-radius: 12px; background: var(--card); transition: border-color .2s, transform .2s; }
+.person:hover { border-color: var(--ink); transform: translateY(-3px); }
+.person .pic { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; margin-bottom: .8rem; border-radius: 10px; background: var(--ink); color: var(--bg); font: 600 1rem var(--mono); transition: background .2s, transform .3s cubic-bezier(.3,1.6,.5,1); }
+.person:hover .pic { background: var(--acc); color: #fff; transform: rotate(-6deg); }
+.person .rl { font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.person .nm { font: 720 1.6rem/1.05 var(--sans); font-stretch: 80%; letter-spacing: -.015em; }
+.person .nm { margin: 0; }
+.person .built { margin-top: .4rem; color: var(--ink2); font-size: .92rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.alum .nm { margin: 0; }
+.person .see { margin-top: auto; padding-top: 1rem; align-self: flex-start; border: 0; background: none; padding-left: 0; cursor: pointer; font: 600 .76rem var(--mono); color: var(--ink); text-transform: uppercase; letter-spacing: .05em; }
+.person .see:hover { color: var(--acc); }
+.person.alum { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.person.alum .rl, .person.alum .built { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.person.alum .pic { background: var(--acc); color: #fff; }
+.team-h { margin: 2.6rem 0 1rem; }
+.team-h:first-of-type { margin-top: 0; }
+.advisor { margin-top: 1.4rem; font: 600 .74rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.alumni { margin-top: clamp(3.5rem, 7vw, 5.5rem); padding-top: 2.5rem; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 2rem 4rem; }
+@media (max-width: 900px) { .alumni { grid-template-columns: 1fr; } }
+.alum-h { margin-top: .9rem; font-size: clamp(2.2rem, 4.6vw, 3.6rem); }
+.alum-list { display: grid; gap: 1rem; }
+.alum { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem 1.3rem; padding: 1.5rem; border-radius: 14px; background: var(--ink); color: var(--bg); }
+.alum .pic { display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border-radius: 12px; background: var(--acc); color: #fff; font: 600 1.05rem var(--mono); }
+.alum .nm { font: 740 1.9rem/1 var(--sans); font-stretch: 78%; letter-spacing: -.02em; }
+.alum .rl { margin-top: .35rem; font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: .65; }
+.alum .path { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .8rem; padding: 1rem 0; border-block: 1px solid color-mix(in srgb, var(--bg) 18%, transparent); }
+.alum .path span { font: 600 .72rem var(--mono); letter-spacing: .05em; text-transform: uppercase; opacity: .65; }
+.alum .path b { display: block; margin-top: .25rem; font: 680 1.15rem/1.15 var(--sans); font-stretch: 85%; }
+.alum .path .arrow { font: 600 1.1rem var(--mono); color: var(--acc); }
+.alum .path > div:last-child { text-align: right; }
+.alum p { grid-column: 1 / -1; font-size: .95rem; opacity: .82; }
+.alum-cta { padding: 1.2rem 1.4rem; border: 1px dashed var(--line2); border-radius: 14px; color: var(--mute); font-size: .95rem; }
 
-/* Credits roll (team) */
-.team { background: var(--felt); color: var(--letter); }
-.team h2 { color: var(--letter); }
-.team .lede { color: #b9bec4; }
-.roll { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(255,255,255,.15); }
-.roll-h { margin: 2.4rem 0 .8rem; font: 700 .9rem var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--today); }
-.roll-h:first-of-type { margin-top: 0; }
-.roll-foot { margin-top: 2rem; color: #b9bec4; }
-.roll li { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: .25rem 2rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,.15); align-items: baseline; }
-.roll .rl { font: 700 .82rem var(--display); letter-spacing: .14em; text-transform: uppercase; color: #9aa1a8; }
-.roll .nm { font: 700 clamp(1.4rem, 2.6vw, 2rem) var(--display); font-stretch: 78%; letter-spacing: .02em; }
-.roll .nm small { display: block; margin-top: .2rem; font: 400 .98rem var(--text); color: #c5cad0; letter-spacing: 0; }
-.roll li.alum .nm { color: var(--today); }
-@media (max-width: 600px) { .roll li { grid-template-columns: 1fr; } }
+/* Get a site */
+.join .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (max-width: 960px) { .join .wrap { grid-template-columns: 1fr; } }
+.perks { list-style: none; padding: 0; margin-top: 1.8rem; border-top: 1px solid var(--line2); }
+.perks li { display: grid; grid-template-columns: 2.4rem 1fr; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.perks li i { font: 400 .74rem var(--mono); font-style: normal; color: var(--acc); padding-top: .2rem; }
+.perks strong { display: block; font-weight: 650; }
+.perks span { color: var(--mute); font-size: .95rem; }
+.cfg { margin-top: 2rem; display: grid; gap: 1.1rem; }
+.cfg label, .cfg legend { display: block; margin-bottom: .45rem; font: 600 .72rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.cfg fieldset { border: 0; padding: 0; margin: 0; }
+.cfg .field { width: 100%; max-width: 26rem; }
+.sw { display: flex; gap: .5rem; flex-wrap: wrap; }
+.sw button { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 2px solid var(--bg); background: var(--c); cursor: pointer; box-shadow: 0 0 0 1px var(--line2); transition: transform .15s, box-shadow .15s; }
+.sw button:hover { transform: scale(1.08); }
+.sw button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.feats { display: flex; flex-wrap: wrap; gap: .4rem; }
+.cfg-out { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem; margin-top: .4rem; }
+.cfg-out output { font-size: .9rem; color: var(--mute); }
+.mock-wrap { position: sticky; top: 90px; }
+.mock { border-radius: 14px; overflow: hidden; border: 1px solid var(--line2); background: var(--card); box-shadow: 0 40px 70px -40px rgba(0,0,0,.55); }
+.mock .url { position: static; }
+.m-nav { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1.2rem; font: 600 .8rem var(--sans); }
+.m-nav span { display: flex; gap: .9rem; color: var(--mute); font-weight: 500; }
+.m-nav b { display: flex; align-items: center; gap: .5rem; }
+.m-nav b::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c); }
+.m-hero { margin: 0 .8rem; padding: 2rem 1.4rem 1.6rem; border-radius: 10px; background: var(--c); color: #fff; transition: background .3s; }
+.m-hero small { font: 600 .66rem var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+.m-hero h4 { margin: .5rem 0 0; font: 760 clamp(2rem, 4.5vw, 3rem)/.92 var(--sans); font-stretch: 75%; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.m-hero p { margin-top: .7rem; font-size: .88rem; opacity: .9; max-width: 32ch; }
+.m-hero .mb { display: inline-block; margin-top: 1rem; padding: .45rem .8rem; border-radius: 6px; background: #fff; color: #111; font: 600 .78rem var(--sans); }
+.m-blocks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; padding: .8rem; min-height: 5rem; }
+.m-block { padding: .85rem .9rem; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); font-size: .82rem; }
+.m-block b { display: flex; align-items: center; gap: .45rem; font-size: .88rem; }
+.m-block b::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+.m-block span { display: block; margin-top: .3rem; color: var(--mute); }
+.m-block .bar { margin-top: .55rem; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.m-block .bar i { display: block; height: 100%; width: 62%; background: var(--c); }
+@media (prefers-reduced-motion: no-preference) { .m-block { animation: pop .35s cubic-bezier(.2,1.4,.4,1) both; } }
+@keyframes pop { from { opacity: 0; transform: scale(.92); } }
+.m-empty { grid-column: 1 / -1; display: grid; place-items: center; padding: 1rem; border: 1px dashed var(--line2); border-radius: 9px; color: var(--mute); font-size: .82rem; }
 
-/* Your club next: preview */
-.try { margin-top: 1.4rem; display: grid; gap: .5rem; }
-.try label { font-weight: 700; }
-.try input { height: 2.8rem; padding: 2px .8rem 0; border: 2px solid var(--ink); border-radius: 4px; font: 600 1.05rem var(--text); max-width: 26rem; }
-.try output { font-size: .98rem; color: var(--slate); }
-.try output b { color: var(--ink); }
+/* Command palette */
+.pal-scrim { position: fixed; inset: 0; z-index: 70; background: rgba(10,10,10,.4); display: flex; align-items: flex-start; justify-content: center; padding: 12vh 1rem 1rem; }
+.pal { width: min(620px, 100%); border-radius: 14px; background: var(--bg); border: 1px solid var(--line2); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) { .pal { animation: palin .18s cubic-bezier(.2,.9,.3,1.2) both; } }
+@keyframes palin { from { opacity: 0; transform: translateY(-8px) scale(.98); } }
+.pal-in { display: flex; align-items: center; gap: .7rem; padding: 0 1.1rem; height: 3.6rem; border-bottom: 1px solid var(--line); }
+.pal-in svg { width: 18px; height: 18px; color: var(--mute); }
+.pal-in input { flex: 1; border: 0; outline: none; background: transparent; font-size: 1.08rem; }
+.pal-list { list-style: none; padding: .4rem; max-height: 52vh; overflow-y: auto; }
+.pal-list li { display: flex; align-items: center; gap: .8rem; padding: .6rem .7rem; border-radius: 8px; cursor: pointer; }
+.pal-list li[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.pal-list li small { margin-left: auto; font: 600 .66rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.pal-list li[aria-selected="true"] small { color: inherit; opacity: .65; }
+.pal-list li i { width: 1.6rem; font: 600 .7rem var(--mono); font-style: normal; color: var(--acc); }
+.pal-list .sep { padding: .7rem .7rem .3rem; font: 600 .66rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); cursor: default; }
+.pal-foot { display: flex; gap: 1rem; padding: .6rem 1.1rem; border-top: 1px solid var(--line); font-size: .78rem; color: var(--mute); }
 
-footer { background: var(--ink); color: #c9d1db; padding: 2.25rem 0 2.75rem; font-size: .95rem; }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; }
-footer p { max-width: 62ch; }
-footer a { color: #fff; }
+.toast { position: fixed; left: 50%; bottom: 1.5rem; z-index: 80; padding: .7rem 1rem; border-radius: 9px; background: var(--ink); color: var(--bg); font: 600 .82rem var(--mono); transform: translate(-50%, 20px); opacity: 0; transition: all .25s; pointer-events: none; }
+.toast.on { transform: translate(-50%, 0); opacity: 1; }
+
+/* Footer */
+footer { margin-top: auto; background: var(--dark); color: var(--on-dark2); padding: 3.5rem 0 2rem; font-size: .95rem; }
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+@media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; } }
+footer h4 { margin: 0 0 .7rem; font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--on-dark); }
+footer a { color: var(--on-dark); text-decoration: none; }
+footer a:hover { color: var(--acc); }
+footer ul { list-style: none; padding: 0; display: grid; gap: .35rem; }
+.wordmark { margin-top: 3rem; font: 760 clamp(3rem, 11.5vw, 10.5rem)/.82 var(--sans); font-stretch: 75%; letter-spacing: -.04em; color: rgba(239,236,230,.09); white-space: nowrap; overflow: hidden; user-select: none; }
+.wordmark span { transition: color .4s; }
+.wordmark span:hover { color: var(--acc); transition: color 0s; }
+.foot-base { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; font: 400 .78rem var(--mono); }
 </style>
 </head>
-<body class="wall">
+<body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#home"><b aria-hidden="true">TW</b>Troy Web Development</a>
+    <a class="brand" href="#home"><span class="mark" aria-hidden="true">TW</span>Troy Web Development</a>
     <nav class="tabs" aria-label="Pages">
-      <a href="#home" data-to="home">Home</a>
-      <a href="#sites" data-to="sites">Sites</a>
-      <a href="#projects" data-to="projects">Projects</a>
-      <a href="#about" data-to="about">About</a>
-      <a href="#team" data-to="team">Team</a>
-      <a href="#join" data-to="join">Get a site</a>
+      <a href="#home" data-to="home"><i>01</i>Home</a>
+      <a href="#sites" data-to="sites"><i>02</i>Sites</a>
+      <a href="#projects" data-to="projects"><i>03</i>Projects</a>
+      <a href="#about" data-to="about"><i>04</i>About</a>
+      <a href="#team" data-to="team"><i>05</i>Team</a>
+      <a href="#join" data-to="join"><i>06</i>Get a site</a>
     </nav>
+    <div class="tools">
+      <button class="tool" type="button" id="pal-open" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lbl">Search</span><kbd>/</kbd></button>
+      <button class="tool" type="button" id="theme" aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    </div>
   </div>
 </header>
 
@@ -395,64 +494,92 @@ footer a { color: #fff; }
 <div class="panel" data-tab="home" tabindex="-1">
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <div class="hero-text">
-        <h1 id="hero-title">Troy Web Development.</h1>
-        <p>Troy High's web development club. Since 2023 we've built websites for clubs across campus, plus a few outside it.</p>
-      </div>
-
-      <div class="board-stage" id="board">
-        <div class="board">
-          <div class="felt">
-            <div class="rows" id="rows" aria-hidden="true"></div>
+      <div>
+        <div class="hero-copy" id="hero-copy">
+          <p class="meta"><span class="live" id="live-count">Sites live</span><span>Est. 2023</span><span>Room 411</span><span>Troy High, Fullerton</span></p>
+          <h1 class="display" id="hero-title" data-ed>We build the web for <span class="hl">Troy clubs.</span></h1>
+          <p class="lede" data-ed>Troy High's web development club. Members learn by shipping real sites for clubs across campus, plus a few outside it.</p>
+          <div class="actions">
+            <a class="btn" href="#sites">See the sites <span class="arr">&rarr;</span></a>
+            <a class="btn ghost" href="#join">Get one for your club</a>
           </div>
         </div>
+        <pre class="src" id="src" hidden aria-label="Source code of the headline"></pre>
+        <div class="devbar">
+          <span class="kicker">DevTools</span>
+          <button class="switch" type="button" id="sw-inspect" aria-pressed="false"><i></i>Inspect</button>
+          <button class="switch" type="button" id="sw-src" aria-pressed="false"><i></i>View source</button>
+          <span class="devhint" id="devhint">This page is the portfolio. Poke at it.</span>
+        </div>
       </div>
-      <div class="board-note">
-        <p>Clubs meeting today are in yellow. Rooms change, so check each club's Instagram. Key Club posts dates on Google Classroom. MVP picks its Thursday on Instagram; next meeting Dec 10.</p>
-        <p>The Science Club meets online every week.</p>
+
+      <div>
+        <div class="board" id="board">
+          <div class="board-top"><span>Troy High &middot; Club directory</span><span class="live" id="clock">--:--</span></div>
+          <div class="flaps"><div class="frows" id="frows" aria-hidden="true"></div></div>
+        </div>
+        <form class="board-form" id="post" autocomplete="off">
+          <label class="sr" for="post-in">Write on the board</label>
+          <input id="post-in" maxlength="90" placeholder="Write on the board: GO WARRIORS" spellcheck="false">
+          <button class="btn sm" type="submit">Post</button>
+          <button class="btn sm ghost" type="button" id="post-reset">Directory</button>
+        </form>
+        <p class="board-note">Orange rows meet today. Click a row to see the club's site. Key Club posts dates on Google Classroom, MVP picks its Thursday on Instagram (next meeting Dec 10), and The Science Club meets online every week. Your message is only on your screen.</p>
+        <ul class="sr" aria-label="Club meeting directory">
+          <li>Monday: Anime Club, Room 910</li>
+          <li>Monday: Troy Learning League, every other Monday, Room 527</li>
+          <li>Tuesday: Chinese Culture Club, every other Tuesday, Room 324</li>
+          <li>Tuesday: Troy Car Club, every other Tuesday, Room W1</li>
+          <li>Wednesday: VSA, every other Wednesday, Room 412</li>
+          <li>Thursday: GeoGuessr Club, Room 322</li>
+          <li>Thursday: Music Vision Productions (MVP), lunch, Room E-25, dates on Instagram @troy.mvpmusic. Next: auditions round 2 Dec 1 to 2, fundraiser Dec 1 after school, general meeting Dec 10, interviews Jan 6, general meeting Jan 7</li>
+          <li>Friday: Leo Club, 1st and 3rd Fridays, Room W17</li>
+          <li>Key Club: lunch meetings in Room 517, dates on Google Classroom</li>
+        </ul>
       </div>
-      <form class="post" id="post" autocomplete="off">
-        <label for="post-in">Write on the board</label>
-        <input id="post-in" maxlength="66" placeholder="GO WARRIORS" spellcheck="false">
-        <button class="chip" type="submit">Post</button>
-        <button class="chip ghost" type="button" id="post-reset">Directory</button>
-        <small>Just for you. It resets when you reload.</small>
-      </form>
-      <ul class="sr" aria-label="Club meeting directory">
-        <li>Monday: Anime Club, Room 910</li>
-        <li>Monday: Troy Learning League, every other Monday, Room 527</li>
-        <li>Tuesday: Chinese Culture Club, every other Tuesday, Room 324</li>
-        <li>Tuesday: Troy Car Club, every other Tuesday, Room W1</li>
-        <li>Wednesday: VSA, every other Wednesday, Room 412</li>
-        <li>Thursday: GeoGuessr Club, Room 322</li>
-        <li>Thursday: Music Vision Productions (MVP), lunch, Room E-25, dates on Instagram @troy.mvpmusic. Next: auditions round 2 Dec 1 to 2, fundraiser Dec 1 after school, general meeting Dec 10, interviews Jan 6, general meeting Jan 7</li>
-        <li>Friday: Leo Club, 1st and 3rd Fridays, Room W17</li>
-        <li>Key Club: lunch meetings in Room 517, dates on Google Classroom</li>
-      </ul>
+    </div>
+  </section>
+
+  <section class="home-low" aria-label="Club at a glance">
+    <div class="wrap">
+      <div class="stats" id="stats">
+        <div class="stat"><b data-n="live">0</b><span>Sites live right now</span></div>
+        <div class="stat"><b data-n="clubs">0</b><span>Clubs on the directory</span></div>
+        <div class="stat"><b data-n="people">0</b><span>Members who shipped a project</span></div>
+        <div class="stat"><b data-n="fair">0</b><span>Tech Fairs, picked from 125 clubs</span></div>
+      </div>
       <div class="now">
-        <a class="now-card" href="#sites"><span class="plate word">NEW</span><strong>Key Club and GeoGuessr Club</strong><span>Our two newest sites went up this month.</span></a>
-        <a class="now-card" href="#about"><span class="plate word">THU</span><strong>Every other Thursday</strong><span>Lunch in Room 411. Anyone can come.</span></a>
-        <a class="now-card" href="#backend"><span class="plate word">JC</span><strong>One backend for every site</strong><span>Jeffrey Chu's Firebase project hosts all of them.</span></a>
+        <a class="now-card" href="#mvp"><span class="kicker"><b>New</b> site</span><strong>Music Vision Productions</strong><span>Scarlett Cheng's site for MVP just went up.</span><span class="go" aria-hidden="true">&nearr;</span></a>
+        <a class="now-card" href="#about"><span class="kicker"><b>Thu</b> meetings</span><strong>Every other Thursday</strong><span>Lunch in Room 411. Anyone can come.</span><span class="go" aria-hidden="true">&nearr;</span></a>
+        <a class="now-card" href="#backend"><span class="kicker"><b>Infra</b> backend</span><strong>One backend for every site</strong><span>Jeffrey Chu's Firebase project hosts all of them.</span><span class="go" aria-hidden="true">&nearr;</span></a>
       </div>
-      <nav class="index" aria-labelledby="index-title">
-        <h2 id="index-title">Jump to a site</h2>
-        <ul id="index-list"></ul>
+      <nav class="jump" aria-labelledby="index-title">
+        <h2 class="kicker" id="index-title">Jump to a site</h2>
+        <ul class="chips" id="index-list"></ul>
       </nav>
     </div>
   </section>
 </div>
+
 <div class="panel" data-tab="sites" tabindex="-1" hidden>
   <section class="backend" id="backend" aria-labelledby="backend-title">
     <div class="wrap">
       <div>
-        <span class="plate word">TROY-HIGH-LLM</span>
-        <h2 id="backend-title">The backend.</h2>
+        <p class="kicker"><b>02</b> troy-high-llm</p>
+        <h2 class="display h2" id="backend-title">The backend.</h2>
       </div>
       <div class="backend-body">
         <p>Every site on this page is hosted on one Firebase project, troy-high-llm. Jeffrey Chu set it up and manages it, along with the club's GitHub. It handles Google sign-in, a separate locked-down database for each site, and deploys every site automatically whenever someone pushes.</p>
         <p>It started as the points system for the Troy High LLM club: members request to join, officers approve them, and awarded points can't be edited after the fact.</p>
+        <div class="pipe" aria-label="How a change goes live: push to GitHub, security rules are tested, Firebase deploys, sites update">
+          <span class="pulse" aria-hidden="true"></span>
+          <div class="step"><i>git</i><b>push</b><span>A member pushes to GitHub</span></div>
+          <div class="step"><i>&check;</i><b>test</b><span>Security rules get tested</span></div>
+          <div class="step"><i>fb</i><b>deploy</b><span>Firebase deploys</span></div>
+          <div class="step"><i id="pipe-n">14</i><b>live</b><span>Every site updates</span></div>
+        </div>
         <p class="by">Made by Jeffrey Chu</p>
-        <div class="links"><a class="btn light" href="https://troy-high-llm.web.app">Open the console</a><a href="https://github.com/Jeffrey-Chu/troyllm">GitHub</a></div>
+        <div class="row-links"><a class="btn sm" href="https://troy-high-llm.web.app">Open the console <span class="arr">&rarr;</span></a><a class="tlink" href="https://github.com/Jeffrey-Chu/troyllm">GitHub</a></div>
       </div>
     </div>
   </section>
@@ -461,16 +588,31 @@ footer a { color: #fff; }
     <div class="hall-sticky">
       <div class="wrap">
         <div class="hall-head">
-          <h2 id="hall-title">Sites.</h2>
-          <div class="find"><label class="sr" for="find-in">Find a site</label><input id="find-in" type="search" placeholder="Find a site" autocomplete="off"><p><span class="on-hover">Hover a preview to scroll through it.</span><span class="on-touch">Previews scroll as you reach them.</span> <span id="find-count"></span></p></div>
+          <div>
+            <p class="kicker"><b>02</b> Live club sites</p>
+            <h2 class="display h2" id="hall-title">Sites.</h2>
+          </div>
+          <div class="find-wrap">
+            <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label class="sr" for="find-in">Find a site</label><input id="find-in" type="search" placeholder="Find a site" autocomplete="off"></div>
+            <div class="filters" id="days" role="group" aria-label="Filter by meeting day">
+              <button class="chip" type="button" data-d="all" aria-pressed="true">All</button>
+              <button class="chip" type="button" data-d="1" aria-pressed="false">Mon</button>
+              <button class="chip" type="button" data-d="2" aria-pressed="false">Tue</button>
+              <button class="chip" type="button" data-d="3" aria-pressed="false">Wed</button>
+              <button class="chip" type="button" data-d="4" aria-pressed="false">Thu</button>
+              <button class="chip" type="button" data-d="5" aria-pressed="false">Fri</button>
+              <button class="chip" type="button" data-d="x" aria-pressed="false">Other</button>
+              <button class="chip" type="button" id="surprise">Surprise me</button>
+            </div>
+            <p class="find-meta"><span class="on-hover">Hover a preview to scroll through it.</span><span class="on-touch">Previews scroll as you reach them.</span> <span id="find-count"></span></p>
+          </div>
         </div>
-        <div class="progress" aria-hidden="true"><i></i></div>
+        <div class="progress" aria-hidden="true"><span id="prog-n">01</span><span class="bar"><i></i></span><span id="prog-t">14</span></div>
       </div>
       <div class="track-outer">
         <div class="track wrap" id="track">
           <p class="none" id="find-none" hidden>No site matches that.</p>
-
-          <article class="door" id="anime">
+          <article class="door" id="anime" data-day="1">
             <a class="screen" href="https://troy-anime-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-anime-club.web.app</span></span><img src="img/anime.webp" width="960" height="1320" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">910</span><div><h3>Anime Club</h3><p class="who">THS Anime Club</p></div></div>
             <p class="what">Talk about the shows you love with no judgment. A weekly showcase, Kahoots, contests and raffles.</p>
@@ -479,7 +621,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-anime-club.web.app">Visit site</a><a href="https://www.instagram.com/troyanimeclub/">Instagram</a><a href="https://discord.gg/4hMCYW8b3T">Discord</a></div>
           </article>
 
-          <article class="door" id="carclub">
+          <article class="door" id="carclub" data-day="2">
             <a class="screen" href="https://troy-car-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-car-club.web.app</span></span><img src="img/carclub.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">W1</span><div><h3>Troy Car Club</h3><p class="who">Car culture and maintenance</p></div></div>
             <p class="what">How cars work, how to look after one, and the history behind them. No car, license or experience needed.</p>
@@ -488,7 +630,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-car-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighcarclub/">Instagram</a></div>
           </article>
 
-          <article class="door" id="chinese">
+          <article class="door" id="chinese" data-day="2">
             <a class="screen" href="https://troy-chinese-culture-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-chinese-culture-club.web.app</span></span><img src="img/chinese.webp" width="960" height="2428" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">324</span><div><h3>Chinese Culture Club</h3><p class="who">中国文化社</p></div></div>
             <p class="what">Troy High's Chinese cultural appreciation club, with events through the year and a table at Club Rush.</p>
@@ -497,7 +639,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-chinese-culture-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhs_ccc/">Instagram</a></div>
           </article>
 
-          <article class="door" id="geo">
+          <article class="door" id="geo" data-day="4">
             <a class="screen" href="https://troy-geoguessr-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-geoguessr-club.web.app</span></span><img src="img/geo.webp" width="960" height="2647" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">322</span><div><h3>GeoGuessr Club</h3><p class="who">THS GeoGuessr Club</p></div></div>
             <p class="what">Play GeoGuessr together, compete in tournaments and get better every week. No experience needed.</p>
@@ -506,7 +648,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-geoguessr-club.web.app">Visit site</a><a href="https://www.instagram.com/geoguessr_ths/">Instagram</a></div>
           </article>
 
-          <article class="door" id="key">
+          <article class="door" id="key" data-day="0">
             <a class="screen" href="https://troy-key-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-key-club.web.app</span></span><img src="img/key.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">517</span><div><h3>Key Club</h3><p class="who">Student-led service club</p></div></div>
             <p class="what">Volunteer, earn service hours and meet Key Clubbers from across Division 30 North.</p>
@@ -515,7 +657,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-key-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighkeyclub/">Instagram</a><a href="https://linktr.ee/troykeyclub">Links</a></div>
           </article>
 
-          <article class="door" id="mvp">
+          <article class="door" id="mvp" data-day="4">
             <a class="screen" href="https://troy-mvp-music.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-mvp-music.web.app</span></span><img src="img/mvp.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">E-25</span><div><h3>Music Vision Productions</h3><p class="who">Student-run music collective</p></div></div>
             <p class="what">Pairs young artists with student designers, marketers, producers and videographers. Free for student artists.</p>
@@ -524,7 +666,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-mvp-music.web.app">Visit site</a><a href="https://www.instagram.com/troy.mvpmusic/">Instagram</a></div>
           </article>
 
-          <article class="door" id="tll">
+          <article class="door" id="tll" data-day="1">
             <a class="screen" href="https://troy-learning-league.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-learning-league.web.app</span></span><img src="img/tll.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">527</span><div><h3>Troy Learning League</h3><p class="who">Peer tutoring</p></div></div>
             <p class="what">Students teaching students. Get matched with a tutor for a class or test, or tutor others and earn volunteer hours.</p>
@@ -533,7 +675,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-learning-league.web.app">Visit site</a><a href="https://www.instagram.com/troy.learning.league/">Instagram</a></div>
           </article>
 
-          <article class="door" id="leo">
+          <article class="door" id="leo" data-day="5">
             <a class="screen" href="https://troy-leo-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-leo-club.web.app</span></span><img src="img/leo.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">W17</span><div><h3>Leo Club</h3><p class="who">Lions Clubs International</p></div></div>
             <p class="what">Volunteer events, Leo competitions, scholarships, and outreach for chronic kidney disease awareness.</p>
@@ -542,7 +684,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-leo-club.web.app">Visit site</a><a href="https://www.instagram.com/troyhighleoclub/">Instagram</a></div>
           </article>
 
-          <article class="door" id="vsa">
+          <article class="door" id="vsa" data-day="3">
             <a class="screen" href="https://troy-vsa.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-vsa.web.app</span></span><img src="img/vsa.webp" width="960" height="2800" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate">412</span><div><h3>VSA</h3><p class="who">Vietnamese Student Association</p></div></div>
             <p class="what">Games, food and Vietnamese culture. Members check in to meetings on the site with a word of the day.</p>
@@ -551,7 +693,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-vsa.web.app">Visit site</a><a href="https://www.instagram.com/troyvsa/">Instagram</a></div>
           </article>
 
-          <article class="door" id="science">
+          <article class="door" id="science" data-day="">
             <a class="screen" href="https://troy-science-club.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-science-club.web.app</span></span><img src="img/science.webp" width="960" height="600" alt="" decoding="async"></a>
             <div class="plaque"><span class="plate word">ONLINE</span><div><h3>The Science Club</h3><p class="who">Nonprofit for middle and high school students</p></div></div>
             <p class="what">Research groups, national competitions and Science Bowl training, from biology and physics to AI.</p>
@@ -560,7 +702,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-science-club.web.app">Visit site</a></div>
           </article>
 
-          <article class="door" id="roots">
+          <article class="door" id="roots" data-day="">
             <a class="screen" href="https://troy-roots-and-roads.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-roots-and-roads.web.app</span></span><img src="img/roots.webp" width="960" height="2262" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate word">OCSA</span><div><h3>Roots &amp; Roads</h3><p class="who">Orange County School of the Arts</p></div></div>
             <p class="what">A student nonprofit that interviews immigrants in Orange County, shares their stories in film and writing, and tutors for free.</p>
@@ -568,7 +710,7 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://troy-roots-and-roads.web.app">Visit site</a><a href="https://www.instagram.com/roots.nroads/">Instagram</a></div>
           </article>
 
-          <article class="door" id="superdw">
+          <article class="door" id="superdw" data-day="">
             <a class="screen" href="https://superdw-crystals.web.app" tabindex="-1" aria-hidden="true"><span class="url"><span>superdw-crystals.web.app</span></span><img src="img/superdw.webp" width="960" height="2775" alt="" decoding="async"><span class="hint">Scrolling the site</span></a>
             <div class="plaque"><span class="plate word">SHOP</span><div><h3>SUPER DW</h3><p class="who">Daphne's crystals and bracelets</p></div></div>
             <p class="what">Hand-strung crystal bracelets, a crystal chart, and a designer for building your own.</p>
@@ -576,120 +718,128 @@ footer a { color: #fff; }
             <div class="links"><a class="btn" href="https://superdw-crystals.web.app">Visit site</a><a href="https://www.instagram.com/deffning/">Instagram</a></div>
           </article>
 
-          <article class="door" id="bioship">
+          <article class="door" id="bioship" data-day="">
             <a class="screen" href="bioship" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-clubs.web.app/bioship</span></span><img src="img/bioship.webp" width="960" height="720" alt="" decoding="async"></a>
             <div class="plaque"><span class="plate word">PLAY</span><div><h3>BioShip</h3><p class="who">A biology quiz game</p></div></div>
             <p class="what">Fly a ship through 1,225 biology questions.</p>
             <p class="by">Made by Ryan Jian and Emerson Lin</p>
             <div class="links"><a class="btn" href="bioship">Play BioShip</a></div>
           </article>
-
         </div>
       </div>
     </div>
   </section>
 </div>
+
 <div class="panel" data-tab="projects" tabindex="-1" hidden>
-  <section class="sec archive" id="archive" aria-labelledby="archive-title">
+  <section class="sec" id="archive" aria-labelledby="archive-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="archive-title">Projects.</h2>
-          <p class="lede">Everything the club has worked on since 2023. Click a project for details.</p>
-        </div>
-        <div class="seg" role="group" aria-label="Show projects" id="seg">
-          <button type="button" data-f="all" aria-pressed="true">All<b></b></button>
-          <button type="button" data-f="live" aria-pressed="false">Live<b></b></button>
-          <button type="button" data-f="work" aria-pressed="false">In the works<b></b></button>
-          <button type="button" data-f="past" aria-pressed="false">Past<b></b></button>
+          <p class="kicker"><b>03</b> Since 2023</p>
+          <h2 class="display h2" id="archive-title">Projects.</h2>
+          <p class="lede2">Everything the club has worked on. Click a project for details, or hover one to preview it.</p>
         </div>
       </div>
-      <div class="miles">
-        <div class="mile"><b>2023</b><span>Founded as Web Development Education</span></div>
-        <div class="mile"><b>Every year</b><span>Picked for Troy Tech Fair out of 125 clubs</span></div>
-        <div class="mile"><b>Every year</b><span>At International Food Fest</span></div>
-        <div class="mile"><b>400+ hours</b><span>Logged by our tutoring initiative</span></div>
+      <div class="ptiles" id="ptiles" role="group" aria-label="Show projects">
+        <button class="ptile" type="button" data-f="all" aria-pressed="true"><span>All projects</span><b></b></button>
+        <button class="ptile" type="button" data-f="live" aria-pressed="false" style="--c: var(--good)"><span>Live</span><b></b></button>
+        <button class="ptile" type="button" data-f="work" aria-pressed="false" style="--c: var(--warn)"><span>In the works</span><b></b></button>
+        <button class="ptile" type="button" data-f="past" aria-pressed="false" style="--c: var(--bad)"><span>Past</span><b></b></button>
+      </div>
+      <div class="pctl">
+        <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label class="sr" for="p-q">Search projects</label><input id="p-q" type="search" placeholder="Search projects" autocomplete="off"></div>
+        <div class="field sel"><label class="sr" for="p-who">Made by</label><select id="p-who"><option value="">Anyone</option></select></div>
+        <div class="field sel"><label class="sr" for="p-sort">Sort</label><select id="p-sort"><option value="">Grouped</option><option value="az">A to Z</option><option value="new">Newest first</option></select></div>
+        <span class="count" id="p-count"></span>
       </div>
       <div class="plist" id="plist"></div>
     </div>
   </section>
 </div>
+
 <div class="panel" data-tab="about" tabindex="-1" hidden>
-  <section class="sec about" id="about-sec" aria-labelledby="about-title">
+  <section class="sec" id="about-sec" aria-labelledby="about-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="about-title">About the club.</h2>
-          <p class="lede">Troy Web Development started in 2023 as Web Development Education, a club where members taught each other how to build for the web. We still teach, but most meetings now go into building and updating sites for Troy clubs.</p>
+          <p class="kicker"><b>04</b> About</p>
+          <h2 class="display h2" id="about-title">About the club.</h2>
+          <p class="lede2">Troy Web Development started in 2023 as Web Development Education, a club where members taught each other how to build for the web. We still teach, but most meetings now go into building and updating sites for Troy clubs.</p>
         </div>
       </div>
+      <ol class="tl">
+        <li><b>2023</b><strong>Web Development Education</strong><p>Yeowon Yoon co-founds the club. Members give lectures on building for the web.</p></li>
+        <li><b>2023</b><strong>troywebdev.com</strong><p>Our first site, a directory of Troy clubs used by more than 100 student organizations.</p></li>
+        <li><b>Yearly</b><strong>Tech Fair and Food Fest</strong><p>Picked for the Troy Tech Fair out of 125 clubs every year since 2023, and at International Food Fest every year too.</p></li>
+        <li><b>2026</b><strong>One backend, every club</strong><p id="tl-now">Jeffrey Chu's Firebase project hosts every club site we build.</p></li>
+      </ol>
       <div class="facts">
-        <div class="fact"><span class="plate word">WHEN</span><h3>Every other Thursday</h3><p>Lunch, Room 411. Club news goes out on Google Classroom.</p></div>
-        <div class="fact"><span class="plate word">WHAT</span><h3>Club websites</h3><p>Clubs ask us for a site. A member takes the lead, builds it with the club, and keeps it updated after launch.</p></div>
-        <div class="fact"><span class="plate word">WHO</span><h3>Anyone at Troy</h3><p>No experience needed. Come to a meeting, pick a project, and learn by building it.</p></div>
-        <div class="fact"><span class="plate word">YEARLY</span><h3>Tech Fair and Food Fest</h3><p>Picked for the Troy Tech Fair out of 125 clubs every year since 2023, and at Food Fest every year too.</p></div>
-      </div>
-      <div class="facts two">
-        <div class="fact"><span class="plate word">START</span><h3>How it started</h3><p>Yeowon Yoon co-founded the club in 2023 and led it through 2026. Our first site, troywebdev.com, was a directory used by more than 100 student organizations. It and our old club kiosk site are retired now. This site replaces both.</p></div>
-        <div class="fact"><span class="plate word">CODE</span><h3>Where the code lives</h3><p>Every site lives in one GitHub repository, managed by Jeffrey Chu, and goes live automatically on Firebase when changes are pushed. <a href="https://github.com/Jeffrey-Chu/troyllm">See the repo</a>.</p></div>
+        <div class="fact"><span class="kicker"><b>When</b></span><h3>Every other Thursday</h3><p>Lunch, Room 411. Club news goes out on Google Classroom.</p></div>
+        <div class="fact"><span class="kicker"><b>What</b></span><h3>Club websites</h3><p>Clubs ask us for a site. A member takes the lead, builds it with the club, and keeps it updated after launch.</p></div>
+        <div class="fact"><span class="kicker"><b>Who</b></span><h3>Anyone at Troy</h3><p>No experience needed. Come to a meeting, pick a project, and learn by building it.</p></div>
+        <div class="fact wide">
+          <div><span class="kicker"><b>Start</b></span><h3>How it started</h3><p>Yeowon Yoon co-founded the club in 2023 and led it through 2026. Our first site, troywebdev.com, was a directory used by more than 100 student organizations. It and our old club kiosk site are retired now. This site replaces both.</p></div>
+          <div><span class="kicker"><b>Code</b></span><h3>Where the code lives</h3><p>Every site lives in one GitHub repository, managed by Jeffrey Chu, and goes live automatically on Firebase when changes are pushed. <a href="https://github.com/Jeffrey-Chu/troyllm">See the repo</a>.</p></div>
+        </div>
       </div>
     </div>
   </section>
 </div>
+
 <div class="panel" data-tab="team" tabindex="-1" hidden>
-  <section class="sec team" id="team-sec" aria-labelledby="team-title">
+  <section class="sec" id="team-sec" aria-labelledby="team-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="team-title">Team.</h2>
-          <p class="lede">Who runs the club and who built what.</p>
+          <p class="kicker"><b>05</b> Credits</p>
+          <h2 class="display h2" id="team-title">Team.</h2>
+          <p class="lede2">The board runs the club. Plenty of other members build with us too, and every site credits whoever made it. Click an officer to see their projects.</p>
         </div>
       </div>
-      <h3 class="roll-h">Officers</h3>
-      <ul class="roll">
-        <li><span class="rl">President</span><span class="nm">Ryan Jian<small>Anime Club, Car Club, Chinese Culture Club, GeoGuessr Club, Key Club, Learning League, Leo Club, VSA, The Science Club, Roots &amp; Roads, SUPER DW, BioShip, the OCHSWA shelf</small></span></li>
-        <li><span class="rl">Vice President</span><span class="nm">Shubhay Shah</span></li>
-        <li><span class="rl">Secretary</span><span class="nm">Wesley Shen<small>OCHSWA wrestling shelf</small></span></li>
-        <li><span class="rl">Head Developer</span><span class="nm">Jeffrey Chu<small>Firebase backend and hosting for every site here, the Troy High LLM points system, the first version of this site</small></span></li>
-      </ul>
-      <h3 class="roll-h">Members</h3>
-      <ul class="roll">
-        <li><span class="rl">Member</span><span class="nm">Daniel Li<small>Anime Club site</small></span></li>
-        <li><span class="rl">Member</span><span class="nm">Jason Lee<small>Key Club site</small></span></li>
-        <li><span class="rl">Member</span><span class="nm">Kaleb Lopez<small>Leo Club site</small></span></li>
-        <li><span class="rl">Member</span><span class="nm">Emerson Lin<small>BioShip</small></span></li>
-      </ul>
-      <h3 class="roll-h">Alumni</h3>
-      <ul class="roll">
-        <li class="alum"><span class="rl">Co-founder</span><span class="nm">Yeowon Yoon<small>Co-founded the club in 2023 and led it through 2026. Launched troywebdev.com and the tutoring initiative. Now studying physics and math at Cornell.</small></span></li>
-      </ul>
-      <p class="roll-foot">Advisor: Mr. Nguyen</p>
+      <h3 class="kicker team-h">2026 board</h3>
+      <div class="people" id="officers"></div>
+      <p class="advisor">Advisor: Mr. Nguyen</p>
+      <div class="alumni">
+        <div>
+          <p class="kicker"><b>Alumni</b> where they are now</p>
+          <h3 class="display alum-h">They built here first.</h3>
+          <p class="lede2">Members who graduated and what they're doing now.</p>
+        </div>
+        <div class="alum-list" id="alumni"></div>
+      </div>
     </div>
   </section>
 </div>
+
 <div class="panel" data-tab="join" tabindex="-1" hidden>
-  <section class="next" id="next" aria-labelledby="next-title">
+  <section class="sec join" id="next" aria-labelledby="next-title">
     <div class="wrap">
       <div>
-        <div class="board" aria-hidden="true">
-          <div class="felt"><div class="rows" id="rows-next"></div></div>
-        </div>
-      </div>
-      <div>
-        <h2 id="next-title">Get a site for your club.</h2>
-        <p class="lede">Ask any member or come to a meeting. A member takes the lead and builds it with your officers.</p>
-        <ul>
-          <li><strong>Built from your club's own stuff</strong><span>Your photos, colors, posts and meeting info.</span></li>
-          <li><strong>Your own address</strong><span>Something like troy-key-club.web.app, for your bio and flyers.</span></li>
-          <li><strong>Features if you need them</strong><span>Meeting check-in, tutor sign-ups, order forms.</span></li>
-          <li><strong>Updates after launch</strong><span>New officers, rooms and events when they change.</span></li>
+        <p class="kicker"><b>06</b> Requests open</p>
+        <h2 class="display h2" id="next-title">Get a site for your club.</h2>
+        <p class="lede2">Ask any member or come to a meeting. A member takes the lead and builds it with your officers. Sketch yours below first.</p>
+        <ul class="perks">
+          <li><i>01</i><div><strong>Built from your club's own stuff</strong><span>Your photos, colors, posts and meeting info.</span></div></li>
+          <li><i>02</i><div><strong>Your own address</strong><span>Something like troy-key-club.web.app, for your bio and flyers.</span></div></li>
+          <li><i>03</i><div><strong>Features if you need them</strong><span>Meeting check-in, tutor sign-ups, order forms.</span></div></li>
+          <li><i>04</i><div><strong>Updates after launch</strong><span>New officers, rooms and events when they change.</span></div></li>
         </ul>
-        <div class="try">
-          <label for="club-in">What's your club called?</label>
-          <input id="club-in" maxlength="28" placeholder="Chess Club" autocomplete="off">
-          <output id="club-out" for="club-in">Your site could live at <b>troy-your-club.web.app</b></output>
+        <div class="cfg">
+          <div><label for="club-in">Club name</label><div class="field"><input id="club-in" maxlength="32" placeholder="Chess Club" autocomplete="off"></div></div>
+          <fieldset><legend>Color</legend><div class="sw" id="sw"></div></fieldset>
+          <fieldset><legend>Features</legend><div class="feats" id="feats"></div></fieldset>
+          <div class="cfg-out"><button class="btn" type="button" id="copy-req">Copy request <span class="arr">&rarr;</span></button><output id="club-out" for="club-in">Your site could live at <b>troy-your-club.web.app</b></output></div>
         </div>
-        <p class="ask">Find us in Room 411, every other Thursday at lunch.</p>
+        <p class="lede2" style="margin-top:1.6rem">Send the copied request to any member, or bring it to Room 411 on a meeting Thursday.</p>
+      </div>
+      <div class="mock-wrap">
+        <div class="mock" id="mock" style="--c: #ff4f1f">
+          <div class="url"><span id="m-url">troy-your-club.web.app</span></div>
+          <div class="m-nav"><b id="m-brand">Your Club</b><span><i>About</i><i>Events</i><i>Join</i></span></div>
+          <div class="m-hero"><small>Troy High School</small><h4 id="m-name">Your Club</h4><p>Meetings, events and everything else, in one place.</p><span class="mb">Join us</span></div>
+          <div class="m-blocks" id="m-blocks"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -698,6 +848,7 @@ footer a { color: #fff; }
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-title" hidden>
+  <div class="dr-shot" id="dr-shot" hidden><img id="dr-img" alt=""></div>
   <div class="dr-head">
     <div class="dr-top"><span class="tag" id="dr-tag"></span><button class="dr-x" type="button" id="dr-x" aria-label="Close">&times;</button></div>
     <h3 id="dr-title"></h3>
@@ -708,377 +859,546 @@ footer a { color: #fff; }
     <dl class="dr-meta" id="dr-meta"></dl>
     <div class="dr-links" id="dr-links"></div>
   </div>
-  <div class="dr-nav"><button type="button" id="dr-prev">&larr; Previous</button><button type="button" id="dr-next">Next &rarr;</button></div>
+  <div class="dr-nav"><button type="button" id="dr-prev">&larr; Prev</button><button type="button" id="dr-next">Next &rarr;</button></div>
 </aside>
+<div class="peek" id="peek" aria-hidden="true"><img alt=""></div>
+<div class="ins" id="ins" hidden><span></span></div>
+<div class="pal-scrim" id="pal" hidden>
+  <div class="pal" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="pal-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pal-q" placeholder="Jump to a page, site or project" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="pal-list"></div>
+    <ul class="pal-list" id="pal-list" role="listbox"></ul>
+    <div class="pal-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
 
 <footer>
   <div class="wrap">
-    <p>Troy Web Development, Troy High's web development club. Est. 2023 as Web Development Education. Room 411, Troy High School, Fullerton. Meeting details come from each club's own site, so check their Instagram for the latest.</p>
-    <p>© <span id="yr">2026</span> Troy Web Development</p>
+    <div class="foot-grid">
+      <div><h4>Troy Web Development</h4><p>Troy High's web development club. Est. 2023 as Web Development Education. Meeting details come from each club's own site, so check their Instagram for the latest.</p></div>
+      <div><h4>Meet us</h4><ul><li>Every other Thursday, lunch</li><li>Room 411, Troy High School</li><li>Fullerton, CA</li></ul></div>
+      <div><h4>Links</h4><ul><li><a href="#sites">All club sites</a></li><li><a href="https://github.com/Jeffrey-Chu/troyllm">GitHub</a></li><li><a href="https://troy-high-llm.web.app">Backend console</a></li><li><a href="#join">Get a site</a></li></ul></div>
+    </div>
+    <div class="wordmark" aria-hidden="true" id="wordmark">Troy Web Dev</div>
+    <div class="foot-base"><span>&copy; <span id="yr">2026</span> Troy Web Development</span><span>Press <kbd>/</kbd> to search</span></div>
   </div>
 </footer>
 
 <script>
 (function () {
-  document.body.classList.add('js');
+  'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var today = new Date().getDay();
-  var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  var canHover = window.matchMedia('(hover: hover)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
-  // Every club on the page, in hallway order: [board name, anchor, index label, day (1-5, 0 = TBA, null = not on board), room]
+  // Theme
+  var root = document.documentElement, themeBtn = $('#theme');
+  function setTheme(t) { root.dataset.theme = t; themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); $('meta[name="theme-color"]').content = t === 'dark' ? '#0e0e0d' : '#f2f0eb'; }
+  setTheme(store('tw-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', function () { var t = root.dataset.theme === 'dark' ? 'light' : 'dark'; setTheme(t); store('tw-theme', t); });
+
+  var toastT;
+  function toast(msg) { var t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 2200); }
+
+  var PROJECTS = [{"name": "Troy High LLM backend", "short": "Firebase project behind every site", "for": "Every site here", "year": "2026", "s": "live", "label": "LIVE", "by": "Jeffrey Chu", "text": "The Firebase project that hosts every club site: Google sign-in, a separate locked-down database per site, and automatic deploys on every push. It started as the Troy High LLM club's points system. Jeffrey also manages the club's GitHub.", "url": "https://troy-high-llm.web.app", "door": "backend"}, {"name": "Anime Club", "short": "Weekly showcases, Kahoots and raffles", "for": "THS Anime Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Daniel Li", "text": "A site for Troy's anime club with meeting info, events and their Discord.", "url": "https://troy-anime-club.web.app", "door": "anime"}, {"name": "Troy Car Club", "short": "Car culture and maintenance", "for": "Troy Car Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Real photos from the club's Instagram and a BMW you can get in and drive.", "url": "https://troy-car-club.web.app", "door": "carclub"}, {"name": "Chinese Culture Club", "short": "中国文化社", "for": "Chinese Culture Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Meetings, events through the year, and the club's Club Rush table.", "url": "https://troy-chinese-culture-club.web.app", "door": "chinese"}, {"name": "GeoGuessr Club", "short": "Road-sign theme with a working compass", "for": "THS GeoGuessr Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Weekly games, tournaments and tips for getting better.", "url": "https://troy-geoguessr-club.web.app", "door": "geo"}, {"name": "Key Club", "short": "Service hours and Division 30 North", "for": "Troy Key Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Jason Lee", "text": "Volunteer events, service hours and links for members.", "url": "https://troy-key-club.web.app", "door": "key"}, {"name": "Music Vision Productions", "short": "Student-run music collective", "for": "Troy MVP", "year": "2026", "s": "live", "label": "LIVE", "by": "Scarlett Cheng", "text": "Club site for MVP: meetings, interest form, lineup and donations.", "url": "https://troy-mvp-music.web.app", "door": "mvp"}, {"name": "Troy Learning League", "short": "Tutor finder and hours log", "for": "Peer tutoring club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Students get matched with a tutor by subject and grade. Tutors log volunteer hours.", "url": "https://troy-learning-league.web.app", "door": "tll"}, {"name": "Leo Club", "short": "Lions Clubs International", "for": "Troy Leo Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Kaleb Lopez", "text": "Volunteer events, Leo competitions, scholarships and kidney disease outreach.", "url": "https://troy-leo-club.web.app", "door": "leo"}, {"name": "VSA", "short": "Meeting check-in with a word of the day", "for": "Vietnamese Student Association", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Members check in to meetings on the site. Includes events, photos and a Vietnamese culture section.", "url": "https://troy-vsa.web.app", "door": "vsa"}, {"name": "The Science Club", "short": "Research groups and Science Bowl", "for": "Science nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A nonprofit for middle and high school students: research groups, national competitions and Science Bowl training.", "url": "https://troy-science-club.web.app", "door": "science"}, {"name": "Roots & Roads", "short": "Immigrant stories in Orange County", "for": "OCSA student nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "An OCSA group that interviews immigrants, shares their stories in film and writing, and tutors for free.", "url": "https://troy-roots-and-roads.web.app", "door": "roots"}, {"name": "SUPER DW", "short": "Crystal shop with a bracelet designer", "for": "Daphne's crystal shop", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer.", "url": "https://superdw-crystals.web.app", "door": "superdw"}, {"name": "BioShip", "short": "Biology quiz game, 1,225 questions", "for": "Biology students", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Emerson Lin", "text": "Fly a ship through 1,225 biology questions.", "url": "bioship", "door": "bioship"}, {"name": "OCHSWA Championship Shelf", "short": "Wrestling records as flipbooks", "for": "Wrestling, for Mr. Nguyen", "year": "2026", "s": "work", "label": "IN PROGRESS", "by": "Wesley Shen, Ryan Jian", "text": "One volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in before it goes public.", "url": "", "door": ""}, {"name": "Troy Robotics", "short": "Club website", "for": "Commission", "year": "2026", "s": "work", "label": "UP NEXT", "by": "", "text": "Commissioned, not started yet.", "url": "", "door": ""}, {"name": "troywebdev.com", "short": "The club's first site", "for": "Troy student orgs", "year": "2023", "s": "past", "label": "RETIRED", "by": "Yeowon Yoon", "text": "A directory of Troy clubs, used by more than 100 student organizations. It's offline now, and this site took its place.", "url": "", "door": ""}, {"name": "Club kiosk", "short": "Kiosk site for clubs", "for": "Troy clubs", "year": "Past", "s": "past", "label": "RETIRED", "by": "", "text": "An older kiosk website for clubs. Retired.", "url": "", "door": ""}, {"name": "Troy Dermatology Club", "short": "Club website", "for": "Troy Dermatology Club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy A Friend in Me", "short": "Club website", "for": "Troy A Friend in Me", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy Act of Kindness", "short": "Club website", "for": "Troy Act of Kindness", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "More club sites", "short": "From earlier years", "for": "Troy clubs", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "Other club sites the club built before 2026.", "url": "", "door": ""}];
+  var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  var DAYNAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+  // [board name, anchor, label, day (1-5, 0 = TBA, null = not on board), room]
   var clubs = [
     ['ANIME CLUB', 'anime', 'Anime Club', 1, '910'],
     ['CAR CLUB', 'carclub', 'Car Club', 2, 'W1'],
     ['CHINESE CULTURE CLUB', 'chinese', 'Chinese Culture Club', 2, '324'],
     ['GEOGUESSR CLUB', 'geo', 'GeoGuessr Club', 4, '322'],
     ['KEY CLUB', 'key', 'Key Club', 0, '517'],
+    ['MVP MUSIC', 'mvp', 'MVP Music', 4, 'E-25'],
     ['LEARNING LEAGUE', 'tll', 'Learning League', 1, '527'],
     ['LEO CLUB', 'leo', 'Leo Club', 5, 'W17'],
-    ['MVP MUSIC', 'mvp', 'MVP Music', 4, 'E-25'],
     ['VSA', 'vsa', 'VSA', 3, '412'],
     ['THE SCIENCE CLUB', 'science', 'The Science Club', null, ''],
     ['ROOTS & ROADS', 'roots', 'Roots & Roads', null, ''],
     ['SUPER DW', 'superdw', 'SUPER DW', null, ''],
     ['BIOSHIP', 'bioship', 'BioShip', null, '']
   ];
+  var LIVE = PROJECTS.filter(function (p) { return p.s === 'live'; }).length;
+  var PEOPLE = {};
+  PROJECTS.forEach(function (p) { if (p.by) p.by.split(', ').forEach(function (n) { (PEOPLE[n] = PEOPLE[n] || []).push(p); }); });
+  function initials(n) { return n.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase(); }
+  $('#live-count').textContent = LIVE + ' sites live';
+  $('#pipe-n').textContent = LIVE;
 
-  // Deterministic jitter so letters sit a little crooked, like real ones.
-  var seed = 7;
-  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-  var n = 0;
-  function letters(text, base) {
-    var frag = document.createDocumentFragment();
-    for (var i = 0; i < text.length; i++) {
-      var c = text[i];
-      var s = document.createElement('span');
-      s.className = 'ch';
-      s.textContent = c === ' ' ? ' ' : c;
-      s.style.setProperty('--r', ((rnd() - .5) * 3.2).toFixed(2) + 'deg');
-      s.style.setProperty('--y', ((rnd() - .5) * 2.4).toFixed(1) + 'px');
-      s.style.setProperty('--d', (base + n * 14 + Math.floor(rnd() * 60)) + 'ms');
-      n++;
-      frag.appendChild(s);
-    }
-    return frag;
+  // ---------- Split-flap board ----------
+  var COLS = 31, frows = $('#frows'), today = new Date().getDay();
+  var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var ROWS = 14, rowEls = [];
+  for (var r = 0; r < ROWS; r++) {
+    var row = el('a', 'frow'); row.tabIndex = -1;
+    for (var c = 0; c < COLS; c++) { var t = el('span', 't', ' '); t._c = ' '; row.appendChild(t); }
+    frows.appendChild(row); rowEls.push(row);
   }
-  function cell(cls, text, base) { var d = document.createElement('span'); d.className = 'cell ' + cls; if (text) d.appendChild(letters(text, base)); return d; }
-
-  function buildBoard(el, rows, base) {
-    n = 0;
-    rows.forEach(function (r) {
-      var row;
-      if (r.type === 'title') { row = document.createElement('div'); row.className = 'row title'; row.appendChild(cell('', r.text, base)); }
-      else if (r.type === 'blank') { row = document.createElement('div'); row.className = 'row blank'; }
-      else if (r.type === 'big' || r.type === 'sub') {
-        row = document.createElement(r.href ? 'a' : 'div'); row.className = 'row ' + r.type;
-        if (r.href) { row.href = r.href; row.tabIndex = -1; }
-        row.appendChild(cell('', r.text, base));
-      }
-      else {
-        row = document.createElement(r.href ? 'a' : 'div');
-        row.className = 'row' + (r.today ? ' today' : '');
-        if (r.href) { row.href = r.href; row.tabIndex = -1; }
-        row.appendChild(cell('day', r.day, base));
-        var nm = cell('name', r.name, base);
-        var lead = document.createElement('span'); lead.className = 'leader'; lead.style.setProperty('--d', (base + n * 14 + 80) + 'ms'); nm.appendChild(lead);
-        row.appendChild(nm);
-        row.appendChild(cell('room', r.room, base));
-      }
-      el.appendChild(row);
+  function center(s) { s = s.slice(0, COLS); var p = Math.floor((COLS - s.length) / 2); return ' '.repeat(p) + s; }
+  function pad(s) { return (s + ' '.repeat(COLS)).slice(0, COLS); }
+  function flip(tile, ch, delay) {
+    clearTimeout(tile._t);
+    if (tile._c === ch) return;
+    tile._c = ch;
+    if (reduce) { tile.textContent = ch; return; }
+    var spins = ch === ' ' ? 1 : 2 + Math.floor(Math.random() * 3);
+    tile._t = setTimeout(function spin() {
+      var last = spins-- <= 0;
+      tile.textContent = last ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      if (tile.animate) tile.animate([{ transform: 'rotateX(0)' }, { transform: 'rotateX(-75deg)', offset: .45 }, { transform: 'rotateX(0)' }], { duration: 110 });
+      if (!last) tile._t = setTimeout(spin, 70);
+    }, delay);
+  }
+  function setBoard(lines) {
+    rowEls.forEach(function (row, i) {
+      var L = lines[i] || { t: '' }, s = pad(L.t);
+      row.className = 'frow' + (L.cls ? ' ' + L.cls : '');
+      if (L.href) row.setAttribute('href', L.href); else row.removeAttribute('href');
+      for (var c = 0; c < COLS; c++) flip(row.children[c], s[c], i * 45 + c * 14 + Math.random() * 90);
     });
   }
-
-  var boardRows = [{ type: 'title', text: 'TROY HIGH CLUB DIRECTORY' }, { type: 'blank' }];
-  clubs.filter(function (c) { return c[3] !== null; })
-    .sort(function (a, b) { return (a[3] || 9) - (b[3] || 9); })
-    .forEach(function (c) {
-      boardRows.push({ day: c[3] ? DAYS[c[3]] : 'TBA', name: c[0], room: 'RM ' + c[4], href: '#' + c[1], today: c[3] === today });
+  var dir = [{ t: center('TROY HIGH CLUB DIRECTORY') }, { t: '' }];
+  clubs.filter(function (c) { return c[3] !== null; }).sort(function (a, b) { return (a[3] || 9) - (b[3] || 9); }).forEach(function (c) {
+    var room = 'RM ' + c[4];
+    dir.push({ t: (c[3] ? DAYS[c[3]] : 'TBA') + ' ' + (c[0] + ' '.repeat(COLS)).slice(0, COLS - 4 - room.length - 1) + ' ' + room, href: '#' + c[1], cls: c[3] === today ? 'today' : (c[3] === 0 ? 'dim' : '') });
+  });
+  dir.push({ t: '' });
+  dir.push({ t: center(today >= 1 && today <= 5 ? 'TODAY IS ' + DAYNAMES[today] : 'SEE YOU MONDAY'), cls: 'today' });
+  dir.push({ t: center('TROY TECH WELCOME · DEC 2') });
+  var showing = 'dir';
+  function startBoard() { setBoard(dir); }
+  if ('IntersectionObserver' in window && !reduce) {
+    var bio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { startBoard(); bio.disconnect(); } }, { threshold: .2 });
+    bio.observe($('#board'));
+  } else startBoard();
+  // Rows re-flip a little when hovered
+  rowEls.forEach(function (row) {
+    row.addEventListener('mouseenter', function () {
+      if (reduce || !row.getAttribute('href')) return;
+      [].forEach.call(row.children, function (t, i) { var ch = t._c; if (ch === ' ') return; t._c = null; flip(t, ch, i * 12); });
     });
-  boardRows.push({ type: 'blank' });
-  boardRows.push({ type: 'title', text: today >= 1 && today <= 5 ? 'TODAY IS ' + ['', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'][today] : 'SEE YOU MONDAY' });
-  boardRows.push({ type: 'title', text: 'TROY TECH WELCOME · DEC 2' });
-  var heroRows = document.getElementById('rows');
-  buildBoard(heroRows, boardRows, 250);
+  });
+  function tick() {
+    var d = new Date(), h = d.getHours(), m = d.getMinutes();
+    $('#clock').textContent = DAYS[d.getDay()] + ' ' + ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' AM' : ' PM');
+  }
+  tick(); setInterval(tick, 15000);
 
-  // Visitors can post their own message on the board
   function wrapLines(t, w) {
     var words = t.toUpperCase().replace(/[^A-Z0-9 &!?.,'#@:\-]/g, '').split(/\s+/).filter(Boolean), lines = [], cur = '';
     words.forEach(function (wd) { wd = wd.slice(0, w); if ((cur + ' ' + wd).trim().length > w) { lines.push(cur); cur = wd; } else cur = (cur + ' ' + wd).trim(); });
     if (cur) lines.push(cur);
-    return lines.slice(0, 3);
+    return lines.slice(0, 6);
   }
-  function swapBoard(rows) {
-    var old = heroRows.querySelectorAll('.ch');
-    if (reduce || !old.length) { heroRows.textContent = ''; buildBoard(heroRows, rows, 0); return; }
-    old.forEach(function (c, i) { c.style.setProperty('--o', (i % 40) * 8 + 'ms'); c.classList.add('out'); });
-    setTimeout(function () { heroRows.textContent = ''; buildBoard(heroRows, rows, 0); }, 620);
-  }
-  var postIn = document.getElementById('post-in');
-  document.getElementById('post').addEventListener('submit', function (e) {
+  var postIn = $('#post-in');
+  $('#post').addEventListener('submit', function (e) {
     e.preventDefault();
-    var lines = wrapLines(postIn.value, window.innerWidth < 640 ? 16 : 26);
+    var lines = wrapLines(postIn.value, COLS - 2);
     if (!lines.length) { postIn.focus(); return; }
-    var rows = [{ type: 'blank' }, { type: 'blank' }];
-    if (lines.length < 3) rows.push({ type: 'blank' });
-    lines.forEach(function (l) { rows.push({ type: 'big', text: l }); });
-
-    swapBoard(rows);
+    var top = Math.max(2, Math.floor((ROWS - lines.length) / 2));
+    var out = [{ t: center('A MESSAGE FROM YOU') }];
+    for (var i = 1; i < ROWS; i++) out.push({ t: '' });
+    lines.forEach(function (l, i) { out[top + i] = { t: center(l), cls: 'today' }; });
+    setBoard(out); showing = 'msg';
   });
-  document.getElementById('post-reset').addEventListener('click', function () { postIn.value = ''; swapBoard(boardRows); });
+  $('#post-reset').addEventListener('click', function () { postIn.value = ''; setBoard(dir); showing = 'dir'; });
 
-  // Jump-to index
-  var list = document.getElementById('index-list');
-  clubs.forEach(function (c) {
-    var li = document.createElement('li'), a = document.createElement('a');
-    a.href = '#' + c[1]; a.textContent = c[2]; li.appendChild(a); list.appendChild(li);
-  });
-
-  // Second board: letters snap in when it scrolls into view
-  var nextRows = document.getElementById('rows-next');
-  function buildNext() {
-    if (nextRows.childNodes.length) return;
-    buildBoard(nextRows, [
-      { type: 'title', text: 'REQUESTS OPEN' },
-      { type: 'blank' },
-      { day: '???', name: 'YOUR CLUB', room: 'RM ???' },
-      { type: 'blank' }
-    ], 0);
+  // ---------- Hero DevTools ----------
+  var copy = $('#hero-copy'), src = $('#src'), ins = $('#ins'), swIns = $('#sw-inspect'), swSrc = $('#sw-src'), hint = $('#devhint');
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function hiTag(tag) {
+    return esc(tag).replace(/^(&lt;\/?)([a-z0-9]+)/, '$1<span class="tg">$2</span>').replace(/ ([a-z-]+)(=)("[^"]*")?/g, function (m, a, eq, v) { return ' <span class="at">' + a + '</span>' + (v ? '=<span class="st">' + v + '</span>' : ''); });
   }
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { buildNext(); io.disconnect(); } }, { threshold: .4 });
-    io.observe(nextRows.closest('.board'));
-  } else buildNext();
+  function hi(html) { return html.replace(/<[^>]+>|[^<]+/g, function (m) { return m[0] === '<' ? hiTag(m) : esc(m); }); }
+  var INLINE = /^(SPAN|A|B|I|EM|STRONG|BR|SMALL)$/;
+  function openTag(n) { var s = '<' + n.tagName.toLowerCase(); [].forEach.call(n.attributes, function (a) { if (a.name === 'contenteditable' || a.name === 'spellcheck' || a.name === 'data-ed') return; s += ' ' + a.name + '="' + a.value + '"'; }); return s + '>'; }
+  function fmt(n, depth, out) {
+    var ind = '  '.repeat(depth);
+    var kids = [].filter.call(n.childNodes, function (k) { return k.nodeType === 1 || k.textContent.trim(); });
+    var inline = kids.every(function (k) { return k.nodeType === 3 || INLINE.test(k.tagName); });
+    if (inline) {
+      var inner = ''; kids.forEach(function (k) { inner += k.nodeType === 3 ? k.textContent.replace(/\s+/g, ' ') : k.outerHTML.replace(/ (contenteditable|spellcheck|data-ed)(="[^"]*")?/g, ''); });
+      out.push(ind + openTag(n) + inner.trim() + '</' + n.tagName.toLowerCase() + '>');
+    } else {
+      out.push(ind + openTag(n));
+      kids.forEach(function (k) { if (k.nodeType === 1) fmt(k, depth + 1, out); });
+      out.push(ind + '</' + n.tagName.toLowerCase() + '>');
+    }
+  }
+  swSrc.addEventListener('click', function () {
+    var on = swSrc.getAttribute('aria-pressed') !== 'true';
+    swSrc.setAttribute('aria-pressed', on);
+    if (on) {
+      if (swIns.getAttribute('aria-pressed') === 'true') swIns.click();
+      var lines = ['<!-- The headline you were just reading -->']; fmt(copy, 0, lines);
+      src.innerHTML = lines.map(function (l, i) { return '<span class="ln" style="--i:' + i + '">' + (i === 0 ? '<span class="cm">' + esc(l) + '</span>' : hi(l)) + '</span>'; }).join('');
+      src.style.minHeight = copy.offsetHeight + 'px';
+    }
+    copy.hidden = on; src.hidden = !on;
+    hint.textContent = on ? 'Real markup, built from the page. Edit it with Inspect.' : 'This page is the portfolio. Poke at it.';
+  });
+  function label(n) {
+    var r = n.getBoundingClientRect(), cls = n.classList[0] ? '.' + n.classList[0] : '';
+    return '<b></b>';
+  }
+  function showIns(n) {
+    var r = n.getBoundingClientRect(); ins.hidden = false;
+    ins.style.left = r.left + 'px'; ins.style.top = r.top + 'px'; ins.style.width = r.width + 'px'; ins.style.height = r.height + 'px';
+    var s = ins.firstChild; s.textContent = n.tagName.toLowerCase() + (n.id ? '#' + n.id : '') + (n.classList[0] ? '.' + n.classList[0] : '');
+    var b = el('b', null, Math.round(r.width) + ' × ' + Math.round(r.height)); s.appendChild(b);
+  }
+  function onMove(e) { var n = e.target.closest('#hero-copy *, #hero-copy'); if (n) showIns(n); else ins.hidden = true; }
+  swIns.addEventListener('click', function () {
+    var on = swIns.getAttribute('aria-pressed') !== 'true';
+    swIns.setAttribute('aria-pressed', on);
+    if (on && swSrc.getAttribute('aria-pressed') === 'true') swSrc.click();
+    document.body.classList.toggle('inspecting', on);
+    $$('[data-ed]', copy).forEach(function (n) { if (on) { n.setAttribute('contenteditable', 'true'); n.spellcheck = false; } else n.removeAttribute('contenteditable'); });
+    if (on) { document.addEventListener('mousemove', onMove); hint.textContent = 'Hover to inspect. Click the headline to edit it.'; $('#hero-title').focus(); }
+    else { document.removeEventListener('mousemove', onMove); ins.hidden = true; hint.textContent = 'This page is the portfolio. Poke at it.'; }
+  });
+  window.addEventListener('scroll', function () { if (!ins.hidden) ins.hidden = true; }, { passive: true });
 
-  // Projects: list, filter and detail drawer
-  var PROJECTS = [{"name": "Troy High LLM backend", "short": "Firebase project behind every site", "for": "Every site here", "year": "2026", "s": "live", "label": "LIVE", "by": "Jeffrey Chu", "text": "The Firebase project that hosts every club site: Google sign-in, a separate locked-down database per site, and automatic deploys on every push. It started as the Troy High LLM club's points system. Jeffrey also manages the club's GitHub.", "url": "https://troy-high-llm.web.app", "door": "backend"}, {"name": "Anime Club", "short": "Weekly showcases, Kahoots and raffles", "for": "THS Anime Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Daniel Li", "text": "A site for Troy's anime club with meeting info, events and their Discord.", "url": "https://troy-anime-club.web.app", "door": "anime"}, {"name": "Troy Car Club", "short": "Car culture and maintenance", "for": "Troy Car Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Real photos from the club's Instagram and a BMW you can get in and drive.", "url": "https://troy-car-club.web.app", "door": "carclub"}, {"name": "Chinese Culture Club", "short": "中国文化社", "for": "Chinese Culture Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Meetings, events through the year, and the club's Club Rush table.", "url": "https://troy-chinese-culture-club.web.app", "door": "chinese"}, {"name": "GeoGuessr Club", "short": "Road-sign theme with a working compass", "for": "THS GeoGuessr Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Weekly games, tournaments and tips for getting better.", "url": "https://troy-geoguessr-club.web.app", "door": "geo"}, {"name": "Key Club", "short": "Service hours and Division 30 North", "for": "Troy Key Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Jason Lee", "text": "Volunteer events, service hours and links for members.", "url": "https://troy-key-club.web.app", "door": "key"}, {"name": "Music Vision Productions", "short": "Student-run music collective", "for": "Troy MVP", "year": "2026", "s": "live", "label": "LIVE", "by": "Scarlett Cheng", "text": "Club site for MVP: meetings, interest form, lineup and donations.", "url": "https://troy-mvp-music.web.app", "door": "mvp"}, {"name": "Troy Learning League", "short": "Tutor finder and hours log", "for": "Peer tutoring club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Students get matched with a tutor by subject and grade. Tutors log volunteer hours.", "url": "https://troy-learning-league.web.app", "door": "tll"}, {"name": "Leo Club", "short": "Lions Clubs International", "for": "Troy Leo Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Kaleb Lopez", "text": "Volunteer events, Leo competitions, scholarships and kidney disease outreach.", "url": "https://troy-leo-club.web.app", "door": "leo"}, {"name": "VSA", "short": "Meeting check-in with a word of the day", "for": "Vietnamese Student Association", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Members check in to meetings on the site. Includes events, photos and a Vietnamese culture section.", "url": "https://troy-vsa.web.app", "door": "vsa"}, {"name": "The Science Club", "short": "Research groups and Science Bowl", "for": "Science nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A nonprofit for middle and high school students: research groups, national competitions and Science Bowl training.", "url": "https://troy-science-club.web.app", "door": "science"}, {"name": "Roots & Roads", "short": "Immigrant stories in Orange County", "for": "OCSA student nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "An OCSA group that interviews immigrants, shares their stories in film and writing, and tutors for free.", "url": "https://troy-roots-and-roads.web.app", "door": "roots"}, {"name": "SUPER DW", "short": "Crystal shop with a bracelet designer", "for": "Daphne's crystal shop", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer.", "url": "https://superdw-crystals.web.app", "door": "superdw"}, {"name": "BioShip", "short": "Biology quiz game, 1,225 questions", "for": "Biology students", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Emerson Lin", "text": "Fly a ship through 1,225 biology questions.", "url": "bioship", "door": "bioship"}, {"name": "OCHSWA Championship Shelf", "short": "Wrestling records as flipbooks", "for": "Wrestling, for Mr. Nguyen", "year": "2026", "s": "work", "label": "IN PROGRESS", "by": "Wesley Shen, Ryan Jian", "text": "One volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in before it goes public.", "url": "", "door": ""}, {"name": "Troy Robotics", "short": "Club website", "for": "Commission", "year": "2026", "s": "work", "label": "UP NEXT", "by": "", "text": "Commissioned, not started yet.", "url": "", "door": ""}, {"name": "troywebdev.com", "short": "The club's first site", "for": "Troy student orgs", "year": "2023", "s": "past", "label": "RETIRED", "by": "Yeowon Yoon", "text": "A directory of Troy clubs, used by more than 100 student organizations. It's offline now, and this site took its place.", "url": "", "door": ""}, {"name": "Club kiosk", "short": "Kiosk site for clubs", "for": "Troy clubs", "year": "Past", "s": "past", "label": "RETIRED", "by": "", "text": "An older kiosk website for clubs. Retired.", "url": "", "door": ""}, {"name": "Troy Dermatology Club", "short": "Club website", "for": "Troy Dermatology Club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy A Friend in Me", "short": "Club website", "for": "Troy A Friend in Me", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy Act of Kindness", "short": "Club website", "for": "Troy Act of Kindness", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "More club sites", "short": "From earlier years", "for": "Troy clubs", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "Other club sites the club built before 2026.", "url": "", "door": ""}];
+  // ---------- Stats ----------
+  var STAT = { live: LIVE, clubs: clubs.filter(function (c) { return c[3] !== null; }).length, people: Object.keys(PEOPLE).length, fair: new Date().getFullYear() - 2023 + (new Date().getMonth() >= 11 ? 1 : 0) };
+  function countUp(b) {
+    var target = STAT[b.dataset.n], t0 = null;
+    if (reduce) { b.textContent = target; return; }
+    function f(ts) { if (!t0) t0 = ts; var p = Math.min(1, (ts - t0) / 1100); b.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); }
+    requestAnimationFrame(f);
+  }
+  if ('IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { $$('[data-n]').forEach(countUp); sio.disconnect(); } }, { threshold: .4 });
+    sio.observe($('#stats'));
+  } else $$('[data-n]').forEach(countUp);
+  $('#tl-now').textContent = "Jeffrey Chu's Firebase project hosts every club site. " + LIVE + ' projects are live today.';
+
+  // Jump-to chips
+  var list = $('#index-list');
+  clubs.forEach(function (c) { var li = el('li'), a = el('a', 'chip', c[2]); a.href = '#' + c[1]; if (c[4]) a.appendChild(el('small', null, c[4])); li.appendChild(a); list.appendChild(li); });
+
+  // ---------- Projects ----------
   var GROUPS = [['live', 'Live'], ['work', 'In the works'], ['past', 'Past']];
   var TAGCLS = { 'LIVE': 'live', 'IN PROGRESS': 'wip', 'UP NEXT': 'next', 'RETIRED': 'retired', 'DELIVERED': 'done' };
-  var plist = document.getElementById('plist'), seg = document.getElementById('seg');
-  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  function tagEl(p) { return el('span', 'tag ' + TAGCLS[p.label], p.label); }
-  var rowsByIndex = [];
-  GROUPS.forEach(function (g) {
-    var items = PROJECTS.map(function (p, i) { return [p, i]; }).filter(function (x) { return x[0].s === g[0]; });
-    var box = el('div', 'pgroup'); box.dataset.g = g[0];
-    var h = el('h3', null, g[1]); h.appendChild(el('i', null, items.length)); box.appendChild(h);
-    var rows = el('div', 'prows');
-    items.forEach(function (x) {
-      var p = x[0], b = el('button', 'prow'); b.type = 'button'; b.setAttribute('aria-expanded', 'false'); b.dataset.i = x[1];
-      b.appendChild(el('span', 'y', p.year));
-      var n = el('span', 'n', p.name); n.appendChild(el('small', null, p.short)); b.appendChild(n);
-      b.appendChild(el('span', 'by', p.by ? 'Made by ' + p.by.replace(', ', ' and ') : p['for']));
-      b.appendChild(tagEl(p));
-      b.appendChild(el('span', 'go', '\u203A'));
-      b.addEventListener('click', function () { openDrawer(+b.dataset.i); });
-      rows.appendChild(b); rowsByIndex[x[1]] = b;
-    });
-    box.appendChild(rows); plist.appendChild(box);
+  var IMG = { anime: 1, carclub: 1, chinese: 1, geo: 1, key: 1, mvp: 1, tll: 1, leo: 1, vsa: 1, science: 1, roots: 1, superdw: 1, bioship: 1 };
+  var plist = $('#plist'), pState = { f: 'all', q: '', who: '', sort: '' }, rowsByIndex = [];
+  var whoSel = $('#p-who');
+  Object.keys(PEOPLE).sort().forEach(function (n) { var o = el('option', null, n + ' (' + PEOPLE[n].length + ')'); o.value = n; whoSel.appendChild(o); });
+  $$('.ptile').forEach(function (b) {
+    var f = b.dataset.f, items = f === 'all' ? PROJECTS : PROJECTS.filter(function (p) { return p.s === f; });
+    $('b', b).textContent = items.length;
+    b.addEventListener('click', function () { pState.f = f; $$('.ptile').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderProjects(); });
   });
-  var segBtns = seg.querySelectorAll('button');
-  segBtns.forEach(function (b) {
-    var f = b.dataset.f;
-    b.querySelector('b').textContent = f === 'all' ? PROJECTS.length : PROJECTS.filter(function (p) { return p.s === f; }).length;
-    b.addEventListener('click', function () {
-      segBtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      plist.querySelectorAll('.pgroup').forEach(function (g) { g.hidden = !(f === 'all' || g.dataset.g === f); });
+  $('#p-q').addEventListener('input', function (e) { pState.q = e.target.value.trim().toLowerCase(); renderProjects(); });
+  whoSel.addEventListener('change', function () { pState.who = whoSel.value; renderProjects(); });
+  $('#p-sort').addEventListener('change', function (e) { pState.sort = e.target.value; renderProjects(); });
+  function makeRow(p, i, n) {
+    var b = el('button', 'prow'); b.type = 'button'; b.setAttribute('aria-expanded', 'false'); b.dataset.i = i;
+    b.appendChild(el('span', 'i', (n < 10 ? '0' : '') + n));
+    var nm = el('span', 'n', p.name); nm.appendChild(el('small', null, p.short)); b.appendChild(nm);
+    var mk = el('span', 'makers');
+    if (p.by) { var av = el('span', 'av'); p.by.split(', ').forEach(function (x, k) { var ii = el('i', k ? '' : 'o', initials(x)); ii.title = x; av.appendChild(ii); }); mk.appendChild(av); mk.appendChild(el('span', null, p.by.replace(', ', ' & '))); }
+    else mk.appendChild(el('span', null, p['for']));
+    b.appendChild(mk);
+    b.appendChild(el('span', 'y', p.year));
+    b.appendChild(el('span', 'tag ' + TAGCLS[p.label], p.label));
+    b.appendChild(el('span', 'go', '→'));
+    b.addEventListener('click', function () { openDrawer(i); });
+    if (IMG[p.door]) { b.addEventListener('mouseenter', function () { peekShow('img/' + p.door + '.webp'); }); b.addEventListener('mouseleave', peekHide); }
+    rowsByIndex[i] = b;
+    return b;
+  }
+  function renderProjects() {
+    plist.textContent = ''; rowsByIndex = [];
+    var items = PROJECTS.map(function (p, i) { return [p, i]; }).filter(function (x) {
+      var p = x[0];
+      return (pState.f === 'all' || p.s === pState.f) && (!pState.who || (p.by || '').split(', ').indexOf(pState.who) > -1) &&
+        (!pState.q || (p.name + ' ' + p.short + ' ' + p.by + ' ' + p['for'] + ' ' + p.text).toLowerCase().indexOf(pState.q) > -1);
     });
-  });
+    $('#p-count').textContent = items.length + (items.length === 1 ? ' project' : ' projects');
+    if (!items.length) { plist.appendChild(el('p', 'empty', 'Nothing matches that. Try another search.')); return; }
+    var groups;
+    if (pState.sort) {
+      var s = items.slice().sort(pState.sort === 'az' ? function (a, b) { return a[0].name.localeCompare(b[0].name); } : function (a, b) { return (b[0].year === 'Past' ? 0 : +b[0].year) - (a[0].year === 'Past' ? 0 : +a[0].year); });
+      groups = [[pState.sort === 'az' ? 'A to Z' : 'Newest first', s]];
+    } else groups = GROUPS.map(function (g) { return [g[1], items.filter(function (x) { return x[0].s === g[0]; })]; }).filter(function (g) { return g[1].length; });
+    var n = 0;
+    groups.forEach(function (g) {
+      var box = el('div', 'pgroup'), h = el('h3', null, g[0]); h.appendChild(el('i', null, g[1].length)); box.appendChild(h);
+      g[1].forEach(function (x) { box.appendChild(makeRow(x[0], x[1], ++n)); });
+      plist.appendChild(box);
+    });
+  }
+  renderProjects();
 
-  var drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim'), openIdx = -1, lastFocus = null;
-  function visibleOrder() { return [].filter.call(plist.querySelectorAll('.prow'), function (r) { return !r.closest('.pgroup').hidden; }).map(function (r) { return +r.dataset.i; }); }
+  // Hover preview that follows the cursor
+  var peek = $('#peek'), peekImg = $('img', peek), mx = 0, my = 0, px = 0, py = 0, raf = 0;
+  function peekLoop() { px += (mx - px) * .2; py += (my - py) * .2; peek.style.left = px + 'px'; peek.style.top = py + 'px'; raf = peek.classList.contains('on') ? requestAnimationFrame(peekLoop) : 0; }
+  function peekShow(u) { if (!canHover) return; if (peekImg.getAttribute('src') !== u) peekImg.src = u; peek.classList.add('on'); if (!raf) raf = requestAnimationFrame(peekLoop); }
+  function peekHide() { peek.classList.remove('on'); }
+  document.addEventListener('mousemove', function (e) { mx = e.clientX + 170; my = e.clientY; if (mx > window.innerWidth - 150) mx = e.clientX - 170; });
+
+  // Drawer
+  var drawer = $('#drawer'), scrim = $('#scrim'), openIdx = -1, lastFocus = null;
+  function visibleOrder() { return $$('.prow', plist).map(function (r) { return +r.dataset.i; }); }
   function fill(i) {
     var p = PROJECTS[i];
-    var t = document.getElementById('dr-tag'); t.className = 'tag ' + TAGCLS[p.label]; t.textContent = p.label;
-    document.getElementById('dr-title').textContent = p.name;
-    document.getElementById('dr-for').textContent = p.short;
-    document.getElementById('dr-text').textContent = p.text;
-    var meta = document.getElementById('dr-meta'); meta.textContent = '';
-    [['For', p['for']], ['Year', p.year === 'Past' ? 'Before 2026' : p.year], ['Made by', p.by ? p.by.replace(', ', ' and ') : '']].forEach(function (m) {
-      if (!m[1]) return; meta.appendChild(el('dt', null, m[0])); meta.appendChild(el('dd', null, m[1]));
-    });
-    var links = document.getElementById('dr-links'); links.textContent = '';
-    if (p.url) { var a = el('a', 'btn', p.door === 'backend' ? 'Open the console' : p.door === 'bioship' ? 'Play BioShip' : 'Visit site'); a.href = p.url; links.appendChild(a); }
-    if (p.door) { var s2 = el('a', null, p.door === 'backend' ? 'Read about the backend' : 'See it in Sites'); s2.href = '#' + p.door; s2.addEventListener('click', closeDrawer); links.appendChild(s2); }
-    if (p.door === 'backend') { var g = el('a', null, 'GitHub'); g.href = 'https://github.com/Jeffrey-Chu/troyllm'; links.appendChild(g); }
-    if (!p.url && !p.door) links.appendChild(el('span', 'by', p.s === 'past' ? 'No longer online.' : 'Not public yet.'));
-    rowsByIndex.forEach(function (r) { r.setAttribute('aria-expanded', 'false'); });
-    rowsByIndex[i].setAttribute('aria-expanded', 'true');
+    var t = $('#dr-tag'); t.className = 'tag ' + TAGCLS[p.label]; t.textContent = p.label;
+    $('#dr-title').textContent = p.name; $('#dr-for').textContent = p.short; $('#dr-text').textContent = p.text;
+    $('#dr-shot').hidden = !IMG[p.door]; if (IMG[p.door]) $('#dr-img').src = 'img/' + p.door + '.webp';
+    var meta = $('#dr-meta'); meta.textContent = '';
+    [['For', p['for']], ['Year', p.year === 'Past' ? 'Before 2026' : p.year], ['Made by', p.by ? p.by.replace(', ', ' and ') : '']].forEach(function (m) { if (!m[1]) return; meta.appendChild(el('dt', null, m[0])); meta.appendChild(el('dd', null, m[1])); });
+    var links = $('#dr-links'); links.textContent = '';
+    if (p.url) { var a = el('a', 'btn sm', p.door === 'backend' ? 'Open the console' : p.door === 'bioship' ? 'Play BioShip' : 'Visit site'); a.href = p.url; links.appendChild(a); }
+    if (p.door) { var s2 = el('a', 'tlink', p.door === 'backend' ? 'Read about the backend' : 'See it in Sites'); s2.href = '#' + p.door; s2.addEventListener('click', closeDrawer); links.appendChild(s2); }
+    if (p.door === 'backend') { var g = el('a', 'tlink', 'GitHub'); g.href = 'https://github.com/Jeffrey-Chu/troyllm'; links.appendChild(g); }
+    if (!p.url && !p.door) links.appendChild(el('span', 'note', p.s === 'past' ? 'No longer online.' : 'Not public yet.'));
+    rowsByIndex.forEach(function (r) { if (r) r.setAttribute('aria-expanded', 'false'); });
+    if (rowsByIndex[i]) rowsByIndex[i].setAttribute('aria-expanded', 'true');
     var order = visibleOrder(), k = order.indexOf(i);
-    document.getElementById('dr-prev').disabled = k <= 0;
-    document.getElementById('dr-next').disabled = k < 0 || k >= order.length - 1;
+    $('#dr-prev').disabled = k <= 0; $('#dr-next').disabled = k < 0 || k >= order.length - 1;
     openIdx = i;
   }
   function openDrawer(i) {
+    peekHide();
     if (openIdx < 0) lastFocus = document.activeElement;
-    fill(i);
-    drawer.hidden = false; scrim.hidden = false;
+    fill(i); drawer.hidden = false; scrim.hidden = false;
     requestAnimationFrame(function () { drawer.classList.add('on'); scrim.classList.add('on'); });
-    document.getElementById('dr-x').focus();
+    $('#dr-x').focus();
   }
   function closeDrawer() {
     if (openIdx < 0) return;
     drawer.classList.remove('on'); scrim.classList.remove('on');
-    rowsByIndex.forEach(function (r) { r.setAttribute('aria-expanded', 'false'); });
+    rowsByIndex.forEach(function (r) { if (r) r.setAttribute('aria-expanded', 'false'); });
     openIdx = -1;
-    setTimeout(function () { drawer.hidden = true; scrim.hidden = true; }, reduce ? 0 : 280);
+    setTimeout(function () { drawer.hidden = true; scrim.hidden = true; }, reduce ? 0 : 320);
     if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
   }
   function step(d) { var order = visibleOrder(), k = order.indexOf(openIdx); if (order[k + d] != null) fill(order[k + d]); }
-  document.getElementById('dr-x').addEventListener('click', closeDrawer);
+  $('#dr-x').addEventListener('click', closeDrawer);
   scrim.addEventListener('click', closeDrawer);
-  document.getElementById('dr-prev').addEventListener('click', function () { step(-1); });
-  document.getElementById('dr-next').addEventListener('click', function () { step(1); });
+  $('#dr-prev').addEventListener('click', function () { step(-1); });
+  $('#dr-next').addEventListener('click', function () { step(1); });
   document.addEventListener('keydown', function (e) {
     if (openIdx < 0) return;
     if (e.key === 'Escape') closeDrawer();
     else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); step(1); }
     else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
     else if (e.key === 'Tab') {
-      var f = drawer.querySelectorAll('button:not(:disabled), a[href]'); if (!f.length) return;
+      var f = $$('button:not(:disabled), a[href]', drawer); if (!f.length) return;
       if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
       else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
     }
   });
   window.addEventListener('hashchange', closeDrawer);
 
-  // Your club next: live preview on the board and the address
-  var clubIn = document.getElementById('club-in'), clubOut = document.getElementById('club-out');
-  clubIn.addEventListener('input', function () {
-    var name = clubIn.value.trim();
-    var slug = name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'your-club';
-    if (slug.indexOf('troy-') !== 0) slug = 'troy-' + slug;
-    clubOut.innerHTML = 'Your site could live at <b></b>';
-    clubOut.querySelector('b').textContent = slug + '.web.app';
-    buildNext();
-    var row = nextRows.querySelector('.row:not(.title):not(.blank) .name');
-    if (!row) return;
-    var lead = row.querySelector('.leader');
-    row.textContent = '';
-    row.appendChild(letters((name || 'YOUR CLUB').toUpperCase().slice(0, 18), 0));
-    row.appendChild(lead);
+  // ---------- Team ----------
+  var BOARD = [['President', 'Ryan Jian'], ['Vice President', 'Shubhay Shah'], ['Secretary', 'Wesley Shen'], ['Head Developer', 'Jeffrey Chu', 'Firebase backend and hosting for every site here, the Troy High LLM points system, and the first version of this site.']];
+  BOARD.forEach(function (m) {
+    var card = el('article', 'person');
+    card.appendChild(el('span', 'pic', initials(m[1])));
+    card.appendChild(el('span', 'rl', m[0]));
+    card.appendChild(el('h4', 'nm', m[1]));
+    var built = PEOPLE[m[1]] || [];
+    card.appendChild(el('p', 'built', m[2] || (built.length ? built.map(function (p) { return p.name; }).join(', ') : 'Helps run the club.')));
+    if (built.length) {
+      var b = el('button', 'see', built.length + (built.length === 1 ? ' project' : ' projects') + ' →'); b.type = 'button';
+      b.addEventListener('click', function () { pState.who = m[1]; whoSel.value = m[1]; pState.f = 'all'; $$('.ptile').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.f === 'all'); }); renderProjects(); location.hash = '#projects'; });
+      card.appendChild(b);
+    }
+    $('#officers').appendChild(card);
+  });
+  // [name, role here, years, then: where, now: what, note]
+  var ALUMNI = [['Yeowon Yoon', 'Co-founder', '2023 to 2026', 'Troy Web Development', 'Cornell University', 'Physics and math', 'Co-founded the club in 2023 and led it through 2026. Launched troywebdev.com and the tutoring initiative, which logged more than 400 hours.']];
+  ALUMNI.forEach(function (a) {
+    var c = el('article', 'alum');
+    c.appendChild(el('span', 'pic', initials(a[0])));
+    var h = el('div'); h.appendChild(el('h4', 'nm', a[0])); h.appendChild(el('p', 'rl', a[1] + ' · ' + a[2])); c.appendChild(h);
+    var path = el('div', 'path');
+    var from = el('div'); from.appendChild(el('span', null, 'Then')); from.appendChild(el('b', null, a[3]));
+    var to = el('div'); to.appendChild(el('span', null, 'Now')); to.appendChild(el('b', null, a[4] + ', ' + a[5].toLowerCase()));
+    path.appendChild(from); path.appendChild(el('span', 'arrow', '→')); path.appendChild(to); c.appendChild(path);
+    c.appendChild(el('p', null, a[6]));
+    $('#alumni').appendChild(c);
+  });
+  $('#alumni').appendChild(el('p', 'alum-cta', 'Graduated from the club? Tell a board member where you ended up and we\'ll add you here.'));
+
+  // ---------- Get a site ----------
+  var COLORS = ['#ff4f1f', '#1f5bff', '#0f9f6e', '#7a3cff', '#e0237a', '#131211'];
+  var FEATS = [['checkin', 'Meeting check-in', 'Word of the day', 1], ['tutor', 'Tutor sign-ups', 'Match by subject', 0], ['orders', 'Order form', 'Merch and fundraisers', 0], ['gallery', 'Photo gallery', 'From your Instagram', 1], ['events', 'Event calendar', 'Every meeting and event', 0], ['hours', 'Hours log', 'Volunteer hours', 0]];
+  var cfg = { name: '', color: COLORS[0], feats: {} };
+  var mock = $('#mock'), sw = $('#sw'), feats = $('#feats'), clubIn = $('#club-in');
+  COLORS.forEach(function (c, i) { var b = el('button'); b.type = 'button'; b.style.setProperty('--c', c); b.setAttribute('aria-label', 'Color ' + (i + 1)); b.setAttribute('aria-pressed', i === 0); b.addEventListener('click', function () { cfg.color = c; $$('button', sw).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); drawMock(); }); sw.appendChild(b); });
+  FEATS.forEach(function (f) { cfg.feats[f[0]] = !!f[3]; var b = el('button', 'chip', f[1]); b.type = 'button'; b.setAttribute('aria-pressed', !!f[3]); b.addEventListener('click', function () { cfg.feats[f[0]] = !cfg.feats[f[0]]; b.setAttribute('aria-pressed', cfg.feats[f[0]]); drawMock(); }); feats.appendChild(b); });
+  function slug() { var s = cfg.name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'your-club'; return (s.indexOf('troy-') === 0 ? s : 'troy-' + s) + '.web.app'; }
+  function drawMock() {
+    var name = cfg.name || 'Your Club';
+    mock.style.setProperty('--c', cfg.color);
+    $('#m-url').textContent = slug(); $('#m-brand').textContent = name; $('#m-name').textContent = name;
+    var out = $('#club-out'); out.textContent = 'Your site could live at '; out.appendChild(el('b', null, slug()));
+    var bl = $('#m-blocks'); bl.textContent = '';
+    var on = FEATS.filter(function (f) { return cfg.feats[f[0]]; });
+    if (!on.length) bl.appendChild(el('div', 'm-empty', 'Pick a feature to add it here.'));
+    on.forEach(function (f) { var d = el('div', 'm-block'); d.appendChild(el('b', null, f[1])); d.appendChild(el('span', null, f[2])); if (f[0] === 'hours' || f[0] === 'checkin') { var bar = el('div', 'bar'); bar.appendChild(el('i')); d.appendChild(bar); } bl.appendChild(d); });
+  }
+  clubIn.addEventListener('input', function () { cfg.name = clubIn.value.trim(); drawMock(); });
+  drawMock();
+  $('#copy-req').addEventListener('click', function () {
+    var on = FEATS.filter(function (f) { return cfg.feats[f[0]]; }).map(function (f) { return f[1].toLowerCase(); });
+    var msg = 'Hi! ' + (cfg.name || 'Our club') + ' would like a website from Troy Web Development. Address idea: ' + slug() + '. Color: ' + cfg.color + '.' + (on.length ? ' Features: ' + on.join(', ') + '.' : '');
+    function done() { toast('Request copied. Send it to any member.'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(done, function () { prompt('Copy this:', msg); });
+    else prompt('Copy this:', msg);
   });
 
-  // Hover tour: how far each screenshot scrolls
+  // ---------- Sites: previews, hallway, filters ----------
   function setPans() {
-    document.querySelectorAll('.screen img').forEach(function (img) {
-      var scr = img.parentElement;
-      var pan = img.offsetHeight - (scr.clientHeight - 34);
+    $$('.screen img').forEach(function (img) {
+      var scr = img.parentElement, pan = img.offsetHeight - (scr.clientHeight - 34);
       if (pan > 40) { scr.style.setProperty('--pan', pan + 'px'); scr.style.setProperty('--dur', Math.min(9, Math.max(2.5, pan / 380)).toFixed(1) + 's'); scr.classList.add('pans'); }
       else { scr.style.setProperty('--pan', '0px'); scr.classList.remove('pans'); }
     });
   }
-  document.querySelectorAll('.screen img').forEach(function (img) {
-    if (!img.complete) img.addEventListener('load', setPans);
-  });
-
-  // Pinned horizontal hallway
-  var hall = document.getElementById('hall');
-  var track = document.getElementById('track');
-  var bar = hall.querySelector('.progress');
-  var mq = window.matchMedia('(min-width: 900px) and (min-height: 600px) and (hover: hover)');
-  var dist = 0, ticking = false;
-  var doors = track.querySelectorAll('.door');
+  $$('.screen img').forEach(function (img) { if (!img.complete) img.addEventListener('load', setPans); });
+  var hall = $('#hall'), track = $('#track'), bar = $('.progress', hall);
+  var mq = window.matchMedia('(min-width: 900px) and (min-height: 640px) and (hover: hover)');
+  var dist = 0, ticking = false, doors = $$('.door', track);
+  function shown() { return doors.filter(function (d) { return !d.hidden; }); }
   function layout() {
     var pin = mq.matches && !reduce;
-    hall.classList.toggle('pinned', pin);
-    track.classList.toggle('wrap', !pin);
+    hall.classList.toggle('pinned', pin); track.classList.toggle('wrap', !pin);
     if (!pin) { hall.style.height = ''; track.style.removeProperty('--x'); doors.forEach(function (d) { d.style.removeProperty('--t'); d.style.removeProperty('--ta'); }); setPans(); return; }
     dist = Math.max(0, track.scrollWidth - window.innerWidth);
     hall.style.height = (window.innerHeight + dist) + 'px';
+    $('#prog-t').textContent = (shown().length < 10 ? '0' : '') + shown().length;
     setPans(); update();
   }
   function update() {
     ticking = false;
     if (!hall.classList.contains('pinned')) return;
-    var r = hall.getBoundingClientRect();
-    var p = Math.min(1, Math.max(0, -r.top / Math.max(1, dist)));
+    var r = hall.getBoundingClientRect(), p = Math.min(1, Math.max(0, -r.top / Math.max(1, dist)));
     track.style.setProperty('--x', (p * dist).toFixed(1) + 'px');
     bar.style.setProperty('--p', p.toFixed(4));
-    var vw = window.innerWidth, x = p * dist;
-    for (var i = 0; i < doors.length; i++) {
-      var d = doors[i]; if (d.hidden) continue; var c = d.offsetLeft + d.offsetWidth / 2 - x - vw / 2;
-      var tt = Math.max(-1, Math.min(1, c / (vw * .62)));
-      d.style.setProperty('--t', tt.toFixed(3));
-      d.style.setProperty('--ta', Math.abs(tt).toFixed(3));
-    }
+    var vw = window.innerWidth, x = p * dist, best = 0, bestD = 1e9, vis = shown();
+    vis.forEach(function (d, i) {
+      var c = d.offsetLeft + d.offsetWidth / 2 - x - vw / 2, tt = Math.max(-1, Math.min(1, c / (vw * .62)));
+      d.style.setProperty('--t', tt.toFixed(3)); d.style.setProperty('--ta', Math.abs(tt).toFixed(3));
+      if (Math.abs(c) < bestD) { bestD = Math.abs(c); best = i; }
+    });
+    $('#prog-n').textContent = (best < 9 ? '0' : '') + (best + 1);
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   window.addEventListener('resize', layout);
   if (mq.addEventListener) mq.addEventListener('change', layout);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
   window.addEventListener('load', layout);
-  layout();
 
-  // Directory rows and keyboard focus jump to the right spot in the hallway
   function goTo(id, instant) {
-    var door = document.getElementById(id);
-    if (!door) return;
+    var door = document.getElementById(id); if (!door) return;
     var behavior = reduce || instant ? 'auto' : 'smooth';
     if (hall.classList.contains('pinned')) {
-      var x = door.offsetLeft - (window.innerWidth - door.offsetWidth) / 2;
-      var p = Math.min(1, Math.max(0, x / Math.max(1, dist)));
-      var top = hall.getBoundingClientRect().top + window.scrollY + p * dist;
-      window.scrollTo({ top: top, behavior: behavior });
-    } else {
-      door.scrollIntoView({ behavior: behavior, block: 'start' });
-    }
+      var x = door.offsetLeft - (window.innerWidth - door.offsetWidth) / 2, p = Math.min(1, Math.max(0, x / Math.max(1, dist)));
+      window.scrollTo({ top: hall.getBoundingClientRect().top + window.scrollY + p * dist, behavior: behavior });
+    } else door.scrollIntoView({ behavior: behavior, block: 'start' });
+    if (door.classList.contains('door')) { door.classList.add('flash'); setTimeout(function () { door.classList.remove('flash'); }, 1400); }
   }
-  // Find a site
-  var findIn = document.getElementById('find-in'), findNone = document.getElementById('find-none'), findCount = document.getElementById('find-count');
-  findIn.addEventListener('input', function () {
-    var q = findIn.value.trim().toLowerCase(), shown = 0;
-    doors.forEach(function (d) { var hit = !q || d.textContent.toLowerCase().indexOf(q) > -1; d.hidden = !hit; if (hit) shown++; });
-    findNone.hidden = shown > 0;
-    findCount.textContent = q ? shown + (shown === 1 ? ' site' : ' sites') : '';
-    window.scrollTo(0, hall.getBoundingClientRect().top + window.scrollY - 10);
+  var findIn = $('#find-in'), findNone = $('#find-none'), findCount = $('#find-count'), dayF = 'all';
+  function applyFind() {
+    var q = findIn.value.trim().toLowerCase(), n = 0;
+    doors.forEach(function (d) {
+      var dd = d.dataset.day, dayOk = dayF === 'all' || (dayF === 'x' ? !dd || dd === '0' : dd === dayF);
+      var hit = dayOk && (!q || d.textContent.toLowerCase().indexOf(q) > -1); d.hidden = !hit; if (hit) n++;
+    });
+    findNone.hidden = n > 0;
+    findCount.textContent = q || dayF !== 'all' ? n + (n === 1 ? ' site' : ' sites') : '';
+    window.scrollTo(0, Math.min(window.scrollY, hall.getBoundingClientRect().top + window.scrollY - 64));
     layout();
+  }
+  findIn.addEventListener('input', applyFind);
+  $$('#days [data-d]').forEach(function (b) { b.addEventListener('click', function () { dayF = b.dataset.d; $$('#days [data-d]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); applyFind(); }); });
+  $('#surprise').addEventListener('click', function () { var v = shown(); if (!v.length) return; var d = v[Math.floor(Math.random() * v.length)]; goTo(d.id); });
+
+  // ---------- Command palette ----------
+  var pal = $('#pal'), palQ = $('#pal-q'), palList = $('#pal-list'), palItems = [], palSel = 0, palLast = null;
+  var CMDS = [['Home', '#home', 'Page'], ['Sites', '#sites', 'Page'], ['Projects', '#projects', 'Page'], ['About', '#about', 'Page'], ['Team and alumni', '#team', 'Page'], ['Get a site', '#join', 'Page'], ['Toggle dark mode', 'theme', 'Action'], ['View source of the headline', 'src', 'Action']];
+  doors.forEach(function (d) { CMDS.push([$('h3', d).textContent, '#' + d.id, 'Site']); });
+  PROJECTS.forEach(function (p, i) { if (!p.door || p.door === 'backend') CMDS.push([p.name, 'p' + i, 'Project']); });
+  function palRender() {
+    var q = palQ.value.trim().toLowerCase(); palList.textContent = '';
+    palItems = CMDS.filter(function (c) { return !q || c[0].toLowerCase().indexOf(q) > -1 || c[2].toLowerCase().indexOf(q) === 0; });
+    palSel = Math.min(palSel, Math.max(0, palItems.length - 1));
+    if (!palItems.length) { palList.appendChild(el('li', 'sep', 'No results')); return; }
+    palItems.forEach(function (c, i) {
+      var li = el('li'); li.setAttribute('role', 'option'); li.setAttribute('aria-selected', i === palSel); li.id = 'pal-' + i;
+      li.appendChild(el('i', null, c[2] === 'Page' ? '§' : c[2] === 'Site' ? '↗' : c[2] === 'Action' ? '⌘' : '#'));
+      li.appendChild(el('span', null, c[0])); li.appendChild(el('small', null, c[2]));
+      li.addEventListener('mousemove', function () { if (palSel !== i) { palSel = i; palMark(); } });
+      li.addEventListener('click', function () { palRun(c); });
+      palList.appendChild(li);
+    });
+    palQ.setAttribute('aria-activedescendant', 'pal-' + palSel);
+  }
+  function palMark() { $$('li[role=option]', palList).forEach(function (li, i) { li.setAttribute('aria-selected', i === palSel); if (i === palSel) li.scrollIntoView({ block: 'nearest' }); }); palQ.setAttribute('aria-activedescendant', 'pal-' + palSel); }
+  function palOpen() { palLast = document.activeElement; pal.hidden = false; palQ.value = ''; palSel = 0; palRender(); palQ.focus(); }
+  function palClose() { pal.hidden = true; if (palLast && palLast.focus) palLast.focus(); }
+  function palRun(c) {
+    palClose();
+    if (c[1] === 'theme') themeBtn.click();
+    else if (c[1] === 'src') { location.hash = '#home'; if (swSrc.getAttribute('aria-pressed') !== 'true') swSrc.click(); }
+    else if (c[1][0] === 'p') { location.hash = '#projects'; setTimeout(function () { openDrawer(+c[1].slice(1)); }, 60); }
+    else if (location.hash === c[1]) { current = null; route(); } else location.hash = c[1];
+  }
+  $('#pal-open').addEventListener('click', palOpen);
+  pal.addEventListener('click', function (e) { if (e.target === pal) palClose(); });
+  palQ.addEventListener('input', function () { palSel = 0; palRender(); });
+  palQ.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); palSel = Math.min(palItems.length - 1, palSel + 1); palMark(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = Math.max(0, palSel - 1); palMark(); }
+    else if (e.key === 'Enter' && palItems[palSel]) { e.preventDefault(); palRun(palItems[palSel]); }
+    else if (e.key === 'Escape') palClose();
+  });
+  document.addEventListener('keydown', function (e) {
+    var typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
+    if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) { e.preventDefault(); pal.hidden ? palOpen() : palClose(); }
   });
 
-  // Tabs
+  // ---------- Tabs and routing ----------
   var TABS = ['home', 'sites', 'projects', 'about', 'team', 'join'];
-  var panels = document.querySelectorAll('.panel'), tabLinks = document.querySelectorAll('.tabs a');
-  var current = null;
+  var panels = $$('.panel'), tabLinks = $$('.tabs a'), current = null;
   function show(tab) {
     if (tab === current) return;
     current = tab;
     panels.forEach(function (p) { p.hidden = p.dataset.tab !== tab; });
     tabLinks.forEach(function (a) { if (a.dataset.to === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     document.title = (tab === 'home' ? '' : { sites: 'Sites', projects: 'Projects', about: 'About', team: 'Team', join: 'Get a site' }[tab] + ' · ') + 'Troy Web Development';
-    if (tab === 'sites') { layout(); }
-    if (tab === 'join') buildNext();
+    if (tab === 'sites') layout();
+    peekHide();
   }
   function route() {
     var id = decodeURIComponent(location.hash.slice(1)) || 'home';
     if (TABS.indexOf(id) > -1) { show(id); window.scrollTo(0, 0); return; }
-    var el = document.getElementById(id);
-    var panel = el && el.closest('.panel');
+    var t = document.getElementById(id), panel = t && t.closest('.panel');
     if (!panel) { show('home'); return; }
     show(panel.dataset.tab);
-    requestAnimationFrame(function () {
-      if (el.classList.contains('door')) goTo(id, true);
-      else window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 10);
-    });
+    requestAnimationFrame(function () { if (t.classList.contains('door')) goTo(id, true); else window.scrollTo(0, t.getBoundingClientRect().top + window.scrollY - 70); });
   }
   window.addEventListener('hashchange', route);
   route();
-  track.addEventListener('focusin', function (e) {
-    if (!hall.classList.contains('pinned')) return;
-    var door = e.target.closest('.door');
-    if (door) goTo(door.id, true);
-  });
-
+  track.addEventListener('focusin', function (e) { if (!hall.classList.contains('pinned')) return; var d = e.target.closest('.door'); if (d) goTo(d.id, true); });
   if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window && !reduce) {
     var tio = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.closest('.door').classList.toggle('tour', e.intersectionRatio > .75); }); }, { threshold: [0, .75, 1] });
-    track.querySelectorAll('.screen').forEach(function (s) { tio.observe(s); });
+    $$('.screen', track).forEach(function (s) { tio.observe(s); });
   }
+  document.addEventListener('click', function (e) { var a = e.target.closest('a[href^="#"]'); if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); current = null; route(); } });
 
-  // Clicking a link to the hash you're already on should still jump there
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); current = null; route(); }
-  });
-
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  // Footer wordmark: letters light up on hover
+  var wm = $('#wordmark'), wt = wm.textContent; wm.textContent = '';
+  wt.split('').forEach(function (ch) { wm.appendChild(el('span', null, ch)); });
+  $('#yr').textContent = new Date().getFullYear();
 })();
 </script>
 </body>
