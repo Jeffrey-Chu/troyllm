@@ -61,8 +61,8 @@ h1, h2, h3, p { margin: 0; }
 .tabs a[aria-current="page"] { background: var(--felt); color: var(--today); box-shadow: 0 0 0 2px #a9b2bc, 0 3px 0 2px rgba(23,33,47,.12); }
 @media (max-width: 980px) {
   .top .wrap { flex-wrap: wrap; height: auto; padding: .9rem 0 .6rem; gap: .6rem; }
-  .tabs { width: 100%; overflow-x: auto; padding: 4px 2px 6px; scrollbar-width: none; }
-  .tabs::-webkit-scrollbar { display: none; }
+  .tabs { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; padding: 2px 2px 4px; }
+  .tabs a { justify-content: center; background: rgba(255,255,255,.45); box-shadow: 0 0 0 1px rgba(23,33,47,.15); }
 }
 [hidden] { display: none !important; }
 body { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
@@ -543,7 +543,7 @@ footer a { color: #fff; }
             <a class="screen" href="bioship" tabindex="-1" aria-hidden="true"><span class="url"><span>troy-clubs.web.app/bioship</span></span><img src="img/bioship.webp" width="960" height="720" alt="" decoding="async"></a>
             <div class="plaque"><span class="plate word">PLAY</span><div><h3>BioShip</h3><p class="who">A biology quiz game</p></div></div>
             <p class="what">Fly a ship through 1,225 biology questions.</p>
-            <p class="by">Made by Ryan Jian</p>
+            <p class="by">Made by Ryan Jian and Emerson Lin</p>
             <div class="links"><a class="btn" href="bioship">Play BioShip</a></div>
           </article>
 
@@ -586,7 +586,7 @@ footer a { color: #fff; }
           <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">Anime, Chinese Culture, Leo, Key, GeoGuessr</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:-3deg">LIVE</span></span></summary><p class="note">Built around each club's own posts and photos. Made by Ryan Jian, with Daniel Li on Anime, Jason Lee on Key Club and Kaleb Lopez on Leo.</p></details>
           <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">The Science Club, Roots &amp; Roads</span><span class="for">Outside Troy</span><span class="st"><span class="stamp live" style="--rot:2deg">LIVE</span></span></summary><p class="note">A science nonprofit, and an OCSA student group that interviews immigrants in Orange County. Made by Ryan Jian.</p></details>
           <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">SUPER DW</span><span class="for">Daphne's crystal shop</span><span class="st"><span class="stamp live" style="--rot:-1.5deg">LIVE</span></span></summary><p class="note">A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer. Made by Ryan Jian.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">BioShip</span><span class="for">Biology students</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">A biology quiz game with 1,225 questions. Made by Ryan Jian. <a href="bioship">Play it</a></p></details>
+          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">BioShip</span><span class="for">Biology students</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">A biology quiz game with 1,225 questions. Made by Ryan Jian and Emerson Lin. <a href="bioship">Play it</a></p></details>
           <details class="line" data-s="wip"><summary class="sum"><span class="yr">2026</span><span class="proj">OCHSWA Championship Shelf</span><span class="for">Wrestling, for Mr. Nguyen</span><span class="st"><span class="stamp wip" style="--rot:-2.5deg">IN PROGRESS</span></span></summary><p class="note">A shelf of wrestling association records, one volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in. Made by Wesley Shen and Ryan Jian.</p></details>
           <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Robotics</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:1.5deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
           <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Enterprise Circle</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:-3deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
@@ -595,7 +595,7 @@ footer a { color: #fff; }
   </section>
 </div>
 <div class="panel" data-tab="about" tabindex="-1" hidden>
-  <section class="sec about" id="about" aria-labelledby="about-title">
+  <section class="sec about" id="about-sec" aria-labelledby="about-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -617,7 +617,7 @@ footer a { color: #fff; }
   </section>
 </div>
 <div class="panel" data-tab="team" tabindex="-1" hidden>
-  <section class="sec team" id="team" aria-labelledby="team-title">
+  <section class="sec team" id="team-sec" aria-labelledby="team-title">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -637,6 +637,7 @@ footer a { color: #fff; }
         <li><span class="rl">Member</span><span class="nm">Daniel Li<small>Anime Club site</small></span></li>
         <li><span class="rl">Member</span><span class="nm">Jason Lee<small>Key Club site</small></span></li>
         <li><span class="rl">Member</span><span class="nm">Kaleb Lopez<small>Leo Club site</small></span></li>
+        <li><span class="rl">Member</span><span class="nm">Emerson Lin<small>BioShip</small></span></li>
       </ul>
       <h3 class="roll-h">Alumni</h3>
       <ul class="roll">
