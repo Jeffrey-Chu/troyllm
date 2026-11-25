@@ -691,7 +691,8 @@ body .logo .t-swash{color:var(--ink-m)}
 .over .ranks li.me{background:rgba(138,36,24,.08)}
 .over .route .node.done{background:#f3e6c6;color:#2b1b0b;border-color:#2b1b0b}
 .over .route .node.locked{background:transparent;border-color:rgba(60,40,16,.4);color:#6a5032}
-@media(max-width:420px){.ledger li{grid-template-columns:5.6em 1fr auto;gap:8px}.lg-n{font-size:1rem}}
+.ledger li{grid-template-columns:44px 6.4em 1fr auto;align-items:center}.over .loot.sm svg{width:40px;height:40px}.lg-i{width:40px;height:40px;display:block}.lg-i svg{width:100%;height:100%}.ledger li.lock .lg-i{border:1px dashed rgba(60,40,16,.35);border-radius:50%;width:34px;height:34px;margin:3px}
+@media(max-width:420px){.ledger li{grid-template-columns:36px 5.2em 1fr auto;gap:8px}.lg-i{width:34px;height:34px}.lg-n{font-size:1rem}}
 </style>
 </head>
 <body>
@@ -2415,63 +2416,63 @@ const ISL8=[
  bio:"A cedar lifts water forty metres with no pump. Evaporation from its needles pulls an unbroken column up through the xylem, held together by hydrogen bonds.",
  pal:{sky:["#1a2a22","#c89a5a"],sea:["#2a4a48","#0a1a1c"],land:["#3a5a32","#1a2a1a"],acc:"#e8c070",glow:"#ffd890",night:0,sun:"#ffe0a8"},
  mon:{name:"Humbaba, guardian of the cedars",kind:"titan",v:"humbaba",wpn:"tree",skin:"#8a6a3a",acc:"#5a3a14",cloth:"#3a2a14",eye:"#ffcf6a",lore:"His roar is the flood, his mouth is fire, his breath is death. Enlil set him to guard the Cedar Forest.",atk:{s:"breath",c:["#ffb040","#ff7020","#ffe0a0"],name:"his breath of fire"}},
- fx:"embers",tr:{name:"The Axe of Gilgamesh",art:"axe",lore:"Forged in Uruk for the journey to the Cedar Forest. Each axe weighed three talents, and Gilgamesh swung it to fell the tallest cedar."}},
+ fx:"embers",tr:{name:"The Axe of Gilgamesh",art:"gilaxe",lore:"Forged in Uruk for the journey to the Cedar Forest. Each axe weighed three talents, and Gilgamesh swung it to fell the tallest cedar."}},
 {id:"qaf",name:"Mount Qaf",cult:"Persian",mus:"ar",topic:"o",obs:["The White Div","giant"],
  myth:"The emerald mountain at the edge of the world, home of the Simurgh. In the Shahnameh, Rostam passed through seven trials and slew the White Div in his cave.",
  ship:{id:"simurgh",name:"Simurgh-Prowed Dhow",hull:"dhow",sail:"lateen",c:["#6a4a2a","#f0e8d0","#3ab8a0"],ex:["swan","lanterns"],text:"Her prow is carved as the Simurgh, the great bird who raised the hero Zal and gave him a feather to call her in need."},
  bio:"Rostam cured the blinded king with the White Div's blood. Real blood carries oxygen on hemoglobin and delivers it to every tissue, the eyes included.",
  pal:{sky:["#0e2a2a","#5aa88a"],sea:["#1a4a48","#061a1c"],land:["#2a6a4a","#0e2a20"],acc:"#c8f0d8",glow:"#7fffd0",night:0,sun:"#e8fff0"},
  mon:{name:"The White Div",kind:"titan",v:"div",wpn:"mace",skin:"#e8e4dc",cloth:"#3a3a48",acc:"#9a9aa8",eye:"#ff5a3a",lore:"A giant demon, white as snow, who held the Shah of Iran captive and blind. Rostam fought him in his cave and tore out his liver.",atk:{s:"proj",m:"rock",n:2,c:"#e8e4dc",name:"a hurled millstone"}},
- fx:"",tr:{name:"Feather of the Simurgh",art:"feather",lore:"Burn it and the Simurgh comes. She saved Rostam's life with it, healing his wounds by drawing her feathers across them."}},
+ fx:"",tr:{name:"Feather of the Simurgh",art:"simurgh",lore:"Burn it and the Simurgh comes. She saved Rostam's life with it, healing his wounds by drawing her feathers across them."}},
 {id:"iram",name:"Iram of the Pillars",cult:"Arabian Nights",mus:"ar",topic:"k",obs:["The jinni of the bottle","giant"],
  myth:"The lost city of a thousand pillars, swallowed by the sands. A fisherman nearby netted a brass bottle sealed with Solomon's seal, and a jinni poured out in smoke.",
  ship:{id:"sambuk",name:"Brass-Bound Sambuk",hull:"dhow",sail:"lateen",c:["#8a5a2a","#f4e4c4","#d8a038"],ex:["lanterns","rays"],text:"A pearling sambuk bound in brass bands, her lamps fed from a bottle that never runs dry."},
  bio:"A sealed vessel is a microbe's world. Yeast in a stoppered jar switches to fermentation when the oxygen runs out, turning sugar into ethanol and carbon dioxide.",
  pal:{sky:["#2a1a3a","#e8905a"],sea:["#3a4a6a","#0e1426"],land:["#c89a5a","#6a4a2a"],acc:"#ffd890",glow:"#ffb860",night:0,sun:"#ffe8b0"},
  mon:{name:"The Jinni of the Brass Bottle",kind:"titan",v:"jinn",skin:"#3a5aa8",cloth:"#5a6aa8",acc:"#e0b048",eye:"#ffe07a",lore:"Imprisoned by Solomon for eighteen centuries, he swore to kill whoever freed him. The fisherman tricked him back into the bottle.",atk:{s:"breath",c:["#7a9aff","#c8d8ff","#ffe07a"],name:"a storm of smoke"}},
- fx:"",tr:{name:"The Brass Bottle",art:"jar",lore:"Stoppered with lead and stamped with the seal of Solomon. Whatever you do, do not open it."}},
+ fx:"",tr:{name:"The Brass Bottle",art:"bottle",lore:"Stoppered with lead and stamped with the seal of Solomon. Whatever you do, do not open it."}},
 {id:"crete",name:"The Labyrinth of Crete",cult:"Greek",mus:"gr",topic:"i",obs:["The Minotaur","giant"],
  myth:"Daedalus built the maze beneath King Minos's palace to hold the Minotaur. Theseus went in with Ariadne's ball of thread and came out alive.",
  ship:{id:"theseus",name:"Ship of Theseus",hull:"greek",sail:"square",c:["#2a2420","#1a1a1a","#c8a048"],ex:["oars","eye"],text:"Black-sailed, as she was when Theseus sailed home and forgot to raise the white sail. The Athenians kept her for centuries, replacing every plank."},
  bio:"The Minotaur was half bull, half man. Real hybrids follow Mendel's rules: a mule gets one set of chromosomes from each parent, and the unmatched sets make it sterile.",
  pal:{sky:["#1a2440","#e8a87a"],sea:["#1a4a7a","#061428"],land:["#c8b08a","#6a5a48"],acc:"#ffe0a8",glow:"#ffd48a",night:0,sun:"#fff0c8"},
  mon:{name:"The Minotaur",kind:"titan",v:"minotaur",wpn:"axe",skin:"#5a3a2a",cloth:"#a8242a",acc:"#e0b048",eye:"#ff6a3a",lore:"Son of Pasiphaë and the white bull of Poseidon. Every nine years, Athens sent seven youths and seven maidens into his maze.",atk:{s:"lunge",name:"the double axe"}},
- fx:"",tr:{name:"Ariadne's Crown",art:"diamond",lore:"Dionysus gave it to Ariadne and later threw it into the sky, where it still shines as the Corona Borealis."}},
+ fx:"",tr:{name:"Ariadne's Crown",art:"crown",lore:"Dionysus gave it to Ariadne and later threw it into the sky, where it still shines as the Corona Borealis."}},
 {id:"gorgon",name:"Isle of the Gorgons",cult:"Greek",mus:"gr",topic:"m",obs:["Medusa","heads"],
  myth:"At the far edge of the western ocean lived the three Gorgon sisters. Perseus cut off Medusa's head, watching her only in the mirror of his polished shield.",
  ship:{id:"perseus",name:"Perseus's Winged Galley",hull:"greek",sail:"striped",c:["#e8e0d0","#e8e8f0","#5a8ac8"],ex:["swan","oars"],text:"Her prow carries Pegasus, the winged horse that sprang from Medusa's neck."},
  bio:"Medusa's gaze froze men in place. Real paralysing toxins, like the tetrodotoxin of pufferfish, block the sodium channels that nerves need to fire.",
  pal:{sky:["#0e1a1a","#4a6a5a"],sea:["#1a3a3a","#04100e"],land:["#5a6a5a","#1e2a24"],acc:"#c8e8c8",glow:"#a8ffb8",night:1,sun:"#e0f0e0"},
  mon:{name:"Medusa",kind:"sorceress",v:"gorgon",skin:"#2a3a2a",belly:"#b8c8a8",eye:"#c8ff8a",lore:"The only mortal Gorgon. Her hair was living snakes, and one look turned any creature to stone.",atk:{s:"proj",m:"orb",n:1,c:"#c8ff8a",name:"the petrifying gaze"}},
- fx:"",tr:{name:"The Mirrored Shield",art:"mirror",lore:"Athena's polished bronze shield. Perseus never looked at Medusa directly, only at her reflection."}},
+ fx:"",tr:{name:"The Mirrored Shield",art:"shield",lore:"Athena's polished bronze shield. Perseus never looked at Medusa directly, only at her reflection."}},
 {id:"heorot",name:"Heorot",cult:"Anglo-Saxon",mus:"no",topic:"r",obs:["Grendel","giant"],
  myth:"The great mead-hall of the Danish king Hrothgar. For twelve years Grendel came at night and carried off its warriors, until Beowulf sailed from Geatland.",
  ship:{id:"geat",name:"Beowulf's Longship",hull:"longship",sail:"striped",c:["#4a3424","#c8a878","#a83a2a"],ex:["shields"],text:"Fourteen Geats rowed her across the whale-road to Denmark, shields hung along her sides."},
  bio:"Grendel struck only at night and returned to his mere. Animals keep territories and daily rhythms too, timed by internal clocks and defended against intruders.",
  pal:{sky:["#0a0e18","#2a3448"],sea:["#1a2a38","#040a10"],land:["#2a3a2a","#0e160e"],acc:"#e8c890",glow:"#ffc870",night:1,sun:"#e8e0d0"},
  mon:{name:"Grendel",kind:"titan",v:"grendel",skin:"#3a4a3a",cloth:"#1a2018",eye:"#ffb040",lore:"A descendant of Cain who hated the sound of the hall's harp. Beowulf fought him bare-handed and tore off his arm.",atk:{s:"lunge",name:"his tearing claws"}},
- fx:"",tr:{name:"Hrunting",art:"sword",lore:"The sword Unferth lent Beowulf for the fight in the mere. It had never failed a hero until it met Grendel's mother."}},
+ fx:"",tr:{name:"Hrunting",art:"hrunting",lore:"The sword Unferth lent Beowulf for the fight in the mere. It had never failed a hero until it met Grendel's mother."}},
 {id:"onigashima",name:"Onigashima",cult:"Japanese",mus:"jp",topic:"p",obs:["The Oni chief","giant"],
  myth:"The island of the oni. Momotarō, the boy born from a peach, sailed there with a dog, a monkey and a pheasant and defeated the demons.",
  ship:{id:"momo",name:"Momotarō's Peach Boat",hull:"skiff",sail:"straw",c:["#8a5a3a","#f0e0c0","#ff8a8a"],ex:["banner"],text:"A small river boat flying a banner with a peach on it, crewed by a dog, a monkey and a pheasant."},
  bio:"Momotarō won with a team, each ally with a different job. The immune system works the same way: macrophages, B cells and T cells each take a different part of the fight.",
  pal:{sky:["#2a0e1a","#c84a4a"],sea:["#3a1a2a","#10040a"],land:["#4a2a2a","#1a0a0a"],acc:"#ffc0a0",glow:"#ff8a6a",night:0,sun:"#ffd0b0"},
  mon:{name:"The Oni chief",kind:"titan",v:"oni",wpn:"club",skin:"#c83a2a",cloth:"#e8c040",acc:"#e8e0c8",eye:"#ffe060",lore:"A horned demon in a tiger-skin loincloth, armed with an iron kanabō studded with spikes.",atk:{s:"lunge",name:"the iron kanabō"}},
- fx:"",tr:{name:"Uchide no Kozuchi",art:"hammer",lore:"The oni's magic mallet. Shake it, and whatever you wish for falls out."}},
+ fx:"",tr:{name:"Uchide no Kozuchi",art:"mallet",lore:"The oni's magic mallet. Shake it, and whatever you wish for falls out."}},
 {id:"gumiho",name:"Gumiho Mountain",cult:"Korean",mus:"cn",topic:"q",obs:["The nine-tailed fox","beast"],
  myth:"In Korean tales a fox that lives a thousand years grows nine tails and can take human form. It hides a glowing bead in its mouth that holds its power.",
  ship:{id:"geobuk",name:"Geobukseon",sub:"Turtle Ship",hull:"turtle",sail:"battened",c:["#3a3a2a","#c8b088","#c83a2a"],ex:["dragon"],text:"Admiral Yi Sun-sin's armoured turtle ship, roofed in iron spikes, with a dragon head at the bow that breathes smoke."},
  bio:"The gumiho was said to hunger for human livers. The real liver clears toxins from the blood and turns spare nitrogen into urea for the kidneys to excrete.",
  pal:{sky:["#1a1a2a","#8a6aa8"],sea:["#2a2a4a","#08081a"],land:["#3a3a4a","#14141e"],acc:"#f0e0ff",glow:"#e0b0ff",night:1,sun:"#f0e8ff"},
  mon:{name:"The Gumiho",kind:"beast",v:"fox",skin:"#f0ece4",eye:"#e0b0ff",lore:"A nine-tailed fox who takes the form of a beautiful woman. If someone swallows her fox bead, they gain her knowledge.",atk:{s:"proj",m:"orb",n:3,c:"#e0b0ff",name:"fox-fire"}},
- fx:"petals",tr:{name:"The Fox Bead",art:"pearls",lore:"Yeowu guseul, the glowing marble a gumiho keeps in its mouth. It holds a thousand years of the fox's power."}},
+ fx:"petals",tr:{name:"The Fox Bead",art:"foxbead",lore:"Yeowu guseul, the glowing marble a gumiho keeps in its mouth. It holds a thousand years of the fox's power."}},
 {id:"nian",name:"Isle of the Nian",cult:"Chinese",mus:"cn",topic:"n",obs:["The Nian","beast"],
  myth:"Every New Year's Eve the Nian came out of the sea to devour crops and villagers, until people learned it feared the colour red, fire and loud noise.",
  ship:{id:"springjunk",name:"Red-Sailed Spring Junk",hull:"junk",sail:"battened",c:["#6a2a1a","#c82a2a","#ffd060"],ex:["lanterns"],text:"Red sails, red lanterns and strings of firecrackers. Nothing the Nian will come near."},
  bio:"The Nian came once a year, like clockwork. Seasonal animals track the year by day length: melatonin from the pineal gland rises with longer nights and triggers breeding, molting and migration.",
  pal:{sky:["#1a0a0a","#a83a2a"],sea:["#2a1414","#0a0404"],land:["#4a2a1a","#1a0a06"],acc:"#ffd080",glow:"#ff6a4a",night:1,sun:"#ffd0a0"},
  mon:{name:"The Nian",kind:"beast",v:"nian",skin:"#4a6a5a",acc:"#c8302a",eye:"#ffe060",lore:"A horned beast from beneath the sea that feeds at the turn of the year. The firecrackers and red banners of Chinese New Year began as ways to drive it off.",atk:{s:"lunge",name:"its New Year hunger"}},
- fx:"embers",tr:{name:"The New Year Gong",art:"bell",lore:"Beaten at midnight with firecrackers and drums. The Nian has never come back to a village that keeps the noise going."}}
+ fx:"embers",tr:{name:"The New Year Gong",art:"gong",lore:"Beaten at midnight with firecrackers and drums. The Nian has never come back to a village that keeps the noise going."}}
 ];
 const BOSS8=[
  {name:"The Bull of Heaven",kind:"beast",v:"bull",skin:"#1a1a38",rim:.18,acc:"#e8c060",big:true,atk:{s:"lunge",name:"the charge of the sky-bull"},cult:"meso",
@@ -2809,6 +2810,15 @@ function treasureSVG(art,glow="#ffd070"){
  case "staff":g=`<g transform="rotate(-38 50 50)"><rect x="46" y="2" width="8" height="96" rx="2" fill="#3a3a44" ${st}/><rect x="44" y="2" width="12" height="14" rx="2" fill="${G}" ${st}/><rect x="44" y="84" width="12" height="14" rx="2" fill="${G}" ${st}/><path d="M48 20 V80" stroke="#8a8a9a" stroke-width="1.6"/></g>${shine(76,18)}`;break;
  case "hammer":g=`<path d="M50 52 V92" stroke="${INK}" stroke-width="9" stroke-linecap="round"/><path d="M50 52 V92" stroke="#6a4a2a" stroke-width="6" stroke-linecap="round"/><path d="M50 78 l-4 4 M50 84 l4 4" stroke="#c9a86a" stroke-width="2"/><path d="M20 20 H80 L84 30 V44 L80 54 H20 L16 44 V30Z" fill="${S}" ${st}/><path d="M28 30 L40 40 L28 46 M72 30 L60 40 L72 46" stroke="#5a6870" stroke-width="2" fill="none"/><path d="M50 4 L46 16 L52 16 L48 26" stroke="#bfe8ff" stroke-width="2.4" fill="none"/>`;break;
  case "mirror":g=`<circle cx="50" cy="44" r="30" fill="${G}" ${st}/><circle cx="50" cy="44" r="23" fill="url(#${id}obs)" ${st} stroke-width="1.4"/>${Array.from({length:12},(_,k)=>{const a=k*Math.PI/6;return `<circle cx="${50+Math.cos(a)*27}" cy="${44+Math.sin(a)*27}" r="2.2" fill="#40e0c0"/>`}).join("")}<path d="M36 36 Q42 26 54 28" stroke="#9fb0c0" stroke-width="2.4" fill="none" opacity=".7"/><path d="M50 74 V94" stroke="${G}" stroke-width="6"/><g fill="#9aa" opacity=".5"><circle cx="40" cy="12" r="5"/><circle cx="34" cy="4" r="4"/></g>`;break;
+ case "gilaxe":g=`<path d="M56 94 L40 10" stroke="${INK}" stroke-width="8" stroke-linecap="round"/><path d="M56 94 L40 10" stroke="#6a4424" stroke-width="5" stroke-linecap="round"/><path d="M44 20 Q20 12 12 30 Q8 46 20 58 Q30 44 48 40Z" fill="${B}" ${st}/><path d="M16 32 Q14 44 20 54" stroke="#ffe0b0" stroke-width="2" fill="none"/><path d="M44 20 L48 40 L54 38 L50 18Z" fill="${G}" ${st} stroke-width="1.6"/><g stroke="#5a3414" stroke-width="1.4"><path d="M26 30 l4 2 M24 36 l4 2 M26 42 l4 2"/><path d="M30 28 v4 M28 34 v4 M30 40 v4"/></g><path d="M52 80 l6 -2 M54 86 l6 -2" stroke="${G}" stroke-width="2.4"/>`;break;
+ case "simurgh":g=`<path d="M48 94 Q46 54 58 8" stroke="#d8c8a0" stroke-width="2.6" fill="none"/><path d="M57 10 Q86 26 80 56 Q72 80 50 88 Q50 60 57 10Z" fill="#2a8a7a" ${st}/><path d="M57 10 Q28 28 30 58 Q36 80 50 88 Q48 60 57 10Z" fill="#3aa88a" ${st}/><ellipse cx="56" cy="34" rx="13" ry="16" fill="#d9a441" ${st} stroke-width="1.6"/><ellipse cx="56" cy="35" rx="8" ry="10" fill="#2a4a9a"/><ellipse cx="56" cy="36" rx="4" ry="5" fill="#a8322a"/>${[50,60,70,80].map(y=>`<path d="M50 ${y} Q40 ${y-8} 34 ${y-4} M50 ${y} Q62 ${y-8} 70 ${y-6}" stroke="#a8322a" stroke-width="1.6" fill="none" opacity=".7"/>`).join("")}`;break;
+ case "bottle":g=`<path d="M42 10 H58 V30 Q80 40 78 66 Q74 90 50 90 Q26 90 22 66 Q20 40 42 30Z" fill="${B}" ${st}/><rect x="38" y="4" width="24" height="10" rx="2" fill="#5a6068" ${st}/><circle cx="50" cy="9" r="3.4" fill="none" stroke="${G}" stroke-width="1.6"/><path d="M50 4.8 l3.6 6.2 h-7.2Z M50 13.2 l3.6 -6.2 h-7.2Z" fill="none" stroke="${G}" stroke-width="1"/><path d="M28 56 H72 M26 66 H74" stroke="#5a3414" stroke-width="2"/>${[34,44,54,64].map(x=>`<path d="M${x} 60 l3 -3 l3 3" stroke="#5a3414" stroke-width="1.4" fill="none"/>`).join("")}<ellipse cx="36" cy="46" rx="4" ry="9" fill="#ffe0b0" opacity=".5"/><path d="M58 2 Q66 -2 70 4 Q74 10 66 12" stroke="#9aa4c0" stroke-width="2" fill="none" opacity=".7"/>`;break;
+ case "crown":g=`<ellipse cx="50" cy="62" rx="36" ry="14" fill="none" stroke="${INK}" stroke-width="9"/><ellipse cx="50" cy="62" rx="36" ry="14" fill="none" stroke="${G}" stroke-width="6"/>${[[16,58],[24,50],[36,46],[50,45],[64,46],[76,50],[84,58]].map(([x,y],k)=>`<path d="M${x} ${y} L${x+2} ${y-14-(k===3?8:0)} L${x+5} ${y-1}Z" fill="${G}" ${st} stroke-width="1.6"/><circle cx="${x+2}" cy="${y-16-(k===3?8:0)}" r="${k===3?5:3.6}" fill="${k%2?"#e84a4a":"#d8f4ff"}" ${st} stroke-width="1.4"/>`).join("")}<path d="M16 66 Q50 82 84 66" stroke="#fff1b0" stroke-width="1.6" fill="none"/>${shine(80,24)}`;break;
+ case "shield":g=`<circle cx="50" cy="50" r="40" fill="${B}" ${st}/><circle cx="50" cy="50" r="33" fill="${S}" ${st} stroke-width="1.6"/><path d="M36 30 Q30 44 34 62" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/><g opacity=".85"><circle cx="54" cy="50" r="12" fill="#8a9a8a"/><path d="M44 44 q-6 -6 -4 -12 M46 40 q-2 -8 4 -10 M54 38 q2 -8 8 -8 M62 42 q6 -6 10 -2 M64 50 q8 0 8 6 M44 52 q-8 2 -8 8" stroke="#3a6a3a" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="50" cy="48" r="1.6" fill="#1c1e24"/><circle cx="58" cy="48" r="1.6" fill="#1c1e24"/></g><circle cx="50" cy="50" r="40" fill="none" stroke="${G}" stroke-width="2" stroke-dasharray="3 5"/>`;break;
+ case "hrunting":g=`<path d="M47 4 L53 4 L55 68 L50 74 L45 68Z" fill="#9aa4ac" ${st}/>${[12,20,28,36,44,52,60].map(y=>`<path d="M47 ${y} q3 3 6 0 q-3 3 -6 6" stroke="#5a6068" stroke-width="1.2" fill="none"/>`).join("")}<path d="M50 6 V66" stroke="#3a4048" stroke-width="1.2"/><path d="M34 70 H66 L64 76 H36Z" fill="${G}" ${st}/><rect x="46" y="76" width="8" height="14" fill="#3a2414" ${st}/><path d="M46 80 h8 M46 85 h8" stroke="${G}" stroke-width="1.4"/><path d="M38 90 H62 L58 98 H42Z" fill="${G}" ${st}/><path d="M42 94 h16" stroke="#a8322a" stroke-width="2"/>`;break;
+ case "mallet":g=`<path d="M50 54 L50 94" stroke="${INK}" stroke-width="9" stroke-linecap="round"/><path d="M50 54 L50 94" stroke="#a8322a" stroke-width="6" stroke-linecap="round"/><path d="M50 82 q-6 6 -2 12" stroke="${G}" stroke-width="2.4" fill="none"/><rect x="16" y="20" width="68" height="36" rx="16" fill="#c4783a" ${st}/><ellipse cx="18" cy="38" rx="6" ry="16" fill="${G}" ${st}/><ellipse cx="82" cy="38" rx="6" ry="16" fill="${G}" ${st}/><path d="M30 26 Q50 22 70 26" stroke="#ffe0b0" stroke-width="2" fill="none"/>${[[36,38],[50,36],[64,38]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="none" stroke="${G}" stroke-width="2"/><path d="M${x-3} ${y} h6 M${x} ${y-3} v6" stroke="${G}" stroke-width="1.4"/>`).join("")}<g fill="${G}"><circle cx="24" cy="12" r="3"/><circle cx="74" cy="10" r="2.4"/><circle cx="86" cy="18" r="2"/></g>`;break;
+ case "foxbead":g=`<circle cx="50" cy="52" r="34" fill="#ffffff" opacity=".35"/><circle cx="50" cy="52" r="24" fill="url(#${id}pearl)" ${st}/><path d="M38 60 Q44 42 60 40 Q50 48 54 58 Q46 52 38 60Z" fill="#e8902a" opacity=".85"/><path d="M58 44 l6 -8 l2 9Z" fill="#e8902a" opacity=".85"/><path d="M36 44 q6 -10 16 -10" stroke="#fff" stroke-width="2.4" fill="none"/>${shine(74,26)}`;break;
+ case "gong":g=`<path d="M14 92 V16 H86 V92" stroke="#6a2414" stroke-width="7" fill="none" stroke-linejoin="round"/><path d="M10 16 H90" stroke="${INK}" stroke-width="9" stroke-linecap="round"/><path d="M10 16 H90" stroke="#a8322a" stroke-width="6" stroke-linecap="round"/><path d="M38 16 V26 M62 16 V26" stroke="${INK}" stroke-width="1.6"/><circle cx="50" cy="56" r="28" fill="${B}" ${st}/><circle cx="50" cy="56" r="10" fill="${G}" ${st} stroke-width="1.6"/><circle cx="50" cy="56" r="20" fill="none" stroke="#5a3414" stroke-width="1.2"/><path d="M36 42 Q40 36 48 34" stroke="#ffe0b0" stroke-width="2" fill="none"/><path d="M84 60 l-14 18" stroke="#8a5a2a" stroke-width="4" stroke-linecap="round"/><circle cx="86" cy="58" r="5" fill="#a8322a" ${st} stroke-width="1.4"/>`;break;
  case "tiki":g=`<path d="M50 10 Q74 12 76 40 Q76 52 66 58 Q74 70 68 86 Q50 94 32 86 Q26 70 34 58 Q24 52 24 40 Q26 12 50 10Z" fill="url(#${id}jade)" ${st}/><circle cx="40" cy="36" r="7" fill="#14482a"/><circle cx="60" cy="36" r="7" fill="#14482a"/><circle cx="40" cy="36" r="3" fill="#c8ffd8"/><circle cx="60" cy="36" r="3" fill="#c8ffd8"/><path d="M42 50 Q50 56 58 50" stroke="#14482a" stroke-width="3" fill="none"/><path d="M38 70 Q50 64 62 70 M40 78 Q50 74 60 78" stroke="#14482a" stroke-width="2.4" fill="none"/><path d="M50 4 V10" stroke="#8a5a2a" stroke-width="3"/>`;break;
  }
  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">${defs}${finish(g,[0,0,100,100],{rim:"#fffbe8",rimA:.7,shade:.3,top:.15,grain:.18,dx:-.8,dy:-1})}</svg>`;
@@ -3414,14 +3424,14 @@ function monBuild(spec){
   fig.add(mesh(new T3.TorusGeometry(.5*S,.07*S,6,20),goldM,[0,7.3*S,0],[Math.PI/2,0,0]));
   if(spec.v==="gorgon"){const snM=M("#3a6a3a",{map:scaleTex(),roughness:.5});for(let k=0;k<14;k++){const a=k/14*Math.PI*2,r0=V3(.1*S+Math.cos(a)*.45*S,7.1*S,Math.sin(a)*.5*S),c=new T3.CatmullRomCurve3([r0,r0.clone().add(V3(Math.cos(a)*.6*S,.5*S,Math.sin(a)*.6*S)),r0.clone().add(V3(Math.cos(a)*1.1*S,.1*S+(k%3)*.2*S,Math.sin(a)*1.1*S)),r0.clone().add(V3(Math.cos(a)*1.4*S,.6*S,Math.sin(a)*1.3*S))]);fig.add(mesh(new T3.TubeGeometry(c,10,.07*S,5),snM));fig.add(mesh(new T3.SphereGeometry(.11*S,8,6),snM,[c.points[3].x,c.points[3].y,c.points[3].z],null,[1.4,.8,1]))}}
   if(spec.v==="moon"){const disc=mesh(new T3.CircleGeometry(2.2*S,40),new T3.MeshBasicMaterial({color:C3("#f4ecd8"),transparent:true,opacity:.85}),[1.2*S,6.6*S,0],[0,-Math.PI/2,0]);fig.add(disc);const hl=glowSprite(7*S,.45,"#fff0c8");hl.position.set(1.3*S,6.6*S,0);fig.add(hl);[1,-1].forEach(d=>fig.add(mesh(new T3.SphereGeometry(.22*S,10,8),goldM,[-.3*S,6.4*S,d*.75*S])))}
-  if(spec.v==="yomi"){for(let k=0;k<6;k++){const a=k/6*Math.PI*2;fig.add(mesh(new T3.ConeGeometry(.18*S,2.4*S,5),hairM,[.2*S+Math.cos(a)*.5*S,5.2*S,Math.sin(a)*.6*S],[Math.sin(a)*.2,0,Math.cos(a)*.15]))}}[1,-1].forEach(d=>{const e=glowSprite(.45*S,.95);e.position.set(-.5*S,6.85*S,d*.2*S);fig.add(e)});
+  if(spec.v==="yomi"){for(let k=0;k<6;k++){const a=k/6*Math.PI*2;fig.add(mesh(new T3.ConeGeometry(.18*S,2.4*S,5),hairM,[.2*S+Math.cos(a)*.5*S,5.2*S,Math.sin(a)*.6*S],[Math.sin(a)*.2,0,Math.cos(a)*.15]))}}[1,-1].forEach(d=>{const e=glowSprite(.3*S,.6);e.position.set(-.5*S,6.85*S,d*.2*S);fig.add(e)});
   /* v8.6 detail: sculpted face, embroidered robe, collar, jewellery, hands */
   {const fh=new T3.Group();fh.position.set(0,6.8*S,0);fh.scale.set(1,1.12,1);fig.add(fh);faceKit(fh,.55*S,skinM,M(mix(spec.belly||"#e2cbd2","#2a0a14",.45),{roughness:.6}),{noEars:true,mouth:M("#7a1a2a",{roughness:.5})})}
   [1,-1].forEach(d=>{const pts=[[2.62,-.5],[2.25,.4],[1.57,2],[.98,3.6],[.73,4.6]].map(([r,y])=>V3(-r*S*Math.cos(.16),y*S,d*r*S*Math.sin(.16)));fig.add(mesh(new T3.TubeGeometry(new T3.CatmullRomCurve3(pts),24,.07*S,5),goldM))});
 
   fig.add(mesh(new T3.CylinderGeometry(.95*S,.7*S,.9*S,24,1,true),robeM,[.25*S,6.05*S,0],[0,0,.12]));fig.add(mesh(new T3.TorusGeometry(.62*S,.06*S,6,24),goldM,[0,5.95*S,0],[Math.PI/2,0,0]));
   fig.add(mesh(new T3.OctahedronGeometry(.16*S,0),orbM,[-.66*S,5.75*S,0]));[1,-1].forEach(d=>fig.add(mesh(new T3.SphereGeometry(.07*S,6,5),goldM,[-.05*S,6.5*S,d*.6*S])));
-  const hands=[0,1].map(()=>{const h=new T3.Group();h.add(mesh(new T3.SphereGeometry(.2*S,10,8),skinM,[0,0,0],null,[1,1.2,.7]));handKit(h,.5*S,skinM,null);h.add(mesh(new T3.CylinderGeometry(.38*S,.22*S,.7*S,12,1,true),robeM,[.1*S,.45*S,0]));root.add(h);return h});
+  const hands=[0,1].map(()=>{const h=new T3.Group();h.add(mesh(new T3.SphereGeometry(.2*S,10,8),skinM,[0,0,0],null,[1,1.2,.7]));handKit(h,.5*S,skinM,null);h.add(mesh(new T3.CylinderGeometry(.26*S,.18*S,.5*S,12,1,true),robeM,[.05*S,.36*S,0]));root.add(h);return h});
   const arms=[1,-1].map(d=>chain(8,.22*S,.16*S,0)),staff=new T3.Group();root.add(staff);staff.add(mesh(new T3.CylinderGeometry(.07*S,.09*S,6*S,7),goldM,[0,-.5*S,0]),mesh(new T3.SphereGeometry(.38*S,16,12),orbM,[0,2.7*S,0]));const orbG=glowSprite(3*S,.7);orbG.position.y=2.7*S;staff.add(orbG);
   const pigs=(spec.v?[]:[0,1,2]).map(k=>{const g=grp(mesh(new T3.SphereGeometry(.5,12,8),M("#e8a8a0"),[0,0,0],null,[1.45,1,1]),mesh(new T3.CylinderGeometry(.2,.22,.25,10),M("#d88880"),[-.75,.05,0],[0,0,Math.PI/2]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,.22]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,-.22]));g.scale.setScalar(S);root.add(g);return g});
   upd=(t,st)=>{const L=Math.max(0,st.L);fig.position.y=.6+Math.sin(t*.8)*.25;fig.rotation.y=Math.sin(t*.3)*.12;const fy=fig.position.y;
@@ -3514,11 +3524,11 @@ function handKit(g,s,skin,nail){for(let f=0;f<4;f++)g.add(mesh(new T3.CylinderGe
  if(nail)for(let f=0;f<4;f++)g.add(mesh(new T3.ConeGeometry(.05*s,.18*s,4),nail,[-.32*s,-.68*s,(f-1.5)*.15*s],[0,0,-2.8]))}
 function monBuild2(spec){
  const kind=spec.kind,v=spec.v||"",big=!!spec.big,glow=spec.glow||"#8ff5cf",root=new T3.Group(),mats=[],parts={};
- const M=(c,o)=>{const m=new T3.MeshStandardMaterial(Object.assign({color:C3(c),roughness:.6,emissive:C3("#000000")},o||{}));mats.push(m);return m};
+ const M=(c,o)=>{const m=new T3.MeshStandardMaterial(Object.assign({color:C3(c),roughness:.6,emissive:C3(mix(c,"#000000",.86))},o||{}));mats.push(m);return m};
  const V3=(x,y,z)=>new T3.Vector3(x,y,z);
  const glowSp=(s,o=.9,c=glow)=>{const sp=new T3.Sprite(new T3.SpriteMaterial({map:softDot(),color:C3(c),transparent:true,blending:T3.AdditiveBlending,depthWrite:false,opacity:o}));sp.scale.setScalar(s);return sp};
  const eyeM=new T3.MeshBasicMaterial({color:C3(spec.eye||glow)});
- const eyes=(g,x,y,z,r)=>[1,-1].forEach(d=>{g.add(mesh(new T3.SphereGeometry(r,10,8),eyeM,[x,y,d*z]));const s=glowSp(r*7,.7,spec.eye||glow);s.position.set(x-.05,y,d*z);g.add(s)});
+ const eyes=(g,x,y,z,r)=>[1,-1].forEach(d=>{g.add(mesh(new T3.SphereGeometry(r*.8,10,8),eyeM,[x+r*.3,y,d*z],null,[.6,.7,1]));const s=glowSp(r*3.2,.4,spec.eye||glow);s.position.set(x-.05,y,d*z);g.add(s)});
  const bone=M("#efe6cf",{roughness:.5}),dark=M("#0c0a0c",{roughness:.8});
  let upd=()=>{};
  if(kind==="titan"){
@@ -3559,7 +3569,7 @@ function monBuild2(spec){
    [1,-1].forEach(d=>{const h=new T3.CatmullRomCurve3([V3(0,.5*S,d*.6*S),V3(0,.8*S,d*1.4*S),V3(-.4*S,1.5*S,d*1.8*S),V3(-.9*S,1.8*S,d*1.6*S)]);hd.add(mesh(new T3.TubeGeometry(h,10,.13*S,6),bone));hd.add(mesh(new T3.TorusGeometry(.18*S,.05*S,6,12),gold,[-1.42*S,-.35*S,0],[0,Math.PI/2,0]))});eyes(hd,-.62*S,.35*S,.42*S,.09*S)}
   else{hd.add(mesh(new T3.SphereGeometry(.85*S*hs,18,14),sk,[0,0,0],null,[1,1.12,.95]));
    const ey=v==="cyclops"?0:1;if(ey)eyes(hd,-.72*S*hs,.2*S*hs,.32*S*hs,(v==="grendel"?.13:.1)*S);
-   else{hd.add(mesh(new T3.SphereGeometry(.38*S,16,12),M("#f2ece0",{roughness:.3}),[-.68*S,.22*S,0]));hd.add(mesh(new T3.SphereGeometry(.2*S,12,10),eyeM,[-.98*S,.22*S,0]));const s=glowSp(2*S,.8,spec.eye||glow);s.position.set(-1.1*S,.22*S,0);hd.add(s)}
+   else{hd.add(mesh(new T3.SphereGeometry(.38*S,16,12),M("#f2ece0",{roughness:.3}),[-.68*S,.22*S,0]));hd.add(mesh(new T3.SphereGeometry(.2*S,12,10),eyeM,[-.98*S,.22*S,0]));const s=glowSp(1.1*S,.45,spec.eye||glow);s.position.set(-1.1*S,.22*S,0);hd.add(s)}
    // sculpted face: brow, nose, cheeks, ears, mouth; beards for the old kings of wind and sea
    {const shd=M(mix(skinC,"#000000",.4),stone?{map:rockTex(),flatShading:true}:metal?{metalness:.85,roughness:.35}:{roughness:.7});
     faceKit(hd,.85*S*hs,sk,shd,{angry:v!=="king",sockets:v!=="cyclops",beard:v==="humbaba"||v==="div"||v==="jinn"?M(v==="jinn"?"#1a1a2a":"#2a1a0e",{roughness:.95}):null,beardL:.8,noEars:v==="bronze"})}
@@ -3578,7 +3588,7 @@ function monBuild2(spec){
    if(v==="stone"){for(let k=0;k<3;k++){const a=(k-1)*.7;hd.add(mesh(new T3.ConeGeometry(.22*S,.9*S,4),sk,[.1*S,.95*S,Math.sin(a)*.5*S],[a,0,0]))}}}
   // arms: shoulder group -> forearm group -> hand/weapon
   const arms=[1,-1].map(d=>{const sh=new T3.Group();sh.position.set(-hunch*.6*S,3.25*S,d*1.55*S*(chestR/1.4));tor.add(sh);
-   const up=mesh(new T3.CylinderGeometry(.42*S,.36*S,2*S,10),sk,[0,-1*S,0]);sh.add(up);sh.add(mesh(new T3.SphereGeometry(.5*S,10,8),metal||v==="kumbha"?gold:sk));
+   const up=mesh(new T3.CylinderGeometry(.42*S,.36*S,2*S,10),sk,[0,-1*S,0]);sh.add(up);sh.add(mesh(new T3.SphereGeometry(.44*S,12,10),metal||v==="kumbha"?gold:sk,[0,0,0],null,[1,.9,1]));
    const fa=new T3.Group();fa.position.y=-2*S;sh.add(fa);fa.add(mesh(new T3.CylinderGeometry(.36*S,.3*S,(v==="grendel"?2.6:1.9)*S,10),sk,[0,-.95*S*(v==="grendel"?1.35:1),0]));
    sh.add(mesh(new T3.SphereGeometry(.4*S,10,8),sk,[-.12*S,-.85*S,0],null,[1,1.5,.95]));
    fa.add(mesh(new T3.CylinderGeometry(.4*S,.37*S,.55*S,10),metal||v==="king"||v==="kumbha"?gold:M(spec.belt||"#3a2414",{roughness:.7}),[0,-1.35*S*(v==="grendel"?1.3:1),0]));
@@ -4262,7 +4272,7 @@ async function win(){
  const got=grantCharms(n.type==="boss"?2:1);
  let newShip=null;if(n.type==="isl"&&!P.ships.includes(n.isl.ship.id)){P.ships.push(n.isl.ship.id);newShip=n.isl.ship}
  save();busy=false;
- const rew=got.length?`<p class="rw-charm">Charm found: ${got.map(c=>`<b>${CHARM_NAME[c]}</b>`).join(" and ")}</p>`:`<p class="rw-charm">Your charm hold is full.</p>`;
+ const rew=got.length?`<p class="rw-charm">Charm found: ${[...new Set(got)].map(c=>{const k=got.filter(x=>x===c).length;return `<b>${CHARM_NAME[c]}</b>${k>1?` ×${k}`:""}`}).join(" and ")}</p>`:`<p class="rw-charm">Your charm hold is full.</p>`;
  const end=i===NODES.length-1;
  if(n.type==="isl"){const I=n.isl,S=I.ship,T=I.tr;
   await Scene.landfall(I);
@@ -4436,13 +4446,13 @@ function lootSVG(t,c){const g=["#c9bfa6","#7fd8ff","#ffcf6a"][t];
  return `<svg viewBox="0 0 48 48"><g stroke="${g}" stroke-width="1.2" opacity=".55">${[...Array(12)].map((_,k)=>{const a=k/12*Math.PI*2;return `<path d="M${24+Math.cos(a)*15} ${24+Math.sin(a)*15}L${24+Math.cos(a)*22} ${24+Math.sin(a)*22}"/>`}).join("")}</g><path d="M24 9 28.5 19.5 40 20.5 31 28 34 39.5 24 33 14 39.5 17 28 8 20.5 19.5 19.5Z" fill="${g}"/><circle cx="24" cy="25" r="4" fill="${c}"/></svg>`}
 function awardLoot(n,stars){P.loot=P.loot||{};const k=nodeKey(n),prev=P.loot[k]||0,got=[];for(let t=prev;t<stars;t++)got.push(t);if(stars>prev)P.loot[k]=stars;return got}
 function lootRow(n,stars,got){const L=LOOT3[nodeKey(n)]||["Relic","Rare relic","Legendary relic"],have=(P.loot||{})[nodeKey(n)]||0;
- return `<section class="ledger"><h2>Ship's ledger</h2><ol>${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<li class="${own?"got":"lock"} ${nw?"new":""}" style="--d:${.3+t*.15}s"><span class="lg-r">${RARITY[t].name}</span><span class="lg-n">${own?esc(L[t]):"Not yet found"}</span><span class="lg-s">${nw?"New":own?"Held":`${t+1} ${t?"stars":"star"}`}</span></li>`}).join("")}</ol>${have<3?`<p class="lg-hint">${have===2?"Clear it with no misses to find the Legendary piece.":"Fewer misses find rarer pieces."}</p>`:""}</section>`}
+ return `<section class="ledger"><h2>Ship's ledger</h2><ol>${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<li class="${own?"got":"lock"} ${nw?"new":""}" style="--d:${.3+t*.15}s"><span class="lg-i" aria-hidden="true">${own?lootSVG(t,"",nodeKey(n)):""}</span><span class="lg-r">${RARITY[t].name}</span><span class="lg-n">${own?esc(L[t]):"Not yet found"}</span><span class="lg-s">${nw?"New":own?"Held":`${t+1} ${t?"stars":"star"}`}</span></li>`}).join("")}</ol>${have<3?`<p class="lg-hint">${have===2?"Clear it with no misses to find the Legendary piece.":"Fewer misses find rarer pieces."}</p>`:""}</section>`}
 function lootRowOld(n,stars,got){const L=LOOT3[nodeKey(n)]||["Relic","Rare relic","Legendary relic"],have=(P.loot||{})[nodeKey(n)]||0,c=n.type==="isl"?n.isl.pal.glow:BOSSPAL[n.leg].glow;
- return `<div class="lootrow">${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<div class="loot r${t} ${own?"":"locked"} ${nw?"new":""}" style="animation-delay:${.25+t*.18}s">${lootSVG(t,c)}<span class="mono">${RARITY[t].name}${nw?" · new":""}</span><b>${own?esc(L[t]):`${t+1} star${t?"s":""} to claim`}</b></div>`}).join("")}</div>
+ return `<div class="lootrow">${[0,1,2].map(t=>{const own=t<have,nw=got.includes(t);return `<div class="loot r${t} ${own?"":"locked"} ${nw?"new":""}" style="animation-delay:${.25+t*.18}s">${lootSVG(t,c,nodeKey(n))}<span class="mono">${RARITY[t].name}${nw?" · new":""}</span><b>${own?esc(L[t]):`${t+1} star${t?"s":""} to claim`}</b></div>`}).join("")}</div>
  ${have<3?`<p class="loot-hint">${have===2?"Clear it with no misses to claim the Legendary.":"Fewer misses earn rarer loot."}</p>`:""}`}
 function lootTotal(){return Object.values(P.loot||{}).reduce((a,b)=>a+(+b||0),0)}
 function lootLog(){return `<p class="sub" style="margin-top:0">${lootTotal()} of ${NODES.length*3} pieces collected. One, two or three stars on a stop claims its Common, Rare and Legendary piece.</p><div class="lootgrid">${NODES.map((n,i)=>{const L=LOOT3[nodeKey(n)],have=(P.loot||{})[nodeKey(n)]||0,known=i<=P.unlocked,c=n.type==="isl"?n.isl.pal.glow:BOSSPAL[n.leg].glow;
- return `<div class="lg"><span class="mono">${n.type==="isl"?n.num:"Boss"} · ${known?esc(nodeName(n)):"Uncharted"}</span><div class="lg3">${[0,1,2].map(t=>`<div class="loot sm r${t} ${t<have?"":"locked"}" title="${t<have?esc(L[t]):RARITY[t].name}">${lootSVG(t,c)}<b>${t<have?esc(L[t]):"·"}</b></div>`).join("")}</div></div>`}).join("")}</div>`}
+ return `<div class="lg"><span class="mono">${n.type==="isl"?n.num:"Boss"} · ${known?esc(nodeName(n)):"Uncharted"}</span><div class="lg3">${[0,1,2].map(t=>`<div class="loot sm r${t} ${t<have?"":"locked"}" title="${t<have?esc(L[t]):RARITY[t].name}">${lootSVG(t,c,nodeKey(n))}<b>${t<have?esc(L[t]):"·"}</b></div>`).join("")}</div></div>`}).join("")}</div>`}
 /* ---------- ranked voyage ---------- */
 const fmtT=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s/60)%60,x=s%60;return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0")};
 function rankHud(){if(P.mode!=="ranked"||!R||R.duel)return;const e=$("#hudSea");if(e)e.textContent=`Ranked · ${fmtT((P.rank||{}).t||0)} · ${R.boss?"Boss":"Island "+R.n.num}`}
@@ -4518,9 +4528,195 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 8.6 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8.7 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
+
+/* ============ v8.7 loot illustrations: one drawing per named piece (120) ============ */
+const LOOTART=(()=>{
+const K="#2b1b0b",s=`stroke="${K}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"`,t=`stroke="${K}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"`;
+const GD="#d9a441",GL="#f3d27a",SV="#c9d2d8",BZ="#b0743a",IR="#5a6068",WD="#8a5a2a",RD="#a8322a",JD="#3fae6a",LP="#2a4a9a",OB="#1c1e24",BN="#efe6cf",WH="#f7f2e4",AM="#e8902a",CO="#e8705a",LF="#4a8a3a",PA="#ead9b0";
+const ln=(d,c=K,w=2.4)=>`<path d="${d}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+const sh=(d,f)=>`<path d="${d}" fill="${f}" ${s}/>`;
+const c=(x,y,r,f,st=s)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" ${st}/>`;
+const hl=(x,y,r=3)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity=".75"/>`;
+const flame=(x,y,k=1,col=AM)=>`<path d="M${x} ${y} q${-7*k} ${-8*k} 0 ${-20*k} q${7*k} ${12*k} 0 ${20*k}Z" fill="${col}" ${t}/><path d="M${x} ${y-3*k} q${-3*k} ${-4*k} 0 ${-10*k} q${3*k} ${6*k} 0 ${10*k}Z" fill="#fff1b0"/>`;
+const beads=(pts,f,r=6)=>pts.map(([x,y],i)=>c(x,y,r,Array.isArray(f)?f[i%f.length]:f,t)+hl(x-r*.35,y-r*.35,r*.3)).join("");
+const arc=(n,cx,cy,rx,ry,a0,a1)=>Array.from({length:n},(_,i)=>{const a=a0+(a1-a0)*i/(n-1);return[cx+Math.cos(a)*rx,cy+Math.sin(a)*ry]});
+const vial=(liq,cork=WD)=>sh("M42 14 H58 V30 Q72 38 72 60 Q72 86 50 86 Q28 86 28 60 Q28 38 42 30Z",WH+"")+`<path d="M30 58 Q50 52 70 58 Q71 84 50 84 Q29 84 30 58Z" fill="${liq}"/>`+sh("M40 6 H60 V16 H40Z",cork)+ln("M36 44 Q34 56 38 66","#fff",3);
+const lantern=(body,glow,top=IR)=>sh("M36 22 H64 L68 30 H32Z",top)+sh("M34 30 H66 V74 H34Z",body)+`<rect x="40" y="36" width="20" height="32" fill="${glow}" opacity=".9"/>`+flame(50,64,.9,AM)+sh("M32 74 H68 L64 82 H36Z",top)+ln("M50 22 V10 M44 10 Q50 2 56 10")+ln("M34 30 V74 M66 30 V74 M50 30 V74",K,1.5);
+const horn=(f,rim)=>sh("M14 76 Q18 36 64 16 Q84 10 88 20 Q60 30 46 56 Q38 72 30 84Z",f)+ln("M26 62 Q40 40 64 26",K,1.2)+(rim?sh("M62 14 Q80 8 90 20 L86 24 Q76 14 64 20Z",rim):"");
+const tooth=(f=BN,root="#d8c8a0")=>sh("M30 16 Q50 8 70 16 Q76 34 64 48 Q60 72 52 90 Q48 70 44 50 Q26 36 30 16Z",f)+ln("M40 24 Q50 20 60 24",root,2)+hl(40,28,3);
+const feather=(vane,vane2,tip,spine="#e8dcc0",curl=0)=>ln("M30 92 Q42 52 70 10",spine,3)+sh(`M70 10 Q${92+curl} 40 62 70 Q48 86 36 86 Q46 52 70 10Z`,vane)+sh("M70 10 Q38 30 34 60 Q32 80 36 86 Q46 52 70 10Z",vane2)+(tip?sh("M70 10 Q78 18 76 28 Q70 22 62 22 Q64 14 70 10Z",tip):"");
+const scale=(f,edge)=>sh("M50 12 Q84 20 84 52 Q80 82 50 90 Q20 82 16 52 Q16 20 50 12Z",f)+ln("M50 22 Q72 28 74 52 Q72 74 50 80",edge,2)+ln("M30 40 Q50 30 70 40 M28 56 Q50 46 72 56",edge,1.4)+hl(36,30,4);
+const stone=(f,mark="")=>sh("M18 62 L26 30 L52 18 L78 28 L86 56 L70 82 L34 84Z",f)+ln("M26 30 L44 46 L52 18 M44 46 L34 84 M44 46 L86 56",K,1.2)+mark;
+const collar=(f,stud)=>`<ellipse cx="50" cy="52" rx="36" ry="26" fill="none" stroke="${K}" stroke-width="13"/><ellipse cx="50" cy="52" rx="36" ry="26" fill="none" stroke="${f}" stroke-width="9"/>`+arc(9,50,52,36,26,Math.PI*.15,Math.PI*.85).map(([x,y])=>c(x,y,3,stud,t)).join("");
+const P={
+skull:[ // Barnacled spyglass | Lantern of the drowned | The black spot
+ ()=>sh("M10 64 L62 30 L68 40 L16 74Z",BZ)+sh("M58 26 L84 10 L92 24 L66 40Z",GD)+sh("M6 66 L14 60 L20 72 L12 78Z",OB)+ln("M30 48 L36 58 M44 40 L50 50",K,1.6)+[[28,58],[38,50],[46,46],[24,64]].map(([x,y])=>c(x,y,3,"#e8e0d0",t)).join("")+hl(80,16,2.4),
+ ()=>lantern("#4a5a4a","#9fe8c0")+`<g fill="#e8e0d0">${[[34,40],[66,56],[36,70]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g>`+ln("M20 88 Q30 82 40 88 T60 88 T80 88","#2a6f97",2.4),
+ ()=>c(50,50,34,PA)+ln("M24 30 Q50 22 76 30 M22 70 Q50 78 78 70",K,1)+c(50,50,14,OB,t)+`<text x="50" y="84" font-family="serif" font-size="10" text-anchor="middle" fill="${RD}">DEPOSED</text>`+ln("M70 18 L84 10",K,1)],
+onogoro:[ // Coral-bead rosary | Hare of Inaba charm | Drop from the jeweled spear
+ ()=>beads(arc(14,50,46,30,30,-Math.PI*.5,Math.PI*1.4),[CO,"#f0a090"],5)+ln("M50 76 V90",RD,3)+sh("M44 88 H56 L52 96 H48Z",RD),
+ ()=>sh("M20 20 H80 V86 L50 96 L20 86Z",WD)+sh("M26 26 H74 V80 L50 88 L26 80Z",WH)+sh("M36 70 Q34 52 48 50 Q50 34 46 24 Q54 26 56 46 Q58 32 64 26 Q64 42 60 52 Q70 58 66 70Z",WH)+c(56,56,1.6,K,t)+ln("M50 6 V20",RD,3),
+ ()=>sh("M50 8 Q72 44 72 62 Q72 86 50 86 Q28 86 28 62 Q28 44 50 8Z","#bfe0f0")+ln("M40 56 Q38 68 44 76","#fff",3)+c(50,64,8,"#8ad0e8",t)+ln("M50 0 V6",GD,4)+`<g fill="${GL}"><circle cx="20" cy="30" r="2"/><circle cx="80" cy="36" r="2"/><circle cx="76" cy="16" r="1.6"/></g>`],
+magnetic:[ // Bent iron nail | Brass horseman's spur | Heart of the lodestone
+ ()=>sh("M18 22 H40 V28 H18Z",IR)+sh("M26 28 H32 V58 Q32 74 48 78 L80 82 L80 88 L46 84 Q26 80 26 58Z",IR)+ln("M28 34 V56",SV,1.4)+ln("M78 84 l8 0",K,1.4),
+ ()=>sh("M14 50 Q14 30 40 30 H56 V38 H40 Q24 38 24 50 Q24 62 40 62 H56 V70 H40 Q14 70 14 50Z",BZ)+ln("M56 50 H70",K,4)+`<g transform="translate(80 50)">${Array.from({length:8},(_,k)=>{const a=k*Math.PI/4;return `<path d="M0 0 L${Math.cos(a)*12} ${Math.sin(a)*12}" stroke="${K}" stroke-width="3"/>`}).join("")}${c(0,0,5,GD,t)}</g>`+c(44,34,2.4,GD,t)+c(44,66,2.4,GD,t),
+ ()=>stone("#3a3e48")+sh("M50 40 Q56 30 64 36 Q70 44 50 64 Q30 44 36 36 Q44 30 50 40Z",RD)+ln("M12 30 Q4 50 12 70 M88 30 Q96 50 88 70","#6a8ab8",2)+`<g stroke="${IR}" stroke-width="3" stroke-linecap="round"><path d="M10 50 h-6"/><path d="M90 50 h6"/></g>`],
+penglai:[ // Peach blossom sprig | Elixir gourd | Scale from the island-bearer
+ ()=>ln("M16 88 Q40 60 58 40 Q70 26 86 14","#5a3a24",4)+[[40,62],[60,40],[78,22],[30,76]].map(([x,y])=>Array.from({length:5},(_,k)=>{const a=k/5*Math.PI*2;return c(x+Math.cos(a)*6,y+Math.sin(a)*6,4.4,"#f6c0c8",t)}).join("")+c(x,y,2.4,"#e84a6a",t)).join("")+sh("M48 52 q-12 -2 -16 6 q10 2 16 -6Z",LF),
+ ()=>sh("M50 30 Q70 30 72 48 Q72 60 62 64 Q82 70 80 82 Q76 96 50 96 Q24 96 20 82 Q18 70 38 64 Q28 60 28 48 Q30 30 50 30Z","#d8a850")+sh("M44 18 H56 V30 H44Z",WD)+ln("M38 62 Q50 66 62 62",RD,4)+ln("M60 10 Q66 4 74 8","#9ae0c0",2)+hl(36,44,4)+hl(32,78,4),
+ ()=>sh("M50 10 L84 30 L84 66 L50 90 L16 66 L16 30Z","#4a7a5a")+sh("M50 26 L70 38 L70 60 L50 74 L30 60 L30 38Z","#6a9a6a")+ln("M50 10 V26 M84 30 L70 38 M84 66 L70 60 M50 90 V74 M16 66 L30 60 M16 30 L30 38",K,1.4)+ln("M40 44 Q50 38 60 44",GL,2)],
+thule:[ // Northern amber bead | Pytheas's sounding line | The midnight-sun crystal
+ ()=>ln("M10 40 Q50 20 90 40","#8a6a3a",2)+c(50,58,24,AM)+c(50,58,6,"#7a3a0a",t)+ln("M36 46 Q42 40 50 40","#ffe9a8",3),
+ ()=>ln("M50 4 V40 M50 4 Q40 20 50 30 Q60 40 50 50","#c8b080",3)+sh("M40 52 H60 L64 88 H36Z",IR)+`<ellipse cx="50" cy="88" rx="14" ry="4" fill="#e8d8a0" ${t}/>`+ln("M42 60 h16 M42 70 h16 M41 80 h18",SV,1.4),
+ ()=>sh("M50 6 L68 34 L60 92 H40 L32 34Z","#f0f4ff")+ln("M50 6 L50 92 M32 34 L50 44 L68 34",K,1.2)+`<path d="M50 44 L68 34 L60 92 L50 92Z" fill="#c8d8f8" opacity=".8"/>`+c(78,20,8,"#ffd070")+Array.from({length:8},(_,k)=>{const a=k*Math.PI/4;return ln(`M${78+Math.cos(a)*11} ${20+Math.sin(a)*11} L${78+Math.cos(a)*15} ${20+Math.sin(a)*15}`,AM,1.6)}).join("")],
+sekhet:[ // Reed of the field | Scarab of Khepri | Knife of Ra that cut Apep
+ ()=>ln("M30 94 Q34 50 40 6 M50 94 Q50 50 54 10 M70 94 Q66 50 66 16",LF,3.4)+sh("M40 6 q-8 10 0 22 q6 -10 0 -22Z","#c8a860")+sh("M54 10 q-8 10 0 22 q6 -10 0 -22Z","#c8a860")+ln("M20 90 H80","#2a6f97",3),
+ ()=>sh("M50 30 Q74 32 74 60 Q72 86 50 88 Q28 86 26 60 Q26 32 50 30Z","#2a6a7a")+ln("M50 36 V86",K,1.6)+sh("M38 30 Q50 18 62 30 Q50 34 38 30Z","#1a3a4a")+c(50,10,9,"#e8902a")+ln("M28 50 L12 42 M28 66 L12 70 M72 50 L88 42 M72 66 L88 70",K,2.4)+hl(40,48,4),
+ ()=>sh("M20 80 L72 22 Q86 12 88 16 Q86 22 78 30 L28 86Z",SV)+ln("M28 76 L74 26","#fff",1.6)+sh("M14 76 L28 90 L24 94 L10 80Z",GD)+sh("M6 88 L16 98 L12 100 L2 92Z","#1a3a6a")+ln("M50 60 q-10 6 -6 16 q8 4 12 -6",RD,2)],
+buyan:[ // Oak acorn of Buyan | Alatyr stone chip | Koschei's death egg
+ ()=>sh("M28 46 Q28 92 50 94 Q72 92 72 46Z","#c8903a")+sh("M22 46 Q22 26 50 26 Q78 26 78 46Z","#7a5a2a")+ln("M30 34 h40 M26 42 h48",K,1)+ln("M50 26 Q52 14 60 8",WD,4)+hl(38,60,4),
+ ()=>stone(WH,`<path d="M50 34 L56 46 L70 46 L58 54 L62 68 L50 60 L38 68 L42 54 L30 46 L44 46Z" fill="none" stroke="${GD}" stroke-width="2"/>`),
+ ()=>sh("M50 8 Q76 10 80 52 Q80 90 50 92 Q20 90 20 52 Q24 10 50 8Z","#e8e0c8")+[[38,30],[60,40],[44,62],[64,70],[34,76],[56,22]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.4" fill="#8a7a5a"/>`).join("")+ln("M30 46 L40 52 L36 60 L46 64",K,1.6)+hl(36,24,4)],
+aeaea:[ // Moly root | Circe's wine cup | Hermes's moly flower
+ ()=>ln("M50 6 V40",LF,3)+sh("M50 40 Q66 44 62 60 Q58 70 50 72 Q42 70 38 60 Q34 44 50 40Z",OB)+ln("M44 70 Q36 84 22 90 M50 72 Q52 86 46 96 M56 70 Q66 82 80 88 M40 60 Q26 62 16 70 M60 58 Q74 60 86 66",OB,2.4),
+ ()=>sh("M14 34 H86 Q84 56 50 58 Q16 56 14 34Z","#c4783a")+`<path d="M22 40 H78 Q72 52 50 52 Q28 52 22 40Z" fill="#5a1a3a"/>`+ln("M14 34 Q4 36 8 48 M86 34 Q96 36 92 48",K,3)+sh("M44 58 H56 V78 H44Z","#c4783a")+sh("M30 80 H70 L66 88 H34Z","#c4783a")+ln("M36 46 q6 4 12 0 q6 -4 12 0",OB,1.2),
+ ()=>ln("M50 96 V50",LF,3)+sh("M50 74 q-16 -2 -20 -14 q14 0 20 14Z",LF)+Array.from({length:6},(_,k)=>{const a=k/6*Math.PI*2-Math.PI/2;return sh(`M50 34 Q${50+Math.cos(a-.4)*24} ${34+Math.sin(a-.4)*24} ${50+Math.cos(a)*26} ${34+Math.sin(a)*26} Q${50+Math.cos(a+.4)*24} ${34+Math.sin(a+.4)*24} 50 34Z`,WH)}).join("")+c(50,34,5,GL,t)+sh("M66 60 l10 -6 l-2 8Z M34 60 l-10 -6 l2 8Z",WH)],
+erytheia:[ // Red cattle bell | Orthrus's collar | Heracles's golden cup
+ ()=>ln("M20 10 Q50 30 80 10",WD,4)+sh("M34 26 H66 L70 80 H30Z",RD)+ln("M30 80 H70",K,4)+c(50,86,5,IR)+ln("M38 34 V72",CO,2),
+ ()=>collar("#3a2a20",SV)+sh("M40 74 L50 92 L60 74Z",SV)+c(38,40,4,BZ,t)+c(62,40,4,BZ,t)+ln("M34 32 l-6 -8 M66 32 l6 -8",K,2),
+ ()=>sh("M8 38 H92 Q90 76 50 78 Q10 76 8 38Z",GD)+`<ellipse cx="50" cy="38" rx="42" ry="8" fill="${GL}" ${s}/>`+c(50,58,8,"#ffd070",t)+Array.from({length:8},(_,k)=>{const a=k*Math.PI/4;return ln(`M${50+Math.cos(a)*10} ${58+Math.sin(a)*10} L${50+Math.cos(a)*14} ${58+Math.sin(a)*14}`,"#8a5a1a",1.6)}).join("")+ln("M14 86 Q30 80 46 86 T78 86","#2a6f97",2.4)],
+tir:[ // Silver apple branch | Fomorian sling stone | The spear of Lugh's victory
+ ()=>ln("M14 30 Q40 34 60 30 Q76 28 88 20",SV,4)+ln("M60 30 V40",SV,2)+c(60,56,16,SV)+hl(54,50,4)+sh("M30 32 q-6 -10 4 -14 q4 8 -4 14Z","#dfe8f0")+sh("M80 24 q4 -12 12 -8 q-4 8 -12 8Z","#dfe8f0"),
+ ()=>ln("M10 20 Q30 70 50 66 Q70 70 90 20","#8a6a3a",2.4)+sh("M38 60 Q50 54 62 60 Q62 74 50 76 Q38 74 38 60Z","#8a6a3a")+c(50,64,12,"#6a6a70")+ln("M44 60 l8 4 M46 68 l6 -2",K,1.2),
+ ()=>ln("M16 92 L66 24",WD,5)+sh("M62 30 L72 6 L80 14 L70 34Z",SV)+flame(78,14,.9,AM)+sh("M30 74 l8 6 l-4 4 l-8 -6Z",GD)],
+hybrasil:[ // Mist-glass vial | Seventh-day key | Map of the hidden isle
+ ()=>vial("#c8d8e8")+`<path d="M34 50 Q50 40 66 50" stroke="#fff" stroke-width="5" fill="none" opacity=".6"/>`,
+ ()=>c(28,50,16,"none",`stroke="${K}" stroke-width="9"`)+c(28,50,16,"none",`stroke="${IR}" stroke-width="5"`)+sh("M44 46 H90 V54 H44Z",IR)+sh("M72 54 H78 V66 H72Z M84 54 H90 V70 H84Z",IR)+`<text x="28" y="56" font-family="serif" font-size="16" text-anchor="middle" fill="${GD}">VII</text>`,
+ ()=>sh("M12 22 Q30 16 50 22 Q70 28 88 22 V80 Q70 86 50 80 Q30 74 12 80Z",PA)+ln("M50 22 V80 M30 18 V76 M70 26 V84",K,.8)+sh("M40 50 Q46 38 58 42 Q68 50 60 60 Q48 64 40 50Z","#a8c890")+ln("M22 66 Q32 58 40 54",RD,1.6)+ln("M18 70 l6 -6 M18 64 l6 6",RD,2)+`<path d="M30 40 Q50 30 70 40" stroke="#fff" stroke-width="6" fill="none" opacity=".5"/>`],
+ogygia:[ // Calypso's loom shuttle | Raft timber of Odysseus | Ambrosia of the nymph
+ ()=>sh("M6 50 Q20 38 50 38 Q80 38 94 50 Q80 62 50 62 Q20 62 6 50Z","#c8964a")+sh("M36 44 H64 V56 H36Z","#7a5a2a")+`<rect x="40" y="46" width="20" height="8" fill="#a8322a"/>`+ln("M60 50 Q76 70 92 80",RD,1.6)+hl(22,46,3),
+ ()=>sh("M14 30 L86 22 L90 40 L18 48Z","#a87a4a")+sh("M10 54 L82 50 L86 68 L14 72Z","#9a6a3a")+ln("M30 26 L34 70 M64 22 L68 68","#c8b080",4)+ln("M20 36 h60 M18 60 h60",K,.8)+ln("M8 84 Q30 78 50 84 T92 84","#2a6f97",2.4),
+ ()=>sh("M36 26 H64 L60 34 Q80 44 76 66 Q72 88 50 88 Q28 88 24 66 Q20 44 40 34Z","#e8d8b8")+ln("M28 58 H72",RD,3)+`<path d="M44 20 Q50 2 56 20" fill="${GL}" ${t}/>`+`<g fill="${GL}"><circle cx="38" cy="12" r="2"/><circle cx="64" cy="10" r="2"/></g>`+hl(34,48,4)],
+lanka:[ // Sita's ring | Hanuman's leap stone | The shadow-seizer's tooth
+ ()=>`<ellipse cx="50" cy="60" rx="28" ry="20" fill="none" stroke="${K}" stroke-width="12"/><ellipse cx="50" cy="60" rx="28" ry="20" fill="none" stroke="${GD}" stroke-width="8"/>`+sh("M38 40 L50 26 L62 40 L50 50Z",GD)+c(50,38,7,"#2a8a5a",t)+`<text x="50" y="66" font-family="serif" font-size="9" text-anchor="middle" fill="#8a5a1a">राम</text>`,
+ ()=>stone("#8a7a6a",sh("M40 40 Q46 30 54 34 Q60 40 58 56 Q56 68 48 66 Q38 62 40 40Z","#5a4a3a")+[[42,30],[48,26],[54,26],[60,30]].map(([x,y])=>`<ellipse cx="${x}" cy="${y-2}" rx="3" ry="4" fill="#5a4a3a"/>`).join("")),
+ ()=>tooth("#d8d0b8")+`<path d="M60 56 q10 10 22 6" stroke="#5a3a6a" stroke-width="6" fill="none" opacity=".6"/><path d="M36 60 q-12 8 -22 2" stroke="#5a3a6a" stroke-width="5" fill="none" opacity=".5"/>`],
+ryugu:[ // Turtle-back comb | Otohime's tamatebako ribbon | Kanju, the tide-ebbing jewel
+ ()=>sh("M10 50 Q10 18 50 18 Q90 18 90 50Z","#8a4a1a")+Array.from({length:14},(_,k)=>`<rect x="${13+k*5.4}" y="50" width="3.4" height="30" rx="1" fill="#8a4a1a" ${t}/>`).join("")+ln("M24 34 L36 28 L50 34 L64 28 L76 34 M36 28 V22 M64 28 V22",GL,1.4),
+ ()=>sh("M18 36 H82 V86 H18Z","#2a2a30")+sh("M14 28 H86 V40 H14Z","#3a3a40")+ln("M50 28 V86 M18 60 H82",RD,6)+sh("M50 28 Q36 8 30 20 Q38 30 50 28 Q64 8 70 20 Q62 30 50 28Z",RD)+ln("M50 28 L40 44 M50 28 L60 44",RD,3)+`<g fill="${GD}"><circle cx="30" cy="74" r="3"/><circle cx="70" cy="48" r="3"/></g>`,
+ ()=>c(50,50,26,"#dff4ff")+ln("M30 58 Q40 50 50 58 T70 58",LP,3)+ln("M30 66 Q40 58 50 66 T70 66",LP,2)+ln("M36 36 Q44 28 54 30","#fff",3)+Array.from({length:8},(_,k)=>{const a=k*Math.PI/4;return ln(`M${50+Math.cos(a)*32} ${50+Math.sin(a)*32} L${50+Math.cos(a)*40} ${50+Math.sin(a)*40}`,"#8ad0e8",2)}).join("")],
+roc:[ // Roc feather quill | Valley of diamonds shard | Roc egg fragment
+ ()=>feather("#6a4a2a","#8a6a3a",null,"#e8dcc0")+sh("M28 90 L34 80 L38 84 L30 96Z",IR)+ln("M30 94 l-4 6",OB,2),
+ ()=>sh("M50 10 L74 36 L60 88 L40 88 L26 36Z","#e8f8ff")+ln("M26 36 H74 M50 10 L42 36 L50 88 M50 10 L58 36 L50 88",K,1.2)+`<path d="M58 36 L74 36 L60 88Z" fill="#a8d8f0" opacity=".8"/>`+sh("M12 92 Q30 78 50 90 Q70 80 88 92Z","#7a6a5a"),
+ ()=>sh("M14 70 Q12 30 46 18 Q80 12 88 46 L74 44 L68 56 L56 48 L46 62 L36 52 L26 66Z","#f0e8d0")+[[32,38],[52,30],[70,30],[24,52]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#b8a888"/>`).join("")+`<path d="M18 74 Q50 92 84 72" stroke="${K}" stroke-width="1.4" fill="none" opacity=".4"/>`],
+avalon:[ // Apple of Avalon | Black-samite thread | Scabbard of Excalibur
+ ()=>sh("M50 30 Q60 20 74 26 Q90 36 84 62 Q76 88 56 86 Q50 84 44 86 Q24 88 16 62 Q10 36 26 26 Q40 20 50 30Z","#d8b838")+ln("M50 30 Q50 18 56 10",WD,3)+sh("M54 18 Q66 10 72 16 Q64 24 54 18Z",LF)+hl(30,42,5),
+ ()=>sh("M30 20 H70 L66 28 V72 L70 80 H30 L34 72 V28Z","#c8a870")+`<rect x="34" y="28" width="32" height="44" fill="${OB}"/>`+ln("M34 36 H66 M34 44 H66 M34 52 H66 M34 60 H66",SV,.8)+ln("M66 50 Q84 60 78 80 Q74 92 88 96",OB,2.4),
+ ()=>sh("M42 6 H58 L60 84 L50 96 L40 84Z","#5a2a1a")+ln("M42 6 H58",GD,5)+[20,36,52,68].map(y=>sh(`M44 ${y} L50 ${y-5} L56 ${y} L50 ${y+5}Z`,GD)+c(50,y,1.8,RD,"")).join("")+sh("M40 84 L50 96 L60 84 L56 82 L50 90 L44 82Z",GD)],
+ka:[ // Lapis brow bead | Myrrh of Punt | The serpent's golden scale
+ ()=>ln("M8 50 Q50 36 92 50","#c8a860",2)+sh("M30 50 Q50 30 70 50 Q50 70 30 50Z",LP)+`<path d="M36 50 Q50 38 64 50" stroke="${GL}" stroke-width="1.4" fill="none"/>`+[[40,48],[58,54],[50,44]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.4" fill="${GL}"/>`).join("")+hl(42,44,3),
+ ()=>sh("M14 54 Q14 88 50 90 Q86 88 86 54Z","#c8a870")+ln("M18 64 H82 M20 74 H80",WD,1.4)+[[30,50],[44,44],[58,46],[70,52],[38,54],[52,54],[64,56]].map(([x,y])=>sh(`M${x} ${y} q-5 -4 -2 -12 q7 4 2 12Z`,"#c86a2a")).join("")+`<path d="M44 30 Q48 20 44 10 M56 30 Q60 18 56 8" stroke="#bfb0a0" stroke-width="2" fill="none" opacity=".7"/>`,
+ ()=>scale(GD,"#8a5a1a")+`<path d="M34 64 Q50 56 66 64" stroke="#fff1b0" stroke-width="2" fill="none"/>`],
+huaguo:[ // Flower-fruit peach | Shrimp soldier's spear | Golden headband of Wukong
+ ()=>sh("M50 30 Q22 30 22 58 Q24 86 50 88 Q76 86 78 58 Q78 30 50 30Z","#f4b0a0")+`<path d="M50 30 Q22 30 22 58 Q24 76 40 84 Q34 60 50 30Z" fill="#e8706a" opacity=".6"/>`+ln("M50 30 Q52 44 48 88",K,1.2)+sh("M50 28 Q36 14 24 20 Q34 32 50 28Z",LF)+sh("M50 28 Q62 12 74 16 Q66 30 50 28Z",LF)+Array.from({length:5},(_,k)=>{const a=k/5*Math.PI*2;return c(80+Math.cos(a)*5,20+Math.sin(a)*5,3.4,"#f6c0c8",t)}).join(""),
+ ()=>ln("M20 92 L70 20",WD,4)+sh("M66 24 L74 8 L80 26Z",SV)+sh("M62 20 L56 12 M78 30 L88 28",SV)+ln("M60 22 L54 14 M76 28 L86 30",K,2)+sh("M30 76 Q20 66 26 56 Q36 62 34 72Z","#e8705a")+ln("M26 56 Q14 40 8 36 M28 58 Q22 40 22 30","#e8705a",1.6),
+ ()=>`<ellipse cx="50" cy="56" rx="34" ry="16" fill="none" stroke="${K}" stroke-width="11"/><ellipse cx="50" cy="56" rx="34" ry="16" fill="none" stroke="${GD}" stroke-width="7"/>`+sh("M16 50 Q8 40 14 32 Q20 40 22 50Z",GD)+sh("M84 50 Q92 40 86 32 Q80 40 78 50Z",GD)+ln("M24 64 Q50 76 76 64",GL,1.6)+[30,50,70].map(x=>`<path d="M${x-4} 70 q4 -4 8 0" stroke="#8a5a1a" stroke-width="1.4" fill="none"/>`).join("")],
+jotun:[ // Frost-giant tooth | Thor's goat-hide glove | Jörmungandr's venom fang
+ ()=>tooth("#e8f0f8","#a8c8e8")+ln("M36 18 l-6 -8 M64 18 l6 -8 M50 12 v-8","#bfe0ff",2)+`<path d="M38 40 l8 4 l-4 6" stroke="#a8c8e8" stroke-width="1.4" fill="none"/>`,
+ ()=>sh("M30 90 V50 Q30 40 36 40 V20 Q36 14 41 14 Q46 14 46 20 V38 V14 Q46 8 51 8 Q56 8 56 14 V38 V18 Q56 12 61 12 Q66 12 66 18 V44 L72 36 Q78 32 80 38 L70 60 V90Z","#8a6a4a")+sh("M28 76 H72 V92 H28Z",IR)+ln("M32 82 H68 M32 88 H68",SV,1.2)+ln("M40 54 q4 6 10 0",K,1),
+ ()=>sh("M34 10 Q60 8 66 20 Q60 50 44 92 Q40 50 34 10Z",BN)+`<path d="M44 92 q-2 4 0 8" stroke="#6ad04a" stroke-width="4" fill="none"/>`+c(44,100-6,0,"none")+`<circle cx="46" cy="72" r="3" fill="#6ad04a" opacity=".8"/>`+ln("M40 20 Q50 18 60 22","#c8c0a0",2)],
+aztlan:[ // Obsidian flake | Heron feather of Aztlán | Cipactli's jade eye
+ ()=>sh("M20 80 L40 16 L60 10 L82 30 L70 72 L44 90Z",OB)+ln("M40 16 L50 50 L44 90 M50 50 L82 30",SV,1)+`<path d="M44 22 L50 48 L40 60Z" fill="#5a6a7a" opacity=".7"/>`+hl(56,20,2.4),
+ ()=>feather("#f4f4f0","#e8ecf0",null,"#c8c8c0",-6)+ln("M44 70 Q54 52 66 30",K,.8),
+ ()=>`<ellipse cx="50" cy="50" rx="40" ry="26" fill="#3a6a3a" ${s}/>`+c(50,50,20,"url(#la_jade)")+`<ellipse cx="50" cy="50" rx="5" ry="16" fill="${OB}"/>`+hl(42,42,4)+ln("M10 50 Q50 10 90 50 M10 50 Q50 90 90 50",K,1.4)+`<g fill="${BN}"><path d="M14 40 l4 6 l2 -7Z"/><path d="M84 40 l-4 6 l-2 -7Z"/></g>`],
+hawaiki:[ // Pounamu chip | Waka huia feather | Māui's jawbone hook
+ ()=>sh("M30 14 Q50 8 66 14 L72 80 Q50 92 28 80Z","url(#la_jade)")+ln("M30 74 Q50 82 70 74","#c8ffd8",2)+c(50,24,5,"#fff4","")+ln("M50 22 V4","#8a5a2a",2),
+ ()=>feather(OB,"#2a2a30",WH,"#4a4a50")+sh("M28 86 Q30 70 46 72 Q48 86 28 86Z","#c4783a"),
+ ()=>sh("M60 10 Q76 10 76 30 V60 Q76 88 50 90 Q26 90 24 70 Q24 58 34 56 L40 56 L40 64 L34 64 Q34 80 50 80 Q64 80 64 60 V30 Q64 22 56 22Z",BN)+sh("M30 56 L40 44 L42 58Z",BN)+ln("M62 12 L76 4","#8a5a2a",3)+[30,40,50].map(y=>ln(`M66 ${y} h6`,K,1.2)).join("")],
+b0:[ // Whirlpool driftwood | Charybdis's tooth | The swallowed oar of Odysseus
+ ()=>sh("M10 60 Q30 46 56 50 Q80 52 92 40 L88 56 Q70 66 50 64 Q28 62 14 72Z","#a89880")+ln("M24 58 Q40 54 56 56 M60 58 q8 -2 14 -6",K,1)+c(30,56,3,"#7a6a5a",t)+ln("M50 84 m-24 0 a24 8 0 1 0 48 0 a16 5 0 1 0 -32 0","#2a6f97",2),
+ ()=>tooth("#d8d8c8","#a8a890")+ln("M32 30 Q50 40 68 30",K,1)+`<path d="M40 50 Q50 46 58 52" stroke="#2a6f97" stroke-width="2" fill="none"/>`,
+ ()=>ln("M14 90 L66 24",WD,6)+sh("M60 32 Q66 10 82 6 Q94 8 90 22 Q82 36 68 36Z","#a87a4a")+ln("M26 76 l6 4 M36 64 l6 4",K,1.4)+`<path d="M76 14 q6 4 6 10" stroke="#2a6f97" stroke-width="2" fill="none"/>`],
+b1:[ // Bottomless barrel stave | Umibōzu's tear | Lantern of the calm sea
+ ()=>sh("M34 6 Q26 50 34 94 H56 Q64 50 56 6Z","#b8844a")+ln("M30 24 H62 M30 76 H62",IR,4)+ln("M44 10 Q38 50 44 90",K,.8)+ln("M60 40 Q74 48 70 64","#2a6f97",2),
+ ()=>sh("M50 10 Q74 46 74 64 Q74 88 50 88 Q26 88 26 64 Q26 46 50 10Z","#3a3a5a")+ln("M38 58 Q36 70 42 78","#8aa0c8",3)+c(50,64,6,"#bfd8f0","")+`<path d="M22 92 Q50 84 78 92" stroke="#2a6f97" stroke-width="2" fill="none"/>`,
+ ()=>sh("M34 20 H66 V28 H34Z",OB)+sh("M30 28 Q26 52 30 76 H70 Q74 52 70 28Z",WH)+ln("M30 36 H70 M28 46 H72 M28 58 H72 M30 68 H70",K,1)+`<rect x="30" y="28" width="40" height="48" fill="#ffd070" opacity=".35"/>`+sh("M34 76 H66 V84 H34Z",OB)+`<text x="50" y="58" font-family="serif" font-size="14" text-anchor="middle" fill="${RD}">凪</text>`+ln("M50 20 V8",K,2)],
+b2:[ // Hydra scale | Iolaus's firebrand | The immortal head's ichor
+ ()=>scale("#3a6a4a","#1a3a2a")+ln("M50 22 V80",K,1),
+ ()=>ln("M30 92 L56 36",WD,8)+ln("M30 92 L56 36","#6a4424",5)+sh("M50 40 L62 34 L64 42Z","#c8b080")+flame(60,34,1.5,AM)+`<g fill="${AM}"><circle cx="78" cy="14" r="2"/><circle cx="40" cy="20" r="1.6"/></g>`,
+ ()=>stone("#7a7a70")+`<path d="M44 46 Q40 62 46 80 Q52 90 50 96" stroke="${GD}" stroke-width="5" fill="none"/>`+c(50,96,0,"none")+`<circle cx="50" cy="92" r="4" fill="${GL}"/>`+hl(60,34,3)],
+b3:[ // Bronze rivet | Talos's ankle nail | Vial of ichor
+ ()=>sh("M20 30 Q20 12 50 12 Q80 12 80 30 Z",BZ)+sh("M38 30 H62 V82 Q62 90 50 90 Q38 90 38 82Z",BZ)+ln("M44 34 V82","#ffe0b0",2)+hl(36,20,3),
+ ()=>sh("M26 16 H74 V30 H26Z",BZ)+sh("M42 30 H58 L52 94 H48Z",BZ)+`<path d="M40 50 Q50 60 60 50" stroke="${GD}" stroke-width="4" fill="none"/>`+`<path d="M52 66 q6 10 0 20" stroke="${GL}" stroke-width="3" fill="none"/>`,
+ ()=>vial(GL,BZ)+`<g fill="#fff8d0"><circle cx="44" cy="70" r="2"/><circle cx="56" cy="64" r="1.6"/></g>`],
+b4:[ // Strait-cliff pebble | Scylla's hound collar | Crown of the six heads
+ ()=>`<ellipse cx="50" cy="56" rx="32" ry="24" fill="#9a9a90" ${s}/>`+ln("M26 52 Q50 40 74 54",WH,2)+ln("M30 64 Q50 56 70 66","#7a7a70",1.2)+hl(40,44,4),
+ ()=>collar("#5a2a3a",BN)+[[30,74],[50,80],[70,74]].map(([x,y])=>sh(`M${x-5} ${y} L${x} ${y+12} L${x+5} ${y}Z`,BN)).join(""),
+ ()=>sh("M14 80 H86 V66 H14Z",GD)+Array.from({length:6},(_,k)=>{const x=20+k*12;return sh(`M${x-4} 66 Q${x-6} 40 ${x+2} 30 Q${x+8} 28 ${x+6} 36 Q${x+2} 46 ${x+4} 66Z`,"#3a6a4a")+c(x+3,32,1.4,RD,"")}).join("")+[26,50,74].map(x=>c(x,73,3.4,RD,t)).join("")],
+b5:[ // Giant squid beak | Kraken ink pearl | Eye of the deep
+ ()=>sh("M20 30 Q50 6 76 30 Q88 46 72 60 Q60 50 50 56 Q40 50 28 60 Q14 46 20 30Z","#3a2a20")+sh("M30 62 Q50 50 70 62 Q60 92 50 94 Q40 92 30 62Z","#5a3a28")+ln("M50 56 V92",K,1)+hl(36,26,3),
+ ()=>sh("M8 70 Q20 50 50 52 Q80 50 92 70 Q80 86 50 84 Q20 86 8 70Z","#e8dcc8")+c(50,58,16,"#1a1a2a")+`<path d="M44 52 q6 -6 12 -2" stroke="#8a8ab8" stroke-width="2.4" fill="none"/>`+`<path d="M60 70 q12 6 20 -2 q-4 12 -14 10" fill="#1a1a2a" opacity=".6"/>`,
+ ()=>`<ellipse cx="50" cy="50" rx="42" ry="28" fill="#e8e0c8" ${s}/>`+c(50,50,22,"#c88a2a")+c(50,50,12,OB,t)+hl(42,42,5)+ln("M8 50 Q50 0 92 50 M8 50 Q50 100 92 50",K,1.4)+ln("M20 34 l-6 -8 M80 34 l6 -8 M50 22 v-10","#2a4a6a",1.4)],
+b6:[ // Aurochs horn | Ishtar's lapis tether | Heart of the Bull of Heaven
+ ()=>horn("#d8c8a0",null)+`<path d="M60 20 Q80 12 88 20 L84 26 Q74 18 62 24Z" fill="#3a3a30"/>`,
+ ()=>ln("M14 44 Q50 92 86 44",GD,1.6)+ln("M14 44 Q8 30 18 20 M86 44 Q92 30 82 20",GD,2.4)+beads(arc(11,50,40,36,36,Math.PI*.95,Math.PI*.05),[LP,GD,LP],5.4)+sh("M80 82 L90 92 L84 96 L76 88Z",GD),
+ ()=>sh("M50 34 Q58 16 74 20 Q92 28 84 52 Q74 72 50 90 Q26 72 16 52 Q8 28 26 20 Q42 16 50 34Z","#8a2418")+ln("M40 30 Q48 42 46 60 M58 34 Q60 46 56 56",RD,2)+sh("M44 16 Q48 6 56 8 L54 20Z","#6a1a10")+`<g fill="${GL}"><circle cx="30" cy="38" r="2"/><circle cx="70" cy="40" r="2"/></g>`+hl(30,34,4)],
+b7:[ // Cave-door chip | Odysseus's 'Nobody' token | The Cyclops's eye-stake
+ ()=>stone("#8a8478")+ln("M30 70 Q50 60 70 72","#5a5448",4)+ln("M24 40 l10 4 M70 34 l-6 8","#5a5448",2),
+ ()=>sh("M30 30 Q24 18 36 16 L44 24 Q56 20 66 28 Q84 34 84 60 Q82 86 56 88 Q30 88 22 64 Q18 44 30 30Z","#7a4a2a")+sh("M34 14 H46 V24 H34Z",WD)+ln("M40 50 Q50 46 60 50",K,1)+`<text x="54" y="70" font-family="serif" font-size="12" text-anchor="middle" fill="${PA}">ΟΥΤΙΣ</text>`,
+ ()=>ln("M12 90 L74 20","#7a8a4a",9)+ln("M12 90 L74 20","#a8b070",5)+sh("M70 24 L86 6 L80 28Z","#3a2a1a")+flame(84,10,.8,AM)+ln("M26 72 l-6 -4 M40 56 l6 4 M52 44 l-6 -4","#5a6a3a",2)],
+b8:[ // Sleeping-mat thread | Rama's arrow fletching | Kumbhakarna's crown
+ ()=>sh("M30 26 H70 V34 H30Z M30 66 H70 V74 H30Z",WD)+`<rect x="34" y="34" width="32" height="32" fill="#d8c070" ${s}/>`+ln("M34 40 H66 M34 46 H66 M34 52 H66 M34 58 H66",K,.8)+ln("M66 56 Q84 66 80 82 Q76 94 90 96","#c8a850",2),
+ ()=>ln("M6 50 H70",WD,3)+sh("M70 44 L94 50 L70 56Z",SV)+[[14,"#e8e0c8"],[26,"#e8e0c8"]].map(([x])=>sh(`M${x} 50 L${x+12} 50 L${x+4} 30 L${x-6} 34Z M${x} 50 L${x+12} 50 L${x+4} 70 L${x-6} 66Z`,"#e8d8c0")).join("")+ln("M12 50 h26",RD,1.4)+`<g fill="${GL}"><circle cx="86" cy="40" r="2"/><circle cx="88" cy="62" r="2"/></g>`,
+ ()=>sh("M20 86 H80 L74 50 Q70 26 50 8 Q30 26 26 50Z",GD)+ln("M24 70 H76 M26 54 H74",RD,3)+[34,50,66].map(x=>c(x,62,3.4,"#2a8a5a",t)).join("")+c(50,34,6,RD,t)+sh("M46 8 L50 0 L54 8Z",GD)],
+b9:[ // Leviathan scale | Lamp from its mouth | The whole of the morning star
+ ()=>scale("#2a4a6a","#8ab8d8")+`<path d="M32 66 Q50 74 68 66" stroke="#8ab8d8" stroke-width="1.6" fill="none"/>`,
+ ()=>sh("M14 64 Q16 50 40 50 H70 Q86 50 92 40 Q90 64 70 70 H34 Q18 72 14 64Z",BZ)+flame(86,40,1,AM)+sh("M40 50 Q42 40 52 40 Q60 40 60 50Z",BZ)+ln("M14 64 Q4 60 8 50",K,3)+hl(30,58,3),
+ ()=>Array.from({length:8},(_,k)=>{const a=k*Math.PI/4,r=k%2?26:42;return ln(`M50 50 L${50+Math.cos(a)*r} ${50+Math.sin(a)*r}`,"#ffd070",3)}).join("")+sh("M50 14 L58 42 L86 50 L58 58 L50 86 L42 58 L14 50 L42 42Z","#fff4c8")+c(50,50,8,"#ffffff",t)],
+cedar:[ // Cedar resin | Enkidu's sandal | The seven terrors of Humbaba
+ ()=>sh("M20 10 H80 V90 H20Z","#6a4a2a")+ln("M30 10 Q34 50 28 90 M50 10 Q46 50 52 90 M70 10 Q74 50 68 90",K,1)+[[40,36],[60,56],[46,70]].map(([x,y])=>sh(`M${x} ${y} q-8 6 -6 16 q6 6 12 0 q2 -10 -6 -16Z`,AM)+hl(x-3,y+8,2)).join(""),
+ ()=>sh("M30 14 Q50 6 70 14 Q76 50 68 88 Q50 96 32 88 Q24 50 30 14Z","#a87a4a")+ln("M34 30 L66 30 M30 50 L70 50 M32 70 L68 70","#5a3414",4)+ln("M66 30 Q84 40 80 60",WD,2),
+ ()=>Array.from({length:7},(_,k)=>{const a=k/7*Math.PI*2-Math.PI/2;return c(50+Math.cos(a)*32,50+Math.sin(a)*32,9,"#f6d070",t)+c(50+Math.cos(a)*32,50+Math.sin(a)*32,4,"#fff8d8","")}).join("")+c(50,50,14,"#6a4a1a")+ln("M42 46 l6 2 M52 48 l6 -2 M44 56 Q50 60 56 56",OB,2)],
+qaf:[ // Emerald shard of Qaf | Rakhsh's horseshoe | Rostam's tiger-skin cloak
+ ()=>sh("M50 6 L72 30 L64 92 L36 92 L28 30Z","#2a9a5a")+ln("M28 30 L50 40 L72 30 M50 6 V92",K,1.2)+`<path d="M50 40 L72 30 L64 92 L50 92Z" fill="#1a6a3a" opacity=".7"/>`+hl(40,26,3),
+ ()=>sh("M22 86 L22 46 Q22 14 50 14 Q78 14 78 46 L78 86 H64 V46 Q64 28 50 28 Q36 28 36 46 V86Z",IR)+[[29,56],[29,72],[71,56],[71,72],[40,24],[60,24]].map(([x,y])=>`<rect x="${x-2}" y="${y-3}" width="4" height="6" fill="${OB}"/>`).join("")+hl(30,34,3),
+ ()=>sh("M20 16 Q50 8 80 16 L90 86 Q70 80 60 94 Q50 82 40 94 Q30 80 10 86Z","#d8902a")+[[28,30],[48,24],[66,30],[24,54],[44,50],[62,56],[78,46],[32,74],[54,72],[72,74]].map(([x,y])=>ln(`M${x} ${y} q4 4 2 10`,OB,3)).join("")+sh("M40 8 Q50 0 60 8 Q50 16 40 8Z","#d8902a")+c(45,7,1.4,OB,"")+c(55,7,1.4,OB,"")],
+iram:[ // Pillar-capital fragment | Fisherman's net | The seal of Solomon
+ ()=>sh("M14 30 H86 L80 44 H20Z","#d8c8a0")+sh("M24 44 H76 V60 L70 90 H30 L24 60Z","#d8c8a0")+ln("M32 44 V90 M44 44 V90 M56 44 V90 M68 44 V90",K,1.2)+c(20,36,6,"#d8c8a0")+c(80,36,6,"#d8c8a0")+ln("M76 60 L84 72 L70 90",K,1.4),
+ ()=>Array.from({length:6},(_,k)=>ln(`M${14+k*14} 14 Q${20+k*12} 50 ${12+k*15} 88`,"#a89060",1.8)).join("")+Array.from({length:6},(_,k)=>ln(`M12 ${18+k*14} Q50 ${24+k*12} 88 ${16+k*14}`,"#a89060",1.8)).join("")+[[20,86],[50,90],[80,86]].map(([x,y])=>c(x,y,4,IR,t)).join(""),
+ ()=>`<ellipse cx="50" cy="66" rx="24" ry="20" fill="none" stroke="${K}" stroke-width="10"/><ellipse cx="50" cy="66" rx="24" ry="20" fill="none" stroke="${GD}" stroke-width="6"/>`+c(50,30,20,GD)+sh("M50 16 L62 37 H38Z",GL)+sh("M50 44 L62 23 H38Z",GL)+ln("M50 16 L62 37 H38Z M50 44 L62 23 H38Z",K,1.4)],
+crete:[ // Labyrinth floor tile | Ball of Ariadne's thread | Bronze bull's horn of Minos
+ ()=>sh("M12 12 H88 V88 H12Z","#c8a870")+ln("M22 78 V22 H78 V78 H32 V32 H68 V68 H42 V42 H58 V58 H50",RD,3.4),
+ ()=>c(46,50,28,RD)+ln("M24 40 Q46 30 68 40 M20 54 Q46 44 72 56 M26 68 Q46 60 66 70 M36 24 Q30 50 40 76 M56 24 Q64 50 54 78",CO,1.6)+ln("M70 66 Q84 76 80 88 Q76 96 92 96",RD,2.4)+hl(36,36,4),
+ ()=>horn(BZ,GD)+[[30,66],[40,52],[52,40]].map(([x,y])=>ln(`M${x} ${y} l8 6`,GD,2)).join("")],
+gorgon:[ // Stone sparrow | Hermes's winged sandal | The cap of invisibility
+ ()=>sh("M20 60 Q22 36 46 32 Q58 22 70 30 L86 28 L74 38 Q76 60 58 70 L80 82 L56 80 Q30 82 20 60Z","#9a9a92")+c(64,38,2.6,OB,"")+ln("M34 54 Q46 48 58 56",K,1.2)+sh("M30 82 H66 V90 H30Z","#8a8a82"),
+ ()=>sh("M14 76 Q14 62 30 60 L60 58 Q80 58 86 72 L86 80 H14Z","#a87a4a")+ln("M30 60 L40 40 M44 58 L50 40",WD,2)+sh("M60 58 Q62 30 84 18 Q80 34 92 30 Q82 44 90 48 Q76 56 66 58Z",WH)+ln("M68 50 Q74 38 84 26 M70 54 Q80 48 88 40",K,1),
+ ()=>sh("M20 66 Q18 22 50 16 Q82 22 80 66 L70 66 L68 84 L32 84 L30 66Z","#3a3e48")+`<path d="M20 66 Q18 22 50 16 Q82 22 80 66" fill="#fff" opacity=".18"/>`+sh("M44 40 H56 V70 H44Z","#1a1c22")+sh("M32 46 H44 V54 H32Z M56 46 H68 V54 H56Z","#1a1c22")+sh("M46 16 Q50 0 54 16Z","#5a2a3a")+`<g opacity=".5">${ln("M84 30 l8 -4 M86 50 l10 0 M84 70 l8 4",SV,2)}</g>`],
+heorot:[ // Mead-hall horn | Grendel's claw | Golden collar of Wealhtheow
+ ()=>horn("#e8d8b0",SV)+ln("M20 78 l10 10 l-4 4",SV,4)+[[36,58],[48,44]].map(([x,y])=>ln(`M${x} ${y} l10 8`,SV,3)).join(""),
+ ()=>sh("M20 90 Q16 60 30 46 Q40 36 56 38 Q68 40 70 52 L62 60 Q54 56 48 62 Q40 76 44 90Z","#4a5a3a")+[[56,38,80,14],[64,44,92,30],[68,52,94,54],[34,46,26,16]].map(([x,y,x2,y2])=>sh(`M${x-4} ${y} Q${(x+x2)/2} ${(y+y2)/2-4} ${x2} ${y2} Q${(x+x2)/2+4} ${(y+y2)/2+4} ${x+4} ${y+4}Z`,BN)).join("")+ln("M30 70 Q40 66 46 72",K,1.2),
+ ()=>`<path d="M18 40 Q18 82 50 84 Q82 82 82 40" stroke="${K}" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M18 40 Q18 82 50 84 Q82 82 82 40" stroke="${GD}" stroke-width="10" fill="none" stroke-linecap="round"/>`+ln("M18 40 Q18 82 50 84 Q82 82 82 40",GL,2)+c(18,36,7,GD)+c(82,36,7,GD)+Array.from({length:7},(_,k)=>ln(`M${24+k*9} ${60+Math.sin(k/6*Math.PI)*22} l2 4`,"#8a5a1a",1.4)).join("")],
+onigashima:[ // Kibi dango | Oni's tiger-skin scrap | Straw cloak of invisibility
+ ()=>ln("M10 90 L90 10","#c8a870",3)+[[30,70],[50,50],[70,30]].map(([x,y])=>c(x,y,13,"#f0e8d0")+hl(x-4,y-4,3)).join(""),
+ ()=>sh("M14 24 L84 18 L80 58 L88 82 L20 86 L24 56Z","#e8b030")+[[24,30],[40,26],[58,24],[74,24],[30,48],[50,46],[70,44],[30,70],[52,70],[74,70]].map(([x,y])=>ln(`M${x} ${y} q6 2 4 10`,OB,3.4)).join(""),
+ ()=>sh("M50 10 Q30 14 26 30 L10 90 H90 L74 30 Q70 14 50 10Z","#c8b070")+Array.from({length:12},(_,k)=>ln(`M${14+k*6.4} ${40+Math.abs(k-6)*2} L${12+k*6.8} 92`,"#8a7a40",1.4)).join("")+ln("M28 40 Q50 48 72 40 M22 62 Q50 70 78 62",WD,2)+`<path d="M10 90 H90" stroke="#fff" stroke-width="4" opacity=".4"/>`],
+gumiho:[ // White fox hair | Mask of Hahoe | The nine-tail bell
+ ()=>sh("M20 88 Q30 50 56 20 Q70 8 84 10 Q74 18 68 30 Q80 26 88 30 Q70 40 60 58 Q50 76 28 92Z",WH)+ln("M28 84 Q44 54 70 26 M40 78 Q52 60 66 44",K,1)+`<path d="M78 14 q6 -2 10 -4" stroke="#fff" stroke-width="3"/>`,
+ ()=>sh("M22 30 Q24 10 50 10 Q76 10 78 30 Q82 62 66 82 Q50 92 34 82 Q18 62 22 30Z","#e8d0a8")+ln("M30 38 Q38 30 46 38 M54 38 Q62 30 70 38",OB,3)+ln("M44 50 Q50 58 56 50",K,1.6)+sh("M30 66 Q50 80 70 66 Q60 74 50 74 Q40 74 30 66Z",RD)+c(34,56,4,"#e8a0a0","")+c(66,56,4,"#e8a0a0",""),
+ ()=>sh("M34 70 Q34 34 50 30 Q66 34 66 70Z",GD)+sh("M30 70 H70 V76 H30Z",GD)+c(50,82,5,IR)+ln("M44 30 Q44 20 50 20 Q56 20 56 30",K,3)+Array.from({length:9},(_,k)=>{const a=(k/8-.5)*2.4+Math.PI/2;return ln(`M50 78 Q${50+Math.cos(a)*24} ${78+Math.sin(a)*8} ${50+Math.cos(a)*42} ${78+Math.sin(a)*18}`,"#f0e8e0",2.4)}).join("")+hl(42,46,3)],
+nian:[ // Firecracker string | Red spring couplet | Lantern of the Lantern Festival
+ ()=>ln("M50 4 V92",K,1.6)+Array.from({length:7},(_,k)=>{const y=12+k*11,d=k%2?1:-1;return `<rect x="${50+d*2-(d<0?18:0)}" y="${y}" width="18" height="7" rx="2" fill="${RD}" ${t} transform="rotate(${d*-20} 50 ${y})"/>`}).join("")+`<path d="M50 92 l-6 6 M50 92 l6 6 M50 92 v8" stroke="${AM}" stroke-width="2"/>`,
+ ()=>sh("M34 4 H66 V96 H34Z",RD)+["福","春","安","吉"].map((ch,k)=>`<text x="50" y="${26+k*21}" font-family="serif" font-size="16" text-anchor="middle" fill="${GL}">${ch}</text>`).join("")+ln("M34 4 H66 M34 96 H66",GD,3),
+ ()=>ln("M50 2 V14",K,2)+sh("M40 14 H60 V20 H40Z",GD)+`<ellipse cx="50" cy="50" rx="34" ry="30" fill="${RD}" ${s}/>`+ln("M34 24 Q24 50 34 76 M50 20 V80 M66 24 Q76 50 66 76",GD,1.4)+`<ellipse cx="50" cy="50" rx="18" ry="20" fill="#ffd070" opacity=".35"/>`+sh("M40 80 H60 V86 H40Z",GD)+ln("M44 86 V98 M50 86 V100 M56 86 V98",RD,2)]
+};
+return P})();
+function lootSVG(t,c,key){const f=key&&LOOTART[key]&&LOOTART[key][t];
+ if(f)return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img"><defs><radialGradient id="la_jade" cx=".35" cy=".3"><stop offset="0" stop-color="#c8ffd8"/><stop offset=".5" stop-color="#3fae6a"/><stop offset="1" stop-color="#14482a"/></radialGradient></defs>${f()}</svg>`;
+ return `<svg viewBox="0 0 48 48"><circle cx="24" cy="25" r="12" fill="none" stroke="#8a6a3a" stroke-width="2"/></svg>`}
 
 /* ============ TEMPORARY beta walkthrough mode (delete this file + its build.py entry to remove) ============ */
 /* Turn on: add ?test=1 to the URL, or tap the build line on the title screen 5 times. Turn off: ?test=0 or tap 5 times again. */
