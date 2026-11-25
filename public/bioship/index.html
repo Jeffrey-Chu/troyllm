@@ -3415,12 +3415,19 @@ function monBuild(spec){
   if(spec.v==="gorgon"){const snM=M("#3a6a3a",{map:scaleTex(),roughness:.5});for(let k=0;k<14;k++){const a=k/14*Math.PI*2,r0=V3(.1*S+Math.cos(a)*.45*S,7.1*S,Math.sin(a)*.5*S),c=new T3.CatmullRomCurve3([r0,r0.clone().add(V3(Math.cos(a)*.6*S,.5*S,Math.sin(a)*.6*S)),r0.clone().add(V3(Math.cos(a)*1.1*S,.1*S+(k%3)*.2*S,Math.sin(a)*1.1*S)),r0.clone().add(V3(Math.cos(a)*1.4*S,.6*S,Math.sin(a)*1.3*S))]);fig.add(mesh(new T3.TubeGeometry(c,10,.07*S,5),snM));fig.add(mesh(new T3.SphereGeometry(.11*S,8,6),snM,[c.points[3].x,c.points[3].y,c.points[3].z],null,[1.4,.8,1]))}}
   if(spec.v==="moon"){const disc=mesh(new T3.CircleGeometry(2.2*S,40),new T3.MeshBasicMaterial({color:C3("#f4ecd8"),transparent:true,opacity:.85}),[1.2*S,6.6*S,0],[0,-Math.PI/2,0]);fig.add(disc);const hl=glowSprite(7*S,.45,"#fff0c8");hl.position.set(1.3*S,6.6*S,0);fig.add(hl);[1,-1].forEach(d=>fig.add(mesh(new T3.SphereGeometry(.22*S,10,8),goldM,[-.3*S,6.4*S,d*.75*S])))}
   if(spec.v==="yomi"){for(let k=0;k<6;k++){const a=k/6*Math.PI*2;fig.add(mesh(new T3.ConeGeometry(.18*S,2.4*S,5),hairM,[.2*S+Math.cos(a)*.5*S,5.2*S,Math.sin(a)*.6*S],[Math.sin(a)*.2,0,Math.cos(a)*.15]))}}[1,-1].forEach(d=>{const e=glowSprite(.45*S,.95);e.position.set(-.5*S,6.85*S,d*.2*S);fig.add(e)});
+  /* v8.6 detail: sculpted face, embroidered robe, collar, jewellery, hands */
+  {const fh=new T3.Group();fh.position.set(0,6.8*S,0);fh.scale.set(1,1.12,1);fig.add(fh);faceKit(fh,.55*S,skinM,M(mix(spec.belly||"#e2cbd2","#2a0a14",.45),{roughness:.6}),{noEars:true,mouth:M("#7a1a2a",{roughness:.5})})}
+  [1,-1].forEach(d=>{const pts=[[2.62,-.5],[2.25,.4],[1.57,2],[.98,3.6],[.73,4.6]].map(([r,y])=>V3(-r*S*Math.cos(.16),y*S,d*r*S*Math.sin(.16)));fig.add(mesh(new T3.TubeGeometry(new T3.CatmullRomCurve3(pts),24,.07*S,5),goldM))});
+
+  fig.add(mesh(new T3.CylinderGeometry(.95*S,.7*S,.9*S,24,1,true),robeM,[.25*S,6.05*S,0],[0,0,.12]));fig.add(mesh(new T3.TorusGeometry(.62*S,.06*S,6,24),goldM,[0,5.95*S,0],[Math.PI/2,0,0]));
+  fig.add(mesh(new T3.OctahedronGeometry(.16*S,0),orbM,[-.66*S,5.75*S,0]));[1,-1].forEach(d=>fig.add(mesh(new T3.SphereGeometry(.07*S,6,5),goldM,[-.05*S,6.5*S,d*.6*S])));
+  const hands=[0,1].map(()=>{const h=new T3.Group();h.add(mesh(new T3.SphereGeometry(.2*S,10,8),skinM,[0,0,0],null,[1,1.2,.7]));handKit(h,.5*S,skinM,null);h.add(mesh(new T3.CylinderGeometry(.38*S,.22*S,.7*S,12,1,true),robeM,[.1*S,.45*S,0]));root.add(h);return h});
   const arms=[1,-1].map(d=>chain(8,.22*S,.16*S,0)),staff=new T3.Group();root.add(staff);staff.add(mesh(new T3.CylinderGeometry(.07*S,.09*S,6*S,7),goldM,[0,-.5*S,0]),mesh(new T3.SphereGeometry(.38*S,16,12),orbM,[0,2.7*S,0]));const orbG=glowSprite(3*S,.7);orbG.position.y=2.7*S;staff.add(orbG);
   const pigs=(spec.v?[]:[0,1,2]).map(k=>{const g=grp(mesh(new T3.SphereGeometry(.5,12,8),M("#e8a8a0"),[0,0,0],null,[1.45,1,1]),mesh(new T3.CylinderGeometry(.2,.22,.25,10),M("#d88880"),[-.75,.05,0],[0,0,Math.PI/2]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,.22]),mesh(new T3.ConeGeometry(.13,.3,4),M("#e8a8a0"),[-.35,.45,-.22]));g.scale.setScalar(S);root.add(g);return g});
   upd=(t,st)=>{const L=Math.max(0,st.L);fig.position.y=.6+Math.sin(t*.8)*.25;fig.rotation.y=Math.sin(t*.3)*.12;const fy=fig.position.y;
    const shR=V3(0,6.1*S+fy,1*S),shL=V3(0,6.1*S+fy,-1*S),hR=V3(-1.3*S,4.8*S+fy,1.7*S).lerp(V3(-.8*S,8.6*S+fy,1.1*S),Math.min(1,L*1.6)),hL=V3(-1.7*S,5.2*S+fy,-1.5*S).lerp(V3(-3.4*S,6.4*S+fy,-.6*S),L);
    arms[0].set([shR,shR.clone().lerp(hR,.5).add(V3(.3*S,-.4*S,.4*S)),hR]);arms[1].set([shL,shL.clone().lerp(hL,.5).add(V3(.3*S,-.4*S,-.4*S)),hL]);
-   staff.position.copy(hR);staff.rotation.z=.15-L*.3;orbG.material.opacity=.5+.3*Math.sin(t*3)+L*.5;orbG.scale.setScalar((3+L*3)*S);
+   staff.position.copy(hR);staff.rotation.z=.15-L*.3;hands[0].position.copy(hR);hands[1].position.copy(hL);hands[1].rotation.z=-.4-L*.6;orbG.material.opacity=.5+.3*Math.sin(t*3)+L*.5;orbG.scale.setScalar((3+L*3)*S);
    pigs.forEach((g,k)=>{const a=t*.4+k*2.1;g.position.set(-1.5*S+Math.cos(a)*4.2*S,-.15+Math.sin(t*2+k)*.08,Math.sin(a)*3.4*S);g.rotation.y=-a-Math.PI/2})}}
  else if(kind==="giant3"){const S=1.45*(big?1.9:1);const br=M(spec.skin||"#b07a3a",{metalness:.7,roughness:.35}),sk=M(spec.belly||"#b88a68",{roughness:.6}),cr=M("#a8242a",{roughness:.7}),wood=M("#5a3a24");
   root.add(mesh(new T3.CylinderGeometry(2.2*S,2.6*S,2.4*S,16),M("#3a2a20",{roughness:.9}),[0,.4*S,0]),mesh(new T3.TorusGeometry(2.25*S,.18*S,6,30),br,[0,1.5*S,0],[Math.PI/2,0,0]));
@@ -3493,6 +3500,18 @@ function monBuild(spec){
 
 /* ============ v8: story-true figures (titans, beasts, the heavenly host) ============ */
 /* Same contract as monBuild: faces -x, update(t,st) with st.L (attack 0..1), st.tgt, st.hurt. Limbs are rigid groups (no per-frame geometry work). */
+/* v8.6 detail kit: sculpted faces, hands, muscle and costume detail (static meshes, built once) */
+function faceKit(h,r,skin,shade,o){o=o||{};const P=Math.PI,dk=o.mouth||new T3.MeshStandardMaterial({color:0x1a0808,roughness:.8});
+ h.add(mesh(new T3.BoxGeometry(.2*r,.16*r,.82*r),shade,[-.8*r,.42*r,0],[0,0,o.angry?-.25:-.1]));
+ h.add(mesh(new T3.ConeGeometry(.15*r,.5*r,6),skin,[-.98*r,.02*r,0],[0,0,P/2+.25]));
+ [1,-1].forEach(d=>{h.add(mesh(new T3.SphereGeometry(.26*r,10,8),skin,[-.66*r,-.14*r,d*.4*r]));
+  if(!o.noEars)h.add(mesh(new T3.SphereGeometry(.2*r,8,6),skin,[.02*r,.05*r,d*.93*r],null,[.55,1,.3]));
+  if(o.sockets)h.add(mesh(new T3.SphereGeometry(.17*r,8,6),shade,[-.7*r,.2*r,d*.33*r]))});
+ h.add(mesh(new T3.TorusGeometry(.2*r,.045*r,5,12,P),dk,[-.86*r,-.46*r,0],[0,P/2,o.smile?P:0]));
+ if(o.beard){const bm=o.beard;for(let k=0;k<5;k++){const z=(k-2)*.2*r;h.add(mesh(new T3.ConeGeometry(.2*r,(1.1+(2-Math.abs(k-2))*.35)*r*(o.beardL||1),6),bm,[-.55*r,-.95*r*(o.beardL||1),z],[0,0,P+.25]))}
+  [1,-1].forEach(d=>h.add(mesh(new T3.TubeGeometry(new T3.CatmullRomCurve3([new T3.Vector3(-.98*r,-.2*r,0),new T3.Vector3(-1.02*r,-.28*r,d*.28*r),new T3.Vector3(-.9*r,-.55*r,d*.5*r)]),6,.05*r,4),bm)))}}
+function handKit(g,s,skin,nail){for(let f=0;f<4;f++)g.add(mesh(new T3.CylinderGeometry(.075*s,.06*s,.55*s,5),skin,[-.2*s,-.38*s,(f-1.5)*.15*s],[0,0,-.35]));g.add(mesh(new T3.CylinderGeometry(.08*s,.065*s,.4*s,5),skin,[-.32*s,-.05*s,.28*s],[.7,0,-.9]));
+ if(nail)for(let f=0;f<4;f++)g.add(mesh(new T3.ConeGeometry(.05*s,.18*s,4),nail,[-.32*s,-.68*s,(f-1.5)*.15*s],[0,0,-2.8]))}
 function monBuild2(spec){
  const kind=spec.kind,v=spec.v||"",big=!!spec.big,glow=spec.glow||"#8ff5cf",root=new T3.Group(),mats=[],parts={};
  const M=(c,o)=>{const m=new T3.MeshStandardMaterial(Object.assign({color:C3(c),roughness:.6,emissive:C3("#000000")},o||{}));mats.push(m);return m};
@@ -3523,6 +3542,14 @@ function monBuild2(spec){
   if(v==="king"||v==="wind"){tor.add(mesh(new T3.LatheGeometry([[1.3,-2.4],[1.25,-.6],[1.2,.8],[1.45,2.6],[.6,3.5]].map(([r,y])=>new T3.Vector2(r*S,y*S)),18),cloth,[0,0,0],null,[1.03,1,.82]))}
   else if(!smoke)tor.add(mesh(new T3.CylinderGeometry(1.12*S,1.25*S,1*S,14,1,true),cloth,[0,.2*S,0],null,[1,1,.8]));
   if(metal||v==="kumbha"||v==="king")tor.add(mesh(new T3.TorusGeometry(1.15*S,.1*S,6,24),gold,[0,.75*S,0],[Math.PI/2,0,0],[1,.8,1]));
+  if(v!=="king"&&v!=="wind"){const cr=chestR/1.4;[1,-1].forEach(d=>tor.add(mesh(new T3.SphereGeometry(.72*S,12,10),sk,[-1.12*S*cr,2.45*S,d*.52*S],[0,0,.15],[.42,.62,1])));
+   if(v!=="kumbha")for(let r=0;r<3;r++)[1,-1].forEach(d=>tor.add(mesh(new T3.SphereGeometry(.24*S,8,6),sk,[-(1.08+r*.04)*S,(1.0+r*.42)*S,d*.27*S],null,[.38,.85,1])));
+   [1,-1].forEach(d=>tor.add(mesh(new T3.SphereGeometry(.75*S,10,8),sk,[.25*S,3.2*S,d*.7*S*cr],null,[1,.55,1])));
+   const belt=M(spec.belt||"#3a2414",{roughness:.7});tor.add(mesh(new T3.TorusGeometry(1.17*S,.12*S,6,28),belt,[0,.72*S,0],[Math.PI/2,0,0],[1,.8,1]));
+   tor.add(mesh(new T3.BoxGeometry(.14*S,.42*S,.5*S),gold,[-1.18*S,.72*S,0]));
+   [0,1].forEach(k=>{const f=mesh(new T3.BoxGeometry(.06*S,1.5*S,.75*S),cloth,[k?1.05*S:-1.2*S,-.05*S,0],[0,0,k?-.08:.08]);tor.add(f)})}
+  else{tor.add(mesh(new T3.TorusGeometry(1.24*S,.09*S,6,28),gold,[0,2.5*S,0],[Math.PI/2,0,0],[1.03,.82,1]));tor.add(mesh(new T3.BoxGeometry(.08*S,4.4*S,.55*S),gold,[-1.3*S,.3*S,0],[0,0,.04]));
+   for(let k=0;k<5;k++)tor.add(mesh(new T3.CylinderGeometry(.05*S,.05*S,4*S,5),M(mix(spec.cloth||"#555555","#000000",.3),{roughness:.9}),[Math.cos(k*1.25+.6)*1.28*S,-.2*S,Math.sin(k*1.25+.6)*1.05*S]))}
   if(v==="wind")for(let k=0;k<2;k++){const d=k?1:-1,w=new T3.Shape();w.moveTo(0,0);w.quadraticCurveTo(1.5,2.6,4.2,3.4);w.quadraticCurveTo(3.2,1.6,3.6,.4);w.quadraticCurveTo(2.2,.6,1.6,-1.2);w.closePath();
    const wm=mesh(new T3.ShapeGeometry(w),M(spec.acc||"#c8d8e8",{side:T3.DoubleSide,emissive:C3(glow),emissiveIntensity:.15}),[.9*S,2.6*S,d*.5*S],[0,d*-.9,0]);wm.scale.setScalar(S*1.2);tor.add(wm);(parts.wings=parts.wings||[]).push(wm)}
   // head
@@ -3533,8 +3560,9 @@ function monBuild2(spec){
   else{hd.add(mesh(new T3.SphereGeometry(.85*S*hs,18,14),sk,[0,0,0],null,[1,1.12,.95]));
    const ey=v==="cyclops"?0:1;if(ey)eyes(hd,-.72*S*hs,.2*S*hs,.32*S*hs,(v==="grendel"?.13:.1)*S);
    else{hd.add(mesh(new T3.SphereGeometry(.38*S,16,12),M("#f2ece0",{roughness:.3}),[-.68*S,.22*S,0]));hd.add(mesh(new T3.SphereGeometry(.2*S,12,10),eyeM,[-.98*S,.22*S,0]));const s=glowSp(2*S,.8,spec.eye||glow);s.position.set(-1.1*S,.22*S,0);hd.add(s)}
-   // mouth
-   hd.add(mesh(new T3.BoxGeometry(.12*S,.12*S,.6*S*hs),dark,[-.8*S*hs,-.35*S*hs,0]));
+   // sculpted face: brow, nose, cheeks, ears, mouth; beards for the old kings of wind and sea
+   {const shd=M(mix(skinC,"#000000",.4),stone?{map:rockTex(),flatShading:true}:metal?{metalness:.85,roughness:.35}:{roughness:.7});
+    faceKit(hd,.85*S*hs,sk,shd,{angry:v!=="king",sockets:v!=="cyclops",beard:v==="humbaba"||v==="div"||v==="jinn"?M(v==="jinn"?"#1a1a2a":"#2a1a0e",{roughness:.95}):null,beardL:.8,noEars:v==="bronze"})}
    if(v==="oni"||v==="kumbha"||v==="humbaba"||v==="div"||v==="grendel")[1,-1].forEach(d=>hd.add(mesh(new T3.ConeGeometry(.07*S,.32*S,5),bone,[-.82*S*hs,-.3*S*hs,d*.22*S],[0,0,0])));
    if(v==="oni"||v==="div"){const n=v==="oni"?2:2;[1,-1].slice(0,n).forEach(d=>{const h=new T3.CatmullRomCurve3(v==="div"?[V3(0,.7*S,d*.4*S),V3(.4*S,1.3*S,d*.9*S),V3(1.1*S,1.4*S,d*1.1*S),V3(1.4*S,.9*S,d*1.2*S)]:[V3(-.1*S,.75*S,d*.35*S),V3(-.15*S,1.3*S,d*.45*S),V3(-.35*S,1.7*S,d*.4*S)]);hd.add(mesh(new T3.TubeGeometry(h,8,.12*S,6),bone))})}
    if(v==="humbaba"){for(let k=0;k<14;k++){const a=k/14*Math.PI*2;hd.add(mesh(new T3.ConeGeometry(.22*S,.9*S,5),M(spec.acc||"#6a4a1a",{roughness:.9}),[.15*S,Math.sin(a)*.95*S,Math.cos(a)*.95*S],[a,0,0]))}
@@ -3552,7 +3580,10 @@ function monBuild2(spec){
   const arms=[1,-1].map(d=>{const sh=new T3.Group();sh.position.set(-hunch*.6*S,3.25*S,d*1.55*S*(chestR/1.4));tor.add(sh);
    const up=mesh(new T3.CylinderGeometry(.42*S,.36*S,2*S,10),sk,[0,-1*S,0]);sh.add(up);sh.add(mesh(new T3.SphereGeometry(.5*S,10,8),metal||v==="kumbha"?gold:sk));
    const fa=new T3.Group();fa.position.y=-2*S;sh.add(fa);fa.add(mesh(new T3.CylinderGeometry(.36*S,.3*S,(v==="grendel"?2.6:1.9)*S,10),sk,[0,-.95*S*(v==="grendel"?1.35:1),0]));
+   sh.add(mesh(new T3.SphereGeometry(.4*S,10,8),sk,[-.12*S,-.85*S,0],null,[1,1.5,.95]));
+   fa.add(mesh(new T3.CylinderGeometry(.4*S,.37*S,.55*S,10),metal||v==="king"||v==="kumbha"?gold:M(spec.belt||"#3a2414",{roughness:.7}),[0,-1.35*S*(v==="grendel"?1.3:1),0]));
    const hand=new T3.Group();hand.position.y=-(v==="grendel"?2.6:1.95)*S;fa.add(hand);hand.add(mesh(new T3.SphereGeometry(.42*S,10,8),sk,[0,0,0],null,[1,1.1,.8]));
+   if(v!=="grendel")handKit(hand,S,sk,v==="oni"||v==="div"||v==="humbaba"?bone:null);
    if(v==="grendel")for(let f=0;f<4;f++)hand.add(mesh(new T3.ConeGeometry(.07*S,.6*S,4),bone,[-.3*S,-.3*S,(f-1.5)*.16*S],[0,0,-2.6]));
    return{sh,fa,hand,d}});
   // weapon in the right hand
@@ -3576,7 +3607,7 @@ function monBuild2(spec){
    if(parts.tail){parts.tail.rotation.x=Math.PI+Math.sin(t*1.3)*.12;parts.tail.rotation.z=Math.sin(t*.9)*.1}}}
  else if(kind==="beast"){
   const S=(big?1.45:1)*(spec.size||1),skinC=spec.skin||"#4a3a2a";
-  const sk=M(skinC,{map:scaleTex(),roughness:.6,metalness:0,emissive:C3("#000000")}),bel=M(spec.belly||mix(skinC,"#e8dcc0",.45),{roughness:.7}),acc=M(spec.acc||"#e0b048",{metalness:.7,roughness:.35});
+  const sk=M(skinC,{map:scaleTex(),roughness:.6,metalness:0,emissive:C3(v==="bull"?"#1c1622":"#000000")}),bel=M(spec.belly||mix(skinC,"#e8dcc0",.45),{roughness:.7}),acc=M(spec.acc||"#e0b048",{metalness:.7,roughness:.35});
   const body=new T3.Group();root.add(body);parts.body=body;
   const fox=v==="fox",croc=v==="ammit";
   body.add(mesh(new T3.SphereGeometry(1.6*S,20,14),sk,[0,2.4*S,0],null,[fox?1.55:1.45,fox?.75:.95,fox?.7:.85]));
@@ -3602,6 +3633,15 @@ function monBuild2(spec){
    for(let k=0;k<16;k++){const a=k/16*Math.PI*2;hd.add(mesh(new T3.ConeGeometry(.28*S,1.1*S,5),mane,[.35*S,Math.sin(a)*1*S,Math.cos(a)*1*S],[a,0,-.5]))}
    hd.add(mesh(new T3.ConeGeometry(.16*S,1.2*S,6),M("#e8d8a0",{metalness:.4,roughness:.35}),[-.3*S,1.1*S,0],[0,0,.35]));eyes(hd,-.85*S,.35*S,.4*S,.12*S);
    jaw.position.set(-.5*S,-.45*S,0);jaw.add(mesh(new T3.BoxGeometry(1*S,.3*S,.95*S),sk,[-.35*S,0,0]));for(let k=0;k<5;k++)jaw.add(mesh(new T3.ConeGeometry(.06*S,.28*S,4),bone,[-.8*S,.2*S,(k-2)*.18*S]))}
+  /* v8.6 beast detail: brows, nostrils, ears, claws, dewlap, spine ridge */
+  {const shd=M(mix(skinC,"#000000",.45),{roughness:.8});
+   if(v==="bull"){[1,-1].forEach(d=>{hd.add(mesh(new T3.BoxGeometry(.3*S,.16*S,.5*S),shd,[-.95*S,.42*S,d*.38*S],[0,0,-.3]));hd.add(mesh(new T3.SphereGeometry(.09*S,8,6),dark,[-1.4*S,-.3*S,d*.2*S]));hd.add(mesh(new T3.ConeGeometry(.2*S,.55*S,6),sk,[.1*S,.2*S,d*.7*S],[d*1.3,0,0],[1,1,.45]))});
+    body.add(mesh(new T3.SphereGeometry(.7*S,12,8),bel,[-2.1*S,2.2*S,0],null,[.7,1.2,.55]));body.add(mesh(new T3.SphereGeometry(1.1*S,14,10),sk,[-.7*S,3.6*S,0],null,[1.2,.6,.8]));
+    for(let k=0;k<6;k++)hd.add(mesh(new T3.ConeGeometry(.12*S,.5*S,5),shd,[-.6*S,.6*S,(k-2.5)*.15*S],[0,0,.6+(k%2)*.3]))}
+   if(v==="nian"||croc||fox){[1,-1].forEach(d=>hd.add(mesh(new T3.BoxGeometry(.24*S,.12*S,.42*S),shd,[(fox?-.5:croc?-.35:-.95)*S,(fox?.36:croc?.48:.55)*S,d*(fox?.3:.4)*S],[0,0,-.35])))}
+   if(v!=="bull")legs.slice(0,2).forEach(g=>{for(let c=0;c<3;c++)g.add(mesh(new T3.ConeGeometry(.06*S,.3*S,4),bone,[-.38*S*(fox?.7:1),-2.4*S,(c-1)*.14*S],[0,0,Math.PI/2+.5]))});
+   if(v==="nian"||croc)for(let k=0;k<9;k++)body.add(mesh(new T3.ConeGeometry(.16*S,.55*S,4),v==="nian"?acc:shd,[(-1.2+k*.38)*S,(3.85-Math.abs(k-4)*.06)*S,0],[0,0,-.2]));
+   if(fox)for(let k=0;k<7;k++)body.add(mesh(new T3.ConeGeometry(.22*S,.8*S,5),M("#ffffff",{roughness:.9}),[-2*S,(2.6-k*.12)*S,(k-3)*.16*S],[0,0,Math.PI*.8]))}
   // tails
   const tails=[];const nT=fox?9:1;for(let k=0;k<nT;k++){const base=new T3.Group();base.position.set(2.2*S,2.7*S,0);body.add(base);const a=nT>1?(k/(nT-1)-.5)*2.2:0;base.rotation.x=a;let par=base;const segs=[];
    for(let i=0;i<4;i++){const sg=new T3.Group();sg.position.x=i?(fox?.75:.6)*S:0;par.add(sg);const r=(fox?.32-i*.04:.14)*S;sg.add(mesh(new T3.SphereGeometry(fox?r*1.5:r,8,6),fox?M(i===3?"#ffffff":spec.skin||"#e8e2d8",{roughness:.85,emissive:C3(glow),emissiveIntensity:i===3?.6:.08}):sk,[(fox?.38:.3)*S,0,0],null,[fox?1.4:2.2,1,1]));segs.push(sg);par=sg}
@@ -3621,10 +3661,17 @@ function monBuild2(spec){
   emp.add(mesh(new T3.BoxGeometry(1.1*S,.12*S,.9*S),gold,[0,3.85*S,0]));for(let k=0;k<6;k++)[1,-1].forEach(d=>emp.add(mesh(new T3.CylinderGeometry(.02*S,.02*S,.7*S,4),jade,[d*.5*S-.0,3.5*S,(k-2.5)*.15*S])));
   emp.add(mesh(new T3.ConeGeometry(.3*S,.9*S,8),M("#1a1a1a"),[-.25*S,2.9*S,0],[Math.PI,0,.3]));const hal=glowSp(6*S,.45,"#ffe8a0");hal.position.set(.4*S,3.4*S,0);emp.add(hal);
   [1,-1].forEach(d=>emp.add(mesh(new T3.BoxGeometry(.4*S,.12*S,.9*S),jade,[-.7*S,2*S,d*.4*S],[0,0,-.4])));
+  {const fh=new T3.Group();fh.position.set(0,3.3*S,0);emp.add(fh);faceKit(fh,.48*S,face,M("#c8a888",{roughness:.6}),{smile:false,beard:M("#141414",{roughness:.9}),beardL:1.3});
+   [1,-1].forEach(d=>{emp.add(mesh(new T3.ConeGeometry(.75*S,1.9*S,14,1,true),robe,[-.35*S,2.05*S,d*.95*S],[d*.5,0,.9]));emp.add(mesh(new T3.TorusGeometry(.66*S,.06*S,5,20),gold,[-.9*S,1.55*S,d*.75*S],[0,Math.PI/2+.5,0]))});
+   emp.add(mesh(new T3.BoxGeometry(.12*S,1.2*S,.24*S),jade,[-1.05*S,2.55*S,0],[0,0,-.2]));emp.add(mesh(new T3.TorusGeometry(1.32*S,.07*S,6,30),gold,[0,.85*S,0],[Math.PI/2,0,0]));
+   for(let k=0;k<3;k++)emp.add(mesh(new T3.TorusGeometry((1.15-k*.2)*S,.05*S,5,28,Math.PI),gold,[-.3*S,(1.3+k*.5)*S,0],[0,Math.PI/2,0],[1,1,.6]))}
   // the host of heavenly soldiers
   const sol=[];const nS=6;for(let k=0;k<nS;k++){const g=new T3.Group();const row=k%2,col=Math.floor(k/2);g.position.set(-1.2*S+row*1.6*S,(.9+col*.9+row*.5)*S,(col-1)*3.4*S+(row?1.3:-1.3)*S);root.add(g);
    g.add(cloud(2.8*S,1.1*S,64+k));g.add(mesh(new T3.CylinderGeometry(.4*S,.55*S,1.5*S,8),k%3===0?red:gold,[0,.95*S,0]));g.add(mesh(new T3.SphereGeometry(.28*S,10,8),face,[0,1.95*S,0]));
    g.add(mesh(new T3.ConeGeometry(.34*S,.55*S,8),gold,[0,2.3*S,0]));g.add(mesh(new T3.BoxGeometry(.06*S,.5*S,.06*S),red,[0,2.6*S,0]));
+   [1,-1].forEach(d=>g.add(mesh(new T3.SphereGeometry(.3*S,8,6),gold,[0,1.62*S,d*.42*S],null,[1,.6,1])));g.add(mesh(new T3.CircleGeometry(.2*S,12),M("#f0f4f8",{metalness:.9,roughness:.15}),[-.47*S,1.3*S,0],[0,-Math.PI/2,0]));
+   [1,-1].forEach(d=>g.add(mesh(new T3.SphereGeometry(.045*S,6,4),dark,[-.25*S,2*S,d*.1*S])));
+   g.add(mesh(new T3.CylinderGeometry(.6*S,.6*S,.08*S,16),k%3===0?gold:red,[-.3*S,1.1*S,-.55*S],[Math.PI/2,0,.2]));g.add(mesh(new T3.SphereGeometry(.14*S,8,6),gold,[-.3*S,1.1*S,-.62*S]));
    const sp=new T3.Group();sp.position.set(-.2*S,1.2*S,.45*S);g.add(sp);sp.add(mesh(new T3.CylinderGeometry(.04*S,.04*S,3.2*S,5),M("#5a3a24"),[0,.6*S,0]),mesh(new T3.ConeGeometry(.12*S,.45*S,5),gold,[0,2.3*S,0]));
    if(k===1){const fl=mesh(new T3.PlaneGeometry(1.1*S,1.6*S),M("#c82a2a",{side:T3.DoubleSide,emissive:C3("#3a0808")}),[.55*S,1.6*S,0]);sp.add(fl)}
    sol.push({g,sp,k,y0:g.position.y,x0:g.position.x})}
@@ -3632,7 +3679,9 @@ function monBuild2(spec){
   upd=(t,st)=>{const L=st.L,Lp=Math.max(0,L),hu=st.hurt||0;emp.position.y=4.4*S+Math.sin(t*.6)*.3+hu*.4;emp.rotation.y=Math.sin(t*.25)*.1;hal.material.opacity=.35+.15*Math.sin(t*1.5)+Lp*.3;
    sol.forEach(({g,sp,k,y0,x0})=>{g.position.y=y0+Math.sin(t*1.1+k*1.3)*.25;g.position.x=x0-Lp*1.2*S;sp.rotation.z=lerp(.15,-1.3,Math.min(1,Lp*1.8))+Math.sin(t*.8+k)*.05})}}
  return{root,mats,parts,update:upd,kind}}
-{const _mb=monBuild;monBuild=function(spec){return spec&&(spec.kind==="titan"||spec.kind==="beast"||spec.kind==="army")?monBuild2(spec):_mb(spec)}}
+{const _mb=monBuild;monBuild=function(spec){const k=spec&&spec.kind,m=k==="titan"||k==="beast"||k==="army"?monBuild2(spec):_mb(spec);
+ /* v8.6 turn story figures three-quarters toward the camera so faces read */
+ if(k==="titan"||k==="beast"||k==="sorceress")m.root.rotation.y=.6;return m}}
 
 /* ============ 3D SCENE ============ */
 const WAVES=[[1,.2,.18,1.1,.34],[.6,-.8,.31,1.5,.21],[-.3,1,.55,2.1,.11],[.9,.45,1.1,2.9,.055],[-.7,.7,2.2,3.8,.028]].map(([x,z,k,w,a])=>{const l=Math.hypot(x,z);return[x/l,z/l,k,w,a]});
@@ -4469,7 +4518,7 @@ function duelResult(force){if(!D||!D.done||D.shown)return;const o=D.opp||{};if(!
  $("#dAgain").onclick=async()=>{await duelLeave();R=null;openDuel()};$("#dPort").onclick=async()=>{await duelLeave();toTitle()}}
 $("#tDuel").onclick=()=>{Sound.fx("tap");openDuel()};
 $("#tRank").onclick=()=>{Sound.fx("tap");openRanks()};
-{const v=$("#tVer");if(v)v.textContent="Build 8.5 · "+QBN.toLocaleString()+" questions"}
+{const v=$("#tVer");if(v)v.textContent="Build 8.6 · "+QBN.toLocaleString()+" questions"}
 {const b=$("#tGfx");if(b){const lab=()=>b.textContent="Graphics: "+(GFX==="fast"?"Fast":"Detailed");lab();b.title="Fast is smoother on Chromebooks and phones. Reloads the game.";
  b.onclick=()=>{Sound.fx("tap");try{localStorage.setItem("bioship-gfx",GFX==="fast"?"pretty":"fast")}catch(e){}location.reload()}}}
 
