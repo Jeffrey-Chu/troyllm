@@ -268,43 +268,70 @@ a.row.big:hover .ch { color: #ffe489; }
 .chip:hover { background: var(--link); border-color: var(--link); color: #fff; }
 .post small { flex-basis: 100%; color: var(--slate); }
 
-/* Sign-out sheet (archive) */
+/* Projects */
 .archive { background: var(--paper); }
-.filters { display: flex; flex-wrap: wrap; gap: .5rem; }
-.filters button { height: 2.3rem; padding: 2px .9rem 0; border: 2px solid var(--ink); border-radius: 999px; background: transparent; font: 700 .92rem var(--text); color: var(--ink); cursor: pointer; }
-.filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
-.sheet { background: #fffdf6; border: 1px solid #d8d2c2; border-radius: 3px; box-shadow: 0 18px 30px -24px rgba(23,33,47,.5); position: relative; overflow: hidden;
-  background-image: linear-gradient(90deg, transparent 4.2rem, #f0a3a3 4.2rem, #f0a3a3 calc(4.2rem + 1px), transparent calc(4.2rem + 1px)); }
-.sheet-top { display: grid; grid-template-columns: 4.2rem 1fr 11rem 8.5rem; padding: .9rem 0 .6rem; border-bottom: 2px solid #9fb6d6; font: 700 .78rem var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
-.sheet-top span { padding-left: 1rem; }
-.sheet .line { border-bottom: 1px solid #c9d6e8; }
-.sheet .noexp .proj::after { content: none; }
-.sheet .noexp .sum { cursor: default; }
+.seg { display: inline-flex; padding: 4px; gap: 2px; background: #e3e8ee; border-radius: 8px; }
+.seg button { height: 2.2rem; padding: 2px .95rem 0; border: 0; border-radius: 6px; background: transparent; font: 700 .92rem var(--text); color: var(--slate); cursor: pointer; white-space: nowrap; }
+.seg button b { font-weight: 400; margin-left: .3rem; opacity: .7; }
+.seg button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(23,33,47,.18); }
+.seg button:hover:not([aria-pressed="true"]) { color: var(--ink); }
+@media (max-width: 560px) { .seg { display: flex; overflow-x: auto; max-width: 100%; } }
 
-.sheet .sum { display: grid; grid-template-columns: 4.2rem 1fr 11rem 8.5rem; align-items: center; min-height: 3.4rem; cursor: pointer; list-style: none; }
-.sheet summary::-webkit-details-marker { display: none; }
-.sheet summary.sum:hover .proj { color: var(--link); }
-.sheet .sum > span { padding: .55rem 0 .45rem 1rem; }
-.sheet .yr { font: 700 1rem var(--display); font-stretch: 80%; color: var(--slate); text-align: right; padding-right: .7rem !important; padding-left: 0 !important; }
-.sheet .proj { font-weight: 700; font-size: 1.08rem; }
-.sheet .proj::after { content: "+"; display: inline-block; margin-left: .5rem; color: var(--slate); font-weight: 400; transition: transform .2s; }
-.sheet details[open] .proj::after { transform: rotate(45deg); }
-.sheet .for { color: var(--slate); font-size: .95rem; }
+.miles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 2.5rem; background: var(--felt); color: var(--letter); border-radius: 8px; overflow: hidden; }
+@media (max-width: 860px) { .miles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mile { padding: 1.2rem 1.25rem 1.3rem; border-right: 1px solid rgba(255,255,255,.08); }
+.mile:last-child { border-right: 0; }
+.mile b { display: block; font: 700 clamp(1.6rem, 2.6vw, 2.1rem) var(--display); font-stretch: 75%; letter-spacing: .02em; color: var(--today); line-height: 1; text-shadow: 0 2px 3px rgba(0,0,0,.4); }
+.mile span { display: block; margin-top: .45rem; font-size: .92rem; color: #c5cad0; line-height: 1.4; }
 
-.stamp { display: inline-block; padding: 3px .5rem 1px; border: 2px solid currentColor; border-radius: 3px; font: 800 .74rem var(--display); font-stretch: 85%; letter-spacing: .12em; transform: rotate(var(--rot, -3deg)); white-space: nowrap; }
-.stamp.retired { color: #9b3b3b; text-decoration: line-through; text-decoration-thickness: 1px; } .stamp.live { color: #1d7a46; } .stamp.wip { color: #b8650b; } .stamp.next { color: #6b7380; } .stamp.done { color: #1d4fc4; }
-.sheet .note { padding: 0 1.25rem 1.1rem calc(4.2rem + 1rem); color: var(--ink); max-width: 72ch; }
-.sheet .note a { font-weight: 700; }
-@media (max-width: 720px) {
-  .sheet-top { display: none; }
-  .sheet .sum { grid-template-columns: 3.4rem 1fr auto; padding-right: .7rem; }
-  .sheet .for { grid-column: 2 / 3; grid-row: 2; padding-top: 0 !important; }
-  .sheet .st { grid-column: 3; grid-row: 1 / 3; }
-  .sheet { background-image: linear-gradient(90deg, transparent 3.4rem, #f0a3a3 3.4rem, #f0a3a3 calc(3.4rem + 1px), transparent calc(3.4rem + 1px)); }
-  .sheet .note { padding-left: 4.4rem; }
+.plist { display: grid; gap: 2rem; }
+.pgroup h3 { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .7rem; font: 700 .82rem var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--slate); }
+.pgroup h3 i { font-style: normal; color: #9aa3ae; }
+.prows { background: #fff; border: 1px solid rgba(23,33,47,.12); border-radius: 8px; overflow: hidden; }
+.prow { display: grid; grid-template-columns: 4.5rem minmax(0, 1.6fr) minmax(0, 1fr) 7.5rem 1.25rem; align-items: center; gap: 1rem; width: 100%; padding: .95rem 1.2rem; border: 0; border-top: 1px solid rgba(23,33,47,.08); background: none; text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: background .12s; }
+.prow:first-child { border-top: 0; }
+.prow:hover, .prow[aria-expanded="true"] { background: #f3f6f9; }
+.prow .y { font: 700 .95rem var(--display); font-stretch: 80%; color: var(--slate); letter-spacing: .04em; }
+.prow .n { font-weight: 700; font-size: 1.04rem; line-height: 1.3; }
+.prow .n small { display: block; font-weight: 400; font-size: .9rem; color: var(--slate); margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow .by { font-size: .9rem; color: var(--slate); }
+.prow .go { color: #9aa3ae; font-size: 1.2rem; transition: transform .15s, color .15s; }
+.prow:hover .go { transform: translateX(3px); color: var(--ink); }
+@media (max-width: 760px) {
+  .prow { grid-template-columns: 3.2rem minmax(0, 1fr) auto; gap: .2rem .8rem; }
+  .prow .by { grid-column: 2; grid-row: 2; }
+  .prow .tag { grid-column: 3; grid-row: 1 / 3; }
+  .prow .go { display: none; }
+  .prow .n small { white-space: normal; }
 }
+.tag { display: inline-flex; align-items: center; gap: .4rem; justify-self: start; height: 1.6rem; padding: 2px .55rem 0; border-radius: 3px; background: var(--felt); color: var(--letter); font: 700 .72rem var(--display); letter-spacing: .12em; white-space: nowrap; box-shadow: 0 0 0 1px #a9b2bc; }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, #9aa3ae); margin-top: -2px; }
+.tag.live { --c: #3ccf7a; } .tag.wip { --c: var(--today); } .tag.next { --c: #7aa7ff; } .tag.done { --c: #c9ced4; } .tag.retired { --c: #e26d6d; color: #b9bec4; }
 
-/* About the club */
+/* Project drawer */
+.scrim { position: fixed; inset: 0; z-index: 30; background: rgba(23,33,47,.35); opacity: 0; transition: opacity .2s; }
+.scrim.on { opacity: 1; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 31; width: min(440px, 100%); display: flex; flex-direction: column; background: var(--paper); box-shadow: -20px 0 40px -20px rgba(23,33,47,.5); transform: translateX(100%); transition: transform .28s cubic-bezier(.2, .8, .2, 1); }
+.drawer.on { transform: none; }
+@media (prefers-reduced-motion: reduce) { .drawer, .scrim { transition: none; } }
+.dr-head { padding: 1.4rem 1.5rem 1.5rem; background: var(--felt); color: var(--letter); }
+.dr-top { display: flex; justify-content: space-between; align-items: center; }
+.dr-x { width: 2.3rem; height: 2.3rem; border: 0; border-radius: 4px; background: rgba(255,255,255,.08); color: #fff; font-size: 1.3rem; cursor: pointer; }
+.dr-x:hover { background: rgba(255,255,255,.16); }
+.dr-head h3 { margin-top: 1.1rem; font: 800 clamp(1.9rem, 4vw, 2.5rem) var(--display); font-stretch: 74%; line-height: .95; }
+.dr-head p { margin-top: .5rem; color: #b9bec4; }
+.dr-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+.dr-body p { max-width: 52ch; }
+.dr-meta { margin: 1.4rem 0 0; display: grid; grid-template-columns: 6.5rem 1fr; gap: .6rem 1rem; padding-top: 1.2rem; border-top: 1px solid rgba(23,33,47,.12); }
+.dr-meta dt { font: 700 .76rem var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--slate); padding-top: .2rem; }
+.dr-meta dd { margin: 0; }
+.dr-links { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; }
+.dr-links a:not(.btn) { font-weight: 700; }
+.dr-nav { display: flex; justify-content: space-between; padding: .9rem 1.5rem; border-top: 1px solid rgba(23,33,47,.12); }
+.dr-nav button { border: 0; background: none; font: 700 .92rem var(--text); color: var(--link); cursor: pointer; padding: .3rem 0; }
+.dr-nav button:disabled { color: #b4bcc6; cursor: default; }
+
+
 .about { }
 .facts.two { margin-top: 2.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 760px) { .facts.two { grid-template-columns: 1fr; } .facts.two .fact { padding-left: 0; border-left: 0; } }
@@ -558,39 +585,22 @@ footer a { color: #fff; }
       <div class="sec-head">
         <div>
           <h2 id="archive-title">Projects.</h2>
-          <p class="lede">Everything the club has worked on since 2023, including sites that are retired. Open a line for details.</p>
+          <p class="lede">Everything the club has worked on since 2023. Click a project for details.</p>
         </div>
-        <div class="filters" role="group" aria-label="Filter projects">
-          <button type="button" data-f="all" aria-pressed="true">All</button>
-          <button type="button" data-f="live" aria-pressed="false">Live</button>
-          <button type="button" data-f="done" aria-pressed="false">Finished</button>
-          <button type="button" data-f="wip" aria-pressed="false">In progress</button>
-          <button type="button" data-f="next" aria-pressed="false">Up next</button>
-          <button type="button" data-f="retired" aria-pressed="false">Retired</button>
+        <div class="seg" role="group" aria-label="Show projects" id="seg">
+          <button type="button" data-f="all" aria-pressed="true">All<b></b></button>
+          <button type="button" data-f="live" aria-pressed="false">Live<b></b></button>
+          <button type="button" data-f="work" aria-pressed="false">In the works<b></b></button>
+          <button type="button" data-f="past" aria-pressed="false">Past<b></b></button>
         </div>
       </div>
-      <div class="sheet" id="sheet">
-        <div class="sheet-top" aria-hidden="true"><span></span><span>Project</span><span>For</span><span>Status</span></div>
-          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023</span><span class="proj">Web Development Education</span><span class="for">The club</span><span class="st"><span class="stamp done" style="--rot:-3deg">FOUNDED</span></span></summary><p class="note">Founded by Yeowon Yoon as a lecture club. Members taught each other HTML, CSS, JavaScript and how a site goes live.</p></details>
-          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">Troy Tech Fair</span><span class="for">Prospective students</span><span class="st"><span class="stamp done" style="--rot:2deg">EVERY YEAR</span></span></summary><p class="note">Picked out of 125 clubs every year since 2023 to show prospective students what we build. This year's Troy Tech Welcome is Dec 2.</p></details>
-          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">International Food Fest</span><span class="for">Troy High</span><span class="st"><span class="stamp done" style="--rot:-1.5deg">EVERY YEAR</span></span></summary><p class="note">We've been at Food Fest every year.</p></details>
-          <details class="line" data-s="done"><summary class="sum"><span class="yr">2023–</span><span class="proj">Tutoring initiative</span><span class="for">Troy students</span><span class="st"><span class="stamp done" style="--rot:3deg">400+ HOURS</span></span></summary><p class="note">Members tutored other students and logged more than 400 verified volunteer hours.</p></details>
-          <details class="line" data-s="retired"><summary class="sum"><span class="yr">Past</span><span class="proj">troywebdev.com</span><span class="for">Troy student orgs</span><span class="st"><span class="stamp retired" style="--rot:-2.5deg">RETIRED</span></span></summary><p class="note">The club's first site, a directory used by more than 100 student organizations. Led by Yeowon Yoon. It's offline now, and this site took its place.</p></details>
-          <details class="line" data-s="retired"><summary class="sum"><span class="yr">Past</span><span class="proj">Club kiosk</span><span class="for">Troy clubs</span><span class="st"><span class="stamp retired" style="--rot:1.5deg">RETIRED</span></span></summary><p class="note">A kiosk website for clubs. Retired.</p></details>
-          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy Dermatology Club</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:-3deg">DELIVERED</span></span></div></div>
-          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy A Friend in Me</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:2deg">DELIVERED</span></span></div></div>
-          <div class="line noexp" data-s="done"><div class="sum"><span class="yr">Past</span><span class="proj">Troy Act of Kindness</span><span class="for">Club site</span><span class="st"><span class="stamp done" style="--rot:-1.5deg">DELIVERED</span></span></div></div>
-          <details class="line" data-s="done"><summary class="sum"><span class="yr">Past</span><span class="proj">More club sites</span><span class="for">Club sites</span><span class="st"><span class="stamp done" style="--rot:3deg">DELIVERED</span></span></summary><p class="note">Other sites from earlier years.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy High LLM backend</span><span class="for">Every site here</span><span class="st"><span class="stamp live" style="--rot:-2.5deg">LIVE</span></span></summary><p class="note">Made by Jeffrey Chu. The Firebase project that hosts every club site, and the LLM club's points system. Jeffrey also manages the club's GitHub. <a href="#backend">More about it</a></p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">VSA, Learning League, Car Club</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:1.5deg">LIVE</span></span></summary><p class="note">VSA has meeting check-in with a word of the day. Learning League has a tutor finder. Car Club has a BMW you can get in and drive. Made by Ryan Jian.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">Anime, Chinese Culture, Leo, Key, GeoGuessr</span><span class="for">Club sites</span><span class="st"><span class="stamp live" style="--rot:-3deg">LIVE</span></span></summary><p class="note">Built around each club's own posts and photos. Made by Ryan Jian, with Daniel Li on Anime, Jason Lee on Key Club and Kaleb Lopez on Leo.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">The Science Club, Roots &amp; Roads</span><span class="for">Outside Troy</span><span class="st"><span class="stamp live" style="--rot:2deg">LIVE</span></span></summary><p class="note">A science nonprofit, and an OCSA student group that interviews immigrants in Orange County. Made by Ryan Jian.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">SUPER DW</span><span class="for">Daphne's crystal shop</span><span class="st"><span class="stamp live" style="--rot:-1.5deg">LIVE</span></span></summary><p class="note">A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer. Made by Ryan Jian.</p></details>
-          <details class="line" data-s="live"><summary class="sum"><span class="yr">2026</span><span class="proj">BioShip</span><span class="for">Biology students</span><span class="st"><span class="stamp live" style="--rot:3deg">LIVE</span></span></summary><p class="note">A biology quiz game with 1,225 questions. Made by Ryan Jian and Emerson Lin. <a href="bioship">Play it</a></p></details>
-          <details class="line" data-s="wip"><summary class="sum"><span class="yr">2026</span><span class="proj">OCHSWA Championship Shelf</span><span class="for">Wrestling, for Mr. Nguyen</span><span class="st"><span class="stamp wip" style="--rot:-2.5deg">IN PROGRESS</span></span></summary><p class="note">A shelf of wrestling association records, one volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in. Made by Wesley Shen and Ryan Jian.</p></details>
-          <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Robotics</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:1.5deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
-          <details class="line" data-s="next"><summary class="sum"><span class="yr">2026</span><span class="proj">Troy Enterprise Circle</span><span class="for">Commission</span><span class="st"><span class="stamp next" style="--rot:-3deg">UP NEXT</span></span></summary><p class="note">Commissioned, not started yet.</p></details>
+      <div class="miles">
+        <div class="mile"><b>2023</b><span>Founded as Web Development Education</span></div>
+        <div class="mile"><b>Every year</b><span>Picked for Troy Tech Fair out of 125 clubs</span></div>
+        <div class="mile"><b>Every year</b><span>At International Food Fest</span></div>
+        <div class="mile"><b>400+ hours</b><span>Logged by our tutoring initiative</span></div>
       </div>
+      <div class="plist" id="plist"></div>
     </div>
   </section>
 </div>
@@ -675,6 +685,21 @@ footer a { color: #fff; }
   </section>
 </div>
 </main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-title" hidden>
+  <div class="dr-head">
+    <div class="dr-top"><span class="tag" id="dr-tag"></span><button class="dr-x" type="button" id="dr-x" aria-label="Close">&times;</button></div>
+    <h3 id="dr-title"></h3>
+    <p id="dr-for"></p>
+  </div>
+  <div class="dr-body">
+    <p id="dr-text"></p>
+    <dl class="dr-meta" id="dr-meta"></dl>
+    <div class="dr-links" id="dr-links"></div>
+  </div>
+  <div class="dr-nav"><button type="button" id="dr-prev">&larr; Previous</button><button type="button" id="dr-next">Next &rarr;</button></div>
+</aside>
 
 <footer>
   <div class="wrap">
@@ -813,17 +838,97 @@ footer a { color: #fff; }
     io.observe(nextRows.closest('.board'));
   } else buildNext();
 
-  // Sign-out sheet filters
-  var fbtns = document.querySelectorAll('.filters button');
-  fbtns.forEach(function (b) {
+  // Projects: list, filter and detail drawer
+  var PROJECTS = [{"name": "Troy High LLM backend", "short": "Firebase project behind every site", "for": "Every site here", "year": "2026", "s": "live", "label": "LIVE", "by": "Jeffrey Chu", "text": "The Firebase project that hosts every club site: Google sign-in, a separate locked-down database per site, and automatic deploys on every push. It started as the Troy High LLM club's points system. Jeffrey also manages the club's GitHub.", "url": "https://troy-high-llm.web.app", "door": "backend"}, {"name": "Anime Club", "short": "Weekly showcases, Kahoots and raffles", "for": "THS Anime Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Daniel Li", "text": "A site for Troy's anime club with meeting info, events and their Discord.", "url": "https://troy-anime-club.web.app", "door": "anime"}, {"name": "Troy Car Club", "short": "Car culture and maintenance", "for": "Troy Car Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Real photos from the club's Instagram and a BMW you can get in and drive.", "url": "https://troy-car-club.web.app", "door": "carclub"}, {"name": "Chinese Culture Club", "short": "中国文化社", "for": "Chinese Culture Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Meetings, events through the year, and the club's Club Rush table.", "url": "https://troy-chinese-culture-club.web.app", "door": "chinese"}, {"name": "GeoGuessr Club", "short": "Road-sign theme with a working compass", "for": "THS GeoGuessr Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Weekly games, tournaments and tips for getting better.", "url": "https://troy-geoguessr-club.web.app", "door": "geo"}, {"name": "Key Club", "short": "Service hours and Division 30 North", "for": "Troy Key Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Jason Lee", "text": "Volunteer events, service hours and links for members.", "url": "https://troy-key-club.web.app", "door": "key"}, {"name": "Troy Learning League", "short": "Tutor finder and hours log", "for": "Peer tutoring club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Students get matched with a tutor by subject and grade. Tutors log volunteer hours.", "url": "https://troy-learning-league.web.app", "door": "tll"}, {"name": "Leo Club", "short": "Lions Clubs International", "for": "Troy Leo Club", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Kaleb Lopez", "text": "Volunteer events, Leo competitions, scholarships and kidney disease outreach.", "url": "https://troy-leo-club.web.app", "door": "leo"}, {"name": "VSA", "short": "Meeting check-in with a word of the day", "for": "Vietnamese Student Association", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "Members check in to meetings on the site. Includes events, photos and a Vietnamese culture section.", "url": "https://troy-vsa.web.app", "door": "vsa"}, {"name": "The Science Club", "short": "Research groups and Science Bowl", "for": "Science nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A nonprofit for middle and high school students: research groups, national competitions and Science Bowl training.", "url": "https://troy-science-club.web.app", "door": "science"}, {"name": "Roots & Roads", "short": "Immigrant stories in Orange County", "for": "OCSA student nonprofit", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "An OCSA group that interviews immigrants, shares their stories in film and writing, and tutors for free.", "url": "https://troy-roots-and-roads.web.app", "door": "roots"}, {"name": "SUPER DW", "short": "Crystal shop with a bracelet designer", "for": "Daphne's crystal shop", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian", "text": "A storefront for hand-strung crystal bracelets, with a crystal chart and a bracelet designer.", "url": "https://superdw-crystals.web.app", "door": "superdw"}, {"name": "BioShip", "short": "Biology quiz game, 1,225 questions", "for": "Biology students", "year": "2026", "s": "live", "label": "LIVE", "by": "Ryan Jian, Emerson Lin", "text": "Fly a ship through 1,225 biology questions.", "url": "bioship", "door": "bioship"}, {"name": "OCHSWA Championship Shelf", "short": "Wrestling records as flipbooks", "for": "Wrestling, for Mr. Nguyen", "year": "2026", "s": "work", "label": "IN PROGRESS", "by": "Wesley Shen, Ryan Jian", "text": "One volume per season, each opening into a page-turning flipbook. The shelf is built; the season records still need to be scanned in before it goes public.", "url": "", "door": ""}, {"name": "Troy Robotics", "short": "Club website", "for": "Commission", "year": "2026", "s": "work", "label": "UP NEXT", "by": "", "text": "Commissioned, not started yet.", "url": "", "door": ""}, {"name": "Troy Enterprise Circle", "short": "Club website", "for": "Commission", "year": "2026", "s": "work", "label": "UP NEXT", "by": "", "text": "Commissioned, not started yet.", "url": "", "door": ""}, {"name": "troywebdev.com", "short": "The club's first site", "for": "Troy student orgs", "year": "2023", "s": "past", "label": "RETIRED", "by": "Yeowon Yoon", "text": "A directory of Troy clubs, used by more than 100 student organizations. It's offline now, and this site took its place.", "url": "", "door": ""}, {"name": "Club kiosk", "short": "Kiosk site for clubs", "for": "Troy clubs", "year": "Past", "s": "past", "label": "RETIRED", "by": "", "text": "An older kiosk website for clubs. Retired.", "url": "", "door": ""}, {"name": "Troy Dermatology Club", "short": "Club website", "for": "Troy Dermatology Club", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy A Friend in Me", "short": "Club website", "for": "Troy A Friend in Me", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "Troy Act of Kindness", "short": "Club website", "for": "Troy Act of Kindness", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "A site we built and handed off to the club.", "url": "", "door": ""}, {"name": "More club sites", "short": "From earlier years", "for": "Troy clubs", "year": "Past", "s": "past", "label": "DELIVERED", "by": "", "text": "Other club sites the club built before 2026.", "url": "", "door": ""}];
+  var GROUPS = [['live', 'Live'], ['work', 'In the works'], ['past', 'Past']];
+  var TAGCLS = { 'LIVE': 'live', 'IN PROGRESS': 'wip', 'UP NEXT': 'next', 'RETIRED': 'retired', 'DELIVERED': 'done' };
+  var plist = document.getElementById('plist'), seg = document.getElementById('seg');
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function tagEl(p) { return el('span', 'tag ' + TAGCLS[p.label], p.label); }
+  var rowsByIndex = [];
+  GROUPS.forEach(function (g) {
+    var items = PROJECTS.map(function (p, i) { return [p, i]; }).filter(function (x) { return x[0].s === g[0]; });
+    var box = el('div', 'pgroup'); box.dataset.g = g[0];
+    var h = el('h3', null, g[1]); h.appendChild(el('i', null, items.length)); box.appendChild(h);
+    var rows = el('div', 'prows');
+    items.forEach(function (x) {
+      var p = x[0], b = el('button', 'prow'); b.type = 'button'; b.setAttribute('aria-expanded', 'false'); b.dataset.i = x[1];
+      b.appendChild(el('span', 'y', p.year));
+      var n = el('span', 'n', p.name); n.appendChild(el('small', null, p.short)); b.appendChild(n);
+      b.appendChild(el('span', 'by', p.by ? 'Made by ' + p.by.replace(', ', ' and ') : p['for']));
+      b.appendChild(tagEl(p));
+      b.appendChild(el('span', 'go', '\u203A'));
+      b.addEventListener('click', function () { openDrawer(+b.dataset.i); });
+      rows.appendChild(b); rowsByIndex[x[1]] = b;
+    });
+    box.appendChild(rows); plist.appendChild(box);
+  });
+  var segBtns = seg.querySelectorAll('button');
+  segBtns.forEach(function (b) {
+    var f = b.dataset.f;
+    b.querySelector('b').textContent = f === 'all' ? PROJECTS.length : PROJECTS.filter(function (p) { return p.s === f; }).length;
     b.addEventListener('click', function () {
-      var f = b.dataset.f;
-      fbtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      document.querySelectorAll('#sheet .line').forEach(function (d) {
-        d.hidden = !(f === 'all' || d.dataset.s === f);
-      });
+      segBtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      plist.querySelectorAll('.pgroup').forEach(function (g) { g.hidden = !(f === 'all' || g.dataset.g === f); });
     });
   });
+
+  var drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim'), openIdx = -1, lastFocus = null;
+  function visibleOrder() { return [].filter.call(plist.querySelectorAll('.prow'), function (r) { return !r.closest('.pgroup').hidden; }).map(function (r) { return +r.dataset.i; }); }
+  function fill(i) {
+    var p = PROJECTS[i];
+    var t = document.getElementById('dr-tag'); t.className = 'tag ' + TAGCLS[p.label]; t.textContent = p.label;
+    document.getElementById('dr-title').textContent = p.name;
+    document.getElementById('dr-for').textContent = p.short;
+    document.getElementById('dr-text').textContent = p.text;
+    var meta = document.getElementById('dr-meta'); meta.textContent = '';
+    [['For', p['for']], ['Year', p.year === 'Past' ? 'Before 2026' : p.year], ['Made by', p.by ? p.by.replace(', ', ' and ') : '']].forEach(function (m) {
+      if (!m[1]) return; meta.appendChild(el('dt', null, m[0])); meta.appendChild(el('dd', null, m[1]));
+    });
+    var links = document.getElementById('dr-links'); links.textContent = '';
+    if (p.url) { var a = el('a', 'btn', p.door === 'backend' ? 'Open the console' : p.door === 'bioship' ? 'Play BioShip' : 'Visit site'); a.href = p.url; links.appendChild(a); }
+    if (p.door) { var s2 = el('a', null, p.door === 'backend' ? 'Read about the backend' : 'See it in Sites'); s2.href = '#' + p.door; s2.addEventListener('click', closeDrawer); links.appendChild(s2); }
+    if (p.door === 'backend') { var g = el('a', null, 'GitHub'); g.href = 'https://github.com/Jeffrey-Chu/troyllm'; links.appendChild(g); }
+    if (!p.url && !p.door) links.appendChild(el('span', 'by', p.s === 'past' ? 'No longer online.' : 'Not public yet.'));
+    rowsByIndex.forEach(function (r) { r.setAttribute('aria-expanded', 'false'); });
+    rowsByIndex[i].setAttribute('aria-expanded', 'true');
+    var order = visibleOrder(), k = order.indexOf(i);
+    document.getElementById('dr-prev').disabled = k <= 0;
+    document.getElementById('dr-next').disabled = k < 0 || k >= order.length - 1;
+    openIdx = i;
+  }
+  function openDrawer(i) {
+    if (openIdx < 0) lastFocus = document.activeElement;
+    fill(i);
+    drawer.hidden = false; scrim.hidden = false;
+    requestAnimationFrame(function () { drawer.classList.add('on'); scrim.classList.add('on'); });
+    document.getElementById('dr-x').focus();
+  }
+  function closeDrawer() {
+    if (openIdx < 0) return;
+    drawer.classList.remove('on'); scrim.classList.remove('on');
+    rowsByIndex.forEach(function (r) { r.setAttribute('aria-expanded', 'false'); });
+    openIdx = -1;
+    setTimeout(function () { drawer.hidden = true; scrim.hidden = true; }, reduce ? 0 : 280);
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  function step(d) { var order = visibleOrder(), k = order.indexOf(openIdx); if (order[k + d] != null) fill(order[k + d]); }
+  document.getElementById('dr-x').addEventListener('click', closeDrawer);
+  scrim.addEventListener('click', closeDrawer);
+  document.getElementById('dr-prev').addEventListener('click', function () { step(-1); });
+  document.getElementById('dr-next').addEventListener('click', function () { step(1); });
+  document.addEventListener('keydown', function (e) {
+    if (openIdx < 0) return;
+    if (e.key === 'Escape') closeDrawer();
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'Tab') {
+      var f = drawer.querySelectorAll('button:not(:disabled), a[href]'); if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  window.addEventListener('hashchange', closeDrawer);
 
   // Your club next: live preview on the board and the address
   var clubIn = document.getElementById('club-in'), clubOut = document.getElementById('club-out');
