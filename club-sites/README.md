@@ -83,6 +83,7 @@ Anime Club (`sites/anime`), Chinese Culture Club (`sites/chinese`), Leo Club (`s
 | Roots & Roads | https://troy-roots-and-roads.web.app |
 | The Science Club | https://troy-science-club.web.app |
 | Key Club | https://troy-key-club.web.app |
+| Music Vision Productions | https://troy-mvp-music.web.app |
 | Troy Clubs (hub of all sites) | https://troy-clubs.web.app |
 | THS GeoGuessr Club | https://troy-geoguessr-club.web.app |
 
