@@ -272,52 +272,6 @@ tbody tr:hover td.go { color: var(--cyan); }
 .step span { display: block; color: var(--mute); font-size: .86rem; margin-top: .25rem; }
 @media (max-width: 680px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 2rem; } .steps::before, .steps .pkt { display: none; } }
 
-/* ---------------- TEAM ---------------- */
-.tgroup { margin-top: 3.2rem; }
-.tgroup > h3 { font: 600 .76rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin: 0 0 1.2rem; display: flex; gap: .7rem; align-items: center; }
-.tgroup > h3 em { font-style: normal; color: var(--dim); }
-.badges { display: grid; gap: 1.4rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.badges.sm { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-@media (max-width: 1100px) { .badges.sm { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 980px) { .badges { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .badges, .badges.sm { grid-template-columns: 1fr 1fr; gap: .8rem; } }
-.badge { perspective: 1000px; aspect-ratio: 5 / 7.2; cursor: pointer; border: 0; padding: 0; background: none; text-align: left; }
-.badge.sm-b { aspect-ratio: 5 / 6.4; }
-.bi { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2, .8, .2, 1); transform: rotateX(var(--rx, 0deg)) rotateY(calc(var(--ry, 0deg) + var(--flip, 0deg))); }
-.badge.flipped .bi { --flip: 180deg; }
-.face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: linear-gradient(160deg, #121b42, #0a1029); box-shadow: 0 0 0 1px var(--line2), 0 30px 60px -30px #000; display: flex; flex-direction: column; }
-.face.back { transform: rotateY(180deg); padding: 1.3rem; }
-.face::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; mix-blend-mode: color-dodge; opacity: var(--holo, 0); transition: opacity .3s;
-  background: radial-gradient(circle at var(--px, 50%) var(--py, 50%), rgba(255, 255, 255, .35), transparent 40%),
-              linear-gradient(115deg, transparent 20%, rgba(214, 224, 75, .35) 40%, rgba(52, 195, 236, .4) 55%, rgba(164, 139, 255, .3) 70%, transparent 85%);
-  background-size: 100% 100%, 250% 250%; background-position: center, var(--gx, 50%) var(--gy, 50%); }
-.badge:hover .face::after { --holo: .9; }
-.b-top { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1rem; font: 600 .62rem var(--mono); letter-spacing: .14em; color: var(--mute); text-transform: uppercase; }
-.b-top img { width: 22px; height: 22px; border-radius: 6px; }
-.b-art { position: relative; margin: 0 .8rem; border-radius: 12px; overflow: hidden; flex: 1; min-height: 0; background: #070c20; }
-.b-art canvas { width: 100%; height: 100%; display: block; }
-.b-art .ini { position: absolute; left: .8rem; bottom: .4rem; font: 800 clamp(2.6rem, 5vw, 3.6rem)/1 var(--sans); font-stretch: 75%; color: transparent; -webkit-text-stroke: 1.5px rgba(238, 240, 251, .9); letter-spacing: -.02em; }
-.b-body { padding: .9rem 1rem 1rem; }
-.b-role { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); }
-.b-name { margin: .3rem 0 0; font-weight: 700; font-stretch: 82%; font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.05; color: var(--text); }
-.b-foot { display: flex; justify-content: space-between; align-items: center; margin-top: .7rem; font: 400 .66rem var(--mono); color: var(--dim); }
-.b-foot .bars { height: 14px; width: 60px; background: repeating-linear-gradient(90deg, var(--dim) 0 1px, transparent 1px 3px, var(--dim) 3px 5px, transparent 5px 6px, var(--dim) 6px 7px, transparent 7px 10px); opacity: .7; }
-.back h4 { margin: 0; font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); }
-.back .bn { margin: .35rem 0 1rem; font-weight: 700; font-stretch: 82%; font-size: 1.35rem; line-height: 1.05; color: var(--text); }
-.back ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; overflow: auto; }
-.back li { font-size: .88rem; color: #cfd4f2; padding-left: 1rem; position: relative; }
-.back li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 2px; background: var(--grad); }
-.back .flipnote { margin-top: auto; padding-top: .8rem; font: 600 .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
-.alum { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 2.4rem; align-items: center; padding: 1.6rem; border-radius: 22px; background: radial-gradient(120% 120% at 100% 0%, rgba(52, 195, 236, .12), transparent 50%), var(--panel); border: 1px solid var(--line2); }
-@media (max-width: 760px) { .alum { grid-template-columns: 1fr; } .alum .badge { max-width: 280px; } }
-.alum h4 { margin: 0; font-weight: 700; font-stretch: 82%; font-size: clamp(1.6rem, 3vw, 2.3rem); line-height: 1.05; }
-.alum p { color: var(--mute); margin: .8rem 0 0; max-width: 56ch; }
-.thennow { display: flex; align-items: center; gap: 1rem; margin-top: 1.4rem; font: 600 .8rem var(--mono); }
-.thennow span { padding: .4rem .7rem; border-radius: 8px; background: rgba(255, 255, 255, .05); border: 1px solid var(--line2); }
-.thennow i { flex: none; width: 60px; height: 2px; background: var(--grad); position: relative; }
-.thennow i::after { content: ""; position: absolute; right: -2px; top: -4px; border: 5px solid transparent; border-left-color: var(--cyan); }
-.advisor { margin-top: 2rem; font: 600 .8rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
-
 /* ---------------- JOIN ---------------- */
 .join-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 3.5rem; align-items: start; }
 @media (max-width: 960px) { .join-grid { grid-template-columns: 1fr; } }
@@ -361,7 +315,7 @@ tbody tr:hover td.go { color: var(--cyan); }
 @keyframes pop { from { transform: scale(.94); opacity: 0; } }
 
 /* ---------------- phones ---------------- */
-.board-wrap > *, .play > *, .join-grid > *, .alum > *, .sec-head > * { min-width: 0; }
+.board-wrap > *, .play > *, .join-grid > *, .sec-head > * { min-width: 0; }
 @media (max-width: 700px) {
   :root { --wrap: calc(100vw - 32px); }
   body { font-size: 16px; }
@@ -420,8 +374,6 @@ tbody tr:hover td.go { color: var(--cyan); }
   .b-foot .bars { width: 40px; }
   .back { padding: 1rem; }
   .back li { font-size: .8rem; }
-  .alum { padding: 1.1rem; gap: 1.4rem; }
-  .alum .badge { max-width: 240px; margin: 0 auto; width: 100%; }
   .thennow { flex-wrap: wrap; gap: .6rem; font-size: .72rem; }
   .thennow i { width: 34px; }
   .mock { position: relative; top: 0; transform: none; }
@@ -465,7 +417,6 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
       <a href="#home" data-to="home">Home</a>
       <a href="#projects" data-to="projects">Projects</a>
       <a href="#about" data-to="about">About</a>
-      <a href="#team" data-to="team">Team</a>
       <a href="#join" data-to="join">Get a site</a>
       <span class="ind" id="ind" aria-hidden="true"></span>
     </nav>
@@ -636,21 +587,6 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   </section>
 </div>
 
-<!-- ============ TEAM ============ -->
-<div class="panel" data-tab="team" hidden>
-  <section class="sec">
-    <div class="wrap">
-      <p class="kicker">Team</p>
-      <h2 class="h2">Team.</h2>
-      <p class="lede">The board runs the club. Members build with us, and every site credits whoever made it. <span class="hov">Tilt a card, then click it</span><span class="tch">Tap a card</span> to see what they've built.</p>
-      <div class="tgroup"><h3>2026 board <em id="c-board"></em></h3><div class="badges" id="board-badges"></div></div>
-      <div class="tgroup"><h3>Members who shipped a project <em id="c-mem"></em></h3><div class="badges sm" id="member-badges"></div></div>
-      <div class="tgroup"><h3>Alumni</h3><div id="alumni"></div></div>
-      <p class="advisor">Advisor · Mr. Nguyen</p>
-    </div>
-  </section>
-</div>
-
 <!-- ============ JOIN ============ -->
 <div class="panel" data-tab="join" hidden>
   <section class="sec">
@@ -723,7 +659,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   $('#n-work').textContent = PROJECTS.filter(function (p) { return p.s === 'work'; }).length;
 
   /* ---------------- tabs ---------------- */
-  var TABS = ['home', 'projects', 'about', 'team', 'join'];
+  var TABS = ['home', 'projects', 'about', 'join'];
   var panels = $$('.panel'), tabLinks = $$('#tabs a'), ind = $('#ind'), current = null;
   function moveInd() {
     var a = $('#tabs a[aria-current="page"]'); if (!a) return;
@@ -734,10 +670,9 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
     panels.forEach(function (p) { p.hidden = p.dataset.tab !== tab; });
     tabLinks.forEach(function (a) { if (a.dataset.to === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     moveInd();
-    document.title = (tab === 'home' ? '' : { projects: 'Projects', about: 'About', team: 'Team', join: 'Get a site' }[tab] + ' · ') + 'Troy Web Development';
+    document.title = (tab === 'home' ? '' : { projects: 'Projects', about: 'About', join: 'Get a site' }[tab] + ' · ') + 'Troy Web Development';
     if (tab === 'home') startHome(); else stopHome();
     if (tab === 'projects') setupAuto();
-    if (tab === 'team') drawArt();
   }
   function route() {
     var id = decodeURIComponent(location.hash.slice(1)) || 'home';
@@ -1023,90 +958,6 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
   });
   drawTable();
 
-  /* ---------------- team ---------------- */
-  var BOARD = [
-    ['Ryan Jian', 'President', SITES.filter(function (s) { return /Ryan Jian/.test(s.by); }).map(function (s) { return s.name; }).concat(['OCHSWA Championship Shelf'])],
-    ['Shubhay Shah', 'Vice President', ['Helps run the club and its meetings']],
-    ['Wesley Shen', 'Secretary', ['OCHSWA Championship Shelf']],
-    ['Jeffrey Chu', 'Head Developer', ['The Firebase project and GitHub repo every site runs on', 'Troy High LLM points system', 'The first version of this site']]
-  ];
-  var MEMBERS = [['Daniel Li', 'Member', ['Anime Club site']], ['Jason Lee', 'Member', ['Key Club site']], ['Kaleb Lopez', 'Member', ['Leo Club site']], ['Emerson Lin', 'Member', ['BioShip']], ['Scarlett Cheng', 'Member', ['Music Vision Productions site']]];
-  var ALUM = ['Yeowon Yoon', 'Co-founder · 2023–2026', ['Co-founded the club in 2023', 'Launched troywebdev.com', 'Started the tutoring initiative (400+ hours)']];
-  var seedOf = function (s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
-  function rng(seed) { return function () { seed = (seed + 0x6D2B79F5) | 0; var t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
-  var arts = [];
-  function badge(p, i, small) {
-    var b = el('button', 'badge' + (small ? ' sm-b' : '')); b.type = 'button'; b.setAttribute('aria-label', p[0] + ', ' + p[1] + '. Show what they built');
-    var bi = el('div', 'bi'), f = el('div', 'face front'), bk = el('div', 'face back');
-    var top = el('div', 'b-top'); var lg = el('img'); lg.src = 'img/logo.svg'; lg.alt = ''; top.appendChild(lg); top.appendChild(el('span', null, 'Troy Web Dev · 2026')); f.appendChild(top);
-    var art = el('div', 'b-art'), c = el('canvas'); art.appendChild(c);
-    art.appendChild(el('span', 'ini', p[0].split(' ').map(function (w) { return w[0]; }).join('')));
-    f.appendChild(art); arts.push([c, p[0]]);
-    var bd = el('div', 'b-body'); bd.appendChild(el('div', 'b-role', p[1])); bd.appendChild(el('div', 'b-name', p[0]));
-    var ft = el('div', 'b-foot'); ft.appendChild(el('span', null, 'TWD-' + String(seedOf(p[0]) % 9000 + 1000))); ft.appendChild(el('span', 'bars')); bd.appendChild(ft); f.appendChild(bd);
-    bk.appendChild(el('h4', null, 'Built')); bk.appendChild(el('div', 'bn', p[0]));
-    var ul = el('ul'); p[2].forEach(function (x) { ul.appendChild(el('li', null, x)); }); bk.appendChild(ul);
-    bk.appendChild(el('div', 'flipnote', 'Click to flip back'));
-    bi.appendChild(f); bi.appendChild(bk); b.appendChild(bi);
-    b.addEventListener('click', function () { b.classList.toggle('flipped'); });
-    if (canHover && !reduce) {
-      b.addEventListener('pointermove', function (e) {
-        var r = b.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        bi.style.setProperty('--ry', (x - .5) * 22 + 'deg'); bi.style.setProperty('--rx', (.5 - y) * 18 + 'deg');
-        $$('.face', b).forEach(function (fc) { fc.style.setProperty('--px', x * 100 + '%'); fc.style.setProperty('--py', y * 100 + '%'); fc.style.setProperty('--gx', x * 100 + '%'); fc.style.setProperty('--gy', y * 100 + '%'); });
-      });
-      b.addEventListener('pointerleave', function () { bi.style.setProperty('--ry', '0deg'); bi.style.setProperty('--rx', '0deg'); });
-    }
-    return b;
-  }
-  BOARD.forEach(function (p, i) { $('#board-badges').appendChild(badge(p, i)); });
-  MEMBERS.forEach(function (p, i) { $('#member-badges').appendChild(badge(p, i, true)); });
-  $('#c-board').textContent = BOARD.length; $('#c-mem').textContent = MEMBERS.length;
-  (function () {
-    var box = el('div', 'alum'); box.appendChild(badge(ALUM, 0));
-    var tx = el('div'); tx.appendChild(el('p', 'kicker', 'Where they are now')); tx.appendChild(el('h4', null, 'Yeowon Yoon'));
-    tx.appendChild(el('p', null, 'Co-founded the club in 2023 as Web Development Education and led it through 2026. Launched troywebdev.com and the tutoring initiative, which logged more than 400 volunteer hours.'));
-    var tn = el('div', 'thennow'); tn.appendChild(el('span', null, 'Troy Web Development')); tn.appendChild(el('i')); tn.appendChild(el('span', null, 'Cornell University')); tx.appendChild(tn);
-    box.appendChild(tx); $('#alumni').appendChild(box);
-  })();
-  var drawn = false;
-  function drawArt() {
-    if (drawn) return; drawn = true;
-    requestAnimationFrame(function () {
-      arts.forEach(function (a) {
-        var c = a[0], w = c.offsetWidth * 2, h = c.offsetHeight * 2; if (!w || !h) return; c.width = w; c.height = h;
-        var g = c.getContext('2d'), R = rng(seedOf(a[1])), k = 3 + R() * 4, ph = R() * 6, amp = .25 + R() * .3, n = 26;
-        var bg = g.createLinearGradient(0, 0, w, h); bg.addColorStop(0, '#0a1233'); bg.addColorStop(1, '#070b1f'); g.fillStyle = bg; g.fillRect(0, 0, w, h);
-        var gr = g.createLinearGradient(0, h, w, 0); gr.addColorStop(0, '#d6e04b'); gr.addColorStop(1, '#34c3ec');
-        g.strokeStyle = gr; g.lineWidth = 1.6;
-        var mode = seedOf(a[1]) % 3;
-        if (mode === 1) {
-          var ox = w * (.3 + R() * .5), oy = h * (.3 + R() * .5);
-          for (var q = 1; q < 30; q++) { g.globalAlpha = .2 + .7 * (1 - q / 30); g.beginPath();
-            for (var an = 0; an <= Math.PI * 2 + .05; an += .05) { var rr = q * w * .028 * (1 + .18 * Math.sin(an * k + ph + q * .3)); var px = ox + Math.cos(an) * rr, py = oy + Math.sin(an) * rr * .8; an ? g.lineTo(px, py) : g.moveTo(px, py); }
-            g.stroke(); }
-          g.globalAlpha = 1; return;
-        }
-        if (mode === 2) {
-          for (var gy = 0; gy < 18; gy++) for (var gx = 0; gx < 26; gx++) {
-            var u = gx / 25, v = gy / 17, val = Math.sin(u * k + ph) + Math.cos(v * k * .8 - ph) + Math.sin((u + v) * 4 + ph);
-            var rad = Math.max(0, (val + 1.2) / 4.2) * w * .016; g.globalAlpha = .25 + .75 * Math.min(1, rad / (w * .016));
-            g.fillStyle = gr; g.beginPath(); g.arc(w * (.04 + u * .92), h * (.06 + v * .88), rad, 0, 7); g.fill(); }
-          g.globalAlpha = 1; return;
-        }
-        for (var i = 0; i < n; i++) {
-          g.globalAlpha = .15 + .75 * (i / n); g.beginPath();
-          for (var x = 0; x <= w; x += 6) {
-            var u = x / w, y = h * (.15 + .75 * i / n) + Math.sin(u * k + ph + i * .22) * h * amp * (1 - i / n * .6) * Math.sin(u * 3.1 + i * .1);
-            x ? g.lineTo(x, y) : g.moveTo(x, y);
-          }
-          g.stroke();
-        }
-        g.globalAlpha = 1;
-      });
-    });
-  }
-
   /* ---------------- get a site ---------------- */
   var SW = [['#34c3ec', '#06121d'], ['#d6e04b', '#151a03'], ['#8b6cff', '#fff'], ['#ff5fa2', '#fff'], ['#18c48f', '#03130d'], ['#0d1949', '#fff']];
   var FEATS = [['Meeting check-in', 'Word of the day'], ['Sign-ups', 'Members and tutors'], ['Order form', 'Merch and pre-orders'], ['Photo gallery', 'From your Instagram'], ['Event calendar', 'Synced dates'], ['Hours log', 'Volunteer hours']];
@@ -1136,7 +987,7 @@ footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; 
 
   /* ---------------- command palette ---------------- */
   var mac = /Mac|iPhone|iPad/.test(navigator.platform); $('#kkey').textContent = mac ? '⌘K' : 'Ctrl K';
-  var CMDS = [['Home', '#home', 'Page'], ['Projects', '#projects', 'Page'], ['About the club', '#about', 'Page'], ['Team', '#team', 'Page'], ['Get a site', '#join', 'Page'], ['Play BioShip', 'bioship', 'Game']]
+  var CMDS = [['Home', '#home', 'Page'], ['Projects', '#projects', 'Page'], ['About the club', '#about', 'Page'], ['Get a site', '#join', 'Page'], ['Play BioShip', 'bioship', 'Game']]
     .concat(SITES.filter(function (s) { return s.id !== 'bioship'; }).map(function (s) { return [s.name, '#' + s.id, 'Site']; }));
   var ck = $('#cmdk'), ci = $('#cmdk-in'), cl = $('#cmdk-list'), sel = 0, items = [];
   function drawCmd() {
