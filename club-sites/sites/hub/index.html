@@ -762,16 +762,6 @@ footer { border-top: 1px solid var(--line); }
     </div>
   </section>
 
-  <section class="sec" id="like" aria-labelledby="like-title">
-    <div class="wrap">
-      <div class="sec-top">
-        <p class="lbl"><span class="dot"></span>Sites like yours</p>
-        <div><h2 class="h-m" id="like-title">We've built these for <span id="like-kind">Troy clubs</span>.</h2><p class="lede" style="font-size:1rem">Changes with what you picked in step 01.</p></div>
-      </div>
-      <div class="like" id="like-list"></div>
-    </div>
-  </section>
-
   <section class="sec" id="how" aria-labelledby="how-title">
     <div class="wrap">
       <div class="sec-top">
@@ -1229,18 +1219,7 @@ footer { border-top: 1px solid var(--line); }
     if (!B.feats.length) m.appendChild(el('div', 'empty', 'Pick what you need in step 04'));
     B.feats.forEach(function (i) { var d = el('div'); d.appendChild(el('b', null, FEATS[i][0])); d.appendChild(el('span', null, FEATS[i][1])); m.appendChild(d); });
   }
-  function drawLike() {
-    var t = TYPES[B.type], box = $('#like-list'); box.textContent = ''; $('#like-kind').textContent = t[4];
-    t[5].forEach(function (id, i) {
-      var s2 = byId[id]; if (!s2) return;
-      var a = el('a'); a.href = '#' + id; a.style.setProperty('--i', i);
-      var th = el('div', 'th'), im = el('img'); im.src = 'img/' + id + '.webp'; im.alt = ''; im.loading = 'lazy'; th.appendChild(im); a.appendChild(th);
-      im.addEventListener('load', function () { a.style.setProperty('--pan', Math.max(0, im.offsetHeight - th.offsetHeight) + 'px'); });
-      var tx = el('div', 'tx'); tx.appendChild(el('b', null, s2.name)); tx.appendChild(el('span', null, s2.who)); a.appendChild(tx);
-      box.appendChild(a);
-    });
-  }
-  seg($('#b-type'), TYPES, 0, function (i) { B.type = i; B.pages.Shop = i === 3 ? 1 : 0; drawMock(); drawLike(); });
+  seg($('#b-type'), TYPES, 0, function (i) { B.type = i; B.pages.Shop = i === 3 ? 1 : 0; drawMock(); });
   SW.forEach(function (c, i) {
     var b = el('button'); b.type = 'button'; b.style.setProperty('--c', c[0]); b.setAttribute('aria-label', 'Color ' + c[0]); b.setAttribute('aria-pressed', i ? 'false' : 'true');
     b.addEventListener('click', function () { $$('#sw button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); B.color = i; drawMock(); });
@@ -1255,7 +1234,7 @@ footer { border-top: 1px solid var(--line); }
     drawMock(); var v = $('#club-in').value.trim();
     clearTimeout(jt); jt = setTimeout(function () { nextRows.textContent = ''; buildBoard(nextRows, nextData(v), 0); }, 220);
   });
-  drawMock(); drawLike();
+  drawMock();
   $('#copy-req').addEventListener('click', function () {
     
     var txt = 'Website request for Troy Web Development\nFor: ' + TYPES[B.type][1] + '\nName: ' + ($('#club-in').value.trim() || '(name)') + '\nAddress idea: ' + slug() +
