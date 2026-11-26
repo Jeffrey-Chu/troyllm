@@ -79,7 +79,7 @@ button, input, textarea { font: inherit; color: inherit; border-radius: 0; }
 main { flex: 1; }
 
 /* ================= HOME HERO: the lens ================= */
-.lens { position: relative; height: calc(100vh - 64px); min-height: 560px; max-height: 980px; overflow: hidden; cursor: crosshair; background: #000; touch-action: pan-y; }
+.lens { position: relative; display: flex; flex-direction: column; min-height: max(560px, min(calc(100vh - 64px), 980px)); overflow: hidden; cursor: crosshair; background: #000; touch-action: pan-y; }
 .lens img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; user-select: none; -webkit-user-drag: none; }
 .lens .base { filter: grayscale(1) contrast(1.15) brightness(.42); }
 .lens .color { -webkit-mask-image: radial-gradient(circle var(--rr, 170px) at var(--x, 70%) var(--y, 45%), #000 98%, transparent 100%); mask-image: radial-gradient(circle var(--rr, 170px) at var(--x, 70%) var(--y, 45%), #000 98%, transparent 100%); filter: contrast(1.05) saturate(1.1); }
@@ -94,11 +94,11 @@ main { flex: 1; }
 .readout { position: absolute; left: var(--x, 70%); top: var(--y, 45%); transform: translate(calc(var(--rr, 170px) + 14px), -50%); pointer-events: none; white-space: nowrap; font: 600 .68rem/1.6 var(--mono); letter-spacing: .12em; color: #fff; text-transform: uppercase; }
 .readout span { display: block; color: rgba(255, 255, 255, .6); }
 .readout b { color: var(--lime); font-weight: 600; }
-.lens-ui { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; padding-bottom: clamp(2rem, 6vw, 4.5rem); background: linear-gradient(to top, rgba(0, 0, 0, .85), transparent 55%); }
+.lens-ui { position: relative; z-index: 2; flex: 1; padding-top: 4.6rem; display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; padding-bottom: clamp(2rem, 6vw, 4.5rem); background: linear-gradient(to top, rgba(0, 0, 0, .85), transparent 55%); }
 .lens-ui .wrap { pointer-events: none; }
 .lens-ui a, .lens-ui button { pointer-events: auto; }
-.lens h1 { font-weight: 500; font-size: clamp(3rem, 8.4vw, 9rem); line-height: .88; letter-spacing: -.05em; margin: 0; max-width: 11ch; }
-.lens h1 .rot { color: var(--text); border-bottom: 3px solid var(--lime); }
+.lens h1 { font-weight: 500; font-size: clamp(2.6rem, min(8.4vw, 12.5vh), 9rem); line-height: .88; letter-spacing: -.05em; margin: 0; max-width: 11ch; }
+.lens h1 .rot { display: inline-block; white-space: nowrap; color: var(--text); border-bottom: 3px solid var(--lime); }
 .lens-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.6rem 3rem; margin-top: 2rem; }
 .lens-row p { margin: 0; max-width: 44ch; color: #c9c9c4; font-size: 1.08rem; }
 .ctas { display: flex; flex-wrap: wrap; gap: .6rem; }
@@ -314,39 +314,100 @@ td.yr { font: 600 .78rem var(--mono); color: var(--mute); }
 .join-in input { flex: 1; min-width: 0; height: 56px; padding: 0 1rem; border: 1px solid var(--line2); background: #000; font-size: 1.1rem; }
 .join-in input:focus { outline: none; border-color: var(--text); }
 .join-addr { margin-top: .9rem; }
-.perks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
-.perks > div { padding: 1.4rem 1.2rem 1.6rem 0; border-right: 1px solid var(--line); padding-left: 1.2rem; }
-.perks > div:first-child { padding-left: 0; } .perks > div:last-child { border-right: 0; }
-.perks strong { display: block; margin-top: .8rem; font-weight: 500; font-size: 1.2rem; }
-.perks span { color: var(--mute); font-size: .92rem; }
-@media (max-width: 900px) { .perks { grid-template-columns: 1fr 1fr; } .perks > div { border-right: 0; padding-left: 0 !important; border-bottom: 1px solid var(--line); } }
-.cfg-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3rem var(--pad); margin-top: 4rem; }
-.cfg-grid > * { min-width: 0; }
-@media (max-width: 900px) { .cfg-grid { grid-template-columns: 1fr; } }
-.opt { padding: 1.3rem 0; border-top: 1px solid var(--line); }
-.opt .lbl { display: block; margin-bottom: .8rem; }
+.join-in { margin-top: .2rem; display: flex; }
+.join-in input { flex: 1; min-width: 0; height: 56px; padding: 0 1rem; border: 1px solid var(--line2); background: #000; font-size: 1.1rem; }
+.join-in input:focus, #b-notes:focus { outline: none; border-color: var(--text); }
+.hint2 { margin: .7rem 0 0; color: var(--mute); font-size: .9rem; }
+.hint2 b { color: var(--lime); font-weight: 500; font-family: var(--mono); font-size: .85rem; }
+.builder { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.2fr); gap: 3rem var(--pad); align-items: start; }
+@media (max-width: 980px) { .builder { grid-template-columns: 1fr; } }
+.steps { border-top: 1px solid var(--line); }
+.step-b { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+.step-b .num { font: 600 .8rem var(--mono); color: var(--lime); padding-top: .1rem; }
+.step-b .lbl { display: block; margin-bottom: .9rem; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line2); }
+.seg button { height: 44px; padding: 0 1rem; border: 0; border-left: 1px solid var(--line2); background: none; color: var(--mute); font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: background .15s, color .15s; }
+.seg button:first-child { border-left: 0; }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.seg.sm button { height: 34px; padding: 0 .8rem; }
 .sw { display: flex; gap: 0; }
 .sw button { width: 46px; height: 46px; border: 1px solid var(--line2); margin-left: -1px; background: var(--c); cursor: pointer; }
+.sw button:first-child { margin-left: 0; }
 .sw button[aria-pressed="true"] { outline: 2px solid var(--text); outline-offset: 2px; position: relative; z-index: 1; }
 .feats { display: flex; flex-wrap: wrap; gap: .4rem; }
-.feats button { border: 1px solid var(--line2); background: none; padding: .5rem .8rem; font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); cursor: pointer; }
+.feats button { border: 1px solid var(--line2); background: none; padding: .55rem .85rem; font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); cursor: pointer; transition: all .15s; }
+.feats button:hover { color: var(--text); border-color: var(--text); }
 .feats button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
-.mock { border: 1px solid var(--line2); background: #f4f4f0; color: #111; }
-.mock .cbar { background: #e6e6e1; color: #555; border-color: #d2d2cc; }
-.mock .cbar i { border-color: #999; }
-.m-nav { display: flex; justify-content: space-between; padding: .9rem 1.1rem; font-size: .85rem; border-bottom: 1px solid #ddd; }
-.m-nav b { display: flex; gap: .5rem; align-items: center; }
-.m-nav b::before { content: ""; width: 12px; height: 12px; background: var(--c); }
-.m-nav span { color: #666; display: flex; gap: .9rem; }
-.m-hero { padding: 2.2rem 1.3rem; background: var(--c); color: var(--on, #000); transition: background .3s; }
+.feats button:disabled { opacity: .45; cursor: default; }
+#b-notes { width: 100%; padding: .8rem 1rem; border: 1px solid var(--line2); background: #000; font: inherit; font-size: .98rem; resize: vertical; }
+.send { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: 1.2rem; }
+.send .hint2 { margin: 0; flex: 1 1 14rem; }
+
+.pv { position: sticky; top: 88px; }
+.pv-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: .9rem; }
+.stagebox { display: grid; place-items: start center; padding: clamp(1rem, 3vw, 2rem); background: repeating-linear-gradient(45deg, #0b0b0b 0 10px, #0e0e0e 10px 20px); border: 1px solid var(--line); }
+.mock { width: 100%; max-width: 760px; border: 1px solid var(--line2); background: #f4f4f0; color: #111; overflow: hidden; transition: max-width .45s cubic-bezier(.3,.8,.3,1); }
+.mock.phone { max-width: 320px; border-radius: 26px; border: 8px solid #1a1a1a; }
+.mock.phone .cbar { display: none; }
+.mock .cbar { display: flex; align-items: center; gap: .4rem; height: 34px; padding: 0 .8rem; background: #e6e6e1; color: #555; border-bottom: 1px solid #d2d2cc; font: 400 .72rem var(--mono); }
+.mock .cbar i { width: 9px; height: 9px; border: 1px solid #999; }
+.mock .cbar span { margin: 0 auto; }
+.m-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .9rem 1.1rem; font-size: .85rem; border-bottom: 1px solid #ddd; }
+.m-nav b { display: flex; gap: .5rem; align-items: center; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-nav b::before { content: ""; flex: none; width: 12px; height: 12px; background: var(--c); }
+.m-nav #m-links { color: #666; display: flex; gap: .9rem; white-space: nowrap; }
+.m-nav #m-links i { font-style: normal; }
+.burger { display: none; width: 20px; gap: 4px; flex-direction: column; }
+.burger i { height: 2px; background: #111; }
+.mock.phone #m-links { display: none; }
+.mock.phone .burger { display: flex; }
+.m-hero { position: relative; display: grid; padding: 2.4rem 1.4rem; background: var(--c); color: var(--on, #000); transition: background .3s, color .3s; overflow: hidden; }
+.m-txt { position: relative; z-index: 1; }
 .m-hero small { font: 600 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
-.m-hero h4 { margin: .5rem 0; font-weight: 500; font-size: clamp(2rem, 4vw, 3rem); line-height: .95; letter-spacing: -.035em; word-break: break-word; }
+.m-hero h4 { margin: .55rem 0; font-weight: 500; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .95; letter-spacing: -.035em; overflow-wrap: anywhere; }
 .m-hero p { margin: 0 0 1.1rem; opacity: .85; font-size: .9rem; max-width: 32ch; }
-.m-hero .mb { display: inline-block; padding: .5rem .9rem; background: #000; color: #fff; font-size: .8rem; font-weight: 600; }
+.m-hero .mb { display: inline-block; padding: .55rem .95rem; background: #000; color: #fff; font-size: .8rem; font-weight: 600; }
+.m-art { display: none; }
+.mock[data-layout="photo"] .m-hero { min-height: 260px; align-content: end; color: #fff; background: #222; }
+.mock[data-layout="photo"] .m-art { display: block; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.1) 60%), radial-gradient(60% 70% at 70% 30%, color-mix(in srgb, var(--c) 70%, #fff) 0, transparent 60%), repeating-linear-gradient(115deg, #3a3a3a 0 22px, #2e2e2e 22px 44px); }
+.mock[data-layout="photo"] .mb { background: var(--c); color: var(--on, #000); }
+.mock[data-layout="split"] .m-hero { grid-template-columns: 1.2fr 1fr; gap: 1.2rem; align-items: center; background: #f4f4f0; color: #111; }
+.mock[data-layout="split"] .m-art { display: block; aspect-ratio: 1; background: var(--c); box-shadow: 10px 10px 0 #111; }
+.mock[data-layout="split"] .mb { background: var(--c); color: var(--on, #000); }
+.mock.phone[data-layout="split"] .m-hero { grid-template-columns: 1fr; }
+.mock.phone[data-layout="split"] .m-art { aspect-ratio: 2.2; order: -1; }
+.mock.phone .m-hero h4 { font-size: 2rem; }
 .m-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #ddd; border-top: 1px solid #ddd; }
-.m-blocks div { padding: .9rem 1rem; background: #fff; font-size: .82rem; }
-.m-blocks div b { display: block; }
-.m-blocks div span { color: #777; font-size: .76rem; }
+.mock.phone .m-blocks { grid-template-columns: 1fr; }
+.m-blocks div { padding: .95rem 1rem; background: #fff; font-size: .82rem; }
+@media (prefers-reduced-motion: no-preference) { .m-blocks div { animation: mpop .3s cubic-bezier(.2,1.3,.4,1) both; } }
+@keyframes mpop { from { opacity: 0; transform: scale(.94); } }
+.m-blocks div b { display: flex; align-items: center; gap: .45rem; }
+.m-blocks div b::before { content: ""; width: 7px; height: 7px; background: var(--c); outline: 1px solid rgba(0,0,0,.25); }
+.m-blocks div span { display: block; margin-top: .2rem; color: #777; font-size: .76rem; }
+.m-blocks .empty { grid-column: 1 / -1; color: #888; text-align: center; }
+.m-foot { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 1.1rem; background: #111; color: #aaa; font: 400 .66rem var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.mock.phone .m-foot { flex-direction: column; gap: .2rem; }
+
+.like { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+.like a { display: block; text-decoration: none; border: 1px solid var(--line2); background: #0a0a0a; transition: border-color .2s, transform .25s; }
+.like a:hover { border-color: var(--text); transform: translateY(-3px); }
+.like .th { aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 1px solid var(--line); }
+.like .th img { width: 100%; transition: transform 2.4s cubic-bezier(.4,0,.3,1); }
+.like a:hover .th img { transform: translateY(calc(-1 * var(--pan, 0px))); }
+.like .tx { padding: .9rem 1rem 1rem; }
+.like .tx b { display: block; font-weight: 500; font-size: 1.1rem; }
+.like .tx span { color: var(--mute); font-size: .85rem; }
+@media (prefers-reduced-motion: no-preference) { .like a { animation: mpop .35s both; animation-delay: calc(var(--i) * 50ms); } }
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line); counter-reset: f; }
+.flow li { position: relative; padding: 1.4rem 1.2rem 1.6rem; border-right: 1px solid var(--line); }
+.flow li:first-child { padding-left: 0; } .flow li:last-child { border-right: 0; }
+.flow li::before { content: ""; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; background: var(--lime); }
+.flow li:not(:first-child)::before { left: 1.2rem; }
+.flow strong { display: block; margin-top: .8rem; font-weight: 500; font-size: 1.15rem; }
+.flow span:last-child { color: var(--mute); font-size: .92rem; }
+@media (max-width: 900px) { .flow { grid-template-columns: 1fr; } .flow li { padding-left: 1.4rem !important; border-right: 0; border-bottom: 1px solid var(--line); } .flow li::before { top: 1.75rem; left: 0 !important; } }
 
 /* footer */
 footer { border-top: 1px solid var(--line); }
@@ -368,44 +429,11 @@ footer { border-top: 1px solid var(--line); }
 .toast { position: fixed; left: 50%; bottom: 24px; z-index: 90; transform: translate(-50%, 200%); visibility: hidden; padding: .8rem 1.1rem; background: var(--text); color: var(--bg); font: 600 .78rem var(--mono); letter-spacing: .06em; transition: transform .3s; }
 .toast.on { transform: translate(-50%, 0); visibility: visible; }
 
-/* ================= Card tilt, club finder, ship log ================= */
+/* ================= Card tilt ================= */
 .card .chrome { position: relative; transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .4s; }
 .card.tilting .chrome { transition: transform .08s linear, box-shadow .4s; box-shadow: 0 40px 60px -40px rgba(214,224,75,.35); }
 .card .chrome::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.13), transparent 45%); opacity: 0; transition: opacity .3s; }
 .card.tilting .chrome::after { opacity: 1; }
-.match { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 2.5rem var(--pad); }
-@media (max-width: 900px) { .match { grid-template-columns: 1fr; } }
-.mq { display: grid; gap: 1.8rem; align-content: start; }
-.mchips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
-.mchips button { height: 42px; padding: 0 1rem; border: 1px solid var(--line2); background: none; color: var(--mute); font: 600 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .15s; }
-.mchips button:hover { color: var(--text); border-color: var(--text); }
-.mchips button[aria-pressed="true"] { background: var(--lime); border-color: var(--lime); color: #000; }
-.mres { align-self: start; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); align-content: start; }
-.mrow { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) auto; align-items: center; gap: 1.2rem; padding: 1.2rem 1.3rem; background: var(--bg); text-decoration: none; transition: background .2s; }
-.mrow:hover { background: var(--bg2); }
-.mrow .rk { font: 600 1.6rem var(--mono); color: var(--dim); }
-.mrow:first-child .rk { color: var(--lime); }
-.mrow h3 { margin: 0; font-weight: 500; font-size: 1.35rem; letter-spacing: -.015em; }
-.mrow p { margin: .25rem 0 0; color: var(--mute); font-size: .92rem; }
-.mrow .why { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
-.mrow .why i { padding: .25rem .45rem; border: 1px solid var(--line2); font: 600 .62rem var(--mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--text); }
-.mrow .pct { font: 600 .7rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); text-align: right; }
-.mrow .pct b { display: block; font-size: 1.5rem; letter-spacing: 0; color: var(--text); }
-.mempty { margin: 0; padding: 2rem 1.3rem; background: var(--bg); color: var(--mute); }
-@media (prefers-reduced-motion: no-preference) { .mrow, .log2 li { animation: mrin .35s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 55ms); } }
-@keyframes mrin { from { opacity: 0; transform: translateY(8px); } }
-.log2 { border: 1px solid var(--line2); background: var(--bg1); font-family: var(--mono); }
-.log2-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
-.log2 ol { list-style: none; margin: 0; padding: .4rem 0; max-height: 26rem; overflow-y: auto; }
-.log2 li a { display: grid; grid-template-columns: 5.5rem 4.4rem minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: .6rem 1.1rem; text-decoration: none; font-size: .82rem; transition: background .15s; }
-.log2 li a[href]:hover { background: var(--bg2); }
-.log2 .t { color: var(--dim); }
-.log2 .h { color: var(--lime); }
-.log2 .m { overflow: hidden; color: var(--text); font-family: var(--sans); font-size: .95rem; white-space: nowrap; text-overflow: ellipsis; }
-.log2 .a { color: var(--mute); white-space: nowrap; }
-@media (max-width: 700px) { .log2 li a { grid-template-columns: 4.4rem minmax(0, 1fr); } .log2 .t, .log2 .a { display: none; } }
-.log2 .cur { display: inline-block; width: .55em; height: 1em; background: var(--lime); vertical-align: -2px; animation: cblink 1s steps(1) infinite; }
-@keyframes cblink { 50% { opacity: 0; } }
 </style>
 </head>
 <body>
@@ -474,26 +502,6 @@ footer { border-top: 1px solid var(--line); }
   </section>
 
 
-  <section class="sec" aria-labelledby="match-title">
-    <div class="wrap">
-      <div class="sec-top">
-        <p class="lbl"><span class="dot"></span>Club finder</p>
-        <div>
-          <h2 class="h-l" id="match-title">Find your club.</h2>
-          <p class="lede">Pick the days you're free and what you're into. We'll rank the Troy clubs we've built sites for.</p>
-        </div>
-      </div>
-      <div class="match">
-        <div class="mq">
-          <div><p class="lbl">I'm free on</p><div class="mchips" id="m-days" role="group" aria-label="Free days"></div></div>
-          <div><p class="lbl">I'm into</p><div class="mchips" id="m-ints" role="group" aria-label="Interests"></div></div>
-          <div><button class="btn ghost sm" type="button" id="m-clear">Clear</button></div>
-        </div>
-        <div class="mres" id="m-res" aria-live="polite"></div>
-      </div>
-    </div>
-  </section>
-
   <section class="sec pile-sec" aria-labelledby="pile-title">
     <div class="wrap">
       <div class="sec-top">
@@ -538,19 +546,6 @@ footer { border-top: 1px solid var(--line); }
     </div>
   </section>
 
-
-  <section class="sec" aria-labelledby="ship-title" id="ship-sec" hidden>
-    <div class="wrap">
-      <div class="sec-top">
-        <p class="lbl"><span class="dot blink"></span>Ship log</p>
-        <div>
-          <h2 class="h-l" id="ship-title">What we shipped lately.</h2>
-          <p class="lede">The latest changes pushed to our club sites, pulled live from GitHub. Each one went live on its own a few minutes later.</p>
-        </div>
-      </div>
-      <div class="log2"><div class="log2-top"><span>Jeffrey-Chu/troyllm &middot; club-sites</span><span id="ship-n"></span></div><ol id="ship"></ol></div>
-    </div>
-  </section>
 
   <section class="sec">
     <div class="wrap cta">
@@ -653,35 +648,93 @@ footer { border-top: 1px solid var(--line); }
       <div>
         <p class="lbl"><span class="dot blink"></span>Requests open</p>
         <h1 class="h-xl" style="margin-top:1rem">Get a site.</h1>
-        <p class="lede">For a club, a nonprofit, a team or a small business. Type your name and see it on the board.</p>
-        <div class="join-in"><label class="sr" for="club-in">Name</label><input id="club-in" maxlength="28" placeholder="Chess Club" autocomplete="off"></div>
-        <p class="lbl join-addr">Your site could live at <b id="addr">your-club.web.app</b></p>
+        <p class="lede">For a Troy club, a nonprofit, a club at another school or a small business. Build a rough version below, then send it to us. A member takes the lead and builds the real one with you.</p>
+        <div class="ctas" style="margin-top:2rem"><a class="btn" href="#build">Start building <span class="ar">&rarr;</span></a><a class="btn ghost" href="#how">How it works</a></div>
       </div>
       <div class="board js"><div class="felt"><div class="rows" id="next-rows" aria-hidden="true"></div></div></div>
     </div>
   </section>
-  <section class="sec" style="border-top:0">
-    <div class="wrap">
-      <div class="perks">
-        <div><span class="lbl">01</span><strong>Built from your own stuff</strong><span>Your photos, colors, posts and schedule.</span></div>
-        <div><span class="lbl">02</span><strong>Your own address</strong><span>Something like your-club.web.app.</span></div>
-        <div><span class="lbl">03</span><strong>Features you need</strong><span>Check-in, sign-ups, order forms, galleries.</span></div>
-        <div><span class="lbl">04</span><strong>Updates after launch</strong><span>New officers, dates and events.</span></div>
-      </div>
-      <div class="cfg-grid">
-        <div>
-          <h2 class="h-m">Sketch it, then send it to us.</h2>
-          <div class="opt" style="margin-top:1.6rem"><span class="lbl">Color</span><div class="sw" id="sw"></div></div>
-          <div class="opt"><span class="lbl">Features</span><div class="feats" id="feats"></div></div>
-          <div class="opt"><button class="btn" type="button" id="copy-req">Copy request <span class="ar">→</span></button><p class="lede" style="font-size:.95rem">Send it to any member, or bring it to Room 411 on a meeting Thursday.</p></div>
+
+  <section class="sec" id="build" style="border-top:0">
+    <div class="wrap builder">
+      <div class="steps">
+        <div class="step-b">
+          <span class="num">01</span>
+          <div><p class="lbl">Who is it for</p><div class="seg" id="b-type" role="group" aria-label="Who the site is for"></div></div>
         </div>
-        <div class="mock" id="mock" style="--c:#d6e04b;--on:#111">
+        <div class="step-b">
+          <span class="num">02</span>
+          <div>
+            <label class="lbl" for="club-in">Name</label>
+            <div class="join-in"><input id="club-in" maxlength="28" placeholder="Chess Club" autocomplete="off"></div>
+            <p class="hint2">Your address could be <b id="addr">your-club.web.app</b></p>
+          </div>
+        </div>
+        <div class="step-b">
+          <span class="num">03</span>
+          <div>
+            <p class="lbl">Look</p>
+            <div class="sw" id="sw"></div>
+            <div class="seg" id="b-layout" role="group" aria-label="Layout" style="margin-top:1rem"></div>
+          </div>
+        </div>
+        <div class="step-b">
+          <span class="num">04</span>
+          <div><p class="lbl">Pages</p><div class="feats" id="b-pages" role="group" aria-label="Pages"></div></div>
+        </div>
+        <div class="step-b">
+          <span class="num">05</span>
+          <div><p class="lbl">Features</p><div class="feats" id="feats" role="group" aria-label="Features"></div></div>
+        </div>
+        <div class="step-b">
+          <span class="num">06</span>
+          <div>
+            <label class="lbl" for="b-notes">Anything else</label>
+            <textarea id="b-notes" rows="3" maxlength="400" placeholder="Instagram handle, when you need it, sites you like"></textarea>
+            <div class="send"><button class="btn" type="button" id="copy-req">Copy request <span class="ar">&rarr;</span></button><span class="hint2">Send it to any member, or bring it to Room 411 on a meeting Thursday.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pv">
+        <div class="pv-top">
+          <span class="lbl"><span class="dot blink"></span>Live preview</span>
+          <div class="seg sm" id="b-dev" role="group" aria-label="Preview size"></div>
+        </div>
+        <div class="stagebox"><div class="mock" id="mock" data-layout="bold" style="--c:#d6e04b;--on:#111">
           <div class="cbar"><i></i><i></i><i></i><span id="m-url">your-club.web.app</span></div>
-          <div class="m-nav"><b id="m-brand">Your Club</b><span><i>About</i><i>Events</i><i>Join</i></span></div>
-          <div class="m-hero"><small>Welcome</small><h4 id="m-name">Your Club</h4><p>Meetings, events and everything else, in one place.</p><span class="mb">Join us</span></div>
+          <div class="m-nav"><b id="m-brand">Your Club</b><span id="m-links"></span><span class="burger" aria-hidden="true"><i></i><i></i></span></div>
+          <div class="m-hero"><div class="m-txt"><small id="m-kind">Troy High School</small><h4 id="m-name">Your Club</h4><p id="m-line">Meetings, events and everything else, in one place.</p><span class="mb" id="m-cta">Join us</span></div><div class="m-art" aria-hidden="true"></div></div>
           <div class="m-blocks" id="m-blocks"></div>
-        </div>
+          <div class="m-foot"><span id="m-foot">Your Club</span><span>Made by Troy Web Development</span></div>
+        </div></div>
       </div>
+    </div>
+  </section>
+
+  <section class="sec" id="like" aria-labelledby="like-title">
+    <div class="wrap">
+      <div class="sec-top">
+        <p class="lbl"><span class="dot"></span>Sites like yours</p>
+        <div><h2 class="h-m" id="like-title">We've built these for <span id="like-kind">Troy clubs</span>.</h2><p class="lede" style="font-size:1rem">Changes with what you picked in step 01.</p></div>
+      </div>
+      <div class="like" id="like-list"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="sec-top">
+        <p class="lbl"><span class="dot"></span>How it works</p>
+        <h2 class="h-m" id="how-title">From request to launch.</h2>
+      </div>
+      <ol class="flow">
+        <li><span class="lbl">01</span><strong>Send the request</strong><span>Copy it from the builder and send it to any member.</span></li>
+        <li><span class="lbl">02</span><strong>Meet your lead</strong><span>A member takes it on and talks it through with your officers.</span></li>
+        <li><span class="lbl">03</span><strong>Build it together</strong><span>From your own photos, colors, posts and schedule.</span></li>
+        <li><span class="lbl">04</span><strong>Launch</strong><span>It goes live at its own address, ready for your bio and flyers.</span></li>
+        <li><span class="lbl">05</span><strong>Keep it current</strong><span>New officers, rooms and events when they change.</span></li>
+      </ol>
     </div>
   </section>
 </div>
@@ -997,66 +1050,6 @@ footer { border-top: 1px solid var(--line); }
     ch.addEventListener('mouseleave', function () { c.classList.remove('tilting'); ch.style.setProperty('--rx', '0deg'); ch.style.setProperty('--ry', '0deg'); });
   });
 
-  /* ---------------- HOME: club finder ---------------- */
-  (function () {
-    var TAGS = { anime: ['games', 'pop culture', 'friends'], carclub: ['cars', 'photos', 'friends'], chinese: ['culture', 'food', 'friends'], geo: ['games', 'travel'], key: ['service', 'leadership'], mvp: ['music', 'art', 'photos'], tll: ['tutoring', 'service'], leo: ['service', 'leadership'], vsa: ['culture', 'food', 'friends'] };
-    var INTS = ['service', 'culture', 'games', 'music', 'tutoring', 'cars', 'food', 'travel', 'art', 'leadership'];
-    var DN = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'], free = {}, want = {};
-    var pool = SITES.filter(function (x) { return TAGS[x.id]; });
-    function on(set) { return Object.keys(set).filter(function (k) { return set[k]; }); }
-    function chip(box, label, set, key) {
-      var b = el('button', null, label); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
-      b.addEventListener('click', function () { set[key] = !set[key]; b.setAttribute('aria-pressed', set[key] ? 'true' : 'false'); draw(); });
-      box.appendChild(b);
-    }
-    DN.forEach(function (d, i) { if (i) chip($('#m-days'), d, free, String(i)); });
-    INTS.forEach(function (t) { chip($('#m-ints'), t, want, t); });
-    $('#m-clear').addEventListener('click', function () { free = {}; want = {}; $$('#m-days button, #m-ints button').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); draw(); });
-    function draw() {
-      var box = $('#m-res'), days = on(free), ints = on(want); box.textContent = '';
-      if (!days.length && !ints.length) { box.appendChild(el('p', 'mempty', 'Pick a day or an interest to see your matches.')); return; }
-      var res = pool.map(function (c) {
-        var why = [], sc = 0, max = 0;
-        if (days.length) { max += 3; if (c.day && free[c.day]) { sc += 3; why.push('Meets ' + DN[c.day]); } else if (!c.day) { sc += 1; why.push('Dates vary'); } }
-        if (ints.length) { var hits = TAGS[c.id].filter(function (t) { return want[t]; }), cap = Math.min(ints.length, 2); max += 2 * cap; sc += 2 * Math.min(hits.length, cap); why = why.concat(hits); }
-        return { c: c, sc: sc, pct: Math.round(100 * sc / max), why: why };
-      }).filter(function (r) { return r.sc > 0; }).sort(function (a, b) { return b.sc - a.sc || a.c.name.localeCompare(b.c.name); }).slice(0, 5);
-      if (!res.length) { box.appendChild(el('p', 'mempty', 'No club fits all of that. Try another day or interest.')); return; }
-      res.forEach(function (r, i) {
-        var a = el('a', 'mrow'); a.href = '#' + r.c.id; a.style.setProperty('--i', i);
-        a.appendChild(el('span', 'rk', '0' + (i + 1)));
-        var mid = el('div'); mid.appendChild(el('h3', null, r.c.name)); mid.appendChild(el('p', null, r.c.when || r.c.who));
-        var w = el('div', 'why'); r.why.forEach(function (x) { w.appendChild(el('i', null, x)); }); mid.appendChild(w); a.appendChild(mid);
-        var pc = el('span', 'pct'); pc.appendChild(el('b', null, r.pct + '%')); pc.appendChild(document.createTextNode('match')); a.appendChild(pc);
-        box.appendChild(a);
-      });
-    }
-    draw();
-  })();
-
-  /* ---------------- HOME: ship log from GitHub ---------------- */
-  (function () {
-    if (!window.fetch) return;
-    function ago(t) { var s = (Date.now() - new Date(t)) / 1000; if (s < 3600) return Math.max(1, Math.round(s / 60)) + 'm ago'; if (s < 86400) return Math.round(s / 3600) + 'h ago'; return Math.round(s / 86400) + 'd ago'; }
-    fetch('https://api.github.com/repos/Jeffrey-Chu/troyllm/commits?sha=club-sites&per_page=12').then(function (r) { if (!r.ok) throw r.status; return r.json(); }).then(function (list) {
-      if (!list || !list.length) return;
-      var ol = $('#ship');
-      list.forEach(function (c, i) {
-        var li = el('li'), a = el('a'); li.style.setProperty('--i', i); a.href = c.html_url; a.rel = 'noopener';
-        a.appendChild(el('span', 't', ago(c.commit.author.date)));
-        a.appendChild(el('span', 'h', c.sha.slice(0, 7)));
-        a.appendChild(el('span', 'm', c.commit.message.split('\n')[0]));
-        a.appendChild(el('span', 'a', c.commit.author.name));
-        li.appendChild(a); ol.appendChild(li);
-      });
-      var last = el('li'), cur = el('a'); last.style.setProperty('--i', list.length);
-      cur.appendChild(el('span', 't', 'now')); cur.appendChild(el('span', 'h', '')); var m = el('span', 'm'); m.appendChild(el('span', 'cur')); cur.appendChild(m);
-      last.appendChild(cur); ol.appendChild(last);
-      $('#ship-n').textContent = 'Last push ' + ago(list[0].commit.author.date);
-      $('#ship-sec').hidden = false;
-    }).catch(function () {});
-  })();
-
   /* ---------------- ABOUT: scroll-linked film strip ---------------- */
   var strip = $('#strip'), sh = $('#strip-hero');
   ['lab', 'brainstorm', 'techfair', 'hackathon', 'latechweek', 'desk', 'data', 'headband', 'snacks', 'selfie'].forEach(function (k) { var im = el('img'); im.src = 'img/room/' + k + '.webp'; im.alt = ''; im.loading = 'lazy'; strip.appendChild(im); });
@@ -1069,7 +1062,7 @@ footer { border-top: 1px solid var(--line); }
     requestAnimationFrame(stripTick);
   }
 
-  /* ---------------- JOIN ---------------- */
+  /* ---------------- JOIN: site builder ---------------- */
   var nextRows = $('#next-rows');
   function nextData(name) {
     return [{ type: 'title', text: 'REQUESTS OPEN' }, { type: 'blank' }, { type: 'big', text: (name || 'YOUR CLUB').toUpperCase().slice(0, narrow ? 14 : 18) }, { type: 'blank' },
@@ -1077,30 +1070,82 @@ footer { border-top: 1px solid var(--line); }
   }
   var nb = false, jt;
   function buildNext() { if (nb) return; nb = true; buildBoard(nextRows, nextData(''), 120); }
-  function slug() { return ($('#club-in').value.trim().toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'your-club') + '.web.app'; }
-  $('#club-in').addEventListener('input', function () {
-    var v = $('#club-in').value.trim(); $('#addr').textContent = slug(); $('#m-url').textContent = slug();
-    $('#m-name').textContent = v || 'Your Club'; $('#m-brand').textContent = v || 'Your Club';
-    clearTimeout(jt); jt = setTimeout(function () { nextRows.textContent = ''; buildBoard(nextRows, nextData(v), 0); }, 220);
-  });
+  var TYPES = [
+    ['club', 'Troy club', 'Troy High School', 'Join us', 'Troy clubs', ['anime', 'key', 'chinese', 'geo', 'leo', 'mvp', 'tll', 'vsa', 'carclub']],
+    ['np', 'Nonprofit', 'Student nonprofit', 'Get involved', 'nonprofits', ['roots', 'science']],
+    ['school', 'Another school', 'Student club', 'Join us', 'clubs at other schools', ['roots', 'dronescape']],
+    ['biz', 'Small business', 'Shop', 'Shop now', 'small businesses', ['superdw']]
+  ];
+  var LAYOUTS = [['bold', 'Bold'], ['photo', 'Photo'], ['split', 'Split']];
+  var PAGES = ['Home', 'About', 'Events', 'Gallery', 'Join', 'Shop'];
   var SW = [['#d6e04b', '#111'], ['#f3f3ef', '#111'], ['#111111', '#fff'], ['#2f6bff', '#fff'], ['#ff5fa2', '#111'], ['#18c48f', '#111']];
   var FEATS = [['Meeting check-in', 'Word of the day'], ['Sign-ups', 'Members and tutors'], ['Order form', 'Merch and pre-orders'], ['Photo gallery', 'From your Instagram'], ['Event calendar', 'Upcoming dates'], ['Hours log', 'Volunteer hours']];
-  var mock = $('#mock'), chosen = [0, 3];
+  var B = { type: 0, layout: 'bold', color: 0, pages: { Home: 1, About: 1, Events: 1, Join: 1 }, feats: [0, 3], dev: 'desktop' };
+  var mock = $('#mock');
+  function seg(box, items, cur, fn) {
+    items.forEach(function (it, i) {
+      var b = el('button', null, it[1]); b.type = 'button'; b.setAttribute('aria-pressed', i === cur ? 'true' : 'false');
+      b.addEventListener('click', function () { $$('button', box).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); fn(i); });
+      box.appendChild(b);
+    });
+  }
+  function slug() { return ($('#club-in').value.trim().toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'your-club') + '.web.app'; }
+  function name() { return $('#club-in').value.trim() || (B.type === 3 ? 'Your Shop' : B.type === 1 ? 'Your Nonprofit' : 'Your Club'); }
+  function drawMock() {
+    var t = TYPES[B.type], nm = name();
+    $('#addr').textContent = slug(); $('#m-url').textContent = slug();
+    $('#m-name').textContent = nm; $('#m-brand').textContent = nm; $('#m-foot').textContent = nm;
+    $('#m-kind').textContent = t[2]; $('#m-cta').textContent = B.pages.Shop ? 'Shop now' : t[3];
+    $('#m-line').textContent = B.type === 3 ? 'Everything we make, in one place.' : 'Meetings, events and everything else, in one place.';
+    mock.dataset.layout = B.layout; mock.classList.toggle('phone', B.dev === 'phone');
+    mock.style.setProperty('--c', SW[B.color][0]); mock.style.setProperty('--on', SW[B.color][1]);
+    var L = $('#m-links'); L.textContent = ''; PAGES.forEach(function (p) { if (B.pages[p] && p !== 'Home') L.appendChild(el('i', null, p)); });
+    var m = $('#m-blocks'); m.textContent = '';
+    if (!B.feats.length) m.appendChild(el('div', 'empty', 'Pick features in step 05'));
+    B.feats.forEach(function (i) { var d = el('div'); d.appendChild(el('b', null, FEATS[i][0])); d.appendChild(el('span', null, FEATS[i][1])); m.appendChild(d); });
+  }
+  function drawLike() {
+    var t = TYPES[B.type], box = $('#like-list'); box.textContent = ''; $('#like-kind').textContent = t[4];
+    t[5].forEach(function (id, i) {
+      var s2 = byId[id]; if (!s2) return;
+      var a = el('a'); a.href = '#' + id; a.style.setProperty('--i', i);
+      var th = el('div', 'th'), im = el('img'); im.src = 'img/' + id + '.webp'; im.alt = ''; im.loading = 'lazy'; th.appendChild(im); a.appendChild(th);
+      im.addEventListener('load', function () { a.style.setProperty('--pan', Math.max(0, im.offsetHeight - th.offsetHeight) + 'px'); });
+      var tx = el('div', 'tx'); tx.appendChild(el('b', null, s2.name)); tx.appendChild(el('span', null, s2.who)); a.appendChild(tx);
+      box.appendChild(a);
+    });
+  }
+  seg($('#b-type'), TYPES, 0, function (i) { B.type = i; if (i === 3) B.pages.Shop = 1; syncPages(); drawMock(); drawLike(); });
+  seg($('#b-layout'), LAYOUTS, 0, function (i) { B.layout = LAYOUTS[i][0]; drawMock(); });
+  seg($('#b-dev'), [['desktop', 'Desktop'], ['phone', 'Phone']], 0, function (i) { B.dev = i ? 'phone' : 'desktop'; drawMock(); });
   SW.forEach(function (c, i) {
     var b = el('button'); b.type = 'button'; b.style.setProperty('--c', c[0]); b.setAttribute('aria-label', 'Color ' + c[0]); b.setAttribute('aria-pressed', i ? 'false' : 'true');
-    b.addEventListener('click', function () { $$('#sw button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); mock.style.setProperty('--c', c[0]); mock.style.setProperty('--on', c[1]); });
+    b.addEventListener('click', function () { $$('#sw button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); B.color = i; drawMock(); });
     $('#sw').appendChild(b);
   });
+  var pageBtns = {};
+  PAGES.forEach(function (p) {
+    var b = el('button', null, p); b.type = 'button'; pageBtns[p] = b;
+    if (p === 'Home') b.disabled = true;
+    b.addEventListener('click', function () { B.pages[p] = B.pages[p] ? 0 : 1; syncPages(); drawMock(); });
+    $('#b-pages').appendChild(b);
+  });
+  function syncPages() { PAGES.forEach(function (p) { pageBtns[p].setAttribute('aria-pressed', B.pages[p] ? 'true' : 'false'); }); }
+  syncPages();
   FEATS.forEach(function (f, i) {
-    var b = el('button', null, f[0]); b.type = 'button'; b.setAttribute('aria-pressed', chosen.indexOf(i) > -1 ? 'true' : 'false');
-    b.addEventListener('click', function () { var on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on ? 'true' : 'false'); var k = chosen.indexOf(i); if (on && k < 0) chosen.push(i); if (!on && k > -1) chosen.splice(k, 1); blocks(); });
+    var b = el('button', null, f[0]); b.type = 'button'; b.setAttribute('aria-pressed', B.feats.indexOf(i) > -1 ? 'true' : 'false');
+    b.addEventListener('click', function () { var k = B.feats.indexOf(i); if (k > -1) B.feats.splice(k, 1); else B.feats.push(i); b.setAttribute('aria-pressed', k > -1 ? 'false' : 'true'); drawMock(); });
     $('#feats').appendChild(b);
   });
-  function blocks() { var m = $('#m-blocks'); m.textContent = ''; chosen.slice(0, 4).forEach(function (i) { var d = el('div'); d.appendChild(el('b', null, FEATS[i][0])); d.appendChild(el('span', null, FEATS[i][1])); m.appendChild(d); }); }
-  blocks();
+  $('#club-in').addEventListener('input', function () {
+    drawMock(); var v = $('#club-in').value.trim();
+    clearTimeout(jt); jt = setTimeout(function () { nextRows.textContent = ''; buildBoard(nextRows, nextData(v), 0); }, 220);
+  });
+  drawMock(); drawLike();
   $('#copy-req').addEventListener('click', function () {
-    var nm = $('#club-in').value.trim() || '(name)', col = $('#sw button[aria-pressed="true"]').style.getPropertyValue('--c');
-    var txt = 'Website request for Troy Web Development\nName: ' + nm + '\nColor: ' + col + '\nFeatures: ' + (chosen.map(function (i) { return FEATS[i][0]; }).join(', ') || 'none yet') + '\nAddress idea: ' + slug();
+    var pg = PAGES.filter(function (p) { return B.pages[p]; }).join(', '), notes = $('#b-notes').value.trim();
+    var txt = 'Website request for Troy Web Development\nFor: ' + TYPES[B.type][1] + '\nName: ' + ($('#club-in').value.trim() || '(name)') + '\nAddress idea: ' + slug() +
+      '\nColor: ' + SW[B.color][0] + '\nLayout: ' + B.layout + '\nPages: ' + pg + '\nFeatures: ' + (B.feats.map(function (i) { return FEATS[i][0]; }).join(', ') || 'none yet') + (notes ? '\nNotes: ' + notes : '');
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { toast('Copied. Send it to any member.'); }, function () { prompt('Copy your request:', txt); });
   });
 
