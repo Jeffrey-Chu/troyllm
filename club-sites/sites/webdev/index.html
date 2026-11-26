@@ -279,31 +279,71 @@ td.yr { font: 600 .78rem var(--mono); color: var(--mute); }
 /* ================= ABOUT ================= */
 .strip-hero { position: relative; height: clamp(460px, 70vh, 760px); overflow: hidden; border-bottom: 1px solid var(--line); }
 .strip { position: absolute; top: 0; bottom: 0; left: 0; display: flex; gap: 6px; will-change: transform; }
-.strip img { height: 100%; width: auto; filter: grayscale(1) contrast(1.1) brightness(.55); transition: filter .4s; }
+.strip img { height: 100%; width: auto; filter: grayscale(1) contrast(1.1) brightness(.55); transition: filter .5s; }
 .strip img:hover { filter: none; }
 .strip-hero .over { position: absolute; inset: 0; display: flex; align-items: flex-end; padding-bottom: clamp(2rem, 5vw, 3.5rem); background: linear-gradient(to top, #000 10%, transparent 65%); pointer-events: none; }
-.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
-.facts > div { padding: 1.6rem 1.4rem 1.8rem 0; border-right: 1px solid var(--line); padding-left: 1.4rem; }
-.facts > div:first-child { padding-left: 0; } .facts > div:last-child { border-right: 0; }
-.facts h3 { margin: .9rem 0 .5rem; font-weight: 500; font-size: 1.5rem; letter-spacing: -.02em; line-height: 1.1; }
-.facts p { margin: 0; color: var(--mute); font-size: .95rem; }
-@media (max-width: 900px) { .facts { grid-template-columns: 1fr 1fr; } .facts > div { border-right: 0; padding-left: 0 !important; border-bottom: 1px solid var(--line); } }
-@media (max-width: 520px) { .facts { grid-template-columns: 1fr; } }
-.years { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.years li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1rem var(--pad); padding: 1.8rem 0; border-bottom: 1px solid var(--line); }
-.years b { font-weight: 500; font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: .9; letter-spacing: -.04em; }
-.years strong { display: block; font-weight: 500; font-size: 1.4rem; letter-spacing: -.015em; }
-.years p { margin: .4rem 0 0; color: var(--mute); max-width: 56ch; }
-@media (max-width: 700px) { .years li { grid-template-columns: 1fr; } }
-.pipe { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line2); position: relative; }
-.pipe > div { padding: 1.6rem 1.3rem 1.8rem; border-left: 1px solid var(--line); position: relative; }
-.pipe > div:first-child { border-left: 0; }
-.pipe .lbl { color: var(--lime); }
-.pipe strong { display: block; margin: .9rem 0 .4rem; font: 600 1.3rem var(--mono); }
-.pipe span { color: var(--mute); font-size: .93rem; }
-.pipe::after { content: ""; position: absolute; left: 0; top: -1px; height: 2px; width: 25%; background: var(--lime); animation: run 4s steps(4) infinite; }
-@keyframes run { from { transform: translateX(0); } to { transform: translateX(400%); } }
-@media (max-width: 760px) { .pipe { grid-template-columns: 1fr 1fr; } .pipe > div:nth-child(3) { border-left: 0; } .pipe > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } .pipe::after { display: none; } }
+.reveal .w { color: var(--dim); transition: color .35s; }
+.reveal .w.on { color: var(--text); }
+.qa { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); border: 1px solid var(--line2); }
+@media (max-width: 860px) { .qa { grid-template-columns: 1fr; } }
+.qa-list { position: relative; display: flex; flex-direction: column; border-right: 1px solid var(--line2); }
+@media (max-width: 860px) { .qa-list { border-right: 0; border-bottom: 1px solid var(--line2); } }
+.qa-list button { display: flex; align-items: baseline; gap: 1rem; padding: 1.25rem 1.4rem; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--mute); text-align: left; font-size: 1.12rem; cursor: pointer; transition: color .25s, background .25s, padding .3s cubic-bezier(.2,.8,.2,1); }
+.qa-list button:last-of-type { border-bottom: 0; }
+.qa-list button:hover { color: var(--text); }
+.qa-list button[aria-selected="true"] { color: var(--text); background: var(--bg2); padding-left: 1.9rem; }
+.qa-list button[aria-selected="true"] .lbl { color: var(--lime); }
+.qa-bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: transparent; }
+.qa-bar i { display: block; height: 100%; width: 0; background: var(--lime); }
+.qa-panel { position: relative; min-height: 300px; overflow: hidden; }
+.qa-a { position: absolute; inset: 0; padding: clamp(1.6rem, 3vw, 2.6rem); display: flex; flex-direction: column; justify-content: flex-end; }
+.qa-a h3 { margin: 0; font-weight: 500; font-size: clamp(1.9rem, 3.4vw, 3rem); letter-spacing: -.03em; line-height: 1; max-width: 16ch; position: relative; z-index: 1; }
+.qa-a p { margin: .9rem 0 0; color: var(--mute); max-width: 44ch; position: relative; z-index: 1; }
+.qa-big { position: absolute; right: clamp(1rem, 3vw, 2.2rem); top: .2rem; font-weight: 500; font-size: clamp(6rem, 16vw, 13rem); line-height: 1; letter-spacing: -.06em; color: transparent; -webkit-text-stroke: 1px var(--line2); user-select: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .qa-a:not([hidden]) h3, .qa-a:not([hidden]) p { animation: qin .55s cubic-bezier(.2,.8,.2,1) both; }
+  .qa-a:not([hidden]) p { animation-delay: .07s; }
+  .qa-a:not([hidden]) .qa-big { animation: qbig .8s cubic-bezier(.2,.8,.2,1) both; }
+}
+@keyframes qin { from { opacity: 0; transform: translateY(14px); } }
+@keyframes qbig { from { opacity: 0; transform: translateX(30px); } }
+.tl2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 2rem var(--pad); align-items: start; }
+@media (max-width: 860px) { .tl2 { grid-template-columns: 1fr; } }
+.tl2-side { position: sticky; top: 110px; }
+@media (max-width: 860px) { .tl2-side { position: static; } }
+.tl2-year { margin-top: 2rem; height: clamp(4.4rem, 9vw, 8.5rem); overflow: hidden; font-weight: 500; font-size: clamp(4.4rem, 9vw, 8.5rem); line-height: 1; letter-spacing: -.05em; color: var(--lime); font-variant-numeric: tabular-nums; }
+.tl2-year span { display: block; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+.tl2-year span.out { transform: translateY(-40%); opacity: 0; }
+@media (max-width: 860px) { .tl2-year { display: none; } }
+.tl2-list { list-style: none; margin: 0; padding: 0 0 0 2rem; position: relative; }
+.tl2-list::before { content: ""; position: absolute; left: 0; top: .5rem; bottom: .5rem; width: 1px; background: var(--line2); }
+.tl2-list::after { content: ""; position: absolute; left: 0; top: .5rem; width: 1px; height: calc((100% - 1rem) * var(--fill, 0)); background: var(--lime); }
+.tl2-list li { position: relative; padding: 0 0 clamp(3rem, 8vh, 5.5rem); opacity: .35; transition: opacity .45s; }
+.tl2-list li:last-child { padding-bottom: 0; }
+.tl2-list li::before { content: ""; position: absolute; left: calc(-2rem - 4px); top: .35rem; width: 9px; height: 9px; background: var(--bg); border: 1px solid var(--line2); transition: background .3s, border-color .3s; }
+.tl2-list li.on { opacity: 1; }
+.tl2-list li.on::before { background: var(--lime); border-color: var(--lime); }
+.tl2-list strong { display: block; margin-top: .7rem; font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2.2rem); letter-spacing: -.025em; line-height: 1.05; }
+.tl2-list p { margin: .6rem 0 0; color: var(--mute); max-width: 52ch; }
+.dep { border: 1px solid var(--line2); }
+.dep-steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line2); }
+.dep-steps > div { padding: 1.5rem 1.3rem 1.7rem; border-left: 1px solid var(--line); transition: background .35s; }
+.dep-steps > div:first-child { border-left: 0; }
+.dep-steps strong { display: block; margin: .9rem 0 .4rem; font: 600 1.3rem var(--mono); color: var(--dim); transition: color .3s; }
+.dep-steps span:last-child { color: var(--mute); font-size: .93rem; }
+.dep-steps > div.done strong, .dep-steps > div.now strong { color: var(--text); }
+.dep-steps > div.now { background: var(--bg2); }
+.dep-steps > div.done .lbl, .dep-steps > div.now .lbl { color: var(--lime); }
+.dep-fill { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--lime); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); transition: transform .7s cubic-bezier(.4,0,.2,1); }
+@media (max-width: 760px) { .dep-steps { grid-template-columns: 1fr 1fr; } .dep-steps > div:nth-child(3) { border-left: 0; } .dep-steps > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+.term { background: #050505; }
+.term-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .7rem .7rem .7rem 1.2rem; border-bottom: 1px solid var(--line); font: 600 .72rem var(--mono); letter-spacing: .08em; color: var(--mute); }
+#term { margin: 0; min-height: 11.5rem; padding: 1.1rem 1.2rem 1.3rem; font: 400 .86rem/1.75 var(--mono); color: #cfcfca; white-space: pre-wrap; }
+#term .pr { color: var(--lime); }
+#term .ok { color: #7fe0a0; }
+#term .mu { color: var(--dim); }
+#term .cur { display: inline-block; width: .55em; height: 1.05em; vertical-align: -3px; background: var(--text); animation: tblink 1s steps(1) infinite; }
+@keyframes tblink { 50% { opacity: 0; } }
 
 /* ================= JOIN ================= */
 .join-hero { background: #0a0a0a; border-bottom: 1px solid var(--line); padding: clamp(3rem, 7vw, 6rem) 0; }
@@ -316,7 +356,7 @@ td.yr { font: 600 .78rem var(--mono); color: var(--mute); }
 .join-addr { margin-top: .9rem; }
 .join-in { margin-top: .2rem; display: flex; }
 .join-in input { flex: 1; min-width: 0; height: 56px; padding: 0 1rem; border: 1px solid var(--line2); background: #000; font-size: 1.1rem; }
-.join-in input:focus, #b-notes:focus { outline: none; border-color: var(--text); }
+.join-in input:focus { outline: none; border-color: var(--text); }
 .hint2 { margin: .7rem 0 0; color: var(--mute); font-size: .9rem; }
 .hint2 b { color: var(--lime); font-weight: 500; font-family: var(--mono); font-size: .85rem; }
 .builder { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.2fr); gap: 3rem var(--pad); align-items: start; }
@@ -340,7 +380,6 @@ td.yr { font: 600 .78rem var(--mono); color: var(--mute); }
 .feats button:hover { color: var(--text); border-color: var(--text); }
 .feats button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 .feats button:disabled { opacity: .45; cursor: default; }
-#b-notes { width: 100%; padding: .8rem 1rem; border: 1px solid var(--line2); background: #000; font: inherit; font-size: .98rem; resize: vertical; }
 .send { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: 1.2rem; }
 .send .hint2 { margin: 0; flex: 1 1 14rem; }
 
@@ -603,39 +642,62 @@ footer { border-top: 1px solid var(--line); }
       <h1 class="h-xl" id="about-title" style="margin-top:1rem">About the club.</h1>
     </div></div>
   </section>
+
   <section class="sec" style="border-top:0">
     <div class="wrap">
       <div class="sec-top">
         <p class="lbl"><span class="dot"></span>What we are</p>
-        <p class="h-m" style="color:var(--text)">Troy Web Development started in 2023 as Web Development Education, a club where members taught each other how the web works. We still teach. Now most meetings go into building and updating real sites: for Troy clubs first, and for anyone else who asks.</p>
+        <p class="h-m reveal" id="reveal">Troy Web Development started in 2023 as Web Development Education, a club where members taught each other how the web works. We still teach. Now most meetings go into building and updating real sites: for Troy clubs first, and for anyone else who asks.</p>
       </div>
-      <div class="facts">
-        <div><span class="lbl">When</span><h3>Every other Thursday</h3><p>Lunch in Room 411. Club news goes out on Google Classroom.</p></div>
-        <div><span class="lbl">What</span><h3>Real websites</h3><p>Someone asks for a site, a member takes the lead, builds it with them, and keeps it updated.</p></div>
-        <div><span class="lbl">Who for</span><h3>Not just Troy clubs</h3><p>Nonprofits, student groups at other schools, a music collective, a small shop, a biology game.</p></div>
-        <div><span class="lbl">Who can join</span><h3>Anyone at Troy</h3><p>No experience needed. Come to a meeting, pick a project, learn by building it.</p></div>
+      <div class="qa" id="qa">
+        <div class="qa-list" role="tablist" aria-label="About the club">
+          <button role="tab" type="button" aria-selected="true" data-i="0"><span class="lbl">01</span>When do you meet?</button>
+          <button role="tab" type="button" aria-selected="false" data-i="1"><span class="lbl">02</span>What do you actually do?</button>
+          <button role="tab" type="button" aria-selected="false" data-i="2"><span class="lbl">03</span>Who do you build for?</button>
+          <button role="tab" type="button" aria-selected="false" data-i="3"><span class="lbl">04</span>Can I join?</button>
+          <span class="qa-bar"><i id="qa-bar"></i></span>
+        </div>
+        <div class="qa-panel" role="tabpanel" aria-live="polite">
+          <div class="qa-a" data-i="0"><h3>Every other Thursday.</h3><p>Lunch in Room 411. Club news goes out on Google Classroom.</p><span class="qa-big">411</span></div>
+          <div class="qa-a" data-i="1" hidden><h3>We build real websites.</h3><p>Someone asks for a site, a member takes the lead, builds it with them, and keeps it updated after it launches.</p><span class="qa-big" id="qa-n">14</span></div>
+          <div class="qa-a" data-i="2" hidden><h3>Not just Troy clubs.</h3><p>Nonprofits, student groups at other schools, a music collective, a small shop and a biology game.</p><span class="qa-big">5+</span></div>
+          <div class="qa-a" data-i="3" hidden><h3>Anyone at Troy.</h3><p>No experience needed. Come to a meeting, pick a project and learn by building it.</p><span class="qa-big">0</span></div>
+        </div>
       </div>
     </div>
   </section>
+
   <section class="sec">
-    <div class="wrap">
-      <div class="sec-top"><p class="lbl"><span class="dot"></span>Timeline</p><h2 class="h-l">How we got here.</h2></div>
-      <ol class="years">
-        <li><b>2023</b><div><strong>Web Development Education</strong><p>The club starts as a lecture club on HTML, CSS, JavaScript and how sites go live.</p></div></li>
-        <li><b>2023–25</b><div><strong>troywebdev.com and the club kiosk</strong><p>Our first site was a directory of Troy clubs used by more than 100 student organizations. Both it and the kiosk site are retired now.</p></div></li>
-        <li><b>Every year</b><div><strong>Tech Fair and Food Fest</strong><p>Picked for the Troy Tech Fair out of 125 clubs every year since 2023, and at Food Fest every year too.</p></div></li>
-        <li><b>2026</b><div><strong>Thirteen sites live</strong><p>Troy clubs, a science nonprofit, an OCSA student group, a music collective, a crystal shop and a biology game. More in the works.</p></div></li>
+    <div class="wrap tl2">
+      <div class="tl2-side">
+        <p class="lbl"><span class="dot"></span>Timeline</p>
+        <h2 class="h-l">How we got here.</h2>
+        <div class="tl2-year" aria-hidden="true"><span id="tl-year">2023</span></div>
+      </div>
+      <ol class="tl2-list" id="tl2">
+        <li data-y="2023"><span class="lbl">2023</span><strong>Web Development Education</strong><p>The club starts as a lecture club on HTML, CSS, JavaScript and how sites go live.</p></li>
+        <li data-y="2024"><span class="lbl">2023 to 2025</span><strong>troywebdev.com and the club kiosk</strong><p>Our first site was a directory of Troy clubs used by more than 100 student organizations. Both it and the kiosk site are retired now.</p></li>
+        <li data-y="2025"><span class="lbl">Every year</span><strong>Tech Fair and Food Fest</strong><p>Picked for the Troy Tech Fair out of 125 clubs every year since 2023, and at Food Fest every year too.</p></li>
+        <li data-y="2026"><span class="lbl">2026</span><strong><span id="tl-live">14</span> sites live</strong><p>Troy clubs, a science nonprofit, an OCSA student group, a music collective, a crystal shop, a drone club and a biology game. More in the works.</p></li>
       </ol>
     </div>
   </section>
+
   <section class="sec">
     <div class="wrap">
-      <div class="sec-top"><p class="lbl"><span class="dot"></span>Process</p><div><h2 class="h-l">How a site goes live.</h2><p class="lede">Every site lives in one GitHub repository. When a member pushes a change, it's checked and deployed to Firebase automatically, usually within a couple of minutes.</p></div></div>
-      <div class="pipe">
-        <div><span class="lbl">01 · Push</span><strong>git push</strong><span>A member pushes a change.</span></div>
-        <div><span class="lbl">02 · Check</span><strong>build ✓</strong><span>The build and security rules are tested.</span></div>
-        <div><span class="lbl">03 · Deploy</span><strong>firebase</strong><span>Firebase hosts the new version.</span></div>
-        <div><span class="lbl">04 · Live</span><strong>200 OK</strong><span>Everyone sees the update.</span></div>
+      <div class="sec-top"><p class="lbl"><span class="dot"></span>Process</p><div><h2 class="h-l">How a site goes live.</h2><p class="lede">Every site lives in one GitHub repository. When a member pushes a change, it's checked and deployed to Firebase automatically, usually within a couple of minutes. Press run to watch one go.</p></div></div>
+      <div class="dep" id="dep">
+        <div class="dep-steps">
+          <div data-s="0"><span class="lbl">01 · Push</span><strong>git push</strong><span>A member pushes a change.</span></div>
+          <div data-s="1"><span class="lbl">02 · Check</span><strong>build</strong><span>The build and security rules are tested.</span></div>
+          <div data-s="2"><span class="lbl">03 · Deploy</span><strong>firebase</strong><span>Firebase hosts the new version.</span></div>
+          <div data-s="3"><span class="lbl">04 · Live</span><strong>200 OK</strong><span>Everyone sees the update.</span></div>
+          <i class="dep-fill" id="dep-fill"></i>
+        </div>
+        <div class="term">
+          <div class="term-top"><span>~/troyllm</span><button class="btn sm" type="button" id="dep-run">Run deploy <span class="ar">&rarr;</span></button></div>
+          <pre id="term" aria-live="polite"><span class="pr">$</span> <span class="cur"></span></pre>
+        </div>
       </div>
     </div>
   </section>
@@ -648,7 +710,7 @@ footer { border-top: 1px solid var(--line); }
       <div>
         <p class="lbl"><span class="dot blink"></span>Requests open</p>
         <h1 class="h-xl" style="margin-top:1rem">Get a site.</h1>
-        <p class="lede">For a Troy club, a nonprofit, a club at another school or a small business. Build a rough version below, then send it to us. A member takes the lead and builds the real one with you.</p>
+        <p class="lede">Four quick picks and you're done. Then send it to any member and we'll build the real one with you.</p>
         <div class="ctas" style="margin-top:2rem"><a class="btn" href="#build">Start building <span class="ar">&rarr;</span></a><a class="btn ghost" href="#how">How it works</a></div>
       </div>
       <div class="board js"><div class="felt"><div class="rows" id="next-rows" aria-hidden="true"></div></div></div>
@@ -665,7 +727,7 @@ footer { border-top: 1px solid var(--line); }
         <div class="step-b">
           <span class="num">02</span>
           <div>
-            <label class="lbl" for="club-in">Name</label>
+            <label class="lbl" for="club-in">What's it called</label>
             <div class="join-in"><input id="club-in" maxlength="28" placeholder="Chess Club" autocomplete="off"></div>
             <p class="hint2">Your address could be <b id="addr">your-club.web.app</b></p>
           </div>
@@ -673,33 +735,21 @@ footer { border-top: 1px solid var(--line); }
         <div class="step-b">
           <span class="num">03</span>
           <div>
-            <p class="lbl">Look</p>
+            <p class="lbl">Pick a color</p>
             <div class="sw" id="sw"></div>
-            <div class="seg" id="b-layout" role="group" aria-label="Layout" style="margin-top:1rem"></div>
           </div>
         </div>
         <div class="step-b">
           <span class="num">04</span>
-          <div><p class="lbl">Pages</p><div class="feats" id="b-pages" role="group" aria-label="Pages"></div></div>
+          <div><p class="lbl">What do you need</p><div class="feats" id="feats" role="group" aria-label="Features"></div></div>
         </div>
-        <div class="step-b">
-          <span class="num">05</span>
-          <div><p class="lbl">Features</p><div class="feats" id="feats" role="group" aria-label="Features"></div></div>
-        </div>
-        <div class="step-b">
-          <span class="num">06</span>
-          <div>
-            <label class="lbl" for="b-notes">Anything else</label>
-            <textarea id="b-notes" rows="3" maxlength="400" placeholder="Instagram handle, when you need it, sites you like"></textarea>
-            <div class="send"><button class="btn" type="button" id="copy-req">Copy request <span class="ar">&rarr;</span></button><span class="hint2">Send it to any member, or bring it to Room 411 on a meeting Thursday.</span></div>
-          </div>
-        </div>
+        <div class="send"><button class="btn" type="button" id="copy-req">Copy request <span class="ar">&rarr;</span></button><span class="hint2">Send it to any member, or bring it to Room 411 on a meeting Thursday.</span></div>
       </div>
 
       <div class="pv">
         <div class="pv-top">
           <span class="lbl"><span class="dot blink"></span>Live preview</span>
-          <div class="seg sm" id="b-dev" role="group" aria-label="Preview size"></div>
+          
         </div>
         <div class="stagebox"><div class="mock" id="mock" data-layout="bold" style="--c:#d6e04b;--on:#111">
           <div class="cbar"><i></i><i></i><i></i><span id="m-url">your-club.web.app</span></div>
@@ -1059,8 +1109,83 @@ footer { border-top: 1px solid var(--line); }
     var max = Math.max(0, strip.scrollWidth - innerWidth), p = Math.min(1, Math.max(0, scrollY / (sh.offsetHeight * 1.2)));
     var target = -(max * (.15 + p * .85)) || 0; sx += (target - sx) * .1;
     strip.style.transform = 'translateX(' + sx.toFixed(1) + 'px)';
+    aboutScroll();
     requestAnimationFrame(stripTick);
   }
+
+  // Statement lights up word by word as you scroll past it
+  var rv = $('#reveal'), words = rv.textContent.trim().split(/\s+/);
+  rv.textContent = ''; words.forEach(function (w, i) { rv.appendChild(el('span', 'w', w)); if (i < words.length - 1) rv.appendChild(document.createTextNode(' ')); });
+  var wEls = $$('.w', rv);
+  if (reduce) wEls.forEach(function (w) { w.classList.add('on'); });
+
+  // Timeline: line fills and the big year follows the item you're on
+  var tl = $('#tl2'), tlItems = $$('li', tl), yr = $('#tl-year'), yrNow = '2023';
+  $('#tl-live').textContent = SITES.length;
+  $('#qa-n').textContent = SITES.length;
+  function aboutScroll() {
+    var vh = innerHeight;
+    if (!reduce) {
+      var r = rv.getBoundingClientRect(), p = Math.min(1, Math.max(0, (vh * .85 - r.top) / (r.height + vh * .45)));
+      var n = Math.round(p * wEls.length); wEls.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+    }
+    var tr = tl.getBoundingClientRect(), fp = Math.min(1, Math.max(0, (vh * .55 - tr.top) / tr.height));
+    tl.style.setProperty('--fill', fp.toFixed(3));
+    var on = null;
+    tlItems.forEach(function (li) { var a = li.getBoundingClientRect().top < vh * .6; li.classList.toggle('on', a); if (a) on = li; });
+    var y = (on || tlItems[0]).dataset.y;
+    if (y !== yrNow) {
+      yrNow = y;
+      if (reduce) yr.textContent = y;
+      else { yr.classList.add('out'); setTimeout(function () { yr.textContent = y; yr.classList.remove('out'); }, 180); }
+    }
+  }
+
+  // Q&A tabs, auto-advancing until someone picks one
+  var qaBtns = $$('#qa [role=tab]'), qaPanes = $$('#qa .qa-a'), qaI = 0, qaT = 0, qaAuto = !reduce, qaBar = $('#qa-bar');
+  function qaShow(i) {
+    qaI = i;
+    qaBtns.forEach(function (b, k) { b.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+    qaPanes.forEach(function (p, k) { p.hidden = k !== i; });
+    if (qaAuto) { qaBar.style.transition = 'none'; qaBar.style.width = '0'; void qaBar.offsetWidth; qaBar.style.transition = 'width 5.5s linear'; qaBar.style.width = '100%'; }
+    clearTimeout(qaT); if (qaAuto) qaT = setTimeout(function () { if (current === 'about') qaShow((qaI + 1) % qaBtns.length); }, 5500);
+  }
+  qaBtns.forEach(function (b, k) {
+    b.addEventListener('click', function () { qaAuto = false; qaBar.style.transition = 'none'; qaBar.style.width = '0'; qaShow(k); });
+    if (canHover) b.addEventListener('mouseenter', function () { if (qaI !== k) { qaAuto = false; qaBar.style.transition = 'none'; qaBar.style.width = '0'; qaShow(k); } });
+    b.addEventListener('keydown', function (e) { var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0; if (!d) return; e.preventDefault(); qaAuto = false; var n = (k + d + qaBtns.length) % qaBtns.length; qaShow(n); qaBtns[n].focus(); });
+  });
+  qaShow(0);
+
+  // Deploy demo
+  var term = $('#term'), depSteps = $$('#dep .dep-steps > div'), depFill = $('#dep-fill'), depRunning = false;
+  var LINES = [
+    [0, '<span class="pr">$</span> git push origin club-sites', 0],
+    [0, '<span class="mu">To github.com:Jeffrey-Chu/troyllm.git  a1b2c3d..e4f5a6b</span>', 350],
+    [1, '<span class="mu">Actions:</span> building ' + SITES.length + ' sites', 650],
+    [1, '<span class="mu">Actions:</span> testing security rules <span class="ok">passed</span>', 900],
+    [2, '<span class="mu">firebase:</span> deploying hosting', 800],
+    [2, '<span class="mu">firebase:</span> release complete', 1000],
+    [3, '<span class="ok">✓ live</span>  troy-clubs.web.app  <span class="ok">200 OK</span>', 600]
+  ];
+  function setStep(s, done) {
+    depSteps.forEach(function (d, i) { d.classList.toggle('done', i < s || (done && i === s)); d.classList.toggle('now', i === s && !done); });
+    depFill.style.setProperty('--p', done ? 1 : (s + .5) / 4);
+  }
+  $('#dep-run').addEventListener('click', function () {
+    if (depRunning) return; depRunning = true;
+    var b = this; b.disabled = true; term.innerHTML = ''; setStep(0);
+    var t = 0;
+    LINES.forEach(function (L, i) {
+      t += reduce ? 0 : L[2];
+      setTimeout(function () {
+        setStep(L[0], i === LINES.length - 1);
+        var cur = term.querySelector('.cur'); if (cur) cur.remove();
+        term.insertAdjacentHTML('beforeend', (term.innerHTML ? '\n' : '') + L[1]);
+        if (i === LINES.length - 1) { term.insertAdjacentHTML('beforeend', '\n<span class="pr">$</span> <span class="cur"></span>'); depRunning = false; b.disabled = false; b.firstChild.textContent = 'Run again '; }
+      }, t);
+    });
+  });
 
   /* ---------------- JOIN: site builder ---------------- */
   var nextRows = $('#next-rows');
@@ -1101,7 +1226,7 @@ footer { border-top: 1px solid var(--line); }
     mock.style.setProperty('--c', SW[B.color][0]); mock.style.setProperty('--on', SW[B.color][1]);
     var L = $('#m-links'); L.textContent = ''; PAGES.forEach(function (p) { if (B.pages[p] && p !== 'Home') L.appendChild(el('i', null, p)); });
     var m = $('#m-blocks'); m.textContent = '';
-    if (!B.feats.length) m.appendChild(el('div', 'empty', 'Pick features in step 05'));
+    if (!B.feats.length) m.appendChild(el('div', 'empty', 'Pick what you need in step 04'));
     B.feats.forEach(function (i) { var d = el('div'); d.appendChild(el('b', null, FEATS[i][0])); d.appendChild(el('span', null, FEATS[i][1])); m.appendChild(d); });
   }
   function drawLike() {
@@ -1115,23 +1240,12 @@ footer { border-top: 1px solid var(--line); }
       box.appendChild(a);
     });
   }
-  seg($('#b-type'), TYPES, 0, function (i) { B.type = i; if (i === 3) B.pages.Shop = 1; syncPages(); drawMock(); drawLike(); });
-  seg($('#b-layout'), LAYOUTS, 0, function (i) { B.layout = LAYOUTS[i][0]; drawMock(); });
-  seg($('#b-dev'), [['desktop', 'Desktop'], ['phone', 'Phone']], 0, function (i) { B.dev = i ? 'phone' : 'desktop'; drawMock(); });
+  seg($('#b-type'), TYPES, 0, function (i) { B.type = i; B.pages.Shop = i === 3 ? 1 : 0; drawMock(); drawLike(); });
   SW.forEach(function (c, i) {
     var b = el('button'); b.type = 'button'; b.style.setProperty('--c', c[0]); b.setAttribute('aria-label', 'Color ' + c[0]); b.setAttribute('aria-pressed', i ? 'false' : 'true');
     b.addEventListener('click', function () { $$('#sw button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); B.color = i; drawMock(); });
     $('#sw').appendChild(b);
   });
-  var pageBtns = {};
-  PAGES.forEach(function (p) {
-    var b = el('button', null, p); b.type = 'button'; pageBtns[p] = b;
-    if (p === 'Home') b.disabled = true;
-    b.addEventListener('click', function () { B.pages[p] = B.pages[p] ? 0 : 1; syncPages(); drawMock(); });
-    $('#b-pages').appendChild(b);
-  });
-  function syncPages() { PAGES.forEach(function (p) { pageBtns[p].setAttribute('aria-pressed', B.pages[p] ? 'true' : 'false'); }); }
-  syncPages();
   FEATS.forEach(function (f, i) {
     var b = el('button', null, f[0]); b.type = 'button'; b.setAttribute('aria-pressed', B.feats.indexOf(i) > -1 ? 'true' : 'false');
     b.addEventListener('click', function () { var k = B.feats.indexOf(i); if (k > -1) B.feats.splice(k, 1); else B.feats.push(i); b.setAttribute('aria-pressed', k > -1 ? 'false' : 'true'); drawMock(); });
@@ -1143,9 +1257,9 @@ footer { border-top: 1px solid var(--line); }
   });
   drawMock(); drawLike();
   $('#copy-req').addEventListener('click', function () {
-    var pg = PAGES.filter(function (p) { return B.pages[p]; }).join(', '), notes = $('#b-notes').value.trim();
+    
     var txt = 'Website request for Troy Web Development\nFor: ' + TYPES[B.type][1] + '\nName: ' + ($('#club-in').value.trim() || '(name)') + '\nAddress idea: ' + slug() +
-      '\nColor: ' + SW[B.color][0] + '\nLayout: ' + B.layout + '\nPages: ' + pg + '\nFeatures: ' + (B.feats.map(function (i) { return FEATS[i][0]; }).join(', ') || 'none yet') + (notes ? '\nNotes: ' + notes : '');
+      '\nColor: ' + SW[B.color][0] + '\nNeeds: ' + (B.feats.map(function (i) { return FEATS[i][0]; }).join(', ') || 'a simple site');
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { toast('Copied. Send it to any member.'); }, function () { prompt('Copy your request:', txt); });
   });
 
